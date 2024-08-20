@@ -17,11 +17,11 @@ export default async function Home() {
     .range(0, 27);
 
   if (!movies) {
-    return <p>"Not found"</p>;
+    return <p>Not found</p>;
   }
 
   if (!topMovies) {
-    return <p>"Not found"</p>;
+    return <p>Not found</p>;
   }
 
   return (
