@@ -79,7 +79,7 @@ const UploadFormPage: React.FC = () => {
               id="release_date"
               type="text"
               name="release_date"
-            />{" "}
+            />
             {state?.errors?.release_date && (
               <span
                 id="release_date-error"

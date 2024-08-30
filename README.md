@@ -4,7 +4,8 @@ An app to discover, add movies and make watchlist.
 
 ## Run 
 
-$pnpm dev$
+$ pnpm install
+$ pnpm dev
 
 ## Technologies
 
