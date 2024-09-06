@@ -1,11 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 
-// Define the CardProps interface
 interface CardProps {
   id: number;
   title: string;
-  // director: string;
+  directors: {
+    first_name: string;
+    last_name: string;
+  } | null;
   description: string;
   release_date: string;
   image_url: string;
@@ -18,8 +20,6 @@ export default function Card({
   release_date,
   image_url,
 }: CardProps) {
-  // add direction and description
-
   return (
     <Link
       href={{
@@ -29,6 +29,7 @@ export default function Card({
           title,
           description: encodeURI(description),
           release_date,
+
           image_url,
         },
       }}

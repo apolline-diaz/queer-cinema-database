@@ -5,16 +5,18 @@ import { Metadata, ResolvingMetadata } from "next";
 
 type Props = {
   params: { slug: string };
+  searchParams: {
+    director_first_name: string;
+    director_last_name: string;
+  };
 };
 
 export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  // read route params
   const id = params.slug;
 
-  // fetch data
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -57,7 +59,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function Page({ params }: Props) {
+export default async function Page({ params, searchParams }: Props) {
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -65,7 +67,9 @@ export default async function Page({ params }: Props) {
 
   const { data: movie, error } = await supabase
     .from("movies")
-    .select("id, title, description, image_url, release_date")
+    .select(
+      "id, title, description, image_url, release_date, directors(id, first_name, last_name)"
+    )
     .eq("id", params.slug)
     .single();
 
@@ -77,22 +81,30 @@ export default async function Page({ params }: Props) {
     return <div>Film introuvable</div>;
   }
 
+  const director =
+    movie.directors && movie.directors.length > 0 ? movie.directors[0] : null;
+
   return (
     <>
       <div className="px-12 py-12 max-w-7xl mx-auto min-h-screen">
         <div className="flex justify-between mb-6 lg:mb-12">
-          <h2 className="text-3xl lg:text-4xl items-start uppercase">
-            {movie.title}
-          </h2>
+          <div>
+            <h2 className="text-3xl lg:text-4xl items-start uppercase">
+              {movie.title}
+            </h2>
+            <h2>
+              {movie.directors?.first_name} {movie.directors?.last_name}
+            </h2>
+          </div>
           <h3>{movie.release_date}</h3>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 mb-4">
           <div className="flex items-center justify-center">
             <Image
-              className="p-2"
-              width={500}
-              height={500}
+              className=""
+              width={1000}
+              height={1000}
               alt={movie.title}
               src={getImageUrl(movie.image_url)}
             ></Image>

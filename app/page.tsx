@@ -9,14 +9,16 @@ export default async function Home() {
   const { data: topMovies, error: topMoviesError } = await supabase
     .from("movies")
     .select(
-      "id, title, image_url, description, director_id, directors ( id, first_name, last_name), release_date"
+      `id, title, image_url, description,release_date, directors( id, first_name, last_name)`
     )
     .eq("boost", true)
     .range(0, 2);
 
   const { data: movies, error } = await supabase
     .from("movies")
-    .select("id, title, image_url, description,release_date")
+    .select(
+      `id, title, image_url, description,release_date, directors( id, first_name, last_name)`
+    )
     .range(0, 27);
 
   if (!movies) {
@@ -30,13 +32,6 @@ export default async function Home() {
   return (
     <main className="min-h-screen mx-auto max-w-[100rem]">
       <div className="">
-        {/* <div className="pt-3">
-            <h2 className="text-4xl mb-5">TOP FILMS</h2>
-            <p className="text-xl mb-5">
-              Découvrez le meilleur des teen movies des années 2000
-            </p>
-          </div> */}
-        {/* <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5"> */}
         <div className="w-full cover">
           {topMovies.map((movie) => (
             <Hero
