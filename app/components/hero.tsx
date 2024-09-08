@@ -18,8 +18,6 @@ export default function Hero({
   release_date,
   image_url,
 }: CardProps) {
-  // add direction and description
-
   return (
     <Link
       href={{

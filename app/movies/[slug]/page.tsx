@@ -3,6 +3,8 @@ import { createClient } from "@supabase/supabase-js";
 import { getImageUrl, getCanonicalUrl } from "@/utils/index";
 import { Metadata, ResolvingMetadata } from "next";
 
+export const revalidate = 0;
+
 type Props = {
   params: { slug: string };
   searchParams: {
@@ -68,7 +70,7 @@ export default async function Page({ params, searchParams }: Props) {
   const { data: movie, error } = await supabase
     .from("movies")
     .select(
-      "id, title, description, image_url, release_date, directors(id, first_name, last_name)"
+      "id, title, description, image_url, release_date, runtime, directors(id, first_name, last_name), genres(id, name), keywords(id, name)"
     )
     .eq("id", params.slug)
     .single();
@@ -89,14 +91,17 @@ export default async function Page({ params, searchParams }: Props) {
       <div className="px-12 py-12 max-w-7xl mx-auto min-h-screen">
         <div className="flex justify-between mb-6 lg:mb-12">
           <div>
-            <h2 className="text-3xl lg:text-4xl items-start uppercase">
+            <h2 className="text-3xl lg:text-4xl items-start uppercase pb-2">
               {movie.title}
             </h2>
-            <h2>
+            <h2 className="text-lg">
               {movie.directors?.first_name} {movie.directors?.last_name}
             </h2>
           </div>
-          <h3>{movie.release_date}</h3>
+          <div className="flex flex-col">
+            <span>{movie.release_date}</span>
+            <span>{movie.runtime}&#x27;</span>
+          </div>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 mb-4">
@@ -110,13 +115,20 @@ export default async function Page({ params, searchParams }: Props) {
             ></Image>
           </div>
         </div>
-        <div className="pt-6">
-          <label className="font-bold pb-2 border-b-2 border-gray-800 border-opacity15">
-            SYNOPSIS
-          </label>
-          <p className="text-gray-600 text-lg my-4 pt-4 pb-6">
-            {movie.description}
-          </p>
+        <div className="gap-2 flex flex-col">
+          <div className="font-bold ">Synopsis</div>
+          <p className="py-2">{movie.description}</p>
+          <div className="font-bold">
+            Genre :<span className="font-light p-2">{movie.genres?.name}</span>
+          </div>
+          <div className="font-bold flex flex-wrap gap-2">
+            Mots-clé :
+            <p className="">
+              <span className="font-light text-sm rounded-full border border-black p-1.5">
+                {movie.keywords?.name}
+              </span>
+            </p>
+          </div>
         </div>
       </div>
     </>

@@ -29,7 +29,6 @@ export default function Card({
           title,
           description: encodeURI(description),
           release_date,
-
           image_url,
         },
       }}

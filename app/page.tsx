@@ -8,17 +8,13 @@ export const revalidate = 0;
 export default async function Home() {
   const { data: topMovies, error: topMoviesError } = await supabase
     .from("movies")
-    .select(
-      `id, title, image_url, description,release_date, directors( id, first_name, last_name)`
-    )
+    .select(`id, title, image_url,release_date`)
     .eq("boost", true)
     .range(0, 2);
 
   const { data: movies, error } = await supabase
     .from("movies")
-    .select(
-      `id, title, image_url, description,release_date, directors( id, first_name, last_name)`
-    )
+    .select(`id, title, image_url,release_date`)
     .range(0, 27);
 
   if (!movies) {
