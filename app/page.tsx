@@ -39,7 +39,7 @@ export default async function Home() {
         </div>
       </div>
       <div className="px-10 pb-5 ">
-        <h2 className="text-xl my-5">Teen Movies</h2>
+        <h2 className="text-xl my-5">teen movies</h2>
         <div className="flex flex-row-1 overflow-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5">
           {movies.map((movie) => (
             <Card

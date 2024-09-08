@@ -7,10 +7,6 @@ export const revalidate = 0;
 
 type Props = {
   params: { slug: string };
-  searchParams: {
-    director_first_name: string;
-    director_last_name: string;
-  };
 };
 
 export async function generateMetadata(
@@ -61,7 +57,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function Page({ params, searchParams }: Props) {
+export default async function Page({ params }: Props) {
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -70,7 +66,7 @@ export default async function Page({ params, searchParams }: Props) {
   const { data: movie, error } = await supabase
     .from("movies")
     .select(
-      "id, title, description, image_url, release_date, runtime, directors(id, first_name, last_name), genres(id, name), keywords(id, name)"
+      "id, title, description, image_url, release_date, runtime, directors(id, first_name, last_name), genres(id, name), keywords(id, name), countries(id, name)"
     )
     .eq("id", params.slug)
     .single();
@@ -83,46 +79,44 @@ export default async function Page({ params, searchParams }: Props) {
     return <div>Film introuvable</div>;
   }
 
-  const director =
-    movie.directors && movie.directors.length > 0 ? movie.directors[0] : null;
+  console.log(movie);
 
   return (
     <>
-      <div className="px-12 py-12 max-w-7xl mx-auto min-h-screen">
-        <div className="flex justify-between mb-6 lg:mb-12">
-          <div>
-            <h2 className="text-3xl lg:text-4xl items-start uppercase pb-2">
-              {movie.title}
-            </h2>
-            <h2 className="text-lg">
-              {movie.directors?.first_name} {movie.directors?.last_name}
-            </h2>
-          </div>
-          <div className="flex flex-col">
-            <span>{movie.release_date}</span>
-            <span>{movie.runtime}&#x27;</span>
-          </div>
-        </div>
-
-        <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 mb-4">
-          <div className="flex items-center justify-center">
-            <Image
-              className=""
-              width={1000}
-              height={1000}
-              alt={movie.title}
-              src={getImageUrl(movie.image_url)}
-            ></Image>
+      <div className=" max-w-7xl mx-auto min-h-screen">
+        <div className="h-96 relative">
+          <Image
+            className=""
+            fill={true}
+            alt={movie.title}
+            style={{ objectFit: "cover" }}
+            src={getImageUrl(movie.image_url)}
+          />
+          <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-30 w-full h-full text-white p-10 flex justify-between items-end">
+            <div className="flex flex-col">
+              <h2 className="text-3xl font-bold uppercase">{movie.title}</h2>
+              <h2 className="text-lg font-light ">
+                {movie.directors?.first_name} {movie.directors?.last_name}
+              </h2>
+            </div>
+            <div className="flex flex-col font-light items-end justify-end">
+              <span>
+                {movie.countries?.name}, {movie.release_date}
+              </span>
+              <span>{movie.runtime}&#x27;</span>
+            </div>
           </div>
         </div>
-        <div className="gap-2 flex flex-col">
-          <div className="font-bold ">Synopsis</div>
-          <p className="py-2">{movie.description}</p>
+        <div className="p-10 gap-3 flex flex-col">
+          <div className="font-bold ">
+            Synopsis
+            <p className="py-2 font-light">{movie.description}</p>
+          </div>
           <div className="font-bold">
-            Genre :<span className="font-light p-2">{movie.genres?.name}</span>
+            Genre<span className="font-light p-2">{movie.genres?.name}</span>
           </div>
           <div className="font-bold flex flex-wrap gap-2">
-            Mots-clé :
+            Mots-clé
             <p className="">
               <span className="font-light text-sm rounded-full border border-black p-1.5">
                 {movie.keywords?.name}
