@@ -8,13 +8,13 @@ export const revalidate = 0;
 export default async function Home() {
   const { data: topMovies, error: topMoviesError } = await supabase
     .from("movies")
-    .select(`id, title, image_url,release_date`)
+    .select(`id, title, image_url,description, release_date`)
     .eq("boost", true)
     .range(0, 2);
 
   const { data: movies, error } = await supabase
     .from("movies")
-    .select(`id, title, image_url,release_date`)
+    .select(`id, title, image_url, release_date`)
     .range(0, 27);
 
   if (!movies) {
@@ -38,11 +38,13 @@ export default async function Home() {
           ))}
         </div>
       </div>
-      <div className="px-12 pb-20">
-        <h2 className="text-xl my-10">catalogue</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5">
+      <div className="px-10 pb-5 ">
+        <h2 className="text-xl my-5">Teen Movies</h2>
+        <div className="flex flex-row-1 overflow-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5">
           {movies.map((movie) => (
             <Card
+              directors={null}
+              description={""}
               key={`${movie.title}-${movie.id}`}
               {...movie}
               image_url={getImageUrl(movie.image_url)}

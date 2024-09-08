@@ -39,7 +39,10 @@ export default function Hero({
             alt={title}
             style={{ objectFit: "cover" }}
           />
-          <div className="absolute bg-black bg-opacity-20 flex flex-col px-12 py-4 inset-0 text-white uppercase justify-end">
+          <div className="absolute flex bg-black bg-opacity-20 items-end justify-start w-full h-full text-white font-semi-bold text-xl line-clamp-2 px-10 py-5">
+            Explorez le catalogue
+          </div>
+          <div className="absolute flex flex-col px-10 py-5 text-white uppercase items-start justify-end">
             <div className="text-xl font-semi-bold line-clamp-2">{title}</div>
             <p className="inline-block text-base">
               <span className=" font-extralight text-gray-952 mr-2">
