@@ -2,6 +2,7 @@ import Card from "@/app/components/card";
 import { supabase } from "@/lib/supabase";
 import { getImageUrl } from "@/utils";
 import Hero from "./components/hero";
+import Searchbar from "./components/searchbar";
 
 export const revalidate = 0;
 

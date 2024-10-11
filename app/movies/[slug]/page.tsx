@@ -21,8 +21,19 @@ export async function generateMetadata(
   );
   const { data: movie } = await supabase
     .from("movies")
-    .select()
-    .match({ id })
+    .select(
+      `id, 
+       title, 
+       description, 
+       image_url, 
+       release_date, 
+       runtime, 
+       directors(id, first_name, last_name), 
+       countries(id, name),
+       movie_genres(genre_id, genres(name))
+       movie_keywords(keyword_id, keywords(name))`
+    )
+    .eq("id", params.slug)
     .single();
 
   if (!movie) {
@@ -113,14 +124,22 @@ export default async function Page({ params }: Props) {
             <p className="py-2 font-light">{movie.description}</p>
           </div>
           <div className="font-bold">
-            Genre<span className="font-light p-2">{movie.genres?.name}</span>
+            Genre
+            <span className="font-light p-2">
+              {movie.genres?.map((genre) => genre.name).join(", ")}
+            </span>
           </div>
-          <div className="font-bold flex flex-wrap gap-2">
+          <div className="font-bold flex items-center flex-wrap gap-2">
             Mots-clé
-            <p className="">
-              <span className="font-light text-sm rounded-full border border-black p-1.5">
-                {movie.keywords?.name}
-              </span>
+            <p className="flex gap-2">
+              {movie.keywords?.map((keyword) => (
+                <span
+                  key={keyword.id}
+                  className="font-light text-sm rounded-full border border-black p-1.5"
+                >
+                  {keyword.name}
+                </span>
+              ))}
             </p>
           </div>
         </div>
