@@ -9,48 +9,50 @@ type Props = {
   params: { slug: string };
 };
 
-export async function generateMetadata(
-  { params }: Props,
-  parent: ResolvingMetadata
-): Promise<Metadata> {
-  const id = params.slug;
+// MetaData for accessibility (missing types for movie and others data : to update)
 
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
-  const { data: movie } = await supabase
-    .from("movies")
-    .select(
-      `id, 
-       title, 
-       description, 
-       image_url, 
-       release_date, 
-       runtime, 
-       directors(id, first_name, last_name), 
-       countries(id, name),
-       movie_genres(genre_id, genres(name))
-       movie_keywords(keyword_id, keywords(name))`
-    )
-    .eq("id", params.slug)
-    .single();
+// export async function generateMetadata(
+//   { params }: Props,
+//   parent: ResolvingMetadata
+// ): Promise<Metadata> {
+//   const id = params.slug;
 
-  if (!movie) {
-    return { title: "", description: "" };
-  }
+//   const supabase = createClient(
+//     process.env.NEXT_PUBLIC_SUPABASE_URL!,
+//     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+//   );
+//   const { data: movie } = await supabase
+//     .from("movies")
+//     .select(
+//       `id,
+//        title,
+//        description,
+//        image_url,
+//        release_date,
+//        runtime,
+//        directors(id, first_name, last_name),
+//        countries(id, name),
+//        movie_genres(genre_id, genres(name))
+//        movie_keywords(keyword_id, keywords(name))`
+//     )
+//     .eq("id", params.slug)
+//     .single();
 
-  return {
-    title: movie.title,
-    description: movie.description,
-    openGraph: {
-      images: [getImageUrl(movie.image_url)],
-    },
-    alternates: {
-      canonical: `/movies/${id}`,
-    },
-  };
-}
+//   if (!movie) {
+//     return { title: "", description: "" };
+//   }
+
+//   return {
+//     title: movie.title,
+//     description: movie.description,
+//     openGraph: {
+//       images: [getImageUrl(movie.image_url)],
+//     },
+//     alternates: {
+//       canonical: `/movies/${id}`,
+//     },
+//   };
+// }
 
 export async function generateStaticParams() {
   const supabase = createClient(
@@ -107,13 +109,17 @@ export default async function Page({ params }: Props) {
             <div className="flex flex-col">
               <h2 className="text-3xl font-bold uppercase">{movie.title}</h2>
               <h2 className="text-lg font-light ">
-                {movie.directors?.[0]?.first_name}{" "}
-                {movie.directors?.[0]?.last_name}
+                {movie.directors
+                  ?.map(
+                    (director) => `${director.first_name} ${director.last_name}`
+                  )
+                  .join(", ")}
               </h2>
             </div>
             <div className="flex flex-col font-light items-end justify-end">
               <span>
-                {movie.countries?.[0]?.name}, {movie.release_date}
+                {movie.countries?.map((country) => country.name).join(", ")},{" "}
+                {movie.release_date}
               </span>
               <span>{movie.runtime}&#x27;</span>
             </div>
