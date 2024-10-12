@@ -3,11 +3,11 @@ import Link from "next/link";
 export default function Header() {
   return (
     <>
-      <div className="flex flex-rows justify-between mx-5 p-5 gap-10">
+      <div className="flex flex-rows items-center justify-between mx-5 p-5 gap-10">
         <Link href="/" className="text-xl">
           movie diary
         </Link>
-        <div className="flex justify-center gap-10">
+        <div className="flex justify-center items-center gap-10">
           <ul className="">
             <li>
               <Link

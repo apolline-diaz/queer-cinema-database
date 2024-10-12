@@ -3,43 +3,56 @@ import { createClient } from "@supabase/supabase-js";
 import { getImageUrl, getCanonicalUrl } from "@/utils/index";
 import { Metadata, ResolvingMetadata } from "next";
 
+export const revalidate = 0;
+
 type Props = {
   params: { slug: string };
 };
 
-export async function generateMetadata(
-  { params }: Props,
-  parent: ResolvingMetadata
-): Promise<Metadata> {
-  // read route params
-  const id = params.slug;
+// MetaData for accessibility (missing types for movie and others data : to update)
 
-  // fetch data
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
-  const { data: movie } = await supabase
-    .from("movies")
-    .select()
-    .match({ id })
-    .single();
+// export async function generateMetadata(
+//   { params }: Props,
+//   parent: ResolvingMetadata
+// ): Promise<Metadata> {
+//   const id = params.slug;
 
-  if (!movie) {
-    return { title: "", description: "" };
-  }
+//   const supabase = createClient(
+//     process.env.NEXT_PUBLIC_SUPABASE_URL!,
+//     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+//   );
+//   const { data: movie } = await supabase
+//     .from("movies")
+//     .select(
+//       `id,
+//        title,
+//        description,
+//        image_url,
+//        release_date,
+//        runtime,
+//        directors(id, first_name, last_name),
+//        countries(id, name),
+//        movie_genres(genre_id, genres(name))
+//        movie_keywords(keyword_id, keywords(name))`
+//     )
+//     .eq("id", params.slug)
+//     .single();
 
-  return {
-    title: movie.title,
-    description: movie.description,
-    openGraph: {
-      images: [getImageUrl(movie.image_url)],
-    },
-    alternates: {
-      canonical: `/movies/${id}`,
-    },
-  };
-}
+//   if (!movie) {
+//     return { title: "", description: "" };
+//   }
+
+//   return {
+//     title: movie.title,
+//     description: movie.description,
+//     openGraph: {
+//       images: [getImageUrl(movie.image_url)],
+//     },
+//     alternates: {
+//       canonical: `/movies/${id}`,
+//     },
+//   };
+// }
 
 export async function generateStaticParams() {
   const supabase = createClient(
@@ -65,7 +78,9 @@ export default async function Page({ params }: Props) {
 
   const { data: movie, error } = await supabase
     .from("movies")
-    .select("id, title, description, image_url, release_date")
+    .select(
+      "id, title, description, image_url, release_date, runtime, directors(id, first_name, last_name), genres(id, name), keywords(id, name), countries(id, name)"
+    )
     .eq("id", params.slug)
     .single();
 
@@ -77,34 +92,63 @@ export default async function Page({ params }: Props) {
     return <div>Film introuvable</div>;
   }
 
+  console.log(movie);
+
   return (
     <>
-      <div className="px-12 py-12 max-w-7xl mx-auto min-h-screen">
-        <div className="flex justify-between mb-6 lg:mb-12">
-          <h2 className="text-3xl lg:text-4xl items-start uppercase">
-            {movie.title}
-          </h2>
-          <h3>{movie.release_date}</h3>
-        </div>
-
-        <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 mb-4">
-          <div className="flex items-center justify-center">
-            <Image
-              className="p-2"
-              width={500}
-              height={500}
-              alt={movie.title}
-              src={getImageUrl(movie.image_url)}
-            ></Image>
+      <div className=" max-w-7xl mx-auto min-h-screen">
+        <div className="h-96 relative">
+          <Image
+            className=""
+            fill={true}
+            alt={movie.title}
+            style={{ objectFit: "cover" }}
+            src={getImageUrl(movie.image_url)}
+          />
+          <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-30 w-full h-full text-white p-10 flex justify-between items-end">
+            <div className="flex flex-col">
+              <h2 className="text-3xl font-bold uppercase">{movie.title}</h2>
+              <h2 className="text-lg font-light ">
+                {movie.directors
+                  ?.map(
+                    (director) => `${director.first_name} ${director.last_name}`
+                  )
+                  .join(", ")}
+              </h2>
+            </div>
+            <div className="flex flex-col font-light items-end justify-end">
+              <span>
+                {movie.countries?.map((country) => country.name).join(", ")},{" "}
+                {movie.release_date}
+              </span>
+              <span>{movie.runtime}&#x27;</span>
+            </div>
           </div>
         </div>
-        <div className="pt-6">
-          <label className="font-bold pb-2 border-b-2 border-gray-800 border-opacity15">
-            SYNOPSIS
-          </label>
-          <p className="text-gray-600 text-lg my-4 pt-4 pb-6">
-            {movie.description}
-          </p>
+        <div className="p-10 gap-3 flex flex-col">
+          <div className="font-bold ">
+            Synopsis
+            <p className="py-2 font-light">{movie.description}</p>
+          </div>
+          <div className="font-bold">
+            Genre
+            <span className="font-light p-2">
+              {movie.genres?.map((genre) => genre.name).join(", ")}
+            </span>
+          </div>
+          <div className="font-bold flex items-center flex-wrap gap-2">
+            Mots-clé
+            <p className="flex gap-2">
+              {movie.keywords?.map((keyword) => (
+                <span
+                  key={keyword.id}
+                  className="font-light text-sm rounded-full border border-black p-1.5"
+                >
+                  {keyword.name}
+                </span>
+              ))}
+            </p>
+          </div>
         </div>
       </div>
     </>

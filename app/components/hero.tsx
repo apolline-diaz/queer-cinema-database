@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import Searchbar from "./searchbar";
 
 // Define the CardProps interface
 interface CardProps {
@@ -18,8 +19,6 @@ export default function Hero({
   release_date,
   image_url,
 }: CardProps) {
-  // add direction and description
-
   return (
     <Link
       href={{
@@ -41,7 +40,12 @@ export default function Hero({
             alt={title}
             style={{ objectFit: "cover" }}
           />
-          <div className="absolute bg-black bg-opacity-20 flex flex-col px-12 py-4 inset-0 text-white uppercase justify-end">
+          <div className="absolute flex  bg-black bg-opacity-20 items-center justify-center  w-full h-full text-white font-semi-bold text-xl line-clamp-2 px-10 py-5">
+            <div className="flex flex-col z-100">
+              explorez le catalogue <Searchbar />
+            </div>
+          </div>
+          <div className="absolute flex flex-col px-10 py-5 text-white uppercase items-start justify-end">
             <div className="text-xl font-semi-bold line-clamp-2">{title}</div>
             <p className="inline-block text-base">
               <span className=" font-extralight text-gray-952 mr-2">
