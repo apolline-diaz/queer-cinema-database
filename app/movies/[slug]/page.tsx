@@ -107,12 +107,13 @@ export default async function Page({ params }: Props) {
             <div className="flex flex-col">
               <h2 className="text-3xl font-bold uppercase">{movie.title}</h2>
               <h2 className="text-lg font-light ">
-                {movie.directors?.first_name} {movie.directors?.last_name}
+                {movie.directors?.[0]?.first_name}{" "}
+                {movie.directors?.[0]?.last_name}
               </h2>
             </div>
             <div className="flex flex-col font-light items-end justify-end">
               <span>
-                {movie.countries?.name}, {movie.release_date}
+                {movie.countries?.[0]?.name}, {movie.release_date}
               </span>
               <span>{movie.runtime}&#x27;</span>
             </div>
