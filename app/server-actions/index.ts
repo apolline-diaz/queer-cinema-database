@@ -18,9 +18,14 @@ const ACCEPTED_IMAGE_TYPES = [
 
 export async function addMovie(prevState: any, formData: FormData) {
   const schema = z.object({
-    title: z.string().min(1),
-    description: z.string().min(5),
-    release_date: z.string().min(4),
+    title: z.string().min(1, "Le titre est obligatoire"),
+    director: z.string().min(1, "Lea réalisateur-ce est obligatoire"),
+    description: z
+      .string()
+      .min(5, "Le synopsis doit faire au moins 5 caractères"),
+    release_date: z.string().min(4, "L'année de sortie est obligatoire"),
+    keyword_id: z.string().min(1, "Un mot-clé est obligatoire"),
+    genre_id: z.string().min(1, "Le genre est obligatoire"),
     image_url: z
       .any()
       .refine(
@@ -35,8 +40,11 @@ export async function addMovie(prevState: any, formData: FormData) {
 
   const validatedFields = schema.safeParse({
     title: formData.get("title"),
+    director: formData.get("director"),
     description: formData.get("description"),
     release_date: formData.get("release_date"),
+    keyword_id: formData.get("keyword_id"),
+    genre_id: formData.get("genre_id"),
     image_url: formData.get("image_url"),
   });
 
@@ -49,7 +57,15 @@ export async function addMovie(prevState: any, formData: FormData) {
     };
   }
 
-  const { title, description, release_date, image_url } = validatedFields.data;
+  const {
+    title,
+    director,
+    description,
+    genre_id,
+    keyword_id,
+    release_date,
+    image_url,
+  } = validatedFields.data;
   try {
     const fileName = `${Math.random()}-${title}`;
     const supabase = createServerActionClient({ cookies });
@@ -71,17 +87,22 @@ export async function addMovie(prevState: any, formData: FormData) {
       // insert
       const path = data.path;
 
-      const { error: moviesError } = await supabase
-        .from("movies")
-        .insert({ title, release_date, description, image_url: path });
+      const { error: moviesError } = await supabase.from("movies").insert({
+        title,
+        director,
+        release_date,
+        description,
+        genre_id,
+        keyword_id,
+        image_url: path,
+      });
 
-        if(moviesError){
-          return {
-            type: "error",
-            message:
-              "Erreur avec la base de données : Echec de l'ajout du film",
-          };
-        }
+      if (moviesError) {
+        return {
+          type: "error",
+          message: "Erreur avec la base de données : Echec de l'ajout du film",
+        };
+      }
     }
   } catch (error) {
     console.error("Error", error);
@@ -91,6 +112,6 @@ export async function addMovie(prevState: any, formData: FormData) {
     };
   }
 
-  revalidatePath('/');
-  redirect('/');
+  revalidatePath("/");
+  redirect("/");
 }
