@@ -96,7 +96,7 @@ export default async function Page({ params }: Props) {
 
   return (
     <>
-      <div className=" max-w-7xl mx-auto min-h-screen">
+      <div className="w-full mx-auto min-h-screen">
         <div className="h-96 relative">
           <Image
             className=""

@@ -406,7 +406,7 @@ const UploadFormPage: React.FC = () => {
             </span>
           )}
         </div>
-        <SubmitButton />{" "}
+        <SubmitButton />
       </form>
     </div>
   );
