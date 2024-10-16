@@ -14,6 +14,7 @@ const initialState = {
 
 const UploadFormPage: React.FC = () => {
   const [state, formAction] = useFormState<any>(addMovie as any, initialState);
+  const [countries, setCountries] = useState<any[]>([]);
   const [genres, setGenres] = useState<any[]>([]);
   const [keywords, setKeywords] = useState<any[]>([]);
   const [selectedKeywords, setSelectedKeywords] = useState<any[]>([]);
@@ -30,6 +31,21 @@ const UploadFormPage: React.FC = () => {
     };
 
     fetchGenres();
+  }, []);
+
+  useEffect(() => {
+    const fetchCountries = async () => {
+      const { data, error } = await supabase
+        .from("countries")
+        .select("id, name");
+      if (error) {
+        console.error("Erreur lors de la récupération des pays :", error);
+      } else {
+        setCountries(data);
+      }
+    };
+
+    fetchCountries();
   }, []);
 
   useEffect(() => {
@@ -108,9 +124,9 @@ const UploadFormPage: React.FC = () => {
           <div className="uppercase text-gray-700 text-xs font-bold mb-2">
             Réalisateur
           </div>
-          <div className="flex flex-wrap gap-4 w-full">
-            {/* director first_name 
-            <div className="md:w-1/2">
+          <div className="flex flex-wrap gap-4 w-full"> */}
+        {/* director first_name */}
+        {/* <div className="md:w-1/2">
               <label
                 className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                 htmlFor="director_first_name"
@@ -131,9 +147,9 @@ const UploadFormPage: React.FC = () => {
                   {state.errors.director_first_name.join(",")}
                 </span>
               )}
-            </div>
-            {/* director last_name 
-            <div className="relative md:w-1/2">
+            </div> */}
+        {/* director last_name */}
+        {/* <div className="relative md:w-1/2">
               <label
                 className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                 htmlFor="director_last_name"
@@ -154,8 +170,8 @@ const UploadFormPage: React.FC = () => {
                   {state.errors.director_last_name.join(",")}
                 </span>
               )}
-            </div>
-          </div>
+            </div> */}
+        {/* </div>
         </div> */}
         {/* synopsis */}
         <div className="w-full md:w-1/2">
@@ -180,27 +196,96 @@ const UploadFormPage: React.FC = () => {
           )}
         </div>
         {/* release date */}
-        <div className="w-full md:w-1/5 mb-6 mt-3 md:mb-0">
+        <div className="w-full md:w-1/3 mb-6 mt-3 md:mb-0">
           <label
             className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
             htmlFor="release_date"
           >
             Année de sortie
           </label>
+          <div className="relative">
+            <select
+              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              id="release_date"
+              name="release_date"
+            >
+              <option value="">Sélectionnez une année</option>
+              {Array.from(
+                { length: new Date().getFullYear() + 1 }, // Créer un tableau jusqu'à l'année actuelle
+                (_, i) => new Date().getFullYear() - i // Inverser l'ordre pour afficher de l'année actuelle à 0
+              ).map((year) => (
+                <option key={year} value={year}>
+                  {year}
+                </option>
+              ))}
+            </select>
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+              <svg
+                className="fill-current h-4 w-4"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+              >
+                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+              </svg>
+            </div>
+            {state?.errors?.release_date && (
+              <span
+                id="release_date-error"
+                className="text-red-500 text-xs italic"
+              >
+                {state.errors.release_date.join(",")}
+              </span>
+            )}
+          </div>
+        </div>
+        {/* country */}
+        <div className="w-full md:w-1/3 mt-3 mb-6 md:mb-0">
+          <label
+            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+            htmlFor="country"
+          >
+            Pays
+          </label>
+          <div className="relative">
+            <select
+              className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              id="grid-country"
+              name="country_id"
+            >
+              <option value="">Sélectionnez un pays</option>
+              {countries?.map((country) => (
+                <option key={country.id} value={country.id}>
+                  {country.name}
+                </option>
+              ))}
+            </select>
+
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+              <svg
+                className="fill-current h-4 w-4"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+              >
+                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+              </svg>
+            </div>
+          </div>
+        </div>
+        {/* runtime */}
+        <div className="w-full md:w-1/5 mb-6 mt-3 md:mb-0">
+          <label
+            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+            htmlFor="runtime"
+          >
+            Durée (minutes)
+          </label>
           <input
             className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            id="release_date"
-            type="text"
-            name="release_date"
+            id="runtime"
+            type="number" // Utilisez type "number" pour la durée
+            name="runtime"
+            min="1" // Optionnel : Pour s'assurer que la durée est positive
           />
-          {state?.errors?.release_date && (
-            <span
-              id="release_date-error"
-              className="text-red-500 text-xs italic"
-            >
-              {state.errors.release_date.join(",")}
-            </span>
-          )}
         </div>
         {/* genre */}
         <div className="w-full md:w-1/3 mt-3 mb-6 md:mb-0">
@@ -236,7 +321,7 @@ const UploadFormPage: React.FC = () => {
           </div>
         </div>
         {/* keywords */}
-        <div className="w-full md:w-1/3 mt-3 mb-6 md:mb-0">
+        <div className="w-full md:w-1/2 mt-3 mb-6 md:mb-0">
           <label
             className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
             htmlFor="keyword_id"

@@ -22,9 +22,11 @@ export async function addMovie(prevState: any, formData: FormData) {
     description: z
       .string()
       .min(5, "Le synopsis doit faire au moins 5 caractères"),
-    release_date: z.string().min(4, "L'année de sortie est obligatoire"),
-    keyword_id: z.string().min(1, "Un mot-clé est obligatoire"),
+    release_date: z.number().min(4, "L'année de sortie est obligatoire"),
+    runtime: z.number().min(4, "L'année de sortie est obligatoire"),
+    country_id: z.string().min(1, "Le pays est obligatoire"),
     genre_id: z.string().min(1, "Le genre est obligatoire"),
+    keyword_id: z.string().min(1, "Un mot-clé est obligatoire"),
     image_url: z
       .any()
       .refine(
@@ -41,9 +43,11 @@ export async function addMovie(prevState: any, formData: FormData) {
     title: formData.get("title"),
     // director: formData.get("director"),
     description: formData.get("description"),
-    release_date: formData.get("release_date"),
-    keyword_id: formData.get("keyword_id"),
+    release_date: Number(formData.get("release_date")),
+    runtime: Number(formData.get("runtime")),
+    country_id: formData.get("country_id"),
     genre_id: formData.get("genre_id"),
+    keyword_id: formData.get("keyword_id"),
     image_url: formData.get("image_url"),
   });
 
@@ -60,7 +64,9 @@ export async function addMovie(prevState: any, formData: FormData) {
     title,
     // director,
     description,
+    country_id,
     genre_id,
+    runtime,
     keyword_id,
     release_date,
     image_url,
@@ -68,7 +74,7 @@ export async function addMovie(prevState: any, formData: FormData) {
   console.log(validatedFields.data);
 
   try {
-    // Upload de l'image
+    // image upload
     const fileName = `${Math.random()}-${title}`;
     const supabase = createServerActionClient({ cookies });
     const { data: imageData, error: imageError } = await supabase.storage
@@ -86,16 +92,17 @@ export async function addMovie(prevState: any, formData: FormData) {
       };
     }
 
-    // Insertion du film
+    // movie insert
     const { data: movieData, error: movieError } = await supabase
       .from("movies")
       .insert({
         title,
         release_date,
+        runtime,
         description,
         image_url: imageData?.path,
       })
-      .select("id"); // Récupère l'ID du film inséré
+      .select("id"); // get id movie
 
     if (movieError) {
       return {
@@ -104,10 +111,28 @@ export async function addMovie(prevState: any, formData: FormData) {
       };
     }
 
-    const movieId = movieData[0]?.id; // Récupérer l'ID du film inséré
+    const movieId = movieData[0]?.id; // get movie id
 
-    // Insertion des genres dans movie_genres
-    const genreIds = genre_id.split(",").map(Number); // Genre ID sous forme d'une liste
+    // insert country in movie_countries
+    const countryIds = country_id.split(",").map(Number); // country_id on list format
+    const countryInsert = countryIds.map((id) => ({
+      movie_id: movieId,
+      country_id: id,
+    }));
+
+    const { error: countryError } = await supabase
+      .from("movie_countries")
+      .insert(countryInsert);
+
+    if (countryError) {
+      return {
+        type: "error",
+        message: "Erreur lors de l'insertion des pays",
+      };
+    }
+
+    // insert genres in movie_genres
+    const genreIds = genre_id.split(",").map(Number); // genre_id on list format
     const genreInserts = genreIds.map((id) => ({
       movie_id: movieId,
       genre_id: id,
@@ -124,7 +149,7 @@ export async function addMovie(prevState: any, formData: FormData) {
       };
     }
 
-    // Insertion des mots-clés dans movie_keywords
+    // insert keywords into movie_keywords
     const keywordIds = keyword_id.split(",").map(Number);
     const keywordInserts = keywordIds.map((id) => ({
       movie_id: movieId,
@@ -149,7 +174,8 @@ export async function addMovie(prevState: any, formData: FormData) {
     };
   }
 
-  // Redirection
+  // redirect
+
   revalidatePath("/");
   redirect("/");
 }
