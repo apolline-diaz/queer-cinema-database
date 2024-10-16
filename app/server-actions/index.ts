@@ -1,6 +1,5 @@
 "use server";
 
-//import { supabase } from "@/lib/supabase";
 import { z } from "zod";
 import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
@@ -19,7 +18,7 @@ const ACCEPTED_IMAGE_TYPES = [
 export async function addMovie(prevState: any, formData: FormData) {
   const schema = z.object({
     title: z.string().min(1, "Le titre est obligatoire"),
-    director: z.string().min(1, "Lea réalisateur-ce est obligatoire"),
+    // director: z.string().min(1, "Lea réalisateur-ce est obligatoire"),
     description: z
       .string()
       .min(5, "Le synopsis doit faire au moins 5 caractères"),
@@ -40,7 +39,7 @@ export async function addMovie(prevState: any, formData: FormData) {
 
   const validatedFields = schema.safeParse({
     title: formData.get("title"),
-    director: formData.get("director"),
+    // director: formData.get("director"),
     description: formData.get("description"),
     release_date: formData.get("release_date"),
     keyword_id: formData.get("keyword_id"),
@@ -59,23 +58,27 @@ export async function addMovie(prevState: any, formData: FormData) {
 
   const {
     title,
-    director,
+    // director,
     description,
     genre_id,
     keyword_id,
     release_date,
     image_url,
   } = validatedFields.data;
+  console.log(validatedFields.data);
+
   try {
+    // Upload de l'image
     const fileName = `${Math.random()}-${title}`;
     const supabase = createServerActionClient({ cookies });
-    const { data, error } = await supabase.storage
+    const { data: imageData, error: imageError } = await supabase.storage
       .from("storage")
       .upload(fileName, image_url, {
         cacheControl: "3600",
         upsert: false,
       });
-    if (error) {
+
+    if (imageError) {
       return {
         type: "error",
         message:
@@ -83,26 +86,60 @@ export async function addMovie(prevState: any, formData: FormData) {
       };
     }
 
-    if (data) {
-      // insert
-      const path = data.path;
-
-      const { error: moviesError } = await supabase.from("movies").insert({
+    // Insertion du film
+    const { data: movieData, error: movieError } = await supabase
+      .from("movies")
+      .insert({
         title,
-        director,
         release_date,
         description,
-        genre_id,
-        keyword_id,
-        image_url: path,
-      });
+        image_url: imageData?.path,
+      })
+      .select("id"); // Récupère l'ID du film inséré
 
-      if (moviesError) {
-        return {
-          type: "error",
-          message: "Erreur avec la base de données : Echec de l'ajout du film",
-        };
-      }
+    if (movieError) {
+      return {
+        type: "error",
+        message: "Erreur avec la base de données : Echec de l'ajout du film",
+      };
+    }
+
+    const movieId = movieData[0]?.id; // Récupérer l'ID du film inséré
+
+    // Insertion des genres dans movie_genres
+    const genreIds = genre_id.split(",").map(Number); // Genre ID sous forme d'une liste
+    const genreInserts = genreIds.map((id) => ({
+      movie_id: movieId,
+      genre_id: id,
+    }));
+
+    const { error: genreError } = await supabase
+      .from("movie_genres")
+      .insert(genreInserts);
+
+    if (genreError) {
+      return {
+        type: "error",
+        message: "Erreur lors de l'insertion des genres",
+      };
+    }
+
+    // Insertion des mots-clés dans movie_keywords
+    const keywordIds = keyword_id.split(",").map(Number);
+    const keywordInserts = keywordIds.map((id) => ({
+      movie_id: movieId,
+      keyword_id: id,
+    }));
+
+    const { error: keywordError } = await supabase
+      .from("movie_keywords")
+      .insert(keywordInserts);
+
+    if (keywordError) {
+      return {
+        type: "error",
+        message: "Erreur lors de l'insertion des mots-clés",
+      };
     }
   } catch (error) {
     console.error("Error", error);
@@ -112,6 +149,7 @@ export async function addMovie(prevState: any, formData: FormData) {
     };
   }
 
+  // Redirection
   revalidatePath("/");
   redirect("/");
 }

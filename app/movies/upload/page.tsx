@@ -14,12 +14,11 @@ const initialState = {
 
 const UploadFormPage: React.FC = () => {
   const [state, formAction] = useFormState<any>(addMovie as any, initialState);
-  const [genres, setGenres] = useState<any[]>([]); // State pour les genres
-  const [keywords, setKeywords] = useState<any[]>([]); // Liste de tous les mots-clés
-  const [selectedKeywords, setSelectedKeywords] = useState<any[]>([]); // Liste des mots-clés sélectionnés
-  const [keywordInput, setKeywordInput] = useState(""); // Saisie dans le champ des mots-clés
+  const [genres, setGenres] = useState<any[]>([]);
+  const [keywords, setKeywords] = useState<any[]>([]);
+  const [selectedKeywords, setSelectedKeywords] = useState<any[]>([]);
+  const [keywordInput, setKeywordInput] = useState("");
 
-  // Récupérer les genres au chargement de la page
   useEffect(() => {
     const fetchGenres = async () => {
       const { data, error } = await supabase.from("genres").select("id, name");
@@ -48,29 +47,29 @@ const UploadFormPage: React.FC = () => {
     fetchKeywords();
   }, []);
 
-  // Gestion de la saisie dans le champ des mots-clés avec auto-complétion
+  // keyword field input management with auto-completion
   const handleKeywordInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeywordInput(e.target.value);
   };
 
-  // Ajouter un mot-clé à la sélection
+  // add keyword to selection
   const handleAddKeyword = (keyword: any) => {
     if (!selectedKeywords.find((k) => k.id === keyword.id)) {
       setSelectedKeywords([...selectedKeywords, keyword]);
     }
-    setKeywordInput(""); // Réinitialiser le champ de saisie
+    setKeywordInput("");
   };
 
-  // Supprimer un mot-clé sélectionné
+  // remove a selected keyword
   const handleRemoveKeyword = (id: number) => {
     setSelectedKeywords(selectedKeywords.filter((k) => k.id !== id));
   };
 
-  // Filtrer les suggestions de mots-clés basées sur la saisie de l'utilisateur
+  // keywords suggested depending on the input of user
   const filteredKeywords = keywords.filter(
     (keyword) =>
       keyword.name.toLowerCase().includes(keywordInput.toLowerCase()) &&
-      !selectedKeywords.find((k) => k.id === keyword.id) // Éviter de suggérer les mots-clés déjà sélectionnés
+      !selectedKeywords.find((k) => k.id === keyword.id) // avoid proposing keywords that have already been integrated
   );
 
   return (
@@ -80,7 +79,7 @@ const UploadFormPage: React.FC = () => {
           {state.message}
         </p>
       )}
-      <form action={formAction} className="py-5 flex flex-col gap-5">
+      <form action={formAction} className="py-5">
         {/* title */}
         <div className="w-full md:w-1/2 mb-6 md:mb-0">
           <label
@@ -105,28 +104,59 @@ const UploadFormPage: React.FC = () => {
           )}
         </div>
         {/* director */}
-        <div className="w-full md:w-1/2 mb-6 md:mb-0">
-          <label
-            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            htmlFor="director"
-          >
-            Réalisateur-ice
-          </label>
-          <input
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-            id="director"
-            type="text"
-            name="director"
-          />
-          {state?.errors?.director && (
-            <span
-              id="description-error"
-              className="text-red-500 text-xs italic"
-            >
-              {state.errors.director.join(",")}
-            </span>
-          )}
-        </div>
+        {/* <div className="w-full flex flex-col md:w-1/2 mb-6 md:mb-0 ">
+          <div className="uppercase text-gray-700 text-xs font-bold mb-2">
+            Réalisateur
+          </div>
+          <div className="flex flex-wrap gap-4 w-full">
+            {/* director first_name 
+            <div className="md:w-1/2">
+              <label
+                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                htmlFor="director_first_name"
+              >
+                Prénom
+              </label>
+              <input
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                id="director_first_name"
+                type="text"
+                name="director_first_name"
+              />
+              {state?.errors?.director_first_name && (
+                <span
+                  id="description-error"
+                  className="text-red-500 text-xs italic"
+                >
+                  {state.errors.director_first_name.join(",")}
+                </span>
+              )}
+            </div>
+            {/* director last_name 
+            <div className="relative md:w-1/2">
+              <label
+                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                htmlFor="director_last_name"
+              >
+                Nom
+              </label>
+              <input
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                id="director_last_name"
+                type="text"
+                name="director_last_name"
+              />
+              {state?.errors?.director_last_name && (
+                <span
+                  id="description-error"
+                  className="text-red-500 text-xs italic"
+                >
+                  {state.errors.director_last_name.join(",")}
+                </span>
+              )}
+            </div>
+          </div>
+        </div> */}
         {/* synopsis */}
         <div className="w-full md:w-1/2">
           <label
@@ -150,7 +180,7 @@ const UploadFormPage: React.FC = () => {
           )}
         </div>
         {/* release date */}
-        <div className="w-full md:w-1/5 mb-6 md:mb-0">
+        <div className="w-full md:w-1/5 mb-6 mt-3 md:mb-0">
           <label
             className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
             htmlFor="release_date"
@@ -173,7 +203,7 @@ const UploadFormPage: React.FC = () => {
           )}
         </div>
         {/* genre */}
-        <div className="w-full md:w-1/3 mb-6 md:mb-0">
+        <div className="w-full md:w-1/3 mt-3 mb-6 md:mb-0">
           <label
             className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
             htmlFor="genre_id"
@@ -206,7 +236,7 @@ const UploadFormPage: React.FC = () => {
           </div>
         </div>
         {/* keywords */}
-        <div className="w-full md:w-1/3 mb-6 md:mb-0">
+        <div className="w-full md:w-1/3 mt-3 mb-6 md:mb-0">
           <label
             className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
             htmlFor="keyword_id"
@@ -215,9 +245,16 @@ const UploadFormPage: React.FC = () => {
           </label>
 
           <div className="relative">
+            {/* <input
+              className="block appearance-none w-full bg-gray-200 text-gray-700 border py-2 px-3 pr-8 rounded leading-tight focus:outline-none focus:bg-white"
+              name="keyword_id"
+              value={selectedKeywords.map((keyword) => keyword.id).join(",")}
+              onChange={handleKeywordInputChange}
+              placeholder="Tapez pour rechercher des mots-clés"
+            /> */}
             <input
               className="block appearance-none w-full bg-gray-200 text-gray-700 border py-2 px-3 pr-8 rounded leading-tight focus:outline-none focus:bg-white"
-              type="text"
+              name="keyword_input" // Changer en un nom plus explicite
               value={keywordInput}
               onChange={handleKeywordInputChange}
               placeholder="Tapez pour rechercher des mots-clés"
@@ -237,6 +274,11 @@ const UploadFormPage: React.FC = () => {
                 ))}
               </ul>
             )}
+            <input
+              type="hidden"
+              name="keyword_id"
+              value={selectedKeywords.map((keyword) => keyword.id).join(",")}
+            />
           </div>
           {/* display selected keywords as tags*/}
           <div className="mt-3">
@@ -248,6 +290,7 @@ const UploadFormPage: React.FC = () => {
                 {keyword.name}
                 <button
                   type="button"
+                  name="keyword_id"
                   onClick={() => handleRemoveKeyword(keyword.id)}
                   className="ml-2 text-red-500"
                 >
@@ -258,7 +301,7 @@ const UploadFormPage: React.FC = () => {
           </div>
         </div>
         {/* image */}
-        <div className="w-full md:w-1/2">
+        <div className="w-full md:w-1/2 mt-3 mb-6">
           <label
             className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
             htmlFor="image_url"
@@ -278,8 +321,8 @@ const UploadFormPage: React.FC = () => {
             </span>
           )}
         </div>
+        <SubmitButton />{" "}
       </form>
-      <SubmitButton />
     </div>
   );
 };

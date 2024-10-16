@@ -27,7 +27,7 @@ export default async function Home() {
       `
     )
     .eq("movie_genres.genre_id", 13) // ID du genre "drame"
-    .range(0, 10);
+    .range(0, 15);
 
   // Récupérer les films de genre "comédie"
   const { data: comedyMovies, error: comedyError } = await supabase
@@ -43,7 +43,7 @@ export default async function Home() {
       `
     )
     .eq("movie_genres.genre_id", 15) // ID du genre "comédie"
-    .range(0, 10);
+    .range(0, 15);
 
   if (dramaError || comedyError) {
     return (
