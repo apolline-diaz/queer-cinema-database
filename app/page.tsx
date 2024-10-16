@@ -2,7 +2,7 @@ import Card from "@/app/components/card";
 import { supabase } from "@/lib/supabase";
 import { getImageUrl } from "@/utils";
 import Hero from "./components/hero";
-import Searchbar from "./components/searchbar";
+import Searchbar from "./components/searchbox";
 
 export const revalidate = 0;
 
@@ -11,7 +11,7 @@ export default async function Home() {
     .from("movies")
     .select(`id, title, image_url, description, release_date`)
     .eq("boost", true)
-    .range(0, 2);
+    .range(0, 1);
 
   // Récupérer les films de genre "drame"
   const { data: dramaMovies, error: dramaError } = await supabase
@@ -63,7 +63,7 @@ export default async function Home() {
   }
 
   return (
-    <main className="min-h-screen mx-auto max-w-[100rem]">
+    <main className="w-full">
       <div className="">
         <div className="w-full cover">
           {topMovies.map((movie) => (
@@ -77,8 +77,8 @@ export default async function Home() {
       </div>
 
       <div className="px-10 pb-5">
-        {/* Rangée de films de genre Drame */}
-        <h2 className="text-xl my-5">drame</h2>
+        {/* drama movies */}
+        <h2 className="text-xl my-5">Drame</h2>
         <div className="flex flex-row-1 overflow-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5">
           {dramaMovies.map((movie) => (
             <Card
@@ -91,8 +91,8 @@ export default async function Home() {
           ))}
         </div>
 
-        {/* Rangée de films de genre Comédie */}
-        <h2 className="text-xl my-5">comédie</h2>
+        {/* comedy movies */}
+        <h2 className="text-xl my-5">Comédie</h2>
         <div className="flex flex-row-1 overflow-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5">
           {comedyMovies.map((movie) => (
             <Card

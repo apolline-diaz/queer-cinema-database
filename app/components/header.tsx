@@ -3,24 +3,37 @@ import Link from "next/link";
 export default function Header() {
   return (
     <>
-      <div className="flex flex-rows items-center justify-between mx-5 p-5 gap-10">
+      <div className="flex flex-row items-between justify-between mx-5 p-5 gap-10">
         <Link href="/" className="text-xl">
-          movie diary
+          movie <span className="text-pink-400">diary</span>
         </Link>
-        <div className="flex justify-center items-center gap-10">
-          <ul className="">
+        <div className="flex flex-row items-center">
+          <ul className="flex flex-row gap-5">
             <li>
               <Link
-                href="/movies/upload"
+                href="/catalogue"
+                className="hover:underline underline-offset-8 "
+              >
+                Catalogue
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/upload"
                 className="hover:underline underline-offset-8"
               >
                 Ajouter un film
               </Link>
             </li>
+            <li>
+              <Link
+                href="/login"
+                className="hover:bg-pink-200 underline-offset-8 border border-black rounded-full p-2"
+              >
+                Connexion
+              </Link>
+            </li>
           </ul>
-          <Link href="/login" className="hover:underline underline-offset-8 ">
-            Connexion
-          </Link>
         </div>
       </div>
     </>
