@@ -90,6 +90,9 @@ const UploadFormPage: React.FC = () => {
 
   return (
     <div className="p-10">
+      <div className="tracking-wide text-xl mb-5">
+        Ajoutez un film au catalogue
+      </div>
       {state?.type === "error" && (
         <p id="title-error" className="text-red-500 text-xs italic">
           {state.message}

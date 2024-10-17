@@ -35,7 +35,7 @@ export default function Card({
     >
       <div className="bg-gray-953 rounded-sm overflow-hidden h-full flex flex-col justify-between">
         {/* Responsive width, full on small screens, fixed on larger ones */}
-        <div className="w-full md:w-[400px] lg:w-[400px] relative h-56 bg-center">
+        <div className="sm:w-[500px] md:w-[400px] lg:w-[400px] relative h-56 bg-center">
           <Image
             src={image_url}
             fill={true}
