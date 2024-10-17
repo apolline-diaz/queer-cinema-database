@@ -33,18 +33,19 @@ export default function Card({
         },
       }}
     >
-      <div className="max-w-lg bg bg-gray-953 rounded-sm overflow-hidden h-full flex flex-col justify-between">
-        <div className="relative h-56 w-[400px] bg-center">
+      <div className="bg-gray-953 rounded-sm overflow-hidden h-full flex flex-col justify-between">
+        {/* Responsive width, full on small screens, fixed on larger ones */}
+        <div className="w-full md:w-[400px] lg:w-[400px] relative h-56 bg-center">
           <Image
             src={image_url}
             fill={true}
             alt={title}
             style={{ objectFit: "cover" }}
           />
-          <div className="absolute bg-black bg-opacity-20 flex flex-col px-6 py-4 inset-0 text-white uppercase justify-end">
+          <div className="absolute inset-0 bg-black bg-opacity-20 flex flex-col px-6 py-4 text-white uppercase justify-end">
             <div className="text-xl font-semi-bold line-clamp-2">{title}</div>
             <p className="inline-block text-base">
-              <span className=" font-extralight text-gray-952 mr-2">
+              <span className="font-extralight text-gray-952 mr-2">
                 {release_date}
               </span>
             </p>
