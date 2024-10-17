@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 
 import { createClient } from "@/utils/supabase/server";
+import Link from "next/link";
 
 export default async function ProfilePage() {
   const supabase = createClient();
@@ -11,8 +12,16 @@ export default async function ProfilePage() {
   }
 
   return (
-    <div className="p-10">
-      <p>Hello {data.user.email}</p>
+    <div className="flex flex-col gap-5 p-10">
+      <h1>Hello {data.user.email}</h1>
+      <div className="">
+        <Link
+          href="/upload"
+          className="hover:bg-pink-200  border border-black rounded-full p-2"
+        >
+          Ajouter un film
+        </Link>
+      </div>
     </div>
   );
 }

@@ -24,14 +24,16 @@ export default async function Header() {
                 Catalogue
               </Link>
             </li>
-            <li>
-              <Link
-                href="/upload"
-                className="hover:underline underline-offset-8"
-              >
-                Ajouter un film
-              </Link>
-            </li>
+            {user && (
+              <li>
+                <Link
+                  href="/profile"
+                  className="hover:underline underline-offset-8"
+                >
+                  Profil
+                </Link>
+              </li>
+            )}
             {!user ? (
               <li>
                 <Link
