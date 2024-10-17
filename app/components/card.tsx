@@ -33,8 +33,8 @@ export default function Card({
         },
       }}
     >
-      <div className="max-w-lg bg bg-gray-953 rounded-sm overflow-hidden h-full flex flex-col justify-between">
-        <div className="relative h-56 w-[400px] bg-center">
+      <div className="w-full bg bg-gray-953 rounded-sm overflow-hidden h-full flex flex-col justify-between">
+        <div className="relative h-56 w-full bg-center">
           <Image
             src={image_url}
             fill={true}
