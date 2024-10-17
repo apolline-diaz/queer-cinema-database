@@ -93,7 +93,6 @@ export default async function Home() {
         {/* comedy movies */}
         <h2 className="text-xl my-5">Comédie</h2>
         <div className="flex flex-row-1 overflow-auto gap-5">
-
           {comedyMovies.map((movie) => (
             <Card
               directors={null}
