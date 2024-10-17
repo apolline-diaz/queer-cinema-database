@@ -2,7 +2,6 @@ import Card from "@/app/components/card";
 import { supabase } from "@/lib/supabase";
 import { getImageUrl } from "@/utils";
 import Hero from "./components/hero";
-import Searchbar from "./components/searchbox";
 
 export const revalidate = 0;
 
@@ -93,7 +92,7 @@ export default async function Home() {
 
         {/* comedy movies */}
         <h2 className="text-xl my-5">Comédie</h2>
-        <div className="flex flex-row-1 overflow-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5">
+        <div className="flex flex-row-1 overflow-auto gap-5">
           {comedyMovies.map((movie) => (
             <Card
               directors={null}
