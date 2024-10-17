@@ -2,15 +2,18 @@ import Link from "next/link";
 
 export default function Header() {
   return (
-    <footer className="footer bg-base-300 text-base-content p-10">
-      <nav className="flex justify-between">
+    <footer className="h-full footer bg-base-300 text-base-content p-10 b-0">
+      <nav className="flex justify-between mb-2">
         <Link href="/about" className="link link-hover">
-          A propos
+          À propos
         </Link>
         <Link href="/contact" className="link link-hover">
           Contact
         </Link>
       </nav>
+      <p className="font-light text-xs text-center">
+        © 2024 Movie Diary. Tous droits réservés.
+      </p>
     </footer>
   );
 }

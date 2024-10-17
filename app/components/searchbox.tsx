@@ -43,7 +43,7 @@ export default function Searchbox({
           .ilike("name", `%${search}%`); // search insensitive to breakage
 
         if (keywords && keywords.length > 0) {
-          const keywordIds = keywords.map((k) => k.id); // list of keywords id coressponding
+          const keywordIds = keywords.map((k) => k.id); // list of keywords id corresponding
 
           // get movies link to keywords found
           const { data: movieKeywords, error: movieKeywordError } =
