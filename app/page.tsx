@@ -1,4 +1,4 @@
-import Card from "@/app/components/card";
+import HomeCard from "@/app/components/home-card";
 import { supabase } from "@/lib/supabase";
 import { getImageUrl } from "@/utils";
 import Hero from "./components/hero";
@@ -80,7 +80,7 @@ export default async function Home() {
         <h2 className="text-xl my-5">Drame</h2>
         <div className="flex flex-row-1 overflow-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5">
           {dramaMovies.map((movie) => (
-            <Card
+            <HomeCard
               directors={null}
               description={""}
               key={`${movie.title}-${movie.id}`}
@@ -94,7 +94,7 @@ export default async function Home() {
         <h2 className="text-xl my-5">Comédie</h2>
         <div className="flex flex-row-1 overflow-auto gap-5">
           {comedyMovies.map((movie) => (
-            <Card
+            <HomeCard
               directors={null}
               description={""}
               key={`${movie.title}-${movie.id}`}

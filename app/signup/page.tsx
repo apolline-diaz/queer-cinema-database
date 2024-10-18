@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { login, signup } from "../login/actions";
+import { signup } from "../login/actions";
 
 export default function SignUpPage() {
   return (
@@ -25,7 +25,7 @@ export default function SignUpPage() {
             required
           />
         </div>
-        <div className="w-full justify-center flex flex-row-1 gap-4">
+        <div className="w-full justify-center flex flex-wrap gap-4">
           <button
             className="rounded-full border border-black bg-white hover:bg-pink-200 p-2 "
             formAction={signup}

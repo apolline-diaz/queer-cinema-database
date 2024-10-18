@@ -1,7 +1,12 @@
+"use client";
+
 import Link from "next/link";
-import { login, signup } from "./actions";
+import { login } from "./actions";
+import { useFormStatus } from "react-dom";
 
 export default function LoginPage() {
+  const { pending } = useFormStatus();
+
   return (
     <div className="justify-center items-center p-10 flex flex-col">
       <div className="w-full md:w-[500px] text-left border border-pink-200 p-10 rounded-md">
@@ -26,12 +31,13 @@ export default function LoginPage() {
               required
             />
           </div>
-          <div className="w-full justify-center flex flex-row-1 gap-4">
+          <div className="w-full justify-center flex flex-wrap gap-4">
             <button
               className="rounded-full border border-black bg-white hover:bg-pink-200 p-2 "
               formAction={login}
+              disabled={pending}
             >
-              Se connecter
+              {pending ? "Connexion..." : "Se connecter"}
             </button>
 
             <div className="items-center rounded-full bg-white hover:underline underline-offset-8 p-2">
