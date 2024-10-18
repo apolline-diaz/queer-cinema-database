@@ -138,7 +138,7 @@ export default async function Page({ params }: Props) {
           </div>
           <div className="font-bold flex items-center flex-wrap gap-2">
             Mots-clé
-            <p className="flex gap-2">
+            <p className="flex flex-wrap gap-2">
               {movie.keywords?.map((keyword) => (
                 <span
                   key={keyword.id}
