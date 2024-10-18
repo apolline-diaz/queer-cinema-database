@@ -106,7 +106,7 @@ export default async function Page({ params }: Props) {
             src={getImageUrl(movie.image_url)}
           />
           <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-30 w-full h-full text-white p-10 flex justify-between items-end">
-            <div className="flex flex-col">
+            <div className="flex flex-col ">
               <h2 className="text-3xl font-bold uppercase">{movie.title}</h2>
               <h2 className="text-lg font-light ">
                 {movie.directors
@@ -116,8 +116,8 @@ export default async function Page({ params }: Props) {
                   .join(", ")}
               </h2>
             </div>
-            <div className="flex flex-col font-light items-end justify-end">
-              <span>
+            <div className="flex flex-col font-light items-end justify-end text-right">
+              <span className="">
                 {movie.countries?.map((country) => country.name).join(", ")},{" "}
                 {movie.release_date}
               </span>

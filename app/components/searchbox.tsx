@@ -90,14 +90,14 @@ export default function Searchbox({
   return (
     <div className="w-full">
       <form>
-        <div className="w-full xs:w-1/2 flex flex-col gap-3 mb-5">
+        <div className="w-full xs:w-1/2 flex flex-col gap-3">
           <input
             className="appearance-none text-lg font-light block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
             id="title"
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Cherchez un mot-clé..."
+            placeholder="Tapez un mot-clé..."
           />
         </div>
       </form>

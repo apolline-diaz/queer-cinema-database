@@ -5,9 +5,6 @@ import Header from "./components/header";
 import Footer from "./components/footer";
 import { getCanonicalUrl } from "@/utils/index";
 
-// const nunitoDefaultFont = Nunito({subsets: ["latin"]});
-// const cuteFont = Josefin_Sans({subsets: ["latin"]});
-
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {

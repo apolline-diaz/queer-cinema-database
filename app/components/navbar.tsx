@@ -17,11 +17,13 @@ export default function Navbar({ user }: HeaderProps) {
   };
 
   return (
-    <div className="w-full fixed top-0 left-0 z-50 bg-white">
-      <div className="flex flex-row w-full items-between justify-between gap-10 border-b border-gray-400 p-5">
+    <div className="w-full fixed top-0 left-0 z-50 text-md bg-white">
+      <div className="flex flex-row w-full items-center justify-between gap-10 border-b border-gray-400 px-10 py-3">
         {/* Logo */}
         <Link href="/">
-          movie <span className="text-pink-400">diary</span>
+          <h2 className="text-xl xs:text-md">
+            movie <span className="text-pink-400">diary</span>
+          </h2>
         </Link>
 
         {/* mobile menu icon */}
@@ -32,9 +34,20 @@ export default function Navbar({ user }: HeaderProps) {
                 onClick={handleClick}
                 className="HAMBURGER-ICON space-y-2"
               >
-                <span className="block h-0.5 w-8 bg-gray-600"></span>
-                <span className="block h-0.5 w-8 bg-gray-600"></span>
-                <span className="block h-0.5 w-8 bg-gray-600"></span>
+                <svg
+                  data-testid="geist-icon"
+                  height="16"
+                  stroke-linejoin="round"
+                  viewBox="0 0 16 16"
+                  width="16"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M1 2H1.75H14.25H15V3.5H14.25H1.75H1V2ZM1 12.5H1.75H14.25H15V14H14.25H1.75H1V12.5ZM1.75 7.25H1V8.75H1.75H14.25H15V7.25H14.25H1.75Z"
+                    fill="currentColor"
+                  ></path>
+                </svg>{" "}
               </button>
 
               {/* mobile menu */}
@@ -49,7 +62,7 @@ export default function Navbar({ user }: HeaderProps) {
                   className="absolute top-8 right-8"
                 >
                   <svg
-                    className="h-8 w-8 text-gray-600"
+                    className="h-5 w-5 text-gray-black hover:text-pink-400"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -64,22 +77,22 @@ export default function Navbar({ user }: HeaderProps) {
 
                 {/* mobile navigation links */}
                 <ul className="flex flex-col items-center justify-center gap-5 min-h-[250px]">
-                  <li className="border-b border-gray-400">
+                  <li className="hover:underline underline-offset-8">
                     <Link href="/catalogue">Catalogue</Link>
                   </li>
                   {user && (
-                    <li className="border-b border-gray-400">
+                    <li className="hover:underline underline-offset-8">
                       <Link href="/profile">Profil</Link>
                     </li>
                   )}
                   {!user ? (
-                    <li className="border-b border-gray-400">
+                    <li className="hover:bg-black hover:text-white border border-black rounded-full px-2 py-1">
                       <Link href="/login">Connexion</Link>
                     </li>
                   ) : (
                     <li>
                       <form action={logout}>
-                        <button className="hover:bg-pink-200 underline-offset-8 border border-black rounded-full p-2">
+                        <button className="hover:bg-black hover:text-white border border-black rounded-full px-2 py-1">
                           Se déconnecter
                         </button>
                       </form>
@@ -90,13 +103,13 @@ export default function Navbar({ user }: HeaderProps) {
             </section>
 
             {/* desktop menu */}
-            <div className="items-between justify-between">
-              <ul className="DESKTOP-MENU hidden space-x-8 lg:flex">
-                <li>
+            <div className="">
+              <ul className="DESKTOP-MENU hidden space-x-8 lg:flex items-center">
+                <li className="hover:underline underline-offset-8">
                   <Link href="/catalogue">Catalogue</Link>
                 </li>
                 {user && (
-                  <li>
+                  <li className="hover:underline underline-offset-8">
                     <Link href="/profile">Profil</Link>
                   </li>
                 )}
@@ -104,7 +117,7 @@ export default function Navbar({ user }: HeaderProps) {
                   <li>
                     <Link
                       href="/login"
-                      className="hover:bg-pink-200 underline-offset-8 border border-black rounded-full p-2"
+                      className="hover:bg-black hover:text-white border border-black rounded-full px-2 py-1"
                     >
                       Connexion
                     </Link>
@@ -112,7 +125,7 @@ export default function Navbar({ user }: HeaderProps) {
                 ) : (
                   <li>
                     <form action={logout}>
-                      <button className="hover:bg-pink-200 underline-offset-8 border border-black rounded-full p-2">
+                      <button className="hover:bg-black hover:text-white border border-black rounded-full px-2 py-1">
                         Se déconnecter
                       </button>
                     </form>

@@ -18,7 +18,12 @@ const ACCEPTED_IMAGE_TYPES = [
 export async function addMovie(prevState: any, formData: FormData) {
   const schema = z.object({
     title: z.string().min(1, "Le titre est obligatoire"),
-    // director: z.string().min(1, "Lea réalisateur-ce est obligatoire"),
+    director_first_name: z
+      .string()
+      .min(1, "Le prénom du réalisateur est obligatoire"),
+    director_last_name: z
+      .string()
+      .min(1, "Le nom du réalisateur est obligatoire"),
     description: z
       .string()
       .min(5, "Le synopsis doit faire au moins 5 caractères"),
@@ -41,7 +46,8 @@ export async function addMovie(prevState: any, formData: FormData) {
 
   const validatedFields = schema.safeParse({
     title: formData.get("title"),
-    // director: formData.get("director"),
+    director_first_name: formData.get("director_first_name"),
+    director_last_name: formData.get("director_last_name"),
     description: formData.get("description"),
     release_date: Number(formData.get("release_date")),
     runtime: Number(formData.get("runtime")),
@@ -62,7 +68,8 @@ export async function addMovie(prevState: any, formData: FormData) {
 
   const {
     title,
-    // director,
+    director_first_name,
+    director_last_name,
     description,
     country_id,
     genre_id,
@@ -128,6 +135,38 @@ export async function addMovie(prevState: any, formData: FormData) {
       return {
         type: "error",
         message: "Erreur lors de l'insertion des pays",
+      };
+    }
+
+    //insert director
+    const { data: directorData, error: directorError } = await supabase
+      .from("directors")
+      .upsert({
+        first_name: director_first_name,
+        last_name: director_last_name,
+      })
+      .select("id");
+
+    if (directorError) {
+      return {
+        type: "error",
+        message: "Erreur lors de l'insertion du réalisateur",
+      };
+    }
+
+    const directorId = directorData[0]?.id;
+    // Link director to movie
+    const { error: movieDirectorError } = await supabase
+      .from("movie_directors")
+      .insert({
+        movie_id: movieId,
+        director_id: directorId,
+      });
+
+    if (movieDirectorError) {
+      return {
+        type: "error",
+        message: "Erreur lors de la liaison du réalisateur au film",
       };
     }
 

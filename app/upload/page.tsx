@@ -123,59 +123,54 @@ const UploadFormPage: React.FC = () => {
           )}
         </div>
         {/* director */}
-        {/* <div className="w-full flex flex-col md:w-1/2 mb-6 md:mb-0 ">
-          <div className="uppercase text-gray-700 text-xs font-bold mb-2">
-            Réalisateur
-          </div>
-          <div className="flex flex-wrap gap-4 w-full"> */}
         {/* director first_name */}
-        {/* <div className="md:w-1/2">
-              <label
-                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                htmlFor="director_first_name"
-              >
-                Prénom
-              </label>
-              <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                id="director_first_name"
-                type="text"
-                name="director_first_name"
-              />
-              {state?.errors?.director_first_name && (
-                <span
-                  id="description-error"
-                  className="text-red-500 text-xs italic"
-                >
-                  {state.errors.director_first_name.join(",")}
-                </span>
-              )}
-            </div> */}
+        <div className="w-full md:w-1/2 mb-6">
+          <label
+            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+            htmlFor="director_first_name"
+          >
+            Prénom du réalisateur
+          </label>
+          <input
+            className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+            id="director_first_name"
+            type="text"
+            name="director_first_name"
+          />
+          {state?.errors?.director_first_name && (
+            <span
+              id="director_first_name-error"
+              className="text-red-500 text-xs italic"
+            >
+              {state.errors.director_first_name.join(",")}
+            </span>
+          )}
+        </div>
+
         {/* director last_name */}
-        {/* <div className="relative md:w-1/2">
-              <label
-                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                htmlFor="director_last_name"
-              >
-                Nom
-              </label>
-              <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                id="director_last_name"
-                type="text"
-                name="director_last_name"
-              />
-              {state?.errors?.director_last_name && (
-                <span
-                  id="description-error"
-                  className="text-red-500 text-xs italic"
-                >
-                  {state.errors.director_last_name.join(",")}
-                </span>
-              )}
-            </div> */}
-        {/* </div>
-        </div> */}
+        <div className="w-full md:w-1/2 mb-6">
+          <label
+            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+            htmlFor="director_last_name"
+          >
+            Nom du réalisateur
+          </label>
+          <input
+            className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+            id="director_last_name"
+            type="text"
+            name="director_last_name"
+          />
+          {state?.errors?.director_last_name && (
+            <span
+              id="director_last_name-error"
+              className="text-red-500 text-xs italic"
+            >
+              {state.errors.director_last_name.join(",")}
+            </span>
+          )}
+        </div>
+
         {/* synopsis */}
         <div className="w-full md:w-1/2">
           <label
