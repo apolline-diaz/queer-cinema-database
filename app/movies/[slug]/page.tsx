@@ -151,13 +151,13 @@ export default async function Page({ params }: Props) {
             <p className="py-2 font-light">{movie.description}</p>
           </div>
           <div className="font-bold">
-            Genre
+            Genre :
             <span className="font-light p-2">
               {movie.genres?.map((genre) => genre.name).join(", ")}
             </span>
           </div>
           <div className="font-bold flex items-center flex-wrap gap-2">
-            Mots-clé
+            Mots-clé :
             <p className="flex flex-wrap gap-2">
               {movie.keywords?.map((keyword) => (
                 <span
