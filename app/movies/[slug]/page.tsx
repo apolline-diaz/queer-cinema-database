@@ -85,7 +85,7 @@ export default async function Page({ params }: Props) {
   const { data: movie, error } = await supabase
     .from("movies")
     .select(
-      "id, title, description, image_url, release_date, runtime, directors(id, first_name, last_name), genres(id, name), keywords(id, name), countries(id, name)"
+      "id, title, director, country, description, image_url, release_date, runtime, directors(id, first_name, last_name), genres(id, name), keywords(id, name), countries(id, name)"
     )
     .eq("id", params.slug)
     .single();
@@ -97,6 +97,17 @@ export default async function Page({ params }: Props) {
   if (!movie) {
     return <div>Film introuvable</div>;
   }
+
+  const directorName = movie.directors?.length
+    ? movie.directors
+        .map((director) => `${director.first_name} ${director.last_name}`)
+        .join(", ")
+    : movie.director; // Utilise la colonne 'director' si la relation n'existe pas
+
+  // Logique pour récupérer le pays
+  const countryName = movie.countries?.length
+    ? movie.countries.map((country) => country.name).join(", ")
+    : movie.country; // Utilise la colonne 'country' si la relation n'existe pas
 
   console.log(movie);
 
@@ -115,18 +126,11 @@ export default async function Page({ params }: Props) {
           <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-30 w-full h-full text-white p-10 flex justify-between items-end">
             <div className="flex flex-col ">
               <h2 className="text-3xl font-bold uppercase">{movie.title}</h2>
-              <h2 className="text-lg font-light ">
-                {movie.directors
-                  ?.map(
-                    (director) => `${director.first_name} ${director.last_name}`
-                  )
-                  .join(", ")}
-              </h2>
+              <h2 className="text-lg font-light ">{directorName}</h2>
             </div>
             <div className="flex flex-col font-light items-end justify-end text-right">
               <span className="">
-                {movie.countries?.map((country) => country.name).join(", ")},{" "}
-                {movie.release_date}
+                {countryName}, {movie.release_date}
               </span>
               <span>{movie.runtime}&#x27;</span>
             </div>
