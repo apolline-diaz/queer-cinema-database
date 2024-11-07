@@ -22,7 +22,9 @@ export default function Catalogue() {
   return (
     <div className="h-full w-full justify-center items-center">
       <div className="px-10">
-        <div className="tracking-wide text-xl py-5">Recherche par mot-clé</div>
+        <div className="tracking-wide text-xl pt-10 py-5">
+          Recherche par mot-clé
+        </div>
         <Searchbox onResults={handleSearchResults} />
       </div>
 
