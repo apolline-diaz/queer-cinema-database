@@ -153,6 +153,7 @@ export default async function Home() {
           ))}
         </div>
 
+
         {/* documentary movies */}
         <h2 className="text-xl my-5">Documentaire</h2>
         <div className="flex flex-row-1 overflow-auto gap-5">
@@ -167,7 +168,7 @@ export default async function Home() {
           ))}
         </div>
 
-        {/* documentary movies */}
+        {/* nineties movies */}
         <h2 className="text-xl my-5">Années 90</h2>
         <div className="flex flex-row-1 overflow-auto gap-5">
           {ninetiesMovies.map((movie) => (

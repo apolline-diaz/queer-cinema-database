@@ -86,6 +86,7 @@ export default async function Page({ params }: Props) {
     .from("movies")
     .select(
       "id, title, director, description, image_url, release_date, runtime, directors(id, name), genres(id, name), keywords(id, name), countries(id, name)"
+
     )
     .eq("id", params.slug)
     .single();
@@ -121,9 +122,8 @@ export default async function Page({ params }: Props) {
             </div>
             <div className="flex flex-col font-light items-end justify-end text-right">
               <span className="">
-                {movie.countries?.map((country) => country.name).join(", ")},{" "}
-                {movie.release_date}
-              </span>
+ {movie.countries?.map((country) => country.name).join(", ")},{" "}
+                {movie.release_date}              </span>
               <span>{movie.runtime}&#x27;</span>
             </div>
           </div>
