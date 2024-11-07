@@ -53,7 +53,7 @@
 //       const { data: movieData, error: movieError } = await supabase
 //         .from("movies")
 //         .select(
-//           "id, title, description, image_url, release_date, runtime, directors(id, first_name, last_name), genres(id, name, created_at), keywords(id, name, created_at), countries(id, name)"
+//           "id, title, description, image_url, release_date, runtime, directors(id, name), genres(id, name, created_at), keywords(id, name, created_at), countries(id, name)"
 //         )
 //         .eq("id", params.slug)
 //         .single();
@@ -207,7 +207,7 @@
 //           <ul className="appearance-none block w-full bg-gray-200 text-gray-700  font-light capitalize border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white">
 //             {movie.directors.map((director) => (
 //               <li key={director.id}>
-//                 {director.first_name} {director.last_name}
+//                 {director.name}
 //               </li>
 //             ))}
 //           </ul>

@@ -123,50 +123,26 @@ const UploadFormPage: React.FC = () => {
           )}
         </div>
         {/* director */}
-        {/* director first_name */}
+        {/* director name */}
         <div className="w-full md:w-1/2 mb-6">
           <label
             className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            htmlFor="director_first_name"
+            htmlFor="director_name"
           >
-            Prénom du réalisateur
+            Réalisateur-ice
           </label>
           <input
             className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-            id="director_first_name"
+            id="director_name"
             type="text"
-            name="director_first_name"
+            name="director_name"
           />
-          {state?.errors?.director_first_name && (
+          {state?.errors?.director_name && (
             <span
-              id="director_first_name-error"
+              id="director_name-error"
               className="text-red-500 text-xs italic"
             >
-              {state.errors.director_first_name.join(",")}
-            </span>
-          )}
-        </div>
-
-        {/* director last_name */}
-        <div className="w-full md:w-1/2 mb-6">
-          <label
-            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            htmlFor="director_last_name"
-          >
-            Nom du réalisateur
-          </label>
-          <input
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-            id="director_last_name"
-            type="text"
-            name="director_last_name"
-          />
-          {state?.errors?.director_last_name && (
-            <span
-              id="director_last_name-error"
-              className="text-red-500 text-xs italic"
-            >
-              {state.errors.director_last_name.join(",")}
+              {state.errors.director_name.join(",")}
             </span>
           )}
         </div>

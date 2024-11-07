@@ -59,6 +59,21 @@ export default async function Home() {
     .eq("movie_genres.genre_id", 9) // id for comedy genre
     .range(0, 10);
 
+  const { data: ninetiesMovies } = await supabase
+    .from("movies")
+    .select(
+      `
+      id, 
+      title, 
+      image_url, 
+      release_date,
+      genres:movie_genres!inner(genres(name))
+    `
+    )
+    .gte("release_date", "1990")
+    .lte("release_date", "2000")
+    .range(0, 10);
+
   // const { data: serieMovies, error: serieMoviesError } = await supabase
   //   .from("movies")
   //   .select(
@@ -85,13 +100,15 @@ export default async function Home() {
     );
   }
 
-  if (!dramaMovies || !comedyMovies || !documentaryMovies) {
+  if (!dramaMovies || !comedyMovies || !documentaryMovies || !ninetiesMovies) {
     return <p>Films introuvables</p>;
   }
 
   if (!topMovies) {
     return <p>Films boostés introuvables</p>;
   }
+
+  console.log(typeof dramaMovies);
 
   return (
     <main className="w-full">
@@ -140,6 +157,20 @@ export default async function Home() {
         <h2 className="text-xl my-5">Documentaire</h2>
         <div className="flex flex-row-1 overflow-auto gap-5">
           {documentaryMovies.map((movie) => (
+            <HomeCard
+              directors={null}
+              description={""}
+              key={`${movie.title}-${movie.id}`}
+              {...movie}
+              image_url={getImageUrl(movie.image_url)}
+            />
+          ))}
+        </div>
+
+        {/* documentary movies */}
+        <h2 className="text-xl my-5">Années 90</h2>
+        <div className="flex flex-row-1 overflow-auto gap-5">
+          {ninetiesMovies.map((movie) => (
             <HomeCard
               directors={null}
               description={""}

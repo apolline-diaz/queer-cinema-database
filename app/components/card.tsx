@@ -5,8 +5,7 @@ interface CardProps {
   id: number;
   title: string;
   directors: {
-    first_name: string;
-    last_name: string;
+    name: string;
   } | null;
   description: string;
   release_date: string;
