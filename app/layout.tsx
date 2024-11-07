@@ -28,8 +28,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} min-h-screen flex flex-col`}>
-        <Header />
-        <main className="flex-grow">{children}</main>
+        <div className="mb-10">
+          <Header />
+        </div>
+        <main className="">{children}</main>
         <div className="mt-auto">
           <Footer />
         </div>

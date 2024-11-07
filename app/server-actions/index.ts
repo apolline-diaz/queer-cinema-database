@@ -18,12 +18,9 @@ const ACCEPTED_IMAGE_TYPES = [
 export async function addMovie(prevState: any, formData: FormData) {
   const schema = z.object({
     title: z.string().min(1, "Le titre est obligatoire"),
-    director_first_name: z
+    director_name: z
       .string()
       .min(1, "Le prénom du réalisateur est obligatoire"),
-    director_last_name: z
-      .string()
-      .min(1, "Le nom du réalisateur est obligatoire"),
     description: z
       .string()
       .min(5, "Le synopsis doit faire au moins 5 caractères"),
@@ -46,8 +43,7 @@ export async function addMovie(prevState: any, formData: FormData) {
 
   const validatedFields = schema.safeParse({
     title: formData.get("title"),
-    director_first_name: formData.get("director_first_name"),
-    director_last_name: formData.get("director_last_name"),
+    director_name: formData.get("director_name"),
     description: formData.get("description"),
     release_date: Number(formData.get("release_date")),
     runtime: Number(formData.get("runtime")),
@@ -68,8 +64,7 @@ export async function addMovie(prevState: any, formData: FormData) {
 
   const {
     title,
-    director_first_name,
-    director_last_name,
+    director_name,
     description,
     country_id,
     genre_id,
@@ -142,8 +137,7 @@ export async function addMovie(prevState: any, formData: FormData) {
     const { data: directorData, error: directorError } = await supabase
       .from("directors")
       .upsert({
-        first_name: director_first_name,
-        last_name: director_last_name,
+        name: director_name,
       })
       .select("id");
 
