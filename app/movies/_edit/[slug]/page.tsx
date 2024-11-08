@@ -54,7 +54,6 @@
 //         .from("movies")
 //         .select(
 //           "id, title, description, image_url, release_date, runtime, directors(id, name), genres(id, name, created_at), keywords(id, name, created_at), countries(id, name)"
-
 //         )
 //         .eq("id", params.slug)
 //         .single();
@@ -209,7 +208,6 @@
 //             {movie.directors.map((director) => (
 //               <li key={director.id}>
 //                 {director.name}
-
 //               </li>
 //             ))}
 //           </ul>
