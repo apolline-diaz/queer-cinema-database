@@ -1,4 +1,4 @@
-import { getCanonicalUrl } from "@/utils";
+import { getCanonicalUrl } from "@/utils/index";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

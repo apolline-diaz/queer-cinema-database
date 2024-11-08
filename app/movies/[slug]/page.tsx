@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { createClient } from "@supabase/supabase-js";
-import { getImageUrl, getCanonicalUrl } from "@/utils/index";
+import { getImageUrl } from "@/utils/get-image-url";
+import { getCanonicalUrl } from "@/utils/index";
 import { Metadata, ResolvingMetadata } from "next";
 import Link from "next/link";
 

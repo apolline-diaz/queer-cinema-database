@@ -1,5 +1,5 @@
 import HomeCard from "@/app/components/home-card";
-import { getImageUrl } from "@/utils";
+import { getImageUrl } from "@/utils/get-image-url";
 import Hero from "./components/hero";
 import {
   getMoviesByGenre,

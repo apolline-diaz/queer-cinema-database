@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Card from "@/app/components/card";
 import Searchbox from "@/app/components/searchbox";
-import { getImageUrl } from "@/utils";
+import { getImageUrl } from "@/utils/get-image-url";
 
 interface Movie {
   id: number;

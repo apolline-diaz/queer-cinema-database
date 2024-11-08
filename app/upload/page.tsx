@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useFormState } from "react-dom";
-import { addMovie } from "@/app/server-actions";
+import { addMovie } from "@/app/server-actions/add-movie";
 import { SubmitButton } from "@/app/components/submit-button";
 import {
   getGenres,
