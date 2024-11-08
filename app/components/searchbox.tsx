@@ -28,11 +28,13 @@ export default function Searchbox({
         // Si aucun des champs n'est rempli, on retourne tous les films
         const results = await getMoviesByTitle(""); // Récupérer tous les films
         onResults(results);
+
       }
     }, 500); // Délai de 500ms après la dernière modification
 
     return () => clearTimeout(delayDebounceFn); // Nettoyage de la fonction lors du démontage
   }, [titleSearch, keywordSearch, onResults]);
+
 
   return (
     <div className="w-full">
@@ -53,6 +55,7 @@ export default function Searchbox({
             value={keywordSearch}
             onChange={(e) => setKeywordSearch(e.target.value)}
             placeholder="Tapez un mot-clé"
+
           />
         </div>
       </form>

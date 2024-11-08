@@ -86,6 +86,7 @@ export default async function Page({ params }: Props) {
     .from("movies")
     .select(
       "id, title, director, description, image_url, release_date, runtime, directors(id, name), genres(id, name), keywords(id, name), countries(id, name)"
+
     )
     .eq("id", params.slug)
     .single();
