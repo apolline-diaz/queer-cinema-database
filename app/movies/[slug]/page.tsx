@@ -119,13 +119,6 @@ export default async function Page({ params }: Props) {
                 {movie.directors?.map((director) => director.name).join(", ")}
               </h2>
             </div>
-            <div className="flex flex-col font-light items-end justify-end text-right">
-              <span className="">
-                {movie.countries?.map((country) => country.name).join(", ")},{" "}
-                {movie.release_date}
-              </span>
-              <span>{movie.runtime}&#x27;</span>
-            </div>
           </div>
         </div>
 
@@ -138,8 +131,13 @@ export default async function Page({ params }: Props) {
         </div>
 
         <div className="p-10 gap-3 flex flex-col">
+          <div className="flex flex-col font-light">
+            <span className="font-semibold">
+              {movie.countries?.map((country) => country.name).join(", ")},{" "}
+              {movie.release_date}, {movie.runtime}&#x27;
+            </span>
+          </div>
           <div className="font-bold ">
-            Synopsis
             <p className="py-2 font-light">{movie.description}</p>
           </div>
           <div className="font-bold">

@@ -4,7 +4,11 @@ import { useState, useEffect } from "react";
 import { useFormState } from "react-dom";
 import { addMovie } from "@/app/server-actions";
 import { SubmitButton } from "@/app/components/submit-button";
-import { supabase } from "@/lib/supabase";
+import {
+  getGenres,
+  getCountries,
+  getKeywords,
+} from "@/utils/get-data-to-upload-movie";
 
 const initialState = {
   type: "",
@@ -21,46 +25,17 @@ const UploadFormPage: React.FC = () => {
   const [keywordInput, setKeywordInput] = useState("");
 
   useEffect(() => {
-    const fetchGenres = async () => {
-      const { data, error } = await supabase.from("genres").select("id, name");
-      if (error) {
-        console.error("Erreur lors de la récupération des genres :", error);
-      } else {
-        setGenres(data);
-      }
+    const fetchData = async () => {
+      const [genresData, countriesData, keywordsData] = await Promise.all([
+        getGenres(),
+        getCountries(),
+        getKeywords(),
+      ]);
+      setGenres(genresData);
+      setCountries(countriesData);
+      setKeywords(keywordsData);
     };
-
-    fetchGenres();
-  }, []);
-
-  useEffect(() => {
-    const fetchCountries = async () => {
-      const { data, error } = await supabase
-        .from("countries")
-        .select("id, name");
-      if (error) {
-        console.error("Erreur lors de la récupération des pays :", error);
-      } else {
-        setCountries(data);
-      }
-    };
-
-    fetchCountries();
-  }, []);
-
-  useEffect(() => {
-    const fetchKeywords = async () => {
-      const { data, error } = await supabase
-        .from("keywords")
-        .select("id, name");
-      if (error) {
-        console.error("Erreur lors de la récupération des mots-clés :", error);
-      } else {
-        setKeywords(data);
-      }
-    };
-
-    fetchKeywords();
+    fetchData();
   }, []);
 
   // keyword field input management with auto-completion
