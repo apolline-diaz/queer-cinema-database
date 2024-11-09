@@ -17,7 +17,10 @@ const ACCEPTED_IMAGE_TYPES = [
 
 export async function addMovie(prevState: any, formData: FormData) {
   const schema = z.object({
-    title: z.string().min(1, "Le titre est obligatoire"),
+    title: z
+      .string()
+      .min(1, "Le titre est obligatoire")
+      .regex(/^[\s\S]*$/, "Le titre contient des caractères non valides"), // accepte tous les caractères
     director_name: z
       .string()
       .min(1, "Le prénom du réalisateur est obligatoire"),
@@ -73,6 +76,7 @@ export async function addMovie(prevState: any, formData: FormData) {
     release_date,
     image_url,
   } = validatedFields.data;
+
   console.log(validatedFields.data);
 
   try {
