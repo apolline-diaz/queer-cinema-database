@@ -26,7 +26,6 @@ export default async function Home() {
       await getMoviesByGenre(9);
     if (documentaryError) throw new Error(documentaryError.message);
 
-
     const { data: ninetiesMovies, error: ninetiesError } =
       await getMoviesByYearRange("1990", "1999");
     if (ninetiesError) throw new Error(ninetiesError.message);
@@ -38,9 +37,8 @@ export default async function Home() {
       !documentaryMovies ||
       !ninetiesMovies
     ) {
-      return <p>Films introuvables</p>;
+      return <p>Aucun film trouvé</p>;
     }
-
 
     return (
       <main className="w-full">
