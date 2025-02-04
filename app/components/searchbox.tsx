@@ -28,34 +28,31 @@ export default function Searchbox({
         // Si aucun des champs n'est rempli, on retourne tous les films
         const results = await getMoviesByTitle(""); // Récupérer tous les films
         onResults(results);
-
       }
     }, 500); // Délai de 500ms après la dernière modification
 
     return () => clearTimeout(delayDebounceFn); // Nettoyage de la fonction lors du démontage
   }, [titleSearch, keywordSearch, onResults]);
 
-
   return (
-    <div className="w-full">
+    <div className="w-full ">
       <form>
         <div className="w-full xs:w-1/2 flex flex-col gap-3">
           <input
-            className="appearance-none text-lg font-light block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
+            className="appearance-none text-md font-light block w-full bg-neutral-950 border-b border-b-white text-gray-700 py-3 leading-tight focus:outline-none "
             id="title"
             type="text"
             value={titleSearch}
             onChange={(e) => setTitleSearch(e.target.value)}
-            placeholder="Tapez un titre"
+            placeholder="Entrez un titre"
           />
           <input
-            className="appearance-none text-lg font-light block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
+            className="appearance-none text-md font-light block w-full bg-neutral-950 border-b border-b-white text-gray-700 py-3 leading-tight focus:outline-none "
             id="keyword"
             type="text"
             value={keywordSearch}
             onChange={(e) => setKeywordSearch(e.target.value)}
-            placeholder="Tapez un mot-clé"
-
+            placeholder="Entrez un mot-clé"
           />
         </div>
       </form>

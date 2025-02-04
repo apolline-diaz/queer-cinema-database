@@ -24,18 +24,18 @@ export default function ListCard({ id, title, image_url }: ListCardProps) {
         }}
       >
         <div className="bg-gray-953 rounded-sm overflow-hidden h-full flex flex-col justify-between">
-          <div className="w-full relative h-56 bg-center">
+          <div className="w-full relative h-48 bg-center">
             <Image
               src={image_url}
               fill={true}
               alt={title}
-              style={{ objectFit: "cover" }}
+              className="object-cover transform transition-transform duration-700 ease-in-out group-hover:scale-110"
               onError={(e) => {
                 e.currentTarget.src = "https://via.placeholder.com/640x360";
               }}
             />
             <div className="absolute inset-0 bg-black bg-opacity-20 flex flex-col p-4 text-white uppercase justify-end">
-              <div className="text-xl font-semi-bold line-clamp-2">{title}</div>
+              <div className="text-xl font-semibold line-clamp-2">{title}</div>
             </div>
           </div>
         </div>

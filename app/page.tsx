@@ -41,7 +41,7 @@ export default async function Home() {
     }
 
     return (
-      <main className="w-full">
+      <main className="w-full ">
         <div className="">
           <div className="w-full cover">
             {topMovies.map((movie) => (
@@ -56,7 +56,7 @@ export default async function Home() {
 
         <div className="px-10 pb-5">
           {/* drama movies */}
-          <h2 className="text-xl my-5">Drame</h2>
+          <h2 className="text-xl my-5 text-rose-500">Drame</h2>
           <div className="flex flex-row-1 overflow-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5">
             {dramaMovies.map((movie) => (
               <HomeCard
@@ -70,7 +70,7 @@ export default async function Home() {
           </div>
 
           {/* comedy movies */}
-          <h2 className="text-xl my-5">Comédie</h2>
+          <h2 className="text-xl my-5 text-rose-500">Comédie</h2>
           <div className="flex flex-row-1 overflow-auto gap-5">
             {comedyMovies.map((movie) => (
               <HomeCard
@@ -84,7 +84,7 @@ export default async function Home() {
           </div>
 
           {/* documentary movies */}
-          <h2 className="text-xl my-5">Documentaire</h2>
+          <h2 className="text-xl my-5 text-rose-500">Documentaire</h2>
           <div className="flex flex-row-1 overflow-auto gap-5">
             {documentaryMovies.map((movie) => (
               <HomeCard
@@ -98,7 +98,7 @@ export default async function Home() {
           </div>
 
           {/* nineties movies */}
-          <h2 className="text-xl my-5">Années 90</h2>
+          <h2 className="text-xl my-5 text-rose-500">Années 90</h2>
           <div className="flex flex-row-1 overflow-auto gap-5">
             {ninetiesMovies.map((movie) => (
               <HomeCard

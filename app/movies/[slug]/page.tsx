@@ -86,7 +86,6 @@ export default async function Page({ params }: Props) {
     .from("movies")
     .select(
       "id, title, director, description, image_url, release_date, runtime, directors(id, name), genres(id, name), keywords(id, name), countries(id, name)"
-
     )
     .eq("id", params.slug)
     .single();
@@ -103,7 +102,7 @@ export default async function Page({ params }: Props) {
 
   return (
     <>
-      <div className="w-full mx-auto min-h-screen">
+      <div className="w-full text-white mx-auto min-h-screen">
         <div className="h-96 relative">
           <Image
             className=""
@@ -125,7 +124,7 @@ export default async function Page({ params }: Props) {
 
         <div className="absolute top-20 right-4">
           <Link href={`/movies/edit/${movie.id}`}>
-            <button className="bg-pink-400 text-white px-4 py-2 rounded-md hover:bg-pink-600">
+            <button className="bg-gradient-to-r from-rose-500 to-red-500 text-white px-4 py-2 rounded-md hover:from-rose-600  hover:to-red-600">
               Modifier
             </button>
           </Link>
@@ -133,30 +132,41 @@ export default async function Page({ params }: Props) {
 
         <div className="p-10 gap-3 flex flex-col">
           <div className="flex flex-col font-light">
-            <span className="font-semibold">
+            <span className="font-semibold text-rose-500">
               {movie.countries?.map((country) => country.name).join(", ")},{" "}
               {movie.release_date}, {movie.runtime}&#x27;
             </span>
           </div>
-          <div className="font-bold ">
-            <p className="py-2 font-light">{movie.description}</p>
-          </div>
           <div className="font-bold">
-            Genre :
-            <span className="font-light p-2">
-              {movie.genres?.map((genre) => genre.name).join(", ")}
-            </span>
+            {/* Genre : */}
+            {movie?.genres?.length > 0 && (
+              <span className="font-light text-rose-500 pr-2">
+                {movie.genres?.map((genre) => genre.name).join(", ")}
+              </span>
+            )}
           </div>
+          <p className="py-2 font-light">{movie.description}</p>
           <div className="font-bold flex items-center flex-wrap gap-2">
-            Mots-clé :
+            {/* Mots-clé : */}
             <p className="flex flex-wrap gap-2">
               {movie.keywords?.map((keyword) => (
-                <span
+                <Link
                   key={keyword.id}
-                  className="font-light text-sm rounded-full border border-black p-1.5"
+                  href={`/catalogue?keyword=${encodeURIComponent(
+                    keyword.name
+                  )}`}
                 >
-                  {keyword.name}
-                </span>
+                  <span
+                    key={keyword.id}
+                    className="font-light text-sm rounded-full border border-rose-500 text-rose-500 shadow-md px-2 mr-1 py-1
+                  hover:bg-rose-500 hover:text-white hover:border-none hover:cursor-pointer"
+                    // className="font-light text-sm rounded-full
+                    // bg-gradient-to-b from-rose-600 to-rose-700 shadow-md p-1.5
+                    // hover:from-rose-700 hover:to-rose-800 hover:brightness-90 hover:cursor-pointer transition-all duration-300"
+                  >
+                    {keyword.name}
+                  </span>{" "}
+                </Link>
               ))}
             </p>
           </div>

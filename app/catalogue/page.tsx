@@ -20,9 +20,11 @@ export default function Catalogue() {
   };
 
   return (
-    <div className="h-full w-full justify-center items-center">
+    <div className="h-full w-full justify-center items-center text-white">
       <div className="px-10">
-        <div className="tracking-wide text-xl pt-10 py-5">Recherche</div>
+        <div className="tracking-wide text-xl pt-10 py-5 text-rose-500">
+          Recherche
+        </div>
         <Searchbox onResults={handleSearchResults} />
       </div>
 

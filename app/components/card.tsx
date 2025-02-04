@@ -37,27 +37,22 @@ export default function Card({
         },
       }}
     >
-      <div className="bg-gray-953 rounded-sm overflow-hidden h-full flex flex-col justify-between">
-        {/* Responsive width, full on small screens, fixed on larger ones */}
-        <div className="w-full relative h-56 bg-center">
+      <div className="group overflow-hidden flex flex-col items-left transition-transform">
+        <div className="relative w-full h-48 overflow-hidden ">
           <Image
             src={image_url}
             fill={true}
             alt={title}
-            style={{ objectFit: "cover" }}
+            className="object-cover transform transition-transform duration-700 ease-in-out group-hover:scale-110"
             onError={(e) => {
-              e.currentTarget.src = "https://via.placeholder.com/640x360"; // Image de remplacement
+              e.currentTarget.src = "https://via.placeholder.com/640x360";
             }}
           />
-          <div className="absolute inset-0 bg-black bg-opacity-20 flex flex-col p-4 text-white uppercase justify-end">
-            <div className="text-xl font-semi-bold line-clamp-2">{title}</div>
-            <p className="inline-block text-base">
-              <span className="font-extralight text-gray-952 mr-2">
-                {release_date}
-              </span>
-            </p>
-          </div>
         </div>
+      </div>
+      <div className="text-left text-white mt-4">
+        <div className="text-md font-semibold uppercase">{title}</div>
+        <p className="text-sm text-gray-300">{release_date}</p>
       </div>
     </Link>
   );

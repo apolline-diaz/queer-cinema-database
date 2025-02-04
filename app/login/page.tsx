@@ -33,14 +33,14 @@ export default function LoginPage() {
           </div>
           <div className="w-full justify-center flex flex-wrap gap-4">
             <button
-              className="rounded-full border border-black bg-white hover:bg-pink-200 p-2 "
+              className="rounded-full border border-black  hover:text-rose-500 p-2 "
               formAction={login}
               disabled={pending}
             >
               {pending ? "Connexion..." : "Se connecter"}
             </button>
 
-            <div className="items-center rounded-full bg-white hover:underline underline-offset-8 p-2">
+            <div className="items-center rounded-full  hover:underline underline-offset-8 p-2">
               <Link href="/signup">Pas encore inscrit-e?</Link>
             </div>
           </div>

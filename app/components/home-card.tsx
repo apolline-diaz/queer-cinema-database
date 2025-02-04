@@ -32,23 +32,21 @@ export default function HomeCard({
         },
       }}
     >
-      <div className="bg-gray-953 rounded-sm overflow-hidden h-full flex flex-col justify-between">
+      <div className="group bg-gray-950 overflow-hidden h-full flex flex-col justify-between">
         {/* Responsive width, full on small screens, fixed on larger ones */}
-        <div className="w-[300px] xs:w-[300px] sm:w-[400px] md:w-[500px] lg:w-[500px] relative h-56 bg-center">
+        <div className="w-[300px] relative h-48 bg-center">
           <Image
             src={image_url}
             fill={true}
             alt={title}
-            style={{ objectFit: "cover" }}
+            className="object-cover transform transition-transform duration-700 ease-in-out group-hover:scale-110"
           />
-          <div className="absolute inset-0 bg-black bg-opacity-20 flex flex-col px-6 py-4 text-white uppercase justify-end">
-            <div className="text-xl font-semi-bold line-clamp-2">{title}</div>
-            <p className="inline-block text-base">
-              <span className="font-extralight text-gray-952 mr-2">
-                {release_date}
-              </span>
-            </p>
+        </div>
+        <div className="text-left text-white mt-4">
+          <div className="text-md font-semibold uppercase truncate">
+            {title}
           </div>
+          <p className="text-sm text-gray-300">{release_date}</p>
         </div>
       </div>
     </Link>
