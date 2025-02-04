@@ -27,7 +27,7 @@ export default function SignUpPage() {
         </div>
         <div className="w-full justify-center flex flex-wrap gap-4">
           <button
-            className="rounded-full border border-black bg-white hover:bg-pink-200 p-2 "
+            className="rounded-full border border-black hover:text-rose-500 p-2 "
             formAction={signup}
           >
             Inscrivez-vous
