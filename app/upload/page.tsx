@@ -65,8 +65,8 @@ const UploadFormPage: React.FC = () => {
 
   return (
     <div className="p-10">
-      <div className="tracking-wide text-xl mb-5">
-        Ajoutez un film au catalogue
+      <div className="tracking-wide text-rose-500 text-xl mb-5">
+        Ajouter un film au catalogue
       </div>
       {state?.type === "error" && (
         <p id="title-error" className="text-red-500 text-xs italic">
@@ -77,16 +77,17 @@ const UploadFormPage: React.FC = () => {
         {/* title */}
         <div className="w-full md:w-1/2 mb-6 md:mb-0">
           <label
-            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+            className="block tracking-wide text-white text-sm mb-2"
             htmlFor="title"
           >
             Titre
           </label>
           <input
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+            className="appearance-none block w-full bg-neutral-950 border-b border-b-white text-white font-light text-sm py-3 mb-3 leading-tight focus:outline-none"
             id="title"
             type="text"
             name="title"
+            placeholder="D.E.B.S"
           />
           {state?.errors?.title && (
             <span
@@ -98,19 +99,19 @@ const UploadFormPage: React.FC = () => {
           )}
         </div>
         {/* director */}
-        {/* director name */}
         <div className="w-full md:w-1/2 mb-6">
           <label
-            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+            className="block tracking-wide text-white text-sm mb-2"
             htmlFor="director_name"
           >
             Réalisateur-ice
           </label>
           <input
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+            className="appearance-none block w-full bg-neutral-950 border-b border-b-white text-white font-light text-sm py-3 mb-3 leading-tight focus:outline-none "
             id="director_name"
             type="text"
             name="director_name"
+            placeholder="Angela Robinson"
           />
           {state?.errors?.director_name && (
             <span
@@ -123,17 +124,18 @@ const UploadFormPage: React.FC = () => {
         </div>
 
         {/* synopsis */}
-        <div className="w-full md:w-1/2">
+        <div className="w-full md:w-1/2 mb-6 mt-3">
           <label
-            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+            className="block  tracking-wide text-white text-sm mb-2"
             htmlFor="description"
           >
             Synopsis
           </label>
           <textarea
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            className="appearance-none text-sm block w-full font-light bg-neutral-950 border-b-white text-white border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none"
             id="description"
             name="description"
+            placeholder="Le D.E.B.S. est un groupe d'élite dont la mission est de protéger le pays. Ses membres sont des jeunes femmes recrutées dans les campus."
           ></textarea>
           {state?.errors?.description && (
             <span
@@ -147,14 +149,14 @@ const UploadFormPage: React.FC = () => {
         {/* release date */}
         <div className="w-full md:w-1/3 mb-6 mt-3 md:mb-0">
           <label
-            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+            className="block tracking-wide text-white text-sm mb-2"
             htmlFor="release_date"
           >
             Année de sortie
           </label>
           <div className="relative">
             <select
-              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="appearance-none block w-full bg-neutral-950 font-light text-sm border-b-white text-white border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none"
               id="release_date"
               name="release_date"
             >
@@ -168,7 +170,7 @@ const UploadFormPage: React.FC = () => {
                 </option>
               ))}
             </select>
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
               <svg
                 className="fill-current h-4 w-4"
                 xmlns="http://www.w3.org/2000/svg"
@@ -190,14 +192,14 @@ const UploadFormPage: React.FC = () => {
         {/* country */}
         <div className="w-full md:w-1/3 mt-3 mb-6 md:mb-0">
           <label
-            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+            className="block  tracking-wide text-white text-sm mb-3"
             htmlFor="country"
           >
             Pays
           </label>
           <div className="relative">
             <select
-              className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="block appearance-none w-full text-sm font-light bg-neutral-950 border-b-white border border-gray-200 text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none "
               id="grid-country"
               name="country_id"
             >
@@ -209,7 +211,7 @@ const UploadFormPage: React.FC = () => {
               ))}
             </select>
 
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
               <svg
                 className="fill-current h-4 w-4"
                 xmlns="http://www.w3.org/2000/svg"
@@ -223,30 +225,31 @@ const UploadFormPage: React.FC = () => {
         {/* runtime */}
         <div className="w-full md:w-1/5 mb-6 mt-3 md:mb-0">
           <label
-            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+            className="block tracking-wide text-white text-sm mb-2"
             htmlFor="runtime"
           >
             Durée (minutes)
           </label>
           <input
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            className="appearance-none block w-full font-light text-sm bg-neutral-950 border-b-white text-white border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none"
             id="runtime"
             type="number" // Utilisez type "number" pour la durée
             name="runtime"
             min="1" // Optionnel : Pour s'assurer que la durée est positive
+            placeholder="91"
           />
         </div>
         {/* genre */}
         <div className="w-full md:w-1/3 mt-3 mb-6 md:mb-0">
           <label
-            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+            className="block  tracking-wide text-white text-sm mb-2"
             htmlFor="genre_id"
           >
             Genre
           </label>
           <div className="relative">
             <select
-              className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="block appearance-none w-full font-light text-sm bg-neutral-950 border-b-white border border-gray-200 text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none "
               id="grid-genre"
               name="genre_id"
             >
@@ -258,7 +261,7 @@ const UploadFormPage: React.FC = () => {
               ))}
             </select>
 
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
               <svg
                 className="fill-current h-4 w-4"
                 xmlns="http://www.w3.org/2000/svg"
@@ -272,21 +275,21 @@ const UploadFormPage: React.FC = () => {
         {/* keywords */}
         <div className="w-full md:w-1/2 mt-3 mb-6 md:mb-0">
           <label
-            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+            className="block tracking-wide text-white text-sm mb-2"
             htmlFor="keyword_id"
           >
             Mots-clés
           </label>
           <div className="relative">
             {/* <input
-              className="block appearance-none w-full bg-gray-200 text-gray-700 border py-2 px-3 pr-8 rounded leading-tight focus:outline-none focus:bg-white"
+              className="block appearance-none w-full bg-neutral-950 border-b-white text-white border py-2 px-3 pr-8 rounded leading-tight focus:outline-none focus:bg-white"
               name="keyword_id"
               value={selectedKeywords.map((keyword) => keyword.id).join(",")}
               onChange={handleKeywordInputChange}
               placeholder="Tapez pour rechercher des mots-clés"
             /> */}
             <input
-              className="block appearance-none w-full bg-gray-200 text-gray-700 border py-2 px-3 pr-8 rounded leading-tight focus:outline-none focus:bg-white"
+              className="block appearance-none w-full font-light text-sm bg-neutral-950 border-b-white text-white border py-2 px-3 pr-8 rounded leading-tight focus:outline-none"
               name="keyword_input" // Changer en un nom plus explicite
               value={keywordInput}
               onChange={handleKeywordInputChange}
@@ -295,11 +298,11 @@ const UploadFormPage: React.FC = () => {
 
             {/* display keywords options*/}
             {keywordInput && filteredKeywords.length > 0 && (
-              <ul className="absolute left-0 right-0 bg-white border border-gray-300 mt-1 z-10">
+              <ul className="absolute left-0 right-0 font-light text-xs bg-neutral-950 rounded-md border border-gray-300 mt-1 z-10 hover:bg-rose-500">
                 {filteredKeywords.map((keyword) => (
                   <li
                     key={keyword.id}
-                    className="px-4 py-2 cursor-pointer hover:bg-gray-200"
+                    className="px-4 py-2 cursor-pointer hover:bg-neutral-950 border-b-white"
                     onClick={() => handleAddKeyword(keyword)}
                   >
                     {keyword.name}
@@ -318,7 +321,7 @@ const UploadFormPage: React.FC = () => {
             {selectedKeywords.map((keyword) => (
               <span
                 key={keyword.id}
-                className="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded"
+                className="inline-flex items-center bg-rose-100 text-rose-500 text-sm font-medium mr-2 px-2 py-1 rounded"
               >
                 {keyword.name}
                 <button
@@ -336,13 +339,13 @@ const UploadFormPage: React.FC = () => {
         {/* image */}
         <div className="w-full md:w-1/2 mt-3 mb-6">
           <label
-            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+            className="block tracking-wide text-white text-sm mb-2"
             htmlFor="image_url"
           >
             Image
           </label>
           <input
-            className="appearance-none block w-full hover:cursor"
+            className="appearance-none block w-full hover:cursor-pointer"
             id="image_url"
             name="image_url"
             accept="image/*"

@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Header() {
   return (
-    <footer className="h-full footer bg-base-300 text-base-content p-10 b-0">
+    <footer className="h-full footer  text-white p-10 b-0">
       <nav className="flex justify-between mb-2">
         <Link href="/about" className="link link-hover">
           À propos

@@ -81,11 +81,11 @@ export default function ListPage({ params }: { params: { id: string } }) {
 
   return (
     <div className="p-10">
-      <h1 className="text-3xl font-bold">{listData.title}</h1>
-      <p className="text-gray-700 mt-2">{listData.description}</p>
+      <h1 className="text-xl text-rose-500 font-semibold">{listData.title}</h1>
+      <p className="text-white mt-2 mb-6">{listData.description}</p>
       <button
         onClick={() => router.push(`/lists/edit/${id}`)}
-        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mt-4"
+        className="bg-gradient-to-r from-rose-500 to-red-500 text-white px-4 py-2 rounded-md hover:from-rose-600  hover:to-red-600"
       >
         Modifier la liste
       </button>

@@ -17,7 +17,7 @@ export default async function ProfilePage() {
 
   const { data: lists, error: listsError } = await supabase
     .from("lists")
-    .select("id, title, image_url")
+    .select(`id, title, lists_movies(movie_id), movies(image_url) `)
     .eq("user_id", userId);
 
   // error handler
@@ -27,14 +27,14 @@ export default async function ProfilePage() {
   }
 
   return (
-    <div className="flex flex-col gap-5 p-10">
-      <h1 className="text-3xl font-bold mb-5">Profil</h1>
-
-      <h1>Hello {data.user.email}</h1>
+    <div className="flex flex-col  gap-5 p-10">
+      {/* <h1>Bienvenue {data.user.email} !</h1> */}
       <div className="">
+        <p className="text-xl text-rose-500 font-semibold mb-4">Contribuer</p>
+
         <Link
           href="/upload"
-          className="hover:bg-pink-200 border border-black rounded-full p-2"
+          className="bg-gradient-to-r from-rose-500 to-red-500 text-white px-4 py-2 rounded-md hover:from-rose-600  hover:to-red-600"
         >
           Ajouter un film
         </Link>
@@ -42,17 +42,18 @@ export default async function ProfilePage() {
 
       {/* Mes listes */}
       <section className="mt-8">
-        <h2 className="text-2xl font-bold mb-4">Mes listes</h2>
+        <h2 className="text-xl text-rose-500 font-semibold mb-4">Mes listes</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           <Link
             href="/lists/create"
-            className="flex flex-col justify-center items-center bg-gray-500 text-white text-center p-4  hover:bg-gray-600 cursor-pointer"
+            className="flex flex-col justify-center rounded-lg border border-xl text-rose-500 border-rose-500 items-center  text-center p-4 cursor-pointer hover:text-rose-200 hover:border-rose-200"
           >
             Créer une nouvelle liste
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="50"
               height="50"
+              color=""
               viewBox="0 0 50 50"
             >
               <path
@@ -69,7 +70,7 @@ export default async function ProfilePage() {
               key={list.id}
               id={list.id}
               title={list.title}
-              image_url={list.image_url}
+              image_url={list.movies[0]?.image_url || "/placeholder-image.png"} // Utiliser l'image du premier film ou une image par défaut
             />
           ))}
         </div>
