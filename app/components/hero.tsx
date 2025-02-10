@@ -23,7 +23,7 @@ export default function Hero({
     <div className="bg bg-gray-953 h-96 w-full justify-center items-center">
       <Link
         href={{
-          pathname: `/catalogue`,
+          pathname: `/movies/${id}`,
           // href={{
           //    pathname: `/movies/${id}`,
           query: {
@@ -42,23 +42,23 @@ export default function Hero({
             alt={title}
             style={{ objectFit: "cover" }}
           />
-          <div className="text-center absolute flex bg-black bg-opacity-50 items-center justify-center w-full h-full text-white font-light text-xl line-clamp-2 px-10 py-5">
-            <div className="flex flex-col">
-              <span className="m-5">Explorez le catalogue</span>
-              {/* 
-              <div className="w-full">
-                <Searchbox />
-              </div> */}
+          <div className="absolute flex flex-col bg-black bg-opacity-50 items-left justify-center w-full h-full  line-clamp-2 px-10 py-5">
+            <div className="w-[60%] lg:w-[50%] mb-5">
+              <h2 className="text-5xl font-light text-white">
+                50 ans de cinéma{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-yellow-500 via-green-500 via-blue-500 via-indigo-500 to-purple-500">
+                  LGBTQI+
+                </span>
+              </h2>
             </div>
+            <Link
+              href="/movies"
+              className="w-[200px] bg-gradient-to-r from-rose-500 to-red-500 text-white
+              px-4 py-2 rounded-md hover:from-rose-600 hover:to-red-600"
+            >
+              Explorer le catalogue
+            </Link>
           </div>
-          {/* <div className="absolute flex flex-col px-10 py-5 text-white uppercase items-start justify-end">
-            <div className="text-xl font-semi-bold line-clamp-2">{title}</div>
-            <p className="inline-block text-base">
-              <span className=" font-extralight text-gray-952 mr-2">
-                {release_date}
-              </span>
-            </p>
-          </div> */}
         </div>
       </Link>
     </div>

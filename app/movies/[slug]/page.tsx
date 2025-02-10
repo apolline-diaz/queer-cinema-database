@@ -74,7 +74,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function Page({ params }: Props) {
+export default async function Page({ params }: { params: { slug: string } }) {
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -99,7 +99,6 @@ export default async function Page({ params }: Props) {
   }
 
   console.log(movie);
-
   return (
     <>
       <div className="w-full text-white mx-auto min-h-screen">
@@ -165,7 +164,7 @@ export default async function Page({ params }: Props) {
                     // hover:from-rose-700 hover:to-rose-800 hover:brightness-90 hover:cursor-pointer transition-all duration-300"
                   >
                     {keyword.name}
-                  </span>{" "}
+                  </span>
                 </Link>
               ))}
             </p>

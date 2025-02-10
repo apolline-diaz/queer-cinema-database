@@ -78,7 +78,7 @@ export default function Navbar({ user }: HeaderProps) {
                 {/* mobile navigation links */}
                 <ul className="flex text-white flex-col items-center justify-center gap-5 min-h-[250px]">
                   <li className="hover:underline underline-offset-8">
-                    <Link href="/catalogue">Catalogue</Link>
+                    <Link href="/movies">Catalogue</Link>
                   </li>
                   {user && (
                     <li className="hover:underline underline-offset-8">
@@ -106,7 +106,7 @@ export default function Navbar({ user }: HeaderProps) {
             <div className="text-white">
               <ul className="DESKTOP-MENU hidden space-x-8 lg:flex items-center">
                 <li className="hover:underline underline-offset-8">
-                  <Link href="/catalogue">Catalogue</Link>
+                  <Link href="/movies">Catalogue</Link>
                 </li>
                 {user && (
                   <li className="hover:underline underline-offset-8">
@@ -125,7 +125,7 @@ export default function Navbar({ user }: HeaderProps) {
                 ) : (
                   <li>
                     <form action={logout}>
-                      <button className="hover:bg-black hover:text-white border border-black rounded-full px-2 py-1">
+                      <button className="hover:text-rose-500 px-2 py-1">
                         Se déconnecter
                       </button>
                     </form>

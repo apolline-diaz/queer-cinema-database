@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useFormState } from "react-dom";
 import { createList } from "@/app/server-actions/lists";
 import { SubmitButton } from "@/app/components/submit-button";
-import { getMovies } from "@/utils/get-data-to-create-list";
+import { getMovies } from "@/utils/get-movies";
 
 // Updated Types to match your actual data
 interface Movie {
@@ -46,7 +46,14 @@ const CreateListPage: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const moviesData = await getMovies();
+        const moviesData = await getMovies({
+          title: "",
+          keyword: "",
+          director: "",
+          country: "",
+          genre: "",
+          year: "",
+        });
         // Now this should work as the types match
         setMovies(moviesData);
       } catch (error) {
@@ -158,10 +165,11 @@ const CreateListPage: React.FC = () => {
                     className="px-4 py-2 cursor-pointer hover:bg-gray-800"
                     onClick={() => handleAddMovie(movie)}
                   >
-                    <div className="font-medium">{movie.title}</div>
-                    <div className="text-xs text-gray-400">
-                      {movie.release_date} •{" "}
-                      {movie.genres.map((g) => g.name).join(", ")}
+                    <div className="font-medium flex gap-2 items-center">
+                      {movie.title}
+                      <span className="font-light text-gray-400">
+                        {movie.release_date}
+                      </span>
                     </div>
                   </li>
                 ))}

@@ -1,36 +1,52 @@
 import { relations } from "drizzle-orm/relations";
 import {
-  genres,
-  movieGenres,
-  moviesTable,
+  users,
+  lists,
+  directors,
+  movieDirectors,
+  movies,
   keywords,
   movieKeywords,
   countries,
   movieCountries,
-  directors,
-  movieDirectors,
+  genres,
+  movieGenres,
+  listsMovies,
 } from "./schema";
 
-export const movieGenresRelations = relations(movieGenres, ({ one }) => ({
-  genre: one(genres, {
-    fields: [movieGenres.genreId],
-    references: [genres.id],
+export const listsRelations = relations(lists, ({ one, many }) => ({
+  users: one(users, {
+    fields: [lists.userId],
+    references: [users.id],
   }),
-  movie: one(moviesTable, {
-    fields: [movieGenres.movieId],
-    references: [moviesTable.id],
+  listsMovies: many(listsMovies),
+}));
+
+export const usersRelations = relations(users, ({ many }) => ({
+  lists: many(lists),
+}));
+
+export const movieDirectorsRelations = relations(movieDirectors, ({ one }) => ({
+  director: one(directors, {
+    fields: [movieDirectors.directorId],
+    references: [directors.id],
+  }),
+  movie: one(movies, {
+    fields: [movieDirectors.movieId],
+    references: [movies.id],
   }),
 }));
 
-export const genresRelations = relations(genres, ({ many }) => ({
-  movieGenres: many(movieGenres),
+export const directorsRelations = relations(directors, ({ many }) => ({
+  movieDirectors: many(movieDirectors),
 }));
 
-export const moviesRelations = relations(moviesTable, ({ many }) => ({
-  movieGenres: many(movieGenres),
+export const moviesRelations = relations(movies, ({ many }) => ({
+  movieDirectors: many(movieDirectors),
   movieKeywords: many(movieKeywords),
   movieCountries: many(movieCountries),
-  movieDirectors: many(movieDirectors),
+  movieGenres: many(movieGenres),
+  listsMovies: many(listsMovies),
 }));
 
 export const movieKeywordsRelations = relations(movieKeywords, ({ one }) => ({
@@ -38,9 +54,9 @@ export const movieKeywordsRelations = relations(movieKeywords, ({ one }) => ({
     fields: [movieKeywords.keywordId],
     references: [keywords.id],
   }),
-  movie: one(moviesTable, {
+  movie: one(movies, {
     fields: [movieKeywords.movieId],
-    references: [moviesTable.id],
+    references: [movies.id],
   }),
 }));
 
@@ -53,9 +69,9 @@ export const movieCountriesRelations = relations(movieCountries, ({ one }) => ({
     fields: [movieCountries.countryId],
     references: [countries.id],
   }),
-  movie: one(moviesTable, {
+  movie: one(movies, {
     fields: [movieCountries.movieId],
-    references: [moviesTable.id],
+    references: [movies.id],
   }),
 }));
 
@@ -63,17 +79,28 @@ export const countriesRelations = relations(countries, ({ many }) => ({
   movieCountries: many(movieCountries),
 }));
 
-export const movieDirectorsRelations = relations(movieDirectors, ({ one }) => ({
-  director: one(directors, {
-    fields: [movieDirectors.directorId],
-    references: [directors.id],
+export const movieGenresRelations = relations(movieGenres, ({ one }) => ({
+  genre: one(genres, {
+    fields: [movieGenres.genreId],
+    references: [genres.id],
   }),
-  movie: one(moviesTable, {
-    fields: [movieDirectors.movieId],
-    references: [moviesTable.id],
+  movie: one(movies, {
+    fields: [movieGenres.movieId],
+    references: [movies.id],
   }),
 }));
 
-export const directorsRelations = relations(directors, ({ many }) => ({
-  movieDirectors: many(movieDirectors),
+export const genresRelations = relations(genres, ({ many }) => ({
+  movieGenres: many(movieGenres),
+}));
+
+export const listsMoviesRelations = relations(listsMovies, ({ one }) => ({
+  list: one(lists, {
+    fields: [listsMovies.listId],
+    references: [lists.id],
+  }),
+  movie: one(movies, {
+    fields: [listsMovies.movieId],
+    references: [movies.id],
+  }),
 }));
