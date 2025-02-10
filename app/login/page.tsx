@@ -14,7 +14,7 @@ export default function LoginPage() {
           <div className="flex flex-col gap-3 mb-10">
             <label htmlFor="email">Adresse e-mail</label>
             <input
-              className="appearance-none text-lg font-light border-black block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
+              className="appearance-none text-sm font-light border-white block w-full bg-neutral-950 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:text-white"
               id="email"
               name="email"
               type="email"
@@ -23,7 +23,7 @@ export default function LoginPage() {
             />
             <label htmlFor="password">Mot de passe</label>
             <input
-              className="appearance-none text-lg font-light border-black block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
+              className="appearance-none text-sm font-light border-white block w-full bg-neutral-950 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:text-white"
               id="password"
               name="password"
               type="password"
@@ -33,7 +33,7 @@ export default function LoginPage() {
           </div>
           <div className="w-full justify-center flex flex-wrap gap-4">
             <button
-              className="rounded-full border border-black  hover:text-rose-500 p-2 "
+              className="hover:text-rose-500 p-2 "
               formAction={login}
               disabled={pending}
             >

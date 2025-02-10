@@ -33,7 +33,7 @@ export default async function ProfilePage() {
         <p className="text-xl text-rose-500 font-semibold mb-4">Contribuer</p>
 
         <Link
-          href="/upload"
+          href="/movies/contribute"
           className="bg-gradient-to-r from-rose-500 to-red-500 text-white px-4 py-2 rounded-md hover:from-rose-600  hover:to-red-600"
         >
           Ajouter un film
@@ -46,7 +46,7 @@ export default async function ProfilePage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           <Link
             href="/lists/create"
-            className="flex flex-col justify-center rounded-lg border border-xl text-rose-500 border-rose-500 items-center  text-center p-4 cursor-pointer hover:text-rose-200 hover:border-rose-200"
+            className="flex flex-col justify-center rounded-lg border border-xl text-red-100 border-red-100 items-center  text-center p-4 cursor-pointer hover:text-rose-500 hover:border-rose-500"
           >
             Créer une nouvelle liste
             <svg

@@ -39,14 +39,14 @@ export default function HomeCard({
             src={image_url}
             fill={true}
             alt={title}
-            className="object-cover transform transition-transform duration-700 ease-in-out group-hover:scale-110"
+            className="object-cover transform transition-transform duration-700 ease-in-out group-hover:scale-110 group-hover:brightness-50"
           />
-        </div>
-        <div className="text-left text-white mt-4">
-          <div className="text-md font-semibold uppercase truncate">
-            {title}
+
+          <div className="absolute bottom-0 left-0 w-full p-5 bg-gradient-to-t via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <div className="text-md font-semibold uppercase">{title}</div>
+            <p className="text-sm text-gray-300">{release_date}</p>
+            <p className="absolute text-sm text-gray-200 mt-2">{description}</p>
           </div>
-          <p className="text-sm text-gray-300">{release_date}</p>
         </div>
       </div>
     </Link>

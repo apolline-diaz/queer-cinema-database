@@ -62,11 +62,9 @@
 ## 📂 Project Structure
 
 ```plaintext
-├── catalogue/           # Catalogue page
 ├── lists/               # Lists pages (content view, creation, edit)
-├── movies/              # Movies pages (content view, edit)
+├── movies/              # Movies pages (content view, edit, contribute)
 ├── profile/             # Profile user's page
-├── upload/              # Add movie page
 ├── components/          #
 ├── server-actions/      # Movies (add), lists (add)
 ├── pages/               # Next.js pages
