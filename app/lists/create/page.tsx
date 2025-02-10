@@ -46,7 +46,14 @@ const CreateListPage: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const moviesData = await getMovies();
+        const moviesData = await getMovies({
+          title: "",
+          keyword: "",
+          director: "",
+          country: "",
+          genre: "",
+          year: "",
+        });
         // Now this should work as the types match
         setMovies(moviesData);
       } catch (error) {
