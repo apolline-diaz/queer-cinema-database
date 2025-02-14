@@ -18,6 +18,7 @@ export default function LoginPage() {
               id="email"
               name="email"
               type="email"
+              aria-label="email"
               placeholder="Tapez votre adresse"
               required
             />
@@ -27,6 +28,7 @@ export default function LoginPage() {
               id="password"
               name="password"
               type="password"
+              aria-label="password"
               placeholder="Tapez votre mot de passe"
               required
             />

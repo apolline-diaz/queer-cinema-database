@@ -37,7 +37,7 @@ export default function Searchbox({
   return (
     <div className="w-full ">
       <form>
-        <div className="w-full xs:w-1/2 flex flex-col gap-3">
+        <div className="w-full xs:w-1/2 flex flex-col sm:flex-row gap-3">
           <input
             className="appearance-none text-md font-light block w-full bg-neutral-950 border-b border-b-white text-gray-700 py-3 leading-tight focus:outline-none "
             id="title"
