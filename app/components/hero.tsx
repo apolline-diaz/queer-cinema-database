@@ -43,12 +43,13 @@ export default function Hero({
             style={{ objectFit: "cover" }}
           />
           <div className="absolute flex flex-col bg-black bg-opacity-50 items-left justify-center w-full h-full  line-clamp-2 px-10 py-5">
-            <div className="w-[60%] lg:w-[50%] mb-5">
-              <h2 className="text-5xl font-light text-white">
-                50 ans de cinéma{" "}
+            <div className="w-[70%] lg:w-[60%] mb-5">
+              <h2 className="text-xl font-light text-white">
+                Une large base de données pour découvrir l histoire du cinéma{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-yellow-500 via-green-500 via-blue-500 via-indigo-500 to-purple-500">
                   LGBTQI+
-                </span>
+                </span>{" "}
+                et les archives audiovisuelles.
               </h2>
             </div>
             <Link

@@ -31,10 +31,10 @@ export default async function Home() {
           </div>
         </div>
 
-        <div className="px-10 pb-5">
+        <div className="px-10 py-5">
           {/* Drama Movies */}
-          <h2 className="text-xl my-5 text-rose-500">Drame</h2>
-          <div className="flex flex-row-1 overflow-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5">
+          <h2 className="text-xl mb-2 text-rose-500">Drame</h2>
+          <div className="flex flex-row-1 mb-5 overflow-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5">
             {dramaMovies.map((movie) => (
               <HomeCard
                 directors={null}
@@ -47,8 +47,8 @@ export default async function Home() {
           </div>
 
           {/* Comedy Movies */}
-          <h2 className="text-xl my-5 text-rose-500">Comédie</h2>
-          <div className="flex flex-row-1 overflow-auto gap-5">
+          <h2 className="text-xl mb-2 text-rose-500">Comédie</h2>
+          <div className="flex flex-row-1 mb-5 overflow-auto gap-5">
             {comedyMovies.map((movie) => (
               <HomeCard
                 directors={null}
@@ -61,8 +61,8 @@ export default async function Home() {
           </div>
 
           {/* Documentary Movies */}
-          <h2 className="text-xl my-5 text-rose-500">Documentaire</h2>
-          <div className="flex flex-row-1 overflow-auto gap-5">
+          <h2 className="text-xl mb-2 text-rose-500">Documentaire</h2>
+          <div className="flex flex-row-1 mb-5 overflow-auto gap-5">
             {documentaryMovies.map((movie) => (
               <HomeCard
                 directors={null}
@@ -75,8 +75,8 @@ export default async function Home() {
           </div>
 
           {/* Nineties Movies */}
-          <h2 className="text-xl my-5 text-rose-500">Années 90</h2>
-          <div className="flex flex-row-1 overflow-auto gap-5">
+          <h2 className="text-xl mb-2 text-rose-500">Années 90</h2>
+          <div className="flex flex-row-1 mb-5 overflow-auto gap-5">
             {ninetiesMovies.map((movie) => (
               <HomeCard
                 directors={null}
