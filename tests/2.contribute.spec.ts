@@ -14,7 +14,7 @@ type CustomFixtures = {
 const test = base.extend<CustomFixtures>({
   authenticatedPage: async ({ page }, use) => {
     // perform login
-    await page.goto("http://localhost:3000/login");
+    await page.goto("/login");
     await page.locator("#email").fill(email);
     await page.locator("#password").fill(password);
     await page.getByRole("button", { name: "Se connecter" }).click();
@@ -26,9 +26,9 @@ const test = base.extend<CustomFixtures>({
 });
 
 test("contribute", async ({ authenticatedPage: page }) => {
-  await page.goto("http://localhost:3000/");
+  await page.goto("/");
 
-  await expect(page.getByRole("link", { name: "movie diary" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Profil" })).toBeVisible();
 
   await page.getByRole("link", { name: "Profil" }).click();
 
