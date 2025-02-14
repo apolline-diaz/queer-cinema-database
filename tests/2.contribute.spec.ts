@@ -18,8 +18,7 @@ const test = base.extend<CustomFixtures>({
     await page.locator("#email").fill(email);
     await page.locator("#password").fill(password);
     await page.getByRole("button", { name: "Se connecter" }).click();
-    await expect(page.getByRole("link", { name: "Profil" })).toBeVisible();
-
+    await expect(page.getByTestId("profile-link-desktop")).toBeVisible();
     // pass the authenticated page to the test
     await use(page);
   },
@@ -28,51 +27,42 @@ const test = base.extend<CustomFixtures>({
 test("contribute", async ({ authenticatedPage: page }) => {
   await page.goto("/");
 
-  await expect(page.getByRole("link", { name: "Profil" })).toBeVisible();
+  await expect(page.getByTestId("profile-link-desktop")).toBeVisible();
 
-  await page.getByRole("link", { name: "Profil" }).click();
+  await page.getByTestId("profile-link-desktop").click();
 
   await expect(page.getByText("Contribuer")).toBeVisible();
-
-  await page.getByRole("link", { name: "Profil" }).click();
 
   await page.getByRole("link", { name: "Ajouter un film" }).click();
 
   await expect(page.getByText("Ajouter un film au catalogue")).toBeVisible();
 
-  await page.getByRole("textbox", { name: "Titre" }).click();
-  await page.getByRole("textbox", { name: "Titre" }).fill("Titre du film");
+  // fill in the form with proper selectors matching your form
+  await page.locator("#title").click();
+  await page.locator("#title").fill("Titre du film");
 
-  await page.getByRole("textbox", { name: "Réalisateur-ice" }).click();
-  await page
-    .getByRole("textbox", { name: "Réalisateur-ice" })
-    .fill("Réalisateur du film");
+  await page.locator("#director_name").click();
+  await page.locator("#director_name").fill("Réalisateur du film");
 
-  await page.getByRole("textbox", { name: "Synopsis" }).click();
-  await page
-    .getByRole("textbox", { name: "Synopsis" })
-    .fill("Description du film");
+  await page.locator("#description").click();
+  await page.locator("#description").fill("Description du film");
 
-  await page.getByLabel("Année de sortie").selectOption("2025");
+  await page.locator("#release_date").selectOption("2025");
 
   await page.locator("#grid-country").selectOption("510");
 
-  await page.getByRole("spinbutton", { name: "Durée (minutes)" }).click();
-  await page.getByRole("spinbutton", { name: "Durée (minutes)" }).fill("100");
+  await page.locator("#runtime").click();
+  await page.locator("#runtime").fill("100");
 
   await page.locator("#grid-genre").selectOption("3");
-  await page
-    .getByRole("textbox", { name: "Tapez pour rechercher des mots-clés" })
-    .click();
-  await page
-    .getByRole("textbox", { name: "Tapez pour rechercher des mots-clés" })
-    .fill("lg");
 
+  // handle keywords with proper name attribute
+  await page.locator("#keyword_input").click();
+  await page.locator("#keyword_input").fill("lg");
   await page.getByText("lgbt").click();
 
-  await page.getByRole("textbox", { name: "Image" }).click();
-  await page
-    .getByRole("textbox", { name: "Image" })
-    .setInputFiles("public/assets/diary.png");
+  // handle file upload with proper input type
+  await page.locator("#image_url").setInputFiles("public/assets/diary.png");
+
   await page.getByRole("button", { name: "Ajouter" }).click();
 });

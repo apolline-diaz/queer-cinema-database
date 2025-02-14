@@ -82,7 +82,9 @@ export default function Navbar({ user }: HeaderProps) {
                   </li>
                   {user && (
                     <li className="hover:underline underline-offset-8">
-                      <Link href="/profile">Profil</Link>
+                      <Link href="/profile" data-testid="profile-link-mobile">
+                        Profil
+                      </Link>
                     </li>
                   )}
                   {!user ? (
@@ -110,7 +112,9 @@ export default function Navbar({ user }: HeaderProps) {
                 </li>
                 {user && (
                   <li className="hover:underline underline-offset-8">
-                    <Link href="/profile">Profil</Link>
+                    <Link href="/profile" data-testid="profile-link-desktop">
+                      Profil
+                    </Link>
                   </li>
                 )}
                 {!user ? (
