@@ -71,6 +71,7 @@
 ├── utils/               # Utility functions
 ├── db/                  # Drizzle configuration and database models
 ├── public/              # Public files (images, icons, etc.)
+├── tests/               # Tests with Playwright
 ├── docker-compose.yml   # Docker configuration
 └── README.md            # Documentation
 ```
