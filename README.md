@@ -22,6 +22,7 @@
 - **Database**: [PostgreSQL](https://www.postgresql.org/)
 - **Authentication and Storage**: [Supabase](https://supabase.io/)
 - **Containerization**: [Docker](https://www.docker.com/)
+- **Tests**: [Playwright](https://playwright.dev/)
 
 ## 📦 Installation and Local Setup
 
