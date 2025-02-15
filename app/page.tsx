@@ -89,7 +89,9 @@ export default async function Home() {
     );
   } catch (error) {
     return (
-      <p>Erreur lors du chargement des films : {(error as Error).message}</p>
+      <p className="p-10">
+        Erreur lors du chargement des films : {(error as Error).message}
+      </p>
     );
   }
 }
