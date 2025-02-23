@@ -16,6 +16,8 @@ async function MoviesGrid({ searchParams }: { searchParams: SearchParams }) {
   let movies: any[] = [];
 
   try {
+    console.log("Appel de MoviesGrid avec searchParams :", searchParams);
+
     if (searchParams.title) {
       movies = await searchMoviesByTitle(searchParams.title);
     } else if (searchParams.keyword) {
@@ -23,6 +25,7 @@ async function MoviesGrid({ searchParams }: { searchParams: SearchParams }) {
     } else {
       movies = await searchMoviesByTitle(""); // Get recent movies
     }
+    console.log("Films récupérés dans MoviesGrid :", movies.length);
   } catch (error) {
     console.error("Failed to fetch movies:", error);
   }

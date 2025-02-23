@@ -1,19 +1,31 @@
 # to ensure that Next.js and Drizzle have access to DATABASE_URL during build and deployment.
 
+name: Build and Deploy
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Build project
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      - name: Run database migrations
+        run: npx drizzle-kit push:pg
+
+      - name: Build application
         run: npm run build
-
-      - name: Deploy
-        run: npm run deploy
