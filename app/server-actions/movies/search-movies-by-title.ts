@@ -1,44 +1,76 @@
 "use server";
 
-import db from "@/db";
-import { movies } from "@/db/schema";
-import { ilike } from "drizzle-orm";
+import { supabase } from "@/lib/supabase";
 
-export async function searchMoviesByTitle(title: string) {
+// Movie interface for type safety
+interface Movie {
+  id: string;
+  title: string;
+  imageUrl: string | null;
+  releaseDate: string | null;
+}
+
+export async function searchMoviesByTitle(title: string): Promise<Movie[]> {
   try {
-    console.log(" Recherche de films avec le titre :", title);
-    console.log("DATABASE_URL défini:", !!process.env.DATABASE_URL);
+    console.log("Recherche de films avec le titre :", title);
+
+    let query = supabase
+      .from("movies")
+      .select("id, title, image_url, release_date");
 
     if (!title.trim()) {
       // Si pas de titre fourni, renvoyer tous les films récents
-      const allMovies = await db.query.movies.findMany({
-        orderBy: (movies, { desc }) => [desc(movies.createdAt)],
-        // .limit(500);
-      });
-      console.log("Films récents récupérés :", allMovies.length);
+      console.log("Récupération des films récents");
 
-      return allMovies;
+      const { data, error } = await query
+        .order("created_at", { ascending: false })
+        .limit(100);
+
+      if (error) {
+        console.error("Erreur Supabase:", error);
+        return [];
+      }
+
+      console.log("Films récents récupérés :", data?.length || 0);
+
+      // Transform the data to match your expected format
+      const movies: Movie[] =
+        data?.map((movie) => ({
+          id: movie.id,
+          title: movie.title,
+          imageUrl: movie.image_url,
+          releaseDate: movie.release_date,
+        })) || [];
+
+      return movies;
+    } else {
+      // Recherche des films correspondant au titre
+      console.log("Recherche de films correspondant à :", title);
+
+      const { data, error } = await query
+        .ilike("title", `%${title}%`)
+        .limit(100);
+
+      if (error) {
+        console.error("Erreur Supabase:", error);
+        return [];
+      }
+
+      console.log("Nombre de films trouvés :", data?.length || 0);
+
+      // Transform the data to match your expected format
+      const movies: Movie[] =
+        data?.map((movie) => ({
+          id: movie.id,
+          title: movie.title,
+          imageUrl: movie.image_url,
+          releaseDate: movie.release_date,
+        })) || [];
+
+      return movies;
     }
-
-    // Recherche des films correspondant au titre
-
-    console.log("Recherche de films correspondant à :", title);
-
-    const results = await db
-      .select({
-        id: movies.id,
-        title: movies.title,
-        imageUrl: movies.imageUrl,
-        releaseDate: movies.releaseDate,
-      })
-      .from(movies)
-      .where(ilike(movies.title, `%${title}%`))
-      .limit(100);
-
-    console.log("Nombre de films trouvés :", results.length);
-
-    return results;
   } catch (error) {
     console.error("Erreur lors de la recherche par titre:", error);
+    return [];
   }
 }
