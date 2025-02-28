@@ -7,6 +7,7 @@ import { ilike } from "drizzle-orm";
 export async function searchMoviesByTitle(title: string) {
   try {
     console.log(" Recherche de films avec le titre :", title);
+    console.log("DATABASE_URL défini:", !!process.env.DATABASE_URL);
 
     if (!title.trim()) {
       // Si pas de titre fourni, renvoyer tous les films récents
@@ -39,6 +40,5 @@ export async function searchMoviesByTitle(title: string) {
     return results;
   } catch (error) {
     console.error("Erreur lors de la recherche par titre:", error);
-    return [];
   }
 }
