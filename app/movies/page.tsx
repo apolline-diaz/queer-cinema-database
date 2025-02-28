@@ -19,11 +19,14 @@ async function MoviesGrid({ searchParams }: { searchParams: SearchParams }) {
     console.log("Appel de MoviesGrid avec searchParams :", searchParams);
 
     if (searchParams.title) {
-      movies = await searchMoviesByTitle(searchParams.title);
+      const result = await searchMoviesByTitle(searchParams.title);
+      movies = result || [];
     } else if (searchParams.keyword) {
-      movies = await searchMoviesByKeyword(searchParams.keyword);
+      const result = await searchMoviesByKeyword(searchParams.keyword);
+      movies = result || [];
     } else {
-      movies = await searchMoviesByTitle(""); // Get recent movies
+      const result = await searchMoviesByTitle(""); // Get recent movies
+      movies = result || [];
     }
     console.log("Films récupérés dans MoviesGrid :", movies.length);
   } catch (error) {
