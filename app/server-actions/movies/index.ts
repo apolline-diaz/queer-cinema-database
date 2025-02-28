@@ -1,9 +1,13 @@
 "use server";
 
-import db from "@/db";
-import { genres, movieGenres, movies } from "@/db/schema";
 import { supabase } from "@/lib/supabase";
-import { eq, and, gte, lte } from "drizzle-orm";
+
+interface Movie {
+  id: string;
+  title: string;
+  imageUrl: string | null;
+  releaseDate: string | null;
+}
 
 export async function getTopMovies() {
   const { data, error } = await supabase
@@ -37,30 +41,47 @@ export async function getMoviesByGenre(genreId: number) {
   return data;
 }
 
-export async function getMoviesByYearRange(startYear: string, endYear: string) {
+export async function getMoviesByYearRange(
+  startYear: string,
+  endYear: string
+): Promise<Movie[]> {
   try {
-    const data = await db
-      .select({
-        id: movies.id,
-        title: movies.title,
-        imageUrl: movies.imageUrl,
-        releaseDate: movies.releaseDate,
-        // genre: genres.name,
-      })
-      .from(movies)
-      // .innerJoin(movieGenres, eq(movies.id, movieGenres.movieId))
-      // .innerJoin(genres, eq(movieGenres.genreId, genres.id))
-      .where(
-        and(
-          gte(movies.releaseDate, `${startYear}-01-01`),
-          lte(movies.releaseDate, `${endYear}-12-31`)
-        )
-      )
-      .orderBy(movies.createdAt)
+    console.log(`Recherche de films entre ${startYear} et ${endYear}`);
+
+    // Format the date ranges
+    const startDate = `${startYear}-01-01`;
+    const endDate = `${endYear}-12-31`;
+
+    // Query using Supabase
+    const { data, error } = await supabase
+      .from("movies")
+      .select("id, title, image_url, release_date")
+      .gte("release_date", startDate)
+      .lte("release_date", endDate)
+      .order("created_at", { ascending: true })
       .limit(15);
 
-    return data;
+    if (error) {
+      console.error("Erreur Supabase:", error);
+      throw new Error(`Failed to fetch movies by year range: ${error.message}`);
+    }
+
+    console.log(
+      `${data?.length || 0} films trouvés entre ${startYear} et ${endYear}`
+    );
+
+    // Transform the data to match your expected format
+    const movies: Movie[] =
+      data?.map((movie) => ({
+        id: movie.id,
+        title: movie.title,
+        imageUrl: movie.image_url,
+        releaseDate: movie.release_date,
+      })) || [];
+
+    return movies;
   } catch (error) {
+    console.error("Erreur lors de la recherche par année:", error);
     throw new Error(
       error instanceof Error
         ? error.message
