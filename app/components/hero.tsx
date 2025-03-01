@@ -42,11 +42,11 @@ export default function Hero({
             alt={title}
             style={{ objectFit: "cover" }}
           />
-          <div className="absolute flex flex-col bg-black bg-opacity-50 items-left justify-center w-full h-full  line-clamp-2 px-10 py-5">
-            <div className="w-[70%] lg:w-[60%] mb-5">
-              <h2 className="text-3xl font-light text-white">
-                Une large base de données pour découvrir l&apos;histoire du
-                cinéma{" "}
+          <div className="absolute flex flex-col  items-left justify-center w-full h-full  line-clamp-2 px-10 py-5">
+            <div className="absolute inset-0 bg-gradient-to-r from-black via-black/60 to-transparent"></div>
+            <div className="relative sm:w-[70%] xs:w-[100%] mb-5">
+              <h2 className="text-2xl font-medium text-white">
+                Le site de référence pour découvrir l&apos;histoire du cinéma{" "}
                 <span className="text-transparent text-bold bg-clip-text bg-gradient-to-r from-red-500 via-yellow-500 via-green-500 via-blue-500 via-indigo-500 to-purple-500">
                   LGBTQI+
                 </span>{" "}
@@ -55,7 +55,7 @@ export default function Hero({
             </div>
             <Link
               href="/movies"
-              className="w-[200px] bg-gradient-to-r from-rose-500 to-red-500 text-white
+              className="relative w-[200px] bg-gradient-to-r from-rose-500 to-red-500 text-white
               px-4 py-2 rounded-md hover:from-rose-600 hover:to-red-600"
             >
               Explorer le catalogue
