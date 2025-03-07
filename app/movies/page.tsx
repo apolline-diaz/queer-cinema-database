@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Card from "@/app/components/card";
-import Searchbox from "@/app/components/searchbox";
+import SearchForm from "@/app/components/search-form";
 import { getImageUrl } from "@/utils";
+import { searchMovies } from "@/app/server-actions/movies/search-movies";
 
 interface Movie {
-  id: number;
+  id: string;
   title: string;
   image_url: string;
   release_date: string;
@@ -14,6 +15,24 @@ interface Movie {
 
 export default function Catalogue() {
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Load all movies on initial page load
+  useEffect(() => {
+    const loadInitialMovies = async () => {
+      setIsLoading(true);
+      try {
+        const initialMovies = await searchMovies({});
+        setMovies(initialMovies);
+      } catch (error) {
+        console.error("Error loading initial movies:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadInitialMovies();
+  }, []);
 
   const handleSearchResults = (newMovies: Movie[]) => {
     setMovies(newMovies);
@@ -25,12 +44,14 @@ export default function Catalogue() {
         <div className="tracking-wide text-xl pt-10 py-5 text-rose-500">
           Recherche
         </div>
-        <Searchbox onResults={handleSearchResults} />
+        <SearchForm onSearchResults={handleSearchResults} />
       </div>
 
       <div className="w-full grid xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 p-10">
-        {movies.length === 0 ? (
+        {isLoading ? (
           <p className="">Chargement ...</p>
+        ) : movies.length === 0 ? (
+          <p className="">Aucun film trouvé</p>
         ) : (
           movies.map((movie) => (
             <Card
