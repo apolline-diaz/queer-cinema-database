@@ -32,7 +32,7 @@ export async function getTopMovies() {
   }
 }
 
-export async function getMoviesByGenre(genreId: bigint) {
+export async function getMoviesByGenre(genreId: number) {
   try {
     const movies = await prisma.movies.findMany({
       where: {
