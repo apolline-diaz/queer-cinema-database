@@ -5,7 +5,7 @@ import {
   getMoviesByGenre,
   getMoviesByYearRange,
   getTopMovies,
-} from "@/app/server-actions/movies"; // ✅ Import from server actions
+} from "@/app/server-actions/movies";
 
 export const revalidate = 0;
 
