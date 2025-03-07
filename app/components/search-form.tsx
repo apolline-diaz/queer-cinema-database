@@ -92,7 +92,7 @@ export default function SearchForm({ onSearchResults }: MovieFilterFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 mb-8">
+    <form onSubmit={handleSubmit} className="space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <Select
           label="Pays"
@@ -127,10 +127,10 @@ export default function SearchForm({ onSearchResults }: MovieFilterFormProps) {
         />
       </div>
 
-      <div className="flex space-x-4">
+      <div className="flex flex-col sm:flex-row sm:w-full gap-4">
         <button
           type="submit"
-          className="bg-rose-500 hover:bg-rose-600 text-white font-bold py-2 px-4 rounded"
+          className="xs:w-full sm:w-[200px] bg-gradient-to-r from-rose-500 to-red-500 text-white px-4 py-2 rounded-md hover:from-rose-600 hover:to-red-600"
           disabled={isLoading}
         >
           Rechercher
@@ -139,7 +139,7 @@ export default function SearchForm({ onSearchResults }: MovieFilterFormProps) {
         <button
           type="button"
           onClick={handleReset}
-          className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded"
+          className="xs:w-full sm:w-[200px] border hover:border-rose-500 hover:text-rose-500 text-white px-4 py-2 rounded-md "
           disabled={isLoading}
         >
           Réinitialiser
