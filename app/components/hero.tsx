@@ -4,19 +4,19 @@ import Searchbox from "./searchbox";
 
 // Define the CardProps interface
 interface CardProps {
-  id: number;
+  id: string;
   title: string;
   // director: string;
-  description: string;
-  release_date: string;
+  description: string | null;
+  release_date: string | null;
   image_url: string;
 }
 
 export default function Hero({
   id,
   title,
-  description,
-  release_date,
+  description = "",
+  release_date = "",
   image_url,
 }: CardProps) {
   return (
@@ -29,7 +29,7 @@ export default function Hero({
           query: {
             id,
             title,
-            description: encodeURI(description),
+            description: encodeURI(description || ""),
             release_date,
             image_url,
           },

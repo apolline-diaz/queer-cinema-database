@@ -1,56 +1,118 @@
 "use server";
+import { PrismaClient } from "@prisma/client";
 
-import { supabase } from "@/lib/supabase";
+// Initialisez le client Prisma
+const prisma = new PrismaClient();
 
 export async function getTopMovies() {
-  const { data, error } = await supabase
-    .from("movies")
-    .select(`id, title, image_url, description, release_date`)
-    .eq("boost", true)
-    .range(0, 1);
+  try {
+    const movies = await prisma.movies.findMany({
+      where: {
+        boost: true,
+      },
+      select: {
+        id: true,
+        title: true,
+        image_url: true,
+        description: true,
+        release_date: true,
+      },
+      take: 2, // équivalent à range(0, 1)
+    });
 
-  if (error) throw new Error(error.message);
-  return data;
+    return movies;
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error
+        ? error.message
+        : "Une erreur inconnue est survenue";
+    throw new Error(
+      `Erreur lors de la récupération des films: ${errorMessage}`
+    );
+  }
 }
 
 export async function getMoviesByGenre(genreId: number) {
-  const { data, error } = await supabase
-    .from("movies")
-    .select(
-      `
-      id, 
-      title, 
-      image_url, 
-      release_date,
-      movie_genres!inner(genre_id),
-      genres:movie_genres!inner(genres(name))
-      `
-    )
-    .eq("movie_genres.genre_id", genreId)
-    .order("created_at", { ascending: false })
-    .range(0, 10);
+  try {
+    const movies = await prisma.movies.findMany({
+      where: {
+        movie_genres: {
+          some: {
+            genre_id: genreId,
+          },
+        },
+      },
+      select: {
+        id: true,
+        title: true,
+        image_url: true,
+        release_date: true,
+        movie_genres: {
+          include: {
+            genres: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
+      },
+      orderBy: {
+        created_at: "desc",
+      },
+      take: 15, // équivalent à range(0, 10)
+    });
 
-  if (error) throw new Error(error.message);
-  return data;
+    return movies;
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error
+        ? error.message
+        : "Une erreur inconnue est survenue";
+    throw new Error(
+      `Erreur lors de la récupération des films par genre: ${errorMessage}`
+    );
+  }
 }
 
 export async function getMoviesByYearRange(startYear: string, endYear: string) {
-  const { data, error } = await supabase
-    .from("movies")
-    .select(
-      `
-      id, 
-      title, 
-      image_url, 
-      release_date,
-      genres:movie_genres!inner(genres(name))
-      `
-    )
-    .gte("release_date", startYear)
-    .lte("release_date", endYear)
-    .order("created_at", { ascending: false })
-    .range(0, 10);
+  try {
+    const movies = await prisma.movies.findMany({
+      where: {
+        release_date: {
+          gte: startYear,
+          lte: endYear,
+        },
+      },
+      select: {
+        id: true,
+        title: true,
+        image_url: true,
+        release_date: true,
+        movie_genres: {
+          include: {
+            genres: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
+      },
+      orderBy: {
+        created_at: "desc",
+      },
+      take: 15, // équivalent à range(0, 10)
+    });
 
-  if (error) throw new Error(error.message);
-  return data;
+    return movies;
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error
+        ? error.message
+        : "Une erreur inconnue est survenue";
+    throw new Error(
+      `Erreur lors de la récupération des films par année: ${errorMessage}`
+    );
+  }
 }

@@ -1,27 +1,28 @@
 // Server Action for User's Movie Lists
+import { PrismaClient } from "@prisma/client";
 
-import db from "@/db";
-import { eq } from "drizzle-orm";
-import * as schema from "@/db/schema";
+const prisma = new PrismaClient();
 
 export async function getUserMovieLists(userId: string) {
   "use server";
 
-  const lists = await db.query.lists.findMany({
-    where: eq(schema.lists.userId, userId),
-    with: {
-      listsMovies: {
-        with: {
-          movie: {
-            with: {
-              movieDirectors: {
-                with: {
-                  director: true,
+  const lists = await prisma.lists.findMany({
+    where: {
+      user_id: userId,
+    },
+    include: {
+      lists_movies: {
+        include: {
+          movies: {
+            include: {
+              movie_directors: {
+                include: {
+                  directors: true,
                 },
               },
-              movieGenres: {
-                with: {
-                  genre: true,
+              movie_genres: {
+                include: {
+                  genres: true,
                 },
               },
             },

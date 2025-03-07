@@ -2,21 +2,21 @@ import Image from "next/image";
 import Link from "next/link";
 
 interface CardProps {
-  id: number;
+  id: string;
   title: string;
   directors: {
     name: string;
   } | null;
-  description: string;
-  release_date: string;
+  description: string | null;
+  release_date: string | null;
   image_url: string;
 }
 
 export default function HomeCard({
   id,
   title,
-  description,
-  release_date,
+  description = "",
+  release_date = "",
   image_url,
 }: CardProps) {
   return (
@@ -26,7 +26,7 @@ export default function HomeCard({
         query: {
           id,
           title,
-          description: encodeURI(description),
+          description: encodeURI(description || ""),
           release_date,
           image_url,
         },

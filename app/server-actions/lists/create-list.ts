@@ -1,5 +1,6 @@
-import db from "@/db";
-import { lists, listsMovies, movies, users } from "@/db/schema";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 export async function createList(data: {
   title: string;
@@ -16,29 +17,29 @@ export async function createList(data: {
 
   // Ajouter la liste à la base de données
   try {
-    // Créer la liste dans la base de données
-    const createdList = await db
-      .insert(lists)
-      .values({
-        title,
-        description,
-        userId,
-      })
-      .returning();
+    // Créer la liste et les associations avec les films en une seule transaction
+    const result = await prisma.$transaction(async (tx) => {
+      // Créer la liste dans la base de données
+      const createdList = await tx.lists.create({
+        data: {
+          title,
+          description,
+          user_id: userId,
+        },
+      });
 
-    const listId = createdList[0]?.id;
+      // Ajouter les films associés à la liste
+      if (movieIds.length > 0) {
+        await tx.lists_movies.createMany({
+          data: movieIds.map((movieId) => ({
+            list_id: createdList.id,
+            movie_id: movieId,
+          })),
+        });
+      }
 
-    if (!listId) {
-      return { type: "error", message: "Failed to create the list." };
-    }
-
-    // Ajouter les films associés à la liste
-    const values = movieIds.map((movieId) => ({
-      listId,
-      movieId,
-    }));
-
-    await db.insert(listsMovies).values(values);
+      return createdList;
+    });
 
     return { type: "success", message: "List created successfully!" };
   } catch (err) {
@@ -47,5 +48,9 @@ export async function createList(data: {
       type: "error",
       message: "An error occurred while creating the list.",
     };
+  } finally {
+    // Bonnes pratiques : déconnexion de Prisma
+    // Mais on peut généralement laisser le client Prisma en vie pendant la durée de vie de l'application
+    // await prisma.$disconnect();
   }
 }
