@@ -1,0 +1,138 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model countries {
+  created_at      DateTime          @default(now()) @db.Timestamptz(6)
+  name            String            @unique @db.VarChar
+  id              Int               @id @default(autoincrement())
+  code            String?
+  movie_countries movie_countries[]
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model directors {
+  created_at      DateTime          @default(now()) @db.Timestamptz(6)
+  name            String?           @db.VarChar
+  id              BigInt            @id @unique @default(autoincrement())
+  movie_directors movie_directors[]
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model genres {
+  created_at   DateTime       @default(now()) @db.Timestamptz(6)
+  name         String?        @unique @db.VarChar
+  id           BigInt         @id @default(autoincrement())
+  movie_genres movie_genres[]
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model keywords {
+  id             Int              @id @default(autoincrement())
+  created_at     DateTime         @default(now()) @db.Timestamptz(6)
+  name           String?          @db.VarChar
+  movie_keywords movie_keywords[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model lists {
+  id           BigInt         @id @default(autoincrement())
+  title        String         @db.VarChar(255)
+  description  String?
+  created_at   DateTime?      @default(now()) @db.Timestamp(6)
+  updated_at   DateTime?      @default(now()) @db.Timestamp(6)
+  user_id      String         @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  users        users          @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  lists_movies lists_movies[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model lists_movies {
+  list_id  BigInt
+  movie_id String    @db.Uuid
+  added_at DateTime? @default(now()) @db.Timestamp(6)
+  lists    lists     @relation(fields: [list_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_list")
+  movies   movies    @relation(fields: [movie_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_movie")
+
+  @@id([list_id, movie_id])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model movie_countries {
+  movie_id   String    @db.Uuid
+  country_id Int
+  countries  countries @relation(fields: [country_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  movies     movies    @relation(fields: [movie_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([movie_id, country_id])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model movie_directors {
+  movie_id    String    @db.Uuid
+  director_id BigInt
+  directors   directors @relation(fields: [director_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  movies      movies    @relation(fields: [movie_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([movie_id, director_id])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model movie_genres {
+  movie_id String @db.Uuid
+  genre_id BigInt
+  genres   genres @relation(fields: [genre_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  movies   movies @relation(fields: [movie_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([movie_id, genre_id])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model movie_keywords {
+  movie_id   String   @db.Uuid
+  keyword_id Int
+  keywords   keywords @relation(fields: [keyword_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  movies     movies   @relation(fields: [movie_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([movie_id, keyword_id])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model movies {
+  title           String            @db.VarChar
+  description     String?
+  release_date    String?
+  created_at      DateTime?         @default(now()) @db.Timestamptz(6)
+  updated_at      DateTime?         @default(now()) @db.Timestamptz(6)
+  language        String?           @db.VarChar
+  runtime         Decimal?          @db.Decimal
+  image_url       String?
+  id              String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  boost           Boolean?          @default(false)
+  director        String?           @db.VarChar
+  country         String?
+  lists_movies    lists_movies[]
+  movie_countries movie_countries[]
+  movie_directors movie_directors[]
+  movie_genres    movie_genres[]
+  movie_keywords  movie_keywords[]
+}
+
+model users {
+  id         String   @id @db.Uuid
+  email      String   @unique(map: "users_email_unique") @db.VarChar(255)
+  full_name  String?  @db.VarChar(255)
+  created_at DateTime @db.Timestamp(6)
+  lists      lists[]
+}
