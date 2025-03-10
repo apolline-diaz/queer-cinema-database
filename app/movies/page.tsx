@@ -5,7 +5,7 @@ import Card from "@/app/components/card";
 import SearchForm from "@/app/components/search-form";
 import { getImageUrl } from "@/utils";
 import { searchMovies } from "@/app/server-actions/movies/search-movies";
-import Searchfield from "../components/searchfield";
+// import Searchfield from "../components/searchfield";
 
 interface Movie {
   id: string;
@@ -58,7 +58,7 @@ export default function Catalogue() {
         <h1 className="text-2xl text-rose-500 font-medium mb-5">Recherche</h1>
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
           <div className="flex flex-col gap-5 w-full">
-            <Searchfield onResults={handleSearchResults} />
+            {/* <Searchfield onResults={handleSearchResults} /> */}
 
             <button
               onClick={toggleAdvancedSearch}

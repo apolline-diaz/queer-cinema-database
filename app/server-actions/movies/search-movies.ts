@@ -1,4 +1,3 @@
-// app/actions/movieActions.ts
 "use server";
 
 import { PrismaClient } from "@prisma/client";
