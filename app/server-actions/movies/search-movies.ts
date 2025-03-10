@@ -107,6 +107,7 @@ export async function searchMovies({
       orderBy: {
         created_at: "desc",
       },
+      take: 150,
     };
 
     // Add filters based on parameters
