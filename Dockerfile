@@ -70,6 +70,7 @@ RUN npm install -g pnpm
 
 # Copier les fichiers nécessaires pour l'installation des dépendances
 COPY package.json package-lock.json ./
+COPY prisma/ prisma/
 
 # Installer les dépendances
 RUN npm install

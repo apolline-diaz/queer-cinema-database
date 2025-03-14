@@ -1,47 +1,42 @@
-"use client";
-
-import { useState } from "react";
-import Card from "@/app/components/card";
-import Searchbox from "@/app/components/searchbox";
-import { getImageUrl } from "@/utils";
+import {
+  searchMovies,
+  getCountries,
+  getGenres,
+  getKeywords,
+  getReleaseYears,
+} from "@/app/server-actions/movies/search-movies";
+import ClientSearchComponent from "./client";
 
 interface Movie {
-  id: number;
+  id: string;
   title: string;
   image_url: string;
   release_date: string;
 }
 
-export default function Catalogue() {
-  const [movies, setMovies] = useState<Movie[]>([]);
-
-  const handleSearchResults = (newMovies: Movie[]) => {
-    setMovies(newMovies);
-  };
+export default async function Catalogue() {
+  // get filter data and all movies (initial movies)
+  const initialMovies = await searchMovies({});
+  const countries = await getCountries();
+  const genres = await getGenres();
+  const keywords = await getKeywords();
+  const releaseYears = await getReleaseYears();
 
   return (
     <div className="h-full w-full justify-center items-center text-white">
-      <div className="px-10">
-        <div className="tracking-wide text-xl pt-10 py-5 text-rose-500">
-          Recherche
-        </div>
-        <Searchbox onResults={handleSearchResults} />
-      </div>
-
-      <div className="w-full grid xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 p-10">
-        {movies.length === 0 ? (
-          <p className="">Chargement ...</p>
-        ) : (
-          movies.map((movie) => (
-            <Card
-              directors={null}
-              key={`${movie.title}-${movie.id}`}
-              {...movie}
-              image_url={getImageUrl(movie.image_url)}
-              description={""}
+      <div className="px-10 pt-10">
+        <h1 className="text-2xl text-rose-500 font-medium mb-5">Recherche</h1>
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+          <div className="flex flex-col gap-5 w-full">
+            <ClientSearchComponent
+              initialMovies={initialMovies}
+              countries={countries}
+              genres={genres}
+              keywords={keywords}
+              releaseYears={releaseYears}
             />
-          ))
-        )}
+          </div>
+        </div>
       </div>
     </div>
   );
