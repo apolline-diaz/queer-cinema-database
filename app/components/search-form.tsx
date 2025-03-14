@@ -45,12 +45,6 @@ export default function SearchForm({
 
   const [movies, setMovies] = useState<Movie[]>(initialMovies);
   const [isLoading, setIsLoading] = useState(false);
-  const [showAdvancedSearch, setShowAdvancedSearch] = useState(false);
-
-  // toggle advanced search view
-  const toggleAdvancedSearch = () => {
-    setShowAdvancedSearch(!showAdvancedSearch);
-  };
 
   // handle form submission
   const onSubmit = async (data: FormValues) => {
@@ -91,91 +85,80 @@ export default function SearchForm({
 
   return (
     <>
-      <button
-        onClick={toggleAdvancedSearch}
-        className="sm:w-[300px] xs:w-full bg-gradient-to-r from-rose-500 to-red-500 text-white px-4 py-2 rounded-md hover:from-rose-600 hover:to-red-600"
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="mt-4 p-4 border rounded-lg mb-4"
       >
-        {showAdvancedSearch
-          ? "Sortir de la recherche avancée"
-          : "Lancer une recherche avancée"}
-      </button>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <Controller
+            name="countryId"
+            control={control}
+            render={({ field }) => (
+              <Select
+                label="Pays"
+                options={countries}
+                {...field}
+                placeholder="Tous les pays"
+              />
+            )}
+          />
+          <Controller
+            name="genreId"
+            control={control}
+            render={({ field }) => (
+              <Select
+                label="Genre"
+                options={genres}
+                {...field}
+                placeholder="Tous les genres"
+              />
+            )}
+          />
+          <Controller
+            name="keywordId"
+            control={control}
+            render={({ field }) => (
+              <Select
+                label="Mot-clé"
+                options={keywords}
+                {...field}
+                placeholder="Tous les mots-clés"
+              />
+            )}
+          />
+          <Controller
+            name="releaseYear"
+            control={control}
+            render={({ field }) => (
+              <Select
+                label="Année de sortie"
+                options={releaseYears}
+                {...field}
+                placeholder="Toutes les années"
+              />
+            )}
+          />
+        </div>
 
-      {showAdvancedSearch && (
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="mt-4 p-4 border rounded-lg"
-        >
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <Controller
-              name="countryId"
-              control={control}
-              render={({ field }) => (
-                <Select
-                  label="Pays"
-                  options={countries}
-                  {...field}
-                  placeholder="Tous les pays"
-                />
-              )}
-            />
-            <Controller
-              name="genreId"
-              control={control}
-              render={({ field }) => (
-                <Select
-                  label="Genre"
-                  options={genres}
-                  {...field}
-                  placeholder="Tous les genres"
-                />
-              )}
-            />
-            <Controller
-              name="keywordId"
-              control={control}
-              render={({ field }) => (
-                <Select
-                  label="Mot-clé"
-                  options={keywords}
-                  {...field}
-                  placeholder="Tous les mots-clés"
-                />
-              )}
-            />
-            <Controller
-              name="releaseYear"
-              control={control}
-              render={({ field }) => (
-                <Select
-                  label="Année de sortie"
-                  options={releaseYears}
-                  {...field}
-                  placeholder="Toutes les années"
-                />
-              )}
-            />
-          </div>
+        <div className="flex flex-col sm:flex-row sm:w-full gap-4">
+          <button
+            type="submit"
+            className="xs:w-full sm:w-[200px] bg-gradient-to-r from-rose-500 to-red-500 text-white px-4 py-2 rounded-md hover:from-rose-600 hover:to-red-600"
+            disabled={isLoading}
+          >
+            Rechercher
+          </button>
 
-          <div className="flex flex-col sm:flex-row sm:w-full gap-4">
-            <button
-              type="submit"
-              className="xs:w-full sm:w-[200px] bg-gradient-to-r from-rose-500 to-red-500 text-white px-4 py-2 rounded-md hover:from-rose-600 hover:to-red-600"
-              disabled={isLoading}
-            >
-              Rechercher
-            </button>
-
-            <button
-              type="button"
-              onClick={handleReset}
-              className="xs:w-full sm:w-[200px] border hover:border-rose-500 hover:text-rose-500 text-white px-4 py-2 rounded-md"
-              disabled={isLoading}
-            >
-              Réinitialiser
-            </button>
-          </div>
-        </form>
-      )}
+          <button
+            type="button"
+            onClick={handleReset}
+            className="xs:w-full sm:w-[200px] border hover:border-rose-500 hover:text-rose-500 text-white px-4 py-2 rounded-md"
+            disabled={isLoading}
+          >
+            Réinitialiser
+          </button>
+        </div>
+      </form>
 
       <div className="w-full grid xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
         {isLoading ? (

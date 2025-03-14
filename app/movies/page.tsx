@@ -5,7 +5,7 @@ import {
   getKeywords,
   getReleaseYears,
 } from "@/app/server-actions/movies/search-movies";
-import SearchForm from "@/app/components/search-form";
+import ClientSearchComponent from "./client";
 
 interface Movie {
   id: string;
@@ -28,8 +28,7 @@ export default async function Catalogue() {
         <h1 className="text-2xl text-rose-500 font-medium mb-5">Recherche</h1>
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
           <div className="flex flex-col gap-5 w-full">
-            {/* pass filters options and initial movies */}
-            <SearchForm
+            <ClientSearchComponent
               initialMovies={initialMovies}
               countries={countries}
               genres={genres}
