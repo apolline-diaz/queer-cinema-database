@@ -1,150 +1,209 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { searchMovies } from "@/app/server-actions/movies/search-movies";
+import Card from "./card";
+import { getImageUrl } from "@/utils";
 import Select from "./select";
-import {
-  getCountries,
-  getGenres,
-  getKeywords,
-  getReleaseYears,
-  searchMovies,
-} from "@/app/server-actions/movies/search-movies";
 
-interface MovieFilterFormProps {
-  onSearchResults: (movies: any[]) => void;
+interface Movie {
+  id: string;
+  title: string;
+  image_url: string;
+  release_date: string;
 }
 
-export default function SearchForm({ onSearchResults }: MovieFilterFormProps) {
-  const [countries, setCountries] = useState<
-    { value: string; label: string }[]
-  >([]);
-  const [genres, setGenres] = useState<{ value: string; label: string }[]>([]);
-  const [keywords, setKeywords] = useState<{ value: string; label: string }[]>(
-    []
-  );
-  const [releaseYears, setReleaseYears] = useState<
-    { value: string; label: string }[]
-  >([]);
-  const [isLoading, setIsLoading] = useState(true);
+interface FormValues {
+  countryId: string;
+  genreId: string;
+  keywordId: string;
+  releaseYear: string;
+}
 
-  // Form state
-  const [selectedCountry, setSelectedCountry] = useState("");
-  const [selectedGenre, setSelectedGenre] = useState("");
-  const [selectedKeyword, setSelectedKeyword] = useState("");
-  const [selectedYear, setSelectedYear] = useState("");
+export default function SearchForm({
+  initialMovies,
+  countries,
+  genres,
+  keywords,
+  releaseYears,
+}: {
+  initialMovies: Movie[];
+  countries: { value: string; label: string }[];
+  genres: { value: string; label: string }[];
+  keywords: { value: string; label: string }[];
+  releaseYears: { value: string; label: string }[];
+}) {
+  const { control, handleSubmit, reset } = useForm<FormValues>({
+    defaultValues: {
+      countryId: "",
+      genreId: "",
+      keywordId: "",
+      releaseYear: "",
+    },
+  });
 
-  // Fetch filter options on component mount
-  useEffect(() => {
-    const fetchFilterOptions = async () => {
-      setIsLoading(true);
-      try {
-        const [countriesData, genresData, keywordsData, yearsData] =
-          await Promise.all([
-            getCountries(),
-            getGenres(),
-            getKeywords(),
-            getReleaseYears(),
-          ]);
+  const [movies, setMovies] = useState<Movie[]>(initialMovies);
+  const [isLoading, setIsLoading] = useState(false);
+  const [showAdvancedSearch, setShowAdvancedSearch] = useState(false);
 
-        setCountries(countriesData);
-        setGenres(genresData);
-        setKeywords(keywordsData);
-        setReleaseYears(yearsData);
-      } catch (error) {
-        console.error("Error fetching filter options:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  // toggle advanced search view
+  const toggleAdvancedSearch = () => {
+    setShowAdvancedSearch(!showAdvancedSearch);
+  };
 
-    fetchFilterOptions();
-  }, []);
-
-  // Handle form submission
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  // handle form submission
+  const onSubmit = async (data: FormValues) => {
+    setIsLoading(true); // Show loading indicator
 
     try {
       const results = await searchMovies({
-        countryId: selectedCountry || undefined,
-        genreId: selectedGenre || undefined,
-        keywordId: selectedKeyword || undefined,
-        releaseYear: selectedYear || undefined,
+        countryId: data.countryId || undefined,
+        genreId: data.genreId || undefined,
+        keywordId: data.keywordId || undefined,
+        releaseYear: data.releaseYear || undefined,
       });
 
-      onSearchResults(results);
+      setMovies(results); // Update the movie list with search results
+      setIsLoading(false);
     } catch (error) {
       console.error("Error searching movies:", error);
+      setMovies([]); // Reset the movie list on error
+      setIsLoading(false);
     }
   };
 
-  // Reset all filters
-  const handleReset = () => {
-    setSelectedCountry("");
-    setSelectedGenre("");
-    setSelectedKeyword("");
-    setSelectedYear("");
+  // Reset form and fetch all movies
+  const handleReset = async () => {
+    reset(); // Reset all form values
+    setIsLoading(true);
 
-    // Trigger search with no filters
-    searchMovies({}).then((results: any[]) => {
-      onSearchResults(results);
-    });
+    try {
+      const results = await searchMovies({}); // Trigger search with no filters
+      setMovies(results);
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error resetting search:", error);
+      setMovies([]); // Reset the movie list on error
+      setIsLoading(false);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Select
-          label="Pays"
-          options={countries}
-          value={selectedCountry}
-          onChange={setSelectedCountry}
-          placeholder="Tous les pays"
-        />
+    <>
+      <button
+        onClick={toggleAdvancedSearch}
+        className="sm:w-[300px] xs:w-full bg-gradient-to-r from-rose-500 to-red-500 text-white px-4 py-2 rounded-md hover:from-rose-600 hover:to-red-600"
+      >
+        {showAdvancedSearch
+          ? "Sortir de la recherche avancée"
+          : "Lancer une recherche avancée"}
+      </button>
 
-        <Select
-          label="Genre"
-          options={genres}
-          value={selectedGenre}
-          onChange={setSelectedGenre}
-          placeholder="Tous les genres"
-        />
-
-        <Select
-          label="Mot-clé"
-          options={keywords}
-          value={selectedKeyword}
-          onChange={setSelectedKeyword}
-          placeholder="Tous les mots-clés"
-        />
-
-        <Select
-          label="Année de sortie"
-          options={releaseYears}
-          value={selectedYear}
-          onChange={setSelectedYear}
-          placeholder="Toutes les années"
-        />
-      </div>
-
-      <div className="flex flex-col sm:flex-row sm:w-full gap-4">
-        <button
-          type="submit"
-          className="xs:w-full sm:w-[200px] bg-gradient-to-r from-rose-500 to-red-500 text-white px-4 py-2 rounded-md hover:from-rose-600 hover:to-red-600"
-          disabled={isLoading}
+      {showAdvancedSearch && (
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="mt-4 p-4 border rounded-lg"
         >
-          Rechercher
-        </button>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <Controller
+              name="countryId"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  label="Pays"
+                  options={countries}
+                  {...field}
+                  placeholder="Tous les pays"
+                />
+              )}
+            />
+            <Controller
+              name="genreId"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  label="Genre"
+                  options={genres}
+                  {...field}
+                  placeholder="Tous les genres"
+                />
+              )}
+            />
+            <Controller
+              name="keywordId"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  label="Mot-clé"
+                  options={keywords}
+                  {...field}
+                  placeholder="Tous les mots-clés"
+                />
+              )}
+            />
+            <Controller
+              name="releaseYear"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  label="Année de sortie"
+                  options={releaseYears}
+                  {...field}
+                  placeholder="Toutes les années"
+                />
+              )}
+            />
+          </div>
 
-        <button
-          type="button"
-          onClick={handleReset}
-          className="xs:w-full sm:w-[200px] border hover:border-rose-500 hover:text-rose-500 text-white px-4 py-2 rounded-md "
-          disabled={isLoading}
-        >
-          Réinitialiser
-        </button>
+          <div className="flex flex-col sm:flex-row sm:w-full gap-4">
+            <button
+              type="submit"
+              className="xs:w-full sm:w-[200px] bg-gradient-to-r from-rose-500 to-red-500 text-white px-4 py-2 rounded-md hover:from-rose-600 hover:to-red-600"
+              disabled={isLoading}
+            >
+              Rechercher
+            </button>
+
+            <button
+              type="button"
+              onClick={handleReset}
+              className="xs:w-full sm:w-[200px] border hover:border-rose-500 hover:text-rose-500 text-white px-4 py-2 rounded-md"
+              disabled={isLoading}
+            >
+              Réinitialiser
+            </button>
+          </div>
+        </form>
+      )}
+
+      <div className="w-full grid xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+        {isLoading ? (
+          Array.from({ length: 8 }).map((_, index) => (
+            <div
+              key={index}
+              className="animate-pulse bg-gray-500 h-48 w-full justify-end max-w-xs mx-auto group overflow-hidden flex flex-col transition-transform"
+            >
+              <div className="flex flex-col p-5 space-y-2">
+                <div className="h-6 bg-gray-400 rounded w-3/4 mb-2"></div>
+                <div className="h-4 bg-gray-400 rounded w-1/3 mb-2"></div>
+              </div>
+            </div>
+          ))
+        ) : movies.length === 0 ? (
+          <p>Aucun film trouvé</p>
+        ) : (
+          movies.map((movie) => (
+            <Card
+              directors={null}
+              key={`${movie.title}-${movie.id}`}
+              {...movie}
+              image_url={getImageUrl(movie.image_url)}
+              description={""}
+            />
+          ))
+        )}
       </div>
-    </form>
+    </>
   );
 }
