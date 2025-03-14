@@ -14,6 +14,18 @@ interface Movie {
   release_date: string;
 }
 
+const SkeletonCard = () => {
+  return (
+    <div className="animate-pulse bg-gray-800 rounded-lg w-full max-w-xs mx-auto">
+      <div className="h-48 bg-gray-600 rounded-t-lg"></div>
+      <div className="p-4">
+        <div className="h-6 bg-gray-600 rounded w-3/4 mb-2"></div>
+        <div className="h-4 bg-gray-600 rounded w-1/2"></div>
+      </div>
+    </div>
+  );
+};
+
 export default function Catalogue() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -80,7 +92,9 @@ export default function Catalogue() {
 
       <div className="w-full grid xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 p-10">
         {isLoading ? (
-          <p className="">Chargement ...</p>
+          Array.from({ length: 8 }).map((_, index) => (
+            <SkeletonCard key={index} />
+          ))
         ) : movies.length === 0 ? (
           <p className="">Aucun film trouvé</p>
         ) : (
