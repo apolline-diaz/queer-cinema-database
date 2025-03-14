@@ -28,10 +28,10 @@ export default function ClientSearchComponent({
   keywords,
   releaseYears,
 }: ClientSearchComponentProps) {
-  const [searchMode, setSearchMode] = useState<"form" | "field">("form");
+  const [searchMode, setSearchMode] = useState<"field" | "form">("field");
 
   const toggleSearchMode = () => {
-    setSearchMode(searchMode === "form" ? "field" : "form");
+    setSearchMode(searchMode === "field" ? "form" : "field");
   };
 
   return (
@@ -40,12 +40,14 @@ export default function ClientSearchComponent({
         onClick={toggleSearchMode}
         className="xs:w-full w-auto my-2 font-light hover:bg-rose-500 hover:text-white bg-transparent text-rose-500 border p-2 border-rose-500 rounded-md"
       >
-        {searchMode === "form"
-          ? "Rechercher par titre ou mot-clé? "
-          : "Rechercher des films par filtres?"}
+        {searchMode === "field"
+          ? "Faire une recherche avancée?"
+          : "Rechercher par titre ou mot-clé? "}
       </button>
 
-      {searchMode === "form" ? (
+      {searchMode === "field" ? (
+        <Searchfield initialMovies={initialMovies} />
+      ) : (
         <SearchForm
           initialMovies={initialMovies}
           countries={countries}
@@ -53,8 +55,6 @@ export default function ClientSearchComponent({
           keywords={keywords}
           releaseYears={releaseYears}
         />
-      ) : (
-        <Searchfield initialMovies={initialMovies} />
       )}
     </div>
   );

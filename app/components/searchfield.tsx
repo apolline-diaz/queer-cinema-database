@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { getMoviesByKeyword, getMoviesByTitle } from "@/utils/movies-search";
+import {
+  getMoviesByKeyword,
+  getMoviesByTitle,
+} from "@/app/server-actions/movies/get-movies-by-title-and-keyword";
 import Card from "./card";
 import { getImageUrl } from "@/utils";
 
 interface Movie {
   id: string;
   title: string;
-  image_url: string;
-  release_date: string;
+  image_url: string | null;
+  release_date: string | null;
 }
 
 export default function Searchfield({
@@ -42,7 +45,7 @@ export default function Searchfield({
       <form>
         <div className="w-full xs:w-1/2 my-5 flex flex-col sm:flex-row gap-3">
           <input
-            className="appearance-none text-md font-light block w-full bg-neutral-950 border-b border-b-white text-gray-200 py-3 leading-tight focus:outline-none "
+            className="appearance-none text-md font-light block w-full bg-neutral-950 border-b border-b-white text-gray-200 py-3 leading-tight focus:none focus:outline-none "
             id="title"
             type="text"
             value={titleSearch}
@@ -50,7 +53,7 @@ export default function Searchfield({
             placeholder="Entrez un titre"
           />
           <input
-            className="appearance-none text-md font-light block w-full bg-neutral-950 border-b border-b-white text-gray-200 py-3 leading-tight focus:outline-none "
+            className="appearance-none text-md font-light block w-full bg-neutral-950 border-b border-b-white text-gray-200 py-3 leading-tight focus:none focus:outline-none"
             id="keyword"
             type="text"
             value={keywordSearch}
@@ -80,7 +83,9 @@ export default function Searchfield({
               directors={null}
               key={`${movie.title}-${movie.id}`}
               {...movie}
-              image_url={getImageUrl(movie.image_url)}
+              image_url={getImageUrl(
+                movie.image_url || "public/assets/missing_image.png"
+              )}
               description={""}
             />
           ))
