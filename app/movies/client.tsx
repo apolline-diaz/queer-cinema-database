@@ -3,8 +3,6 @@
 import React, { useState } from "react";
 import SearchForm from "@/app/components/search-form";
 import Searchfield from "@/app/components/searchfield";
-import { getImageUrl } from "@/utils";
-import Card from "../components/card";
 
 interface Movie {
   id: string;
@@ -19,6 +17,7 @@ interface ClientSearchComponentProps {
   genres: { value: string; label: string }[];
   keywords: { value: string; label: string }[];
   releaseYears: { value: string; label: string }[];
+  initialKeyword?: string;
 }
 
 export default function ClientSearchComponent({
@@ -27,8 +26,11 @@ export default function ClientSearchComponent({
   genres,
   keywords,
   releaseYears,
+  initialKeyword = "",
 }: ClientSearchComponentProps) {
-  const [searchMode, setSearchMode] = useState<"field" | "form">("field");
+  const [searchMode, setSearchMode] = useState<"field" | "form">(
+    initialKeyword ? "field" : "form"
+  );
 
   const toggleSearchMode = () => {
     setSearchMode(searchMode === "field" ? "form" : "field");
@@ -46,7 +48,10 @@ export default function ClientSearchComponent({
       </button>
 
       {searchMode === "field" ? (
-        <Searchfield initialMovies={initialMovies} />
+        <Searchfield
+          initialMovies={initialMovies}
+          initialKeyword={initialKeyword}
+        />
       ) : (
         <SearchForm
           initialMovies={initialMovies}

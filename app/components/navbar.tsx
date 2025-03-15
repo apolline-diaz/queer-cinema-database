@@ -88,13 +88,13 @@ export default function Navbar({ user }: HeaderProps) {
                     </li>
                   )}
                   {!user ? (
-                    <li className="hover:bg-black hover:text-white border border-black rounded-full px-2 py-1">
+                    <li className="hover:text-rose-500 hover:border-rose-500 py-2 px-3 rounded-full border ">
                       <Link href="/login">Connexion</Link>
                     </li>
                   ) : (
                     <li>
                       <form action={logout}>
-                        <button className=" hover:text-rose-500 px-2 py-1">
+                        <button className="hover:text-rose-500 hover:border-rose-500 py-2 px-3 rounded-full border ">
                           Se déconnecter
                         </button>
                       </form>
@@ -121,7 +121,7 @@ export default function Navbar({ user }: HeaderProps) {
                   <li>
                     <Link
                       href="/login"
-                      className="hover:text-rose-500 px-2 py-1"
+                      className="hover:text-rose-500 hover:border-rose-500 py-2 px-3 rounded-full border"
                     >
                       Connexion
                     </Link>
@@ -129,7 +129,7 @@ export default function Navbar({ user }: HeaderProps) {
                 ) : (
                   <li>
                     <form action={logout}>
-                      <button className="hover:text-rose-500 px-2 py-1">
+                      <button className="hover:text-rose-500 hover:border-rose-500 py-2 px-3 rounded-full border ">
                         Se déconnecter
                       </button>
                     </form>
