@@ -35,7 +35,7 @@ export default function LoginPage() {
           </div>
           <div className="w-full justify-center flex flex-wrap gap-4">
             <button
-              className="hover:text-rose-500 p-2 "
+              className="hover:text-rose-500 hover:border-rose-500 py-2 px-3 rounded-full border "
               formAction={login}
               disabled={pending}
             >
