@@ -93,13 +93,13 @@ export default async function Page({ params }: { params: { slug: string } }) {
           </div>
         </div>
 
-        <div className="absolute top-20 right-4">
+        {/* <div className="absolute top-20 right-4">
           <Link href={`/movies/edit/${movie.id}`}>
             <button className="bg-gradient-to-r from-rose-500 to-red-500 text-white px-4 py-2 rounded-md hover:from-rose-600  hover:to-red-600">
               Modifier
             </button>
           </Link>
-        </div>
+        </div> */}
 
         <div className="p-10 gap-3 flex flex-col">
           <div className="flex flex-col font-light">
@@ -124,7 +124,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
               {movie.keywords?.map((keyword) => (
                 <Link
                   key={keyword.id}
-                  href={`/catalogue?keyword=${encodeURIComponent(
+                  href={`/movies?keyword=${encodeURIComponent(
                     keyword.name || ""
                   )}`}
                 >
@@ -132,9 +132,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
                     key={keyword.id}
                     className="font-light text-sm rounded-full border border-rose-500 text-rose-500 shadow-md px-2 mr-1 py-1
                   hover:bg-rose-500 hover:text-white hover:border-none hover:cursor-pointer"
-                    // className="font-light text-sm rounded-full
-                    // bg-gradient-to-b from-rose-600 to-rose-700 shadow-md p-1.5
-                    // hover:from-rose-700 hover:to-rose-800 hover:brightness-90 hover:cursor-pointer transition-all duration-300"
                   >
                     {keyword.name}
                   </span>
