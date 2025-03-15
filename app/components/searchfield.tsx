@@ -45,7 +45,7 @@ export default function Searchfield({
       <form>
         <div className="w-full xs:w-1/2 my-5 flex flex-col sm:flex-row gap-3">
           <input
-            className="appearance-none text-md font-light block w-full bg-neutral-950 border-b border-b-white text-gray-200 py-3 leading-tight focus:none focus:outline-none "
+            className="appearance-none text-md font-light block w-full bg-neutral-950 border-b border-b-white text-gray-200 py-3 leading-tight rounded-none focus:none focus:outline-none "
             id="title"
             type="text"
             value={titleSearch}
@@ -53,7 +53,7 @@ export default function Searchfield({
             placeholder="Entrez un titre"
           />
           <input
-            className="appearance-none text-md font-light block w-full bg-neutral-950 border-b border-b-white text-gray-200 py-3 leading-tight focus:none focus:outline-none"
+            className="appearance-none text-md font-light block w-full bg-neutral-950 border-b border-b-white text-gray-200 py-3 leading-tight rounded-none focus:none focus:outline-none"
             id="keyword"
             type="text"
             value={keywordSearch}

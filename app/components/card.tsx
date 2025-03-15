@@ -4,9 +4,7 @@ import Link from "next/link";
 interface CardProps {
   id: string;
   title: string;
-  directors: {
-    name: string;
-  } | null;
+  directors: any;
   description: string;
   release_date: string | null;
   image_url: string | null;
@@ -15,37 +13,22 @@ interface CardProps {
 export default function Card({
   id,
   title,
+  image_url,
   description,
   release_date,
-  image_url,
+  directors,
 }: CardProps) {
-  const isSupabaseImage = image_url?.startsWith(
-    "https://xcwrhyjbfgzsaslstssc.supabase.co"
-  );
-  const isMubiImage = image_url?.startsWith("https://images.mubicdn.net");
-
   return (
-    <Link
-      href={{
-        pathname: `/movies/${id}`,
-        query: {
-          id,
-          title,
-          description: encodeURI(description),
-          release_date,
-          image_url,
-        },
-      }}
-    >
+    <Link href={`/movie/${id}`} className="group">
       <div className="group overflow-hidden flex flex-col transition-transform">
         <div className="relative w-full h-48 overflow-hidden ">
           <Image
             src={image_url || "public/assets/missing_image.png"}
-            fill={true}
+            fill
             alt={title}
             className="object-cover transform transition-transform duration-700 ease-in-out group-hover:scale-110 group-hover:brightness-50"
             onError={(e) => {
-              e.currentTarget.src = "https://via.placeholder.com/640x360";
+              e.currentTarget.src = "public/assets/no_image_found.png";
             }}
           />
           <div className="absolute bottom-0 left-0 w-full p-5 bg-gradient-to-t via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">

@@ -6,7 +6,7 @@ import Searchfield from "./searchfield";
 interface CardProps {
   id: string;
   title: string;
-  // director: string;
+  directors: any;
   description: string | null;
   release_date: string | null;
   image_url: string;
@@ -21,24 +21,11 @@ export default function Hero({
 }: CardProps) {
   return (
     <div className="bg bg-gray-953 h-96 w-full justify-center items-center">
-      <Link
-        href={{
-          pathname: `/movies/${id}`,
-          // href={{
-          //    pathname: `/movies/${id}`,
-          query: {
-            id,
-            title,
-            description: encodeURI(description || ""),
-            release_date,
-            image_url,
-          },
-        }}
-      >
+      <Link href={`/movies/${id}`}>
         <div className="h-full w-full relative bg-center">
           <Image
             src={image_url}
-            fill={true}
+            fill
             alt={title}
             style={{ objectFit: "cover" }}
           />
@@ -50,7 +37,7 @@ export default function Hero({
                 <span className="text-transparent text-bold bg-clip-text bg-gradient-to-r from-red-500 via-yellow-500 via-green-500 via-blue-500 via-indigo-500 to-purple-500">
                   LGBTQI+
                 </span>{" "}
-                et les archives audiovisuelles.
+                et ses archives.
               </h2>
             </div>
             <Link
