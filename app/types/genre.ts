@@ -1,4 +1,4 @@
 export type Genre = {
-  id: number;
+  id: bigint;
   name: string;
 };

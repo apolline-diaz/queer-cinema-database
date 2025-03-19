@@ -1,4 +1,4 @@
 export type Director = {
-  id: number;
-  name: string;
+  id: bigint;
+  name: string | null;
 };

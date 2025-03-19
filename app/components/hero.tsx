@@ -50,7 +50,7 @@ export default function Hero({
                 <span className="text-transparent text-bold bg-clip-text bg-gradient-to-r from-red-500 via-yellow-500 via-green-500 via-blue-500 via-indigo-500 to-purple-500">
                   LGBTQI+
                 </span>{" "}
-                et les archives audiovisuelles.
+                et ses archives.
               </h2>
             </div>
             <Link
