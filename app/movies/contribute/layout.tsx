@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description:
     "Ajoutez et référencez vos films facilement en utilisant Movie Diary",
   alternates: {
-    canonical: `/movies/upload`,
+    canonical: `/movies/contribute`,
   },
 };
 

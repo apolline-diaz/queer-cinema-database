@@ -14,26 +14,28 @@ export default function LoginPage() {
           <div className="flex flex-col gap-3 mb-10">
             <label htmlFor="email">Adresse e-mail</label>
             <input
-              className="appearance-none text-lg font-light border-black block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
+              className="appearance-none text-sm font-light border-white block w-full bg-neutral-950 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:text-white"
               id="email"
               name="email"
               type="email"
+              aria-label="email"
               placeholder="Tapez votre adresse"
               required
             />
             <label htmlFor="password">Mot de passe</label>
             <input
-              className="appearance-none text-lg font-light border-black block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
+              className="appearance-none text-sm font-light border-white block w-full bg-neutral-950 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:text-white"
               id="password"
               name="password"
               type="password"
+              aria-label="password"
               placeholder="Tapez votre mot de passe"
               required
             />
           </div>
           <div className="w-full justify-center flex flex-wrap gap-4">
             <button
-              className="rounded-full border border-black  hover:text-rose-500 p-2 "
+              className="hover:text-rose-500 hover:border-rose-500 py-2 px-3 rounded-full border "
               formAction={login}
               disabled={pending}
             >

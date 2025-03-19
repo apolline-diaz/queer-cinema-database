@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useFormState } from "react-dom";
-import { addMovie } from "@/app/server-actions/movies";
+import { addMovie } from "@/app/server-actions/movies/add-movie";
 import { SubmitButton } from "@/app/components/submit-button";
 import {
   getGenres,
@@ -290,7 +290,8 @@ const UploadFormPage: React.FC = () => {
             /> */}
             <input
               className="block appearance-none w-full font-light text-sm bg-neutral-950 border-b-white text-white border py-2 px-3 pr-8 rounded leading-tight focus:outline-none"
-              name="keyword_input" // Changer en un nom plus explicite
+              id="keyword_input"
+              name="keyword_input"
               value={keywordInput}
               onChange={handleKeywordInputChange}
               placeholder="Tapez pour rechercher des mots-clés"

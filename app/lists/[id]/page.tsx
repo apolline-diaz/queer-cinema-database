@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
-import Card from "@/app/components/card"; // Import du composant Card
+import Card from "@/app/components/card";
 
 export default function ListPage({ params }: { params: { id: string } }) {
   const { id } = params;

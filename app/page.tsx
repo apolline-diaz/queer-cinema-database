@@ -5,40 +5,17 @@ import {
   getMoviesByGenre,
   getMoviesByYearRange,
   getTopMovies,
-} from "@/utils/movies-queries";
+} from "@/app/server-actions/movies";
 
 export const revalidate = 0;
 
 export default async function Home() {
   try {
-    const { data: topMovies, error: topMoviesError } = await getTopMovies();
-    if (topMoviesError) throw new Error(topMoviesError.message);
-
-    const { data: dramaMovies, error: dramaError } = await getMoviesByGenre(13);
-    if (dramaError) throw new Error(dramaError.message);
-
-    const { data: comedyMovies, error: comedyError } = await getMoviesByGenre(
-      15
-    );
-    if (comedyError) throw new Error(comedyError.message);
-
-    const { data: documentaryMovies, error: documentaryError } =
-      await getMoviesByGenre(9);
-    if (documentaryError) throw new Error(documentaryError.message);
-
-    const { data: ninetiesMovies, error: ninetiesError } =
-      await getMoviesByYearRange("1990", "1999");
-    if (ninetiesError) throw new Error(ninetiesError.message);
-
-    if (
-      !topMovies ||
-      !dramaMovies ||
-      !comedyMovies ||
-      !documentaryMovies ||
-      !ninetiesMovies
-    ) {
-      return <p>Aucun film trouvé</p>;
-    }
+    const topMovies = await getTopMovies();
+    const dramaMovies = await getMoviesByGenre(13);
+    const comedyMovies = await getMoviesByGenre(15);
+    const documentaryMovies = await getMoviesByGenre(9);
+    const ninetiesMovies = await getMoviesByYearRange("1990", "1999");
 
     return (
       <main className="w-full ">
@@ -48,65 +25,65 @@ export default async function Home() {
               <Hero
                 key={`${movie.title}-${movie.id}`}
                 {...movie}
-                image_url={getImageUrl(movie.image_url)}
+                image_url={getImageUrl(movie.image_url || "")}
               />
             ))}
           </div>
         </div>
 
-        <div className="px-10 pb-5">
-          {/* drama movies */}
-          <h2 className="text-xl my-5 text-rose-500">Drame</h2>
-          <div className="flex flex-row-1 overflow-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5">
+        <div className="px-10 py-5">
+          {/* Drama Movies */}
+          <h2 className="text-xl mb-2 text-rose-500">Drame</h2>
+          <div className="flex flex-row-1 mb-5 overflow-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5">
             {dramaMovies.map((movie) => (
               <HomeCard
                 directors={null}
                 description={""}
                 key={`${movie.title}-${movie.id}`}
                 {...movie}
-                image_url={getImageUrl(movie.image_url)}
+                image_url={getImageUrl(movie.image_url || "")}
               />
             ))}
           </div>
 
-          {/* comedy movies */}
-          <h2 className="text-xl my-5 text-rose-500">Comédie</h2>
-          <div className="flex flex-row-1 overflow-auto gap-5">
+          {/* Comedy Movies */}
+          <h2 className="text-xl mb-2 text-rose-500">Comédie</h2>
+          <div className="flex flex-row-1 mb-5 overflow-auto gap-5">
             {comedyMovies.map((movie) => (
               <HomeCard
                 directors={null}
                 description={""}
                 key={`${movie.title}-${movie.id}`}
                 {...movie}
-                image_url={getImageUrl(movie.image_url)}
+                image_url={getImageUrl(movie.image_url || "")}
               />
             ))}
           </div>
 
-          {/* documentary movies */}
-          <h2 className="text-xl my-5 text-rose-500">Documentaire</h2>
-          <div className="flex flex-row-1 overflow-auto gap-5">
+          {/* Documentary Movies */}
+          <h2 className="text-xl mb-2 text-rose-500">Documentaire</h2>
+          <div className="flex flex-row-1 mb-5 overflow-auto gap-5">
             {documentaryMovies.map((movie) => (
               <HomeCard
                 directors={null}
                 description={""}
                 key={`${movie.title}-${movie.id}`}
                 {...movie}
-                image_url={getImageUrl(movie.image_url)}
+                image_url={getImageUrl(movie.image_url || "")}
               />
             ))}
           </div>
 
-          {/* nineties movies */}
-          <h2 className="text-xl my-5 text-rose-500">Années 90</h2>
-          <div className="flex flex-row-1 overflow-auto gap-5">
+          {/* Nineties Movies */}
+          <h2 className="text-xl mb-2 text-rose-500">Années 90</h2>
+          <div className="flex flex-row-1 mb-5 overflow-auto gap-5">
             {ninetiesMovies.map((movie) => (
               <HomeCard
                 directors={null}
                 description={""}
                 key={`${movie.title}-${movie.id}`}
                 {...movie}
-                image_url={getImageUrl(movie.image_url)}
+                image_url={getImageUrl(movie.image_url || "")}
               />
             ))}
           </div>
@@ -114,7 +91,6 @@ export default async function Home() {
       </main>
     );
   } catch (error) {
-    // handler centralized for errors centralisée des erreurs
     return (
       <p>Erreur lors du chargement des films : {(error as Error).message}</p>
     );
