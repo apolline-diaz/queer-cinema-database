@@ -41,7 +41,7 @@ export default function KeywordStatsClientComponent({
 
   return (
     <>
-      <div className="mb-10 flex xs:flex-col justify-left ">
+      <div className="mb-10 flex xs:flex-col justify-start">
         <div className="flex flex-col">
           <div className="flex flex-wrap gap-4 xs:w-full">
             <button
@@ -65,13 +65,13 @@ export default function KeywordStatsClientComponent({
               Diagramme en camembert
             </button>
           </div>
-          <h2 className="text-xl font-medium py-4">
+          <h2 className="text-xl font-medium pt-4">
             Distribution des films par mot-clé
           </h2>
         </div>
       </div>
 
-      <div className="rounded-lg shadow-lg my-10">
+      <div className="rounded-lg shadow-lg my-6">
         {/* Distribution des films par mot-clé ({totalMovies} films au total) */}
         <div className="h-96">
           {chartType === "bar" ? (
