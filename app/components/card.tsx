@@ -1,10 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Director } from "../types/director";
 
 interface CardProps {
   id: string;
   title: string;
-  directors: string | null;
+  directors: string | null | Director[];
   description: string;
   release_date: string | null;
   image_url: string;
