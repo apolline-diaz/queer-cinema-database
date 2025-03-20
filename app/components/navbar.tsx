@@ -80,6 +80,9 @@ export default function Navbar({ user }: HeaderProps) {
                   <li className="hover:underline underline-offset-8">
                     <Link href="/movies">Catalogue</Link>
                   </li>
+                  <li className="hover:underline underline-offset-8">
+                    <Link href="/stats">Statistiques</Link>
+                  </li>
                   {user && (
                     <li className="hover:underline underline-offset-8">
                       <Link href="/profile" data-testid="profile-link-mobile">
@@ -109,6 +112,9 @@ export default function Navbar({ user }: HeaderProps) {
               <ul className="DESKTOP-MENU hidden space-x-8 lg:flex items-center">
                 <li className="hover:underline underline-offset-8">
                   <Link href="/movies">Catalogue</Link>
+                </li>
+                <li className="hover:underline underline-offset-8">
+                  <Link href="/stats">Statistiques</Link>
                 </li>
                 {user && (
                   <li className="hover:underline underline-offset-8">
