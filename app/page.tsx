@@ -23,6 +23,7 @@ export default async function Home() {
           <div className="w-full cover">
             {topMovies.map((movie) => (
               <Hero
+                directors={undefined}
                 key={`${movie.title}-${movie.id}`}
                 {...movie}
                 image_url={getImageUrl(movie.image_url || "")}
