@@ -1,4 +1,3 @@
-// app/statistics/KeywordStatsClient.tsx
 "use client";
 
 import { useState } from "react";
@@ -15,7 +14,6 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-// Interface pour nos données
 interface KeywordStat {
   name: string;
   count: number;
@@ -30,7 +28,6 @@ export default function KeywordStatsClientComponent({
 }: KeywordStatsClientProps) {
   const [chartType, setChartType] = useState<"pie" | "bar">("bar");
 
-  // Génération de couleurs pour les segments du graphique
   const COLORS = [
     "#0088FE",
     "#00C49F",
@@ -42,42 +39,40 @@ export default function KeywordStatsClientComponent({
     "#8dd1e1",
   ];
 
-  // Calculer le nombre total de films
-  const totalMovies = keywordStats.reduce((sum, item) => sum + item.count, 0);
-
   return (
     <>
-      <div className="mb-6 flex flex-start">
-        <div className="flex space-x-4">
-          <button
-            onClick={() => setChartType("bar")}
-            className={`px-4 py-2 rounded ${
-              chartType === "bar"
-                ? "bg-rose-500 text-white font-light"
-                : "bg-transparent border border-rose-500 text-rose-500"
-            }`}
-          >
-            Diagramme en bâton
-          </button>
-          <button
-            onClick={() => setChartType("pie")}
-            className={`px-4 py-2 rounded ${
-              chartType === "pie"
-                ? "bg-rose-500 text-white font-light"
-                : "bg-transparent border border-rose-500 text-rose-500"
-            }`}
-          >
-            Diagramme en camembert
-          </button>
+      <div className="mb-10 flex xs:flex-col justify-left ">
+        <div className="flex flex-col">
+          <div className="flex flex-wrap gap-4 xs:w-full">
+            <button
+              onClick={() => setChartType("bar")}
+              className={`px-4 py-2 rounded ${
+                chartType === "bar"
+                  ? "bg-rose-500 text-white font-light"
+                  : "bg-transparent border border-rose-500 text-rose-500"
+              }`}
+            >
+              Diagramme en bâton
+            </button>
+            <button
+              onClick={() => setChartType("pie")}
+              className={`px-4 py-2 rounded ${
+                chartType === "pie"
+                  ? "bg-rose-500 text-white font-light"
+                  : "bg-transparent border border-rose-500 text-rose-500"
+              }`}
+            >
+              Diagramme en camembert
+            </button>
+          </div>
+          <h2 className="text-xl font-medium py-4">
+            Distribution des films par mot-clé
+          </h2>
         </div>
       </div>
 
-      <div className="rounded-lg shadow-lg mb-8">
-        <h2 className="text-xl font-medium mb-4">
-          Distribution des films par mot-clé
-        </h2>
+      <div className="rounded-lg shadow-lg my-10">
         {/* Distribution des films par mot-clé ({totalMovies} films au total) */}
-
         <div className="h-96">
           {chartType === "bar" ? (
             <ResponsiveContainer width="100%" height="100%">
