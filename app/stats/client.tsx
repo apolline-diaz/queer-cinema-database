@@ -1,0 +1,177 @@
+// app/statistics/KeywordStatsClient.tsx
+"use client";
+
+import { useState } from "react";
+import {
+  PieChart,
+  Pie,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  Cell,
+  ResponsiveContainer,
+} from "recharts";
+
+// Interface pour nos données
+interface KeywordStat {
+  name: string;
+  count: number;
+}
+
+interface KeywordStatsClientProps {
+  keywordStats: KeywordStat[];
+}
+
+export default function KeywordStatsClientComponent({
+  keywordStats,
+}: KeywordStatsClientProps) {
+  const [chartType, setChartType] = useState<"pie" | "bar">("bar");
+
+  // Génération de couleurs pour les segments du graphique
+  const COLORS = [
+    "#0088FE",
+    "#00C49F",
+    "#FFBB28",
+    "#FF8042",
+    "#8884d8",
+    "#82ca9d",
+    "#ffc658",
+    "#8dd1e1",
+  ];
+
+  // Calculer le nombre total de films
+  const totalMovies = keywordStats.reduce((sum, item) => sum + item.count, 0);
+
+  return (
+    <>
+      <div className="mb-6 flex flex-start">
+        <div className="flex space-x-4">
+          <button
+            onClick={() => setChartType("bar")}
+            className={`px-4 py-2 rounded ${
+              chartType === "bar"
+                ? "bg-rose-500 text-white font-light"
+                : "bg-transparent border border-rose-500 text-rose-500"
+            }`}
+          >
+            Diagramme en bâton
+          </button>
+          <button
+            onClick={() => setChartType("pie")}
+            className={`px-4 py-2 rounded ${
+              chartType === "pie"
+                ? "bg-rose-500 text-white font-light"
+                : "bg-transparent border border-rose-500 text-rose-500"
+            }`}
+          >
+            Diagramme en camembert
+          </button>
+        </div>
+      </div>
+
+      <div className="rounded-lg shadow-lg mb-8">
+        <h2 className="text-xl font-medium mb-4">
+          Distribution des films par mot-clé
+        </h2>
+        {/* Distribution des films par mot-clé ({totalMovies} films au total) */}
+
+        <div className="h-96">
+          {chartType === "bar" ? (
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart
+                data={keywordStats}
+                margin={{ top: 20, right: 30, left: 20, bottom: 70 }}
+              >
+                <XAxis
+                  dataKey="name"
+                  angle={-45}
+                  textAnchor="end"
+                  height={70}
+                />
+                <YAxis />
+                <Tooltip formatter={(value) => [`${value} films`, "Nombre"]} />
+                <Legend />
+                <Bar
+                  dataKey="count"
+                  name="Nombre de films"
+                  isAnimationActive={true}
+                  className="text-white"
+                >
+                  {keywordStats.map((entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS[index % COLORS.length]}
+                    />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          ) : (
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={keywordStats}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={true}
+                  outerRadius={120}
+                  fill="#8884d8"
+                  dataKey="count"
+                  nameKey="name"
+                  label={({ name, count, percent }) =>
+                    `${name}: ${count} (${(percent * 100).toFixed(0)}%)`
+                  }
+                >
+                  {keywordStats.map((entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS[index % COLORS.length]}
+                    />
+                  ))}
+                </Pie>
+                <Tooltip formatter={(value) => [`${value} films`, "Nombre"]} />
+                <Legend />
+              </PieChart>
+            </ResponsiveContainer>
+          )}
+        </div>
+      </div>
+
+      <div className="rounded-lg shadow-lg">
+        <h2 className="text-xl font-semibold mb-4">Données brutes</h2>
+        <div className="overflow-x-auto">
+          <table className="min-w-full ">
+            <thead>
+              <tr>
+                <th className="py-2 border-b border-gray-200 text-left">
+                  Mot-clé
+                </th>
+                <th className="py-2 border-b border-gray-200 text-right">
+                  Nombre de films
+                </th>
+              </tr>
+            </thead>
+            <tbody className="text-sm font-light">
+              {keywordStats.map((stat, index) => (
+                <tr
+                  key={index}
+                  className={index % 2 === 0 ? "bg-zinc-900" : "bg-zinc-950"}
+                >
+                  <td className="py-2 px-4 border-b border-gray-200">
+                    {stat.name}
+                  </td>
+                  <td className="py-2 px-4 border-b border-gray-200 text-right">
+                    {stat.count}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </>
+  );
+}
