@@ -75,7 +75,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
 
   // Image preview
   const [imagePreview, setImagePreview] = useState<string | null>(
-    movie.imageUrl || null
+    movie.image_url || null
   );
 
   // Prepare initial form values from movie data
@@ -90,10 +90,10 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
     defaultValues: {
       title: movie.title,
       description: movie.description || "",
-      release_date: movie.releaseDate || "",
+      release_date: movie.release_date || "",
       language: movie.language || "",
       runtime: movie.runtime ? Number(movie.runtime) : null,
-      image_url: movie.imageUrl || "",
+      image_url: movie.image_url || "",
       image: null,
       // For relationship fields, we'll set them after data fetching
       director_id:

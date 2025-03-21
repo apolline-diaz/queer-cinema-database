@@ -6,27 +6,27 @@ import Link from "next/link";
 interface ListCardProps {
   id: number;
   title: string;
-  imageUrl: string;
+  image_url: string;
 }
 
-export default function ListCard({ id, title, imageUrl }: ListCardProps) {
-  const isSupabaseImage = imageUrl.startsWith(
+export default function ListCard({ id, title, image_url }: ListCardProps) {
+  const isSupabaseImage = image_url.startsWith(
     "https://xcwrhyjbfgzsaslstssc.supabase.co"
   );
-  const isMubiImage = imageUrl.startsWith("https://images.mubicdn.net");
+  const isMubiImage = image_url.startsWith("https://images.mubicdn.net");
 
   return (
     <div className="gap-4">
       <Link
         href={{
           pathname: `/lists/${id}`,
-          query: { id, title, imageUrl },
+          query: { id, title, image_url },
         }}
       >
         <div className="bg-gray-953 rounded-sm overflow-hidden h-full flex flex-col justify-between">
           <div className="w-full relative h-48 bg-center">
             <Image
-              src={imageUrl}
+              src={image_url}
               fill={true}
               alt={title}
               className="object-cover transform transition-transform duration-700 ease-in-out group-hover:scale-110"
