@@ -11,6 +11,7 @@ import { getKeywords } from "@/app/server-actions/keywords/get-keywords";
 import { getCountries } from "@/app/server-actions/countries/get-countries";
 import { getGenres } from "@/app/server-actions/genres/get-genres";
 import { getDirectors } from "@/app/server-actions/directors/get-directors";
+import { Decimal } from "@prisma/client/runtime/library";
 
 type KeywordOption = {
   value: string;
@@ -34,15 +35,19 @@ type DirectorOption = {
 
 type FormData = {
   title: string;
-  description: string;
-  release_date: string;
-  language: string;
-  runtime: number | null;
+  description: string | null;
+  release_date: string | null;
+  language: string | null;
+  runtime: Decimal | null;
   image_url: string;
   image: FileList | null;
   director_id: string;
+  director: string;
   country_id: string;
+  country: string;
+  genre_ids: string[];
   genres: string[];
+  keyword_ids: string[];
   keywords: string[];
 };
 
@@ -92,7 +97,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
       description: movie.description || "",
       release_date: movie.release_date || "",
       language: movie.language || "",
-      runtime: movie.runtime ? Number(movie.runtime) : null,
+      runtime: movie.runtime || null,
       image_url: movie.image_url || "",
       image: null,
       // For relationship fields, we'll set them after data fetching
@@ -304,16 +309,20 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
 
       // Get names of all selected keywords
       const selectedKeywordNames = selectedKeywords.map((k) => k.label);
+      const runtimeValue = watch("runtime");
+      const runtimeDecimal = runtimeValue
+        ? new Decimal(runtimeValue.toString())
+        : null;
 
       // Prepare movie data for update
       const movieData = {
         id: movie.id,
         title: data.title,
-        description: data.description,
-        release_date: data.release_date,
-        language: data.language,
-        runtime: data.runtime,
-        image_url: data.image_url,
+        description: data.description ?? null,
+        release_date: data.release_date ?? null,
+        language: data.language ?? null,
+        runtime: runtimeDecimal,
+        image_url: data.image_url ?? null,
         image: data.image && data.image.length > 0 ? data.image[0] : null,
         director_id: data.director_id,
         director: selectedDirector?.label || "",

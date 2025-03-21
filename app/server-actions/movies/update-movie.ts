@@ -4,20 +4,25 @@ import { PrismaClient } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { writeFile } from "fs/promises";
 import path from "path";
+import { Decimal } from "@prisma/client/runtime/library";
 
-type UpdateMovieInput = {
+export type UpdateMovieInput = {
   id: string;
   title: string;
-  description: string;
-  release_date: string;
-  language: string;
-  runtime: number | null;
+  description: string | null;
+  release_date: string | null;
+  language: string | null;
+  runtime: Decimal | null;
   image_url: string | null;
+  image: File | null;
+  director_id: string;
   director: string;
+  country_id: string;
   country: string;
+  genre_ids: string[];
   genres: string[];
+  keyword_ids: string[];
   keywords: string[];
-  image?: File | null;
 };
 
 export async function updateMovie(movie: UpdateMovieInput) {
