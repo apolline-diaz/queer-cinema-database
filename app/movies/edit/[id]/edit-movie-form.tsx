@@ -11,6 +11,7 @@ import { getKeywords } from "@/app/server-actions/keywords/get-keywords";
 import { getCountries } from "@/app/server-actions/countries/get-countries";
 import { getGenres } from "@/app/server-actions/genres/get-genres";
 import { getDirectors } from "@/app/server-actions/directors/get-directors";
+import MultiSelect from "@/app/components/multi-select";
 
 type KeywordOption = {
   value: string;
@@ -67,13 +68,8 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
     DirectorOption[]
   >([]);
 
-  // Input fields state
-  const [keywordInput, setKeywordInput] = useState("");
-  const [genreInput, setGenreInput] = useState("");
-
   // Filtered and selected states
-  const [filteredKeywords, setFilteredKeywords] = useState<KeywordOption[]>([]);
-  const [filteredGenres, setFilteredGenres] = useState<GenreOption[]>([]);
+
   const [selectedKeywords, setSelectedKeywords] = useState<KeywordOption[]>([]);
   const [selectedGenres, setSelectedGenres] = useState<GenreOption[]>([]);
 
@@ -208,80 +204,6 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
       return () => URL.revokeObjectURL(fileUrl);
     }
   }, [imageFile]);
-
-  // Keyword input handlers
-  const handleKeywordInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setKeywordInput(value);
-
-    // Filter available keywords based on input
-    const filtered = availableKeywords.filter((keyword) =>
-      keyword.label.toLowerCase().includes(value.toLowerCase())
-    );
-    setFilteredKeywords(filtered);
-  };
-
-  // Genre input handlers
-  const handleGenreInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setGenreInput(value);
-
-    // Filter available genres based on input
-    const filtered = availableGenres.filter((genre) =>
-      genre.label.toLowerCase().includes(value.toLowerCase())
-    );
-    setFilteredGenres(filtered);
-  };
-
-  // Function to add a selected keyword
-  const handleAddKeyword = (keyword: KeywordOption) => {
-    if (!selectedKeywords.find((k) => k.value === keyword.value)) {
-      const updatedKeywords = [...selectedKeywords, keyword];
-      setSelectedKeywords(updatedKeywords);
-      setValue(
-        "keywords",
-        updatedKeywords.map((k) => k.value)
-      );
-    }
-    setKeywordInput(""); // Reset search input after adding
-    setFilteredKeywords([]);
-  };
-
-  // Function to add a selected genre
-  const handleAddGenre = (genre: GenreOption) => {
-    if (!selectedGenres.find((g) => g.value === genre.value)) {
-      const updatedGenres = [...selectedGenres, genre];
-      setSelectedGenres(updatedGenres);
-      setValue(
-        "genres",
-        updatedGenres.map((g) => g.value)
-      );
-    }
-    setGenreInput(""); // Reset search input after adding
-    setFilteredGenres([]);
-  };
-
-  // Function to remove a selected keyword
-  const handleRemoveKeyword = (keywordValue: string) => {
-    const updatedKeywords = selectedKeywords.filter(
-      (k) => k.value !== keywordValue
-    );
-    setSelectedKeywords(updatedKeywords);
-    setValue(
-      "keywords",
-      updatedKeywords.map((k) => k.value)
-    );
-  };
-
-  // Function to remove a selected genre
-  const handleRemoveGenre = (genreValue: string) => {
-    const updatedGenres = selectedGenres.filter((g) => g.value !== genreValue);
-    setSelectedGenres(updatedGenres);
-    setValue(
-      "genres",
-      updatedGenres.map((g) => g.value)
-    );
-  };
 
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
@@ -508,107 +430,44 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
         </div>
 
         {/* Genres Select */}
-        <div>
-          <label className="block text-sm font-medium">Genres</label>
-
-          <div className="mt-2 relative">
-            <input
-              type="text"
-              value={genreInput}
-              onChange={handleGenreInputChange}
-              placeholder="Chercher et ajouter des genres..."
-              className="block w-full bg-transparent text-sm rounded-md border border-gray-300 px-3 py-2"
-            />
-            {filteredGenres.length > 0 && (
-              <div className="absolute z-10 mt-1 w-full bg-black border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto">
-                {filteredGenres.map((genre) => (
-                  <div
-                    key={genre.value}
-                    onClick={() => handleAddGenre(genre)}
-                    className="px-4 py-2 hover:bg-rose-500 cursor-pointer"
-                  >
-                    {genre.label}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-          <div className="mt-1 flex flex-wrap gap-2">
-            {selectedGenres.map((genre) => (
-              <div
-                key={genre.value}
-                className="bg-rose-500 gap-2  flex flex-row items-center justify-center text-white px-2 py-1 rounded-md text-xs "
-              >
-                <span>{genre.label}</span>
-                <button
-                  type="button"
-                  onClick={() => handleRemoveGenre(genre.value)}
-                  className=" block w-full text-sm font-light bg-transparent border-gray-300 "
-                >
-                  ×
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
+        <MultiSelect
+          name="genres"
+          control={control}
+          options={availableGenres}
+          label="Genres"
+          placeholder="Chercher et ajouter des genres..."
+          onChange={(selected) => {
+            setSelectedGenres(selected);
+            setValue(
+              "genres",
+              selected.map((g) => g.value)
+            );
+          }}
+          defaultValues={selectedGenres}
+        />
+        <p className="text-gray-400 text-xs mt-1">
+          Vous pouvez sélectionner plusieurs genres et en retirer.
+        </p>
 
         {/* Keywords - Multi-Select */}
-        <div className="col-span-2">
-          <label className="block text-sm font-medium mb-1">Mots-clé</label>
-          <Controller
-            name="keywords"
-            control={control}
-            render={({ field }) => (
-              <div className="relative">
-                {/* Search input */}
-                <input
-                  type="text"
-                  className="block appearance-none w-full text-sm font-light p-2 border rounded-md bg-transparent"
-                  placeholder="Chercher et ajouter des mot-clés..."
-                  value={keywordInput}
-                  onChange={handleKeywordInputChange}
-                />
-
-                {/* Filtered suggestions */}
-                {keywordInput && filteredKeywords.length > 0 && (
-                  <ul className="absolute left-0 right-0 bg-black rounded-md border mt-1 z-10 max-h-40 overflow-y-auto">
-                    {filteredKeywords.map((keyword) => (
-                      <li
-                        key={keyword.value}
-                        className="px-4 py-2 cursor-pointer hover:bg-rose-500"
-                        onClick={() => handleAddKeyword(keyword)}
-                      >
-                        {keyword.label}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-
-                {/* Display selected keywords */}
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {selectedKeywords.map((keyword) => (
-                    <span
-                      key={keyword.value}
-                      className="inline-flex items-center hover:cursor-pointer bg-rose-100 text-rose-500 text-sm font-medium px-2 py-1 rounded"
-                    >
-                      {keyword.label}
-                      <button
-                        type="button"
-                        className="ml-2 text-red-500 hover:text-red-700"
-                        onClick={() => handleRemoveKeyword(keyword.value)}
-                      >
-                        &times;
-                      </button>
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-          />
-          <p className="text-gray-400 text-xs mt-1">
-            Vous pouvez sélectionner plusieurs mot-clés et en retirer.
-          </p>
-        </div>
+        <MultiSelect
+          name="keywords"
+          control={control}
+          options={availableKeywords}
+          label="Mots-clé"
+          placeholder="Chercher et ajouter des mot-clés..."
+          onChange={(selected) => {
+            setSelectedKeywords(selected);
+            setValue(
+              "keywords",
+              selected.map((k) => k.value)
+            );
+          }}
+          defaultValues={selectedKeywords}
+        />
+        <p className="text-gray-400 text-xs mt-1">
+          Vous pouvez sélectionner plusieurs mot-clés et en retirer.
+        </p>
       </div>
 
       <div className="mt-8 flex flex-col gap-3 xs:flex-col sm:flex-row justify-between">

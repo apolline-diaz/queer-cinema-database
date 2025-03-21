@@ -55,53 +55,69 @@ export default function MultiSelect({
         name={name}
         control={control}
         defaultValue={defaultValues}
-        render={({ field }) => (
-          <div className="relative">
-            {/* Input Field for Searching */}
-            <input
-              type="text"
-              className="block appearance-none w-full text-sm font-light p-2 border rounded-md bg-transparent"
-              placeholder={placeholder || "Rechercher..."}
-              value={inputValue}
-              onChange={handleInputChange}
-            />
+        render={({ field }) => {
+          // Ensure field.value is always an array of Option objects
+          const safeValue = Array.isArray(field.value)
+            ? field.value.map((item) => {
+                // If item is just a string (value), try to find the corresponding Option
+                if (typeof item === "string") {
+                  const matchingOption = options.find(
+                    (opt) => opt.value === item
+                  );
+                  return matchingOption || { value: item, label: item };
+                }
+                // If it's an object but missing label, add a fallback label
+                if (typeof item === "object" && item !== null && !item.label) {
+                  const matchingOption = options.find(
+                    (opt) => opt.value === item.value
+                  );
+                  return matchingOption || { ...item, label: item.value };
+                }
+                return item;
+              })
+            : [];
 
-            {/* Dropdown Suggestions */}
-            {inputValue && filteredOptions.length > 0 && (
-              <ul className="absolute left-0 right-0 bg-black rounded-md border mt-1 z-10 max-h-40 overflow-y-auto">
-                {filteredOptions.map((option) => (
-                  <li
-                    key={option.value}
-                    className="px-4 py-2 cursor-pointer hover:bg-rose-500"
-                    onClick={() => {
-                      // Check if the option is already selected
-                      const isAlreadySelected = field.value?.some(
-                        (item: Option) => item.value === option.value
-                      );
+          return (
+            <div className="relative">
+              {/* Input Field for Searching */}
+              <input
+                type="text"
+                className="block appearance-none w-full text-sm font-light p-2 border rounded-md bg-transparent"
+                placeholder={placeholder || "Rechercher..."}
+                value={inputValue}
+                onChange={handleInputChange}
+              />
 
-                      if (!isAlreadySelected) {
-                        // Make sure field.value is an array before spreading
-                        const currentValue = Array.isArray(field.value)
-                          ? field.value
-                          : [];
-                        const updatedSelection = [...currentValue, option];
+              {/* Dropdown Suggestions */}
+              {inputValue && filteredOptions.length > 0 && (
+                <ul className="absolute left-0 right-0 bg-black rounded-md border mt-1 z-10 max-h-40 overflow-y-auto">
+                  {filteredOptions.map((option) => (
+                    <li
+                      key={option.value}
+                      className="px-4 py-2 cursor-pointer hover:bg-rose-500"
+                      onClick={() => {
+                        // Check if the option is already selected
+                        const isAlreadySelected = safeValue.some(
+                          (item: Option) => item.value === option.value
+                        );
 
-                        field.onChange(updatedSelection); // Update form field value
-                        onChange(updatedSelection); // Call parent onChange prop
-                      }
-                      setInputValue(""); // Reset input
-                    }}
-                  >
-                    {option.label}
-                  </li>
-                ))}
-              </ul>
-            )}
+                        if (!isAlreadySelected) {
+                          const updatedSelection = [...safeValue, option];
+                          field.onChange(updatedSelection); // Update form field value
+                          onChange(updatedSelection); // Call parent onChange prop
+                        }
+                        setInputValue(""); // Reset input
+                      }}
+                    >
+                      {option.label}
+                    </li>
+                  ))}
+                </ul>
+              )}
 
-            {/* Selected Items */}
-            <div className="mt-3 flex flex-wrap gap-2">
-              {Array.isArray(field.value) &&
-                field.value.map((option: Option) => (
+              {/* Selected Items */}
+              <div className="mt-3 flex flex-wrap gap-2">
+                {safeValue.map((option: Option) => (
                   <span
                     key={option.value}
                     className="inline-flex items-center bg-rose-100 text-rose-500 text-sm font-medium px-2 py-1 rounded"
@@ -111,7 +127,7 @@ export default function MultiSelect({
                       type="button"
                       className="ml-2 text-red-500 hover:text-red-700"
                       onClick={() => {
-                        const newValue = field.value.filter(
+                        const newValue = safeValue.filter(
                           (item: Option) => item.value !== option.value
                         );
                         field.onChange(newValue);
@@ -122,9 +138,10 @@ export default function MultiSelect({
                     </button>
                   </span>
                 ))}
+              </div>
             </div>
-          </div>
-        )}
+          );
+        }}
       />
     </div>
   );

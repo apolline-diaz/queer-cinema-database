@@ -1,4 +1,5 @@
-import { getImageUrl } from "@/utils";
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 
@@ -22,11 +23,11 @@ export default function Card({
 
   return (
     <>
-      <Link href={`/movies/${id}`} className="block">
+      <Link href={`/movies/${id}`}>
         <div className="group overflow-hidden flex flex-col transition-transform">
           <div className="relative w-full h-48 overflow-hidden ">
             <Image
-              src={getImageUrl(image_url || "public/assets/missing_image.png")}
+              src={image_url || "public/assets/missing_image.png"}
               fill={true}
               alt={title}
               className="object-cover transform transition-transform duration-700 ease-in-out group-hover:scale-110 group-hover:brightness-50"
