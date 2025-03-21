@@ -1,5 +1,5 @@
 export type Director = {
   id: number;
-  name: string;
+  name?: string | null;
   createdAt?: Date;
 };

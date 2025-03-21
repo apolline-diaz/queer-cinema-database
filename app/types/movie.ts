@@ -2,7 +2,6 @@ import { Director } from "./director";
 import { Genre } from "./genre";
 import { Keyword } from "./keyword";
 import { Country } from "./country";
-import { Decimal } from "@prisma/client/runtime/library";
 
 export type Movie = {
   id: string;
@@ -10,7 +9,7 @@ export type Movie = {
   description?: string | null;
   release_date?: string | null;
   language?: string | null;
-  runtime?: Decimal | null;
+  runtime?: number | null;
   image_url?: string | null;
   boost?: boolean | null;
   director?: string | null;
@@ -19,6 +18,6 @@ export type Movie = {
   keywords?: Keyword[];
   directors?: Director[];
   countries?: Country[];
-  created_at?: Date;
-  updated_at?: Date;
+  created_at?: Date | null;
+  updated_at?: Date | null;
 };

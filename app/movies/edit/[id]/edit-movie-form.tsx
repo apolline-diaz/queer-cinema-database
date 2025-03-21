@@ -11,7 +11,6 @@ import { getKeywords } from "@/app/server-actions/keywords/get-keywords";
 import { getCountries } from "@/app/server-actions/countries/get-countries";
 import { getGenres } from "@/app/server-actions/genres/get-genres";
 import { getDirectors } from "@/app/server-actions/directors/get-directors";
-import { Decimal } from "@prisma/client/runtime/library";
 
 type KeywordOption = {
   value: string;
@@ -38,7 +37,7 @@ type FormData = {
   description: string | null;
   release_date: string | null;
   language: string | null;
-  runtime: Decimal | null;
+  runtime: number | null;
   image_url: string;
   image: FileList | null;
   director_id: string;
@@ -100,7 +99,6 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
       runtime: movie.runtime || null,
       image_url: movie.image_url || "",
       image: null,
-      // For relationship fields, we'll set them after data fetching
       director_id:
         movie.directors && movie.directors[0]
           ? movie.directors[0].id.toString()
@@ -309,10 +307,6 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
 
       // Get names of all selected keywords
       const selectedKeywordNames = selectedKeywords.map((k) => k.label);
-      const runtimeValue = watch("runtime");
-      const runtimeDecimal = runtimeValue
-        ? new Decimal(runtimeValue.toString())
-        : null;
 
       // Prepare movie data for update
       const movieData = {
@@ -321,7 +315,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
         description: data.description ?? null,
         release_date: data.release_date ?? null,
         language: data.language ?? null,
-        runtime: runtimeDecimal,
+        runtime: data.runtime ?? null,
         image_url: data.image_url ?? null,
         image: data.image && data.image.length > 0 ? data.image[0] : null,
         director_id: data.director_id,

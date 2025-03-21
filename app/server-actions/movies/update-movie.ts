@@ -2,9 +2,7 @@
 
 import { PrismaClient } from "@prisma/client";
 import { revalidatePath } from "next/cache";
-import { writeFile } from "fs/promises";
-import path from "path";
-import { Decimal } from "@prisma/client/runtime/library";
+import { supabase } from "@/lib/supabase";
 
 export type UpdateMovieInput = {
   id: string;
@@ -12,7 +10,7 @@ export type UpdateMovieInput = {
   description: string | null;
   release_date: string | null;
   language: string | null;
-  runtime: Decimal | null;
+  runtime: number | null;
   image_url: string | null;
   image: File | null;
   director_id: string;
@@ -31,19 +29,27 @@ export async function updateMovie(movie: UpdateMovieInput) {
   try {
     let imageUrl = movie.image_url;
 
-    // Handle file upload if provided
+    // Si une nouvelle image est fournie
     if (movie.image && movie.image instanceof File) {
-      const bytes = await movie.image.arrayBuffer();
-      const buffer = Buffer.from(await movie.image.arrayBuffer());
-      const uint8Array = new Uint8Array(buffer);
-
+      // Créez un nom de fichier unique pour l'image
       const filename = `${Date.now()}-${movie.image.name.replace(/\s+/g, "-")}`;
-      const uploadDir = path.join(process.cwd(), "public", "uploads");
-      const filePath = path.join(uploadDir, filename);
+      const file = movie.image;
 
-      await writeFile(filePath, uint8Array);
-      imageUrl = `/uploads/${filename}`;
+      // Téléchargez le fichier dans Supabase Storage
+      const { data, error } = await supabase.storage
+        .from("storage") // Le bucket où vous stockez les images
+        .upload(filename, file, {
+          cacheControl: "3600",
+          upsert: true,
+        });
+
+      if (error) {
+        throw new Error(error.message);
+      }
+      imageUrl = `${process.env.SUPABASE_URL}/storage/v1/object/public/storage/${data?.path}`;
     }
+
+    const runtimeValue = movie.runtime ? Number(movie.runtime) : null;
 
     // Update movie data
     await prisma.movies.update({
@@ -53,7 +59,7 @@ export async function updateMovie(movie: UpdateMovieInput) {
         description: movie.description,
         release_date: movie.release_date,
         language: movie.language,
-        runtime: movie.runtime ? Number(movie.runtime) : null,
+        runtime: runtimeValue,
         image_url: imageUrl,
         director: movie.director,
         country: movie.country,
