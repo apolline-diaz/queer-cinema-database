@@ -1,8 +1,18 @@
 "use server";
+
 import { PrismaClient } from "@prisma/client";
+import { z } from "zod";
 
 // initialize Prisma client
 const prisma = new PrismaClient();
+
+const movieSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  image_url: z.string().nullable(),
+  description: z.string().nullable(),
+  release_date: z.string().nullable(),
+});
 
 // get movie by Id
 

@@ -2,29 +2,19 @@ import Image from "next/image";
 import Link from "next/link";
 import Searchfield from "./searchfield";
 
-// Define the CardProps interface
 interface CardProps {
   id: string;
   title: string;
-  directors: any;
-  description: string | null;
-  release_date: string | null;
-  image_url: string;
+  imageUrl?: string;
 }
 
-export default function Hero({
-  id,
-  title,
-  description = "",
-  release_date = "",
-  image_url,
-}: CardProps) {
+export default function Hero({ id, title, imageUrl }: CardProps) {
   return (
     <div className="bg bg-gray-953 h-96 w-full justify-center items-center">
       <Link href={`/movies/${id}`}>
         <div className="h-full w-full relative bg-center">
           <Image
-            src={image_url}
+            src={imageUrl || ""}
             fill
             alt={title}
             style={{ objectFit: "cover" }}

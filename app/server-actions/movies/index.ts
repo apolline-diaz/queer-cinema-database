@@ -1,7 +1,7 @@
 "use server";
+
 import { PrismaClient } from "@prisma/client";
 
-// Initialisez le client Prisma
 const prisma = new PrismaClient();
 
 export async function getTopMovies() {
@@ -108,11 +108,7 @@ export async function getMoviesByYearRange(startYear: string, endYear: string) {
     return movies;
   } catch (error) {
     const errorMessage =
-      error instanceof Error
-        ? error.message
-        : "Une erreur inconnue est survenue";
-    throw new Error(
-      `Erreur lors de la récupération des films par année: ${errorMessage}`
-    );
+      error instanceof Error ? error.message : "An error happened";
+    throw new Error(`Error when fetch movies by release year: ${errorMessage}`);
   }
 }
