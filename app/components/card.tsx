@@ -1,3 +1,4 @@
+import { getImageUrl } from "@/utils";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -25,7 +26,7 @@ export default function Card({
         <div className="group overflow-hidden flex flex-col transition-transform">
           <div className="relative w-full h-48 overflow-hidden ">
             <Image
-              src={image_url || "public/assets/missing_image.png"}
+              src={getImageUrl(image_url || "public/assets/missing_image.png")}
               fill={true}
               alt={title}
               className="object-cover transform transition-transform duration-700 ease-in-out group-hover:scale-110 group-hover:brightness-50"

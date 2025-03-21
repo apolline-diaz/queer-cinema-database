@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Searchfield from "./searchfield";
+import { getImageUrl } from "@/utils";
 
 interface CardProps {
   id: string;
@@ -14,7 +15,7 @@ export default function Hero({ id, title, image_url }: CardProps) {
       <div className="h-full w-full relative bg-center">
         <Link href={`/movies/${id}`}>
           <Image
-            src={image_url || ""}
+            src={getImageUrl(image_url || "public/assets/missing_image.png")}
             fill={true}
             alt={title}
             style={{ objectFit: "cover" }}
