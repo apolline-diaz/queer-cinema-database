@@ -29,15 +29,12 @@ export async function updateMovie(movie: UpdateMovieInput) {
   try {
     let imageUrl = movie.image_url;
 
-    // Si une nouvelle image est fournie
     if (movie.image && movie.image instanceof File) {
-      // Créez un nom de fichier unique pour l'image
       const filename = `${Date.now()}-${movie.image.name.replace(/\s+/g, "-")}`;
       const file = movie.image;
 
-      // Téléchargez le fichier dans Supabase Storage
       const { data, error } = await supabase.storage
-        .from("storage") // Le bucket où vous stockez les images
+        .from("storage")
         .upload(filename, file, {
           cacheControl: "3600",
           upsert: true,
@@ -51,7 +48,6 @@ export async function updateMovie(movie: UpdateMovieInput) {
 
     const runtimeValue = movie.runtime ? Number(movie.runtime) : null;
 
-    // Update movie data
     await prisma.movies.update({
       where: { id: movie.id },
       data: {
