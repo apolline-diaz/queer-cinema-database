@@ -1,4 +1,5 @@
 export type Keyword = {
   id: number;
-  name: string | null;
+  name: string;
+  createdAt?: Date;
 };
