@@ -49,7 +49,7 @@ export async function getMovie(id: string) {
       image_url: movie.image_url,
       boost: movie.boost || false,
       genres: movie.movie_genres.map((g) => ({
-        id: g.genres.id,
+        id: Number(g.genres.id),
         name: g.genres.name,
       })),
       keywords: movie.movie_keywords.map((k) => ({
