@@ -16,7 +16,7 @@ export default function Hero({ id, title, image_url }: CardProps) {
       <Link href={`/movies/${id}`}>
         <div className="h-full w-full relative bg-center">
           <Image
-            src={image_url || "public/assets/missing_image.png"}
+            src={image_url || "/missing_image.png"}
             fill={true}
             alt={title}
             style={{ objectFit: "cover" }}
