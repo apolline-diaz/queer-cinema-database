@@ -12,52 +12,7 @@ type Props = {
   params: { slug: string };
 };
 
-// MetaData for accessibility (missing types for movie and others data : to update)
-
-// export async function generateMetadata(
-//   { params }: Props,
-//   parent: ResolvingMetadata
-// ): Promise<Metadata> {
-//   const id = params.slug;
-
-//   const supabase = createClient(
-//     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-//     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-//   );
-//   const { data: movie } = await supabase
-//     .from("movies")
-//     .select(
-//       `id,
-//        title,
-//        description,
-//        image_url,
-//        release_date,
-//        runtime,
-//        directors(id, name),
-//        countries(id, name),
-//        movie_genres(genre_id, genres(name))
-//        movie_keywords(keyword_id, keywords(name))`
-//     )
-//     .eq("id", params.slug)
-//     .single();
-
-//   if (!movie) {
-//     return { title: "", description: "" };
-//   }
-
-//   return {
-//     title: movie.title,
-//     description: movie.description,
-//     openGraph: {
-//       images: [getImageUrl(movie.image_url)],
-//     },
-//     alternates: {
-//       canonical: `/movies/${id}`,
-//     },
-//   };
-// }
-
-export default async function Page({ params }: { params: { slug: string } }) {
+export default async function Page({ params }: Props) {
   const { movie, error } = await getMovie(params.slug);
 
   if (error) {
@@ -87,7 +42,13 @@ export default async function Page({ params }: { params: { slug: string } }) {
             <div className="flex flex-col ">
               <h2 className="text-3xl font-bold uppercase">{movie.title}</h2>
               <h2 className="text-lg font-light ">
-                {movie.directors?.map((director) => director.name).join(", ")}
+                {movie.directors?.length > 0 && (
+                  <span>
+                    {movie.directors
+                      .map((director) => director.name)
+                      .join(", ")}
+                  </span>
+                )}
               </h2>
             </div>
           </div>

@@ -1,5 +1,5 @@
 export type Director = {
-  id: number;
+  id: bigint;
   name?: string | null;
-  createdAt?: Date;
+  created_at?: Date;
 };
