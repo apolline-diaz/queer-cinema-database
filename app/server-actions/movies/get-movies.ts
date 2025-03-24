@@ -11,7 +11,7 @@ export const getMovies = async (filters: {
   const { data, error } = await supabase
     .from("movies")
     .select(
-      "id, title, release_date, genres(name), countries(name), keywords(name)"
+      "id, title, release_date, genres(name), directors(name), countries(name), keywords(name)"
     );
   if (error) {
     console.error("Erreur lors de la récupération des films :", error);

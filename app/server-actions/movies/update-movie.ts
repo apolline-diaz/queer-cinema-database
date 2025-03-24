@@ -14,9 +14,9 @@ export type UpdateMovieInput = {
   image_url: string | null;
   image: File | null;
   director_id: string;
-  director: string;
+  directors: string[];
   country_id: string;
-  country: string;
+  countries: string[];
   genre_ids: string[];
   genres: string[];
   keyword_ids: string[];
@@ -57,11 +57,41 @@ export async function updateMovie(movie: UpdateMovieInput) {
         language: movie.language,
         runtime: runtimeValue,
         image_url: imageUrl,
-        director: movie.director,
-        country: movie.country,
         updated_at: new Date(),
       },
     });
+
+    // Update director relationship
+    if (movie.director_id) {
+      // Delete existing director relationships
+      await prisma.movie_directors.deleteMany({
+        where: { movie_id: movie.id },
+      });
+
+      // Create new director relationship
+      await prisma.movie_directors.create({
+        data: {
+          movie_id: movie.id,
+          director_id: BigInt(movie.director_id),
+        },
+      });
+    }
+
+    // Update country relationship
+    if (movie.country_id) {
+      // Delete existing country relationships
+      await prisma.movie_countries.deleteMany({
+        where: { movie_id: movie.id },
+      });
+
+      // Create new country relationship
+      await prisma.movie_countries.create({
+        data: {
+          movie_id: movie.id,
+          country_id: parseInt(movie.country_id),
+        },
+      });
+    }
 
     // Update genres & keywords
     await prisma.movie_genres.deleteMany({ where: { movie_id: movie.id } });

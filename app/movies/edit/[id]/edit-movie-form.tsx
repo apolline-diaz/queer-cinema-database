@@ -210,13 +210,11 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
     setError(null);
 
     try {
-      // Get keyword IDs from selected keywords
+      // Get keyword and genre IDs from selected keywords adn genres
       const keywordIds = data.keywords;
-
-      // Get genre IDs from selected genres
       const genreIds = data.genres;
 
-      // Get selected director and country names
+      // Get selected director and country
       const selectedDirector = availableDirectors.find(
         (d) => d.value === data.director_id
       );
@@ -240,10 +238,11 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
         runtime: data.runtime ?? null,
         image_url: data.image_url ?? null,
         image: data.image && data.image.length > 0 ? data.image[0] : null,
+        // Add director and country data
         director_id: data.director_id,
-        director: selectedDirector?.label || "",
+        directors: selectedDirector ? [selectedDirector.label] : [],
         country_id: data.country_id,
-        country: selectedCountry?.label || "",
+        countries: selectedCountry ? [selectedCountry.label] : [],
         genre_ids: genreIds,
         genres: selectedGenreNames,
         keyword_ids: keywordIds,
@@ -301,7 +300,15 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
           >
             <option value="">Select a director</option>
             {availableDirectors.map((director) => (
-              <option key={director.value} value={director.value}>
+              <option
+                key={director.value}
+                value={director.value}
+                // Mark as selected if it matches the current director
+                selected={
+                  movie.directors &&
+                  movie.directors[0]?.id.toString() === director.value
+                }
+              >
                 {director.label}
               </option>
             ))}
@@ -382,7 +389,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
         {/* Country Select */}
         <div>
           <label htmlFor="country_id" className="block text-sm font-medium">
-            Pays de production
+            Pays
           </label>
           <select
             id="country_id"
@@ -391,7 +398,15 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
           >
             <option value="">Select a country</option>
             {availableCountries.map((country) => (
-              <option key={country.value} value={country.value}>
+              <option
+                key={country.value}
+                value={country.value}
+                // Mark as selected if it matches the current country
+                selected={
+                  movie.countries &&
+                  movie.countries[0]?.id.toString() === country.value
+                }
+              >
                 {country.label}
               </option>
             ))}
