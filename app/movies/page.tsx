@@ -16,7 +16,12 @@ export default async function Page({
   const keywordParam = (searchParams?.keyword as string) || "";
 
   // get filter data and all movies (initial movies)
-  const initialMovies = await searchMovies({});
+  const initialMovies = await searchMovies({
+    countryId: "",
+    genreId: "",
+    keywordId: "",
+    releaseYear: "",
+  });
   const countries = await getCountries();
   const genres = await getGenres();
   const keywords = await getKeywords();

@@ -7,7 +7,6 @@ import Card from "./card";
 import { getImageUrl } from "@/utils";
 import Select from "./select";
 import { Movie } from "../types/movie";
-import { watch } from "fs";
 
 interface FormValues {
   countryId: string;
