@@ -1,7 +1,6 @@
 "use server";
 import { PrismaClient } from "@prisma/client";
 
-// Initialisez le client Prisma
 const prisma = new PrismaClient();
 
 export async function getMoviesByYearRange(startYear: string, endYear: string) {

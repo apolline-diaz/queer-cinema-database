@@ -1,54 +1,132 @@
 "use server";
 
+import { cachedQuery } from "@/lib/prisma";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+export async function searchMovies({
+  countryId,
+  genreId,
+  keywordId,
+  releaseYear,
+}: {
+  countryId: string;
+  genreId: string;
+  keywordId: string;
+  releaseYear: string;
+}) {
+  return cachedQuery(
+    ["search-movies", countryId, genreId, keywordId, releaseYear],
+    async () => {
+      try {
+        const movies = await prisma.movies.findMany({
+          where: {
+            ...(countryId && {
+              movie_countries: {
+                some: { country_id: parseInt(countryId) },
+              },
+            }),
+            ...(genreId && {
+              movie_genres: {
+                some: { genre_id: BigInt(genreId) },
+              },
+            }),
+            ...(keywordId && {
+              movie_keywords: {
+                some: { keyword_id: parseInt(keywordId) },
+              },
+            }),
+            ...(releaseYear && {
+              release_date: { startsWith: releaseYear },
+            }),
+          },
+          select: {
+            id: true,
+            title: true,
+            image_url: true,
+            release_date: true,
+          },
+          orderBy: { created_at: "desc" },
+          take: 300,
+        });
+
+        return movies.map((movie) => ({
+          id: movie.id,
+          title: movie.title,
+          image_url: movie.image_url || "",
+          release_date: movie.release_date || "",
+        }));
+      } catch (error) {
+        console.error("Error searching movies:", error);
+        return [];
+      }
+    },
+    {
+      tags: ["movies-search"],
+      revalidate: 3600, // 1 hour cache
+    }
+  );
+}
+
+// Similar approach for other query functions
 export async function getCountries() {
-  try {
-    const countries = await prisma.countries.findMany({
-      orderBy: { name: "asc" },
-    });
-    return countries.map((country) => ({
-      value: country.id.toString(),
-      label: country.name,
-    }));
-  } catch (error) {
-    console.error("Error fetching countries:", error);
-    return [];
-  }
+  return cachedQuery(
+    ["countries"],
+    async () => {
+      const countries = await prisma.countries.findMany({
+        orderBy: { name: "asc" },
+      });
+      return countries.map((country) => ({
+        value: country.id.toString(),
+        label: country.name,
+      }));
+    },
+    {
+      tags: ["countries"],
+      revalidate: 86400, // 24 hours cache
+    }
+  );
 }
 
 export async function getGenres() {
-  try {
-    const genres = await prisma.genres.findMany({
-      orderBy: { name: "asc" },
-      where: { name: { not: null } },
-    });
-    return genres.map((genre) => ({
-      value: genre.id.toString(),
-      label: genre.name || "",
-    }));
-  } catch (error) {
-    console.error("Error fetching genres:", error);
-    return [];
-  }
+  return cachedQuery(
+    ["genres"],
+    async () => {
+      const genres = await prisma.genres.findMany({
+        orderBy: { name: "asc" },
+        where: { name: { not: null } },
+      });
+      return genres.map((genre) => ({
+        value: genre.id.toString(),
+        label: genre.name || "",
+      }));
+    },
+    {
+      tags: ["genres"],
+      revalidate: 86400, // 24 hours cache
+    }
+  );
 }
 
 export async function getKeywords() {
-  try {
-    const keywords = await prisma.keywords.findMany({
-      orderBy: { name: "asc" },
-      where: { name: { not: null } },
-    });
-    return keywords.map((keyword) => ({
-      value: keyword.id.toString(),
-      label: keyword.name || "",
-    }));
-  } catch (error) {
-    console.error("Error fetching keywords:", error);
-    return [];
-  }
+  return cachedQuery(
+    ["keywords"],
+    async () => {
+      const keywords = await prisma.keywords.findMany({
+        orderBy: { name: "asc" },
+        where: { name: { not: null } },
+      });
+      return keywords.map((keyword) => ({
+        value: keyword.id.toString(),
+        label: keyword.name || "",
+      }));
+    },
+    {
+      tags: ["keywords"],
+      revalidate: 86400, // 24 hours cache
+    }
+  );
 }
 
 export async function getReleaseYears() {
@@ -80,77 +158,6 @@ export async function getReleaseYears() {
     }));
   } catch (error) {
     console.error("Error fetching release years:", error);
-    return [];
-  }
-}
-
-export async function searchMovies({
-  countryId,
-  genreId,
-  keywordId,
-  releaseYear,
-}: {
-  countryId?: string;
-  genreId?: string;
-  keywordId?: string;
-  releaseYear?: string;
-}) {
-  try {
-    // Start with basic query
-    let query: any = {
-      include: {
-        movie_countries: true,
-        movie_genres: true,
-        movie_keywords: true,
-      },
-      where: {},
-      orderBy: {
-        created_at: "desc",
-      },
-      take: 300,
-    };
-
-    // Add filters based on parameters
-    if (countryId) {
-      query.where.movie_countries = {
-        some: {
-          country_id: parseInt(countryId),
-        },
-      };
-    }
-
-    if (genreId) {
-      query.where.movie_genres = {
-        some: {
-          genre_id: BigInt(genreId),
-        },
-      };
-    }
-
-    if (keywordId) {
-      query.where.movie_keywords = {
-        some: {
-          keyword_id: parseInt(keywordId),
-        },
-      };
-    }
-
-    if (releaseYear) {
-      query.where.release_date = {
-        startsWith: releaseYear,
-      };
-    }
-
-    const movies = await prisma.movies.findMany(query);
-
-    return movies.map((movie) => ({
-      id: movie.id,
-      title: movie.title,
-      image_url: movie.image_url || "",
-      release_date: movie.release_date || "",
-    }));
-  } catch (error) {
-    console.error("Error searching movies:", error);
     return [];
   }
 }

@@ -7,30 +7,12 @@ export async function getMovie(id: string) {
 
   try {
     const movie = await prisma.movies.findUnique({
-      where: {
-        id: id,
-      },
+      where: { id: id },
       include: {
-        movie_genres: {
-          include: {
-            genres: true,
-          },
-        },
-        movie_keywords: {
-          include: {
-            keywords: true,
-          },
-        },
-        movie_directors: {
-          include: {
-            directors: true,
-          },
-        },
-        movie_countries: {
-          include: {
-            countries: true,
-          },
-        },
+        movie_genres: { include: { genres: true } },
+        movie_keywords: { include: { keywords: true } },
+        movie_directors: { include: { directors: true } },
+        movie_countries: { include: { countries: true } },
       },
     });
 
