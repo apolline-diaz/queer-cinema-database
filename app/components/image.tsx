@@ -8,7 +8,7 @@ interface SafeImageProps {
   [key: string]: any;
 }
 
-export const SafeImage: React.FC<SafeImageProps> = ({
+export const Image: React.FC<SafeImageProps> = ({
   image_url,
   title,
   className,
@@ -21,7 +21,6 @@ export const SafeImage: React.FC<SafeImageProps> = ({
     setSrc("/missing_image.png");
   };
 
-  // If the image URL is from Supabase, use the <img> tag instead of Next.js <Image> component
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img

@@ -1,7 +1,7 @@
 "use client";
 
 import { getImageUrl } from "@/utils";
-import { SafeImage } from "@/app/components/safe-image";
+import { Image } from "@/app/components/image";
 import Link from "next/link";
 
 interface CardProps {
@@ -22,7 +22,7 @@ export default function Card({
       <Link href={`/movies/${id}`}>
         <div className="group overflow-hidden flex flex-col transition-transform">
           <div className="relative w-full h-48 overflow-hidden ">
-            <SafeImage
+            <Image
               src={getImageUrl(image_url)}
               fill={true}
               alt={title}

@@ -1,8 +1,8 @@
 "use client";
 
 import { getImageUrl } from "@/utils";
-import Image from "next/image";
 import Link from "next/link";
+import { Image } from "@/app/components/image";
 
 interface CardProps {
   id: string;
@@ -29,9 +29,7 @@ export default function HomeCard({
               alt={title}
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               className="object-cover h-full w-full transform transition-transform duration-700 ease-in-out group-hover:scale-110 group-hover:brightness-50"
-              onError={(e) => {
-                e.currentTarget.src = "/missing_image.png";
-              }}
+              title={title}
             />
             <div className="absolute bottom-0 left-0 w-full p-5 bg-gradient-to-t via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               <div className="text-md font-semibold uppercase">{title}</div>
