@@ -1,5 +1,6 @@
 "use client";
 
+import { getImageUrl } from "@/utils";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -23,11 +24,14 @@ export default function HomeCard({
           {/* Responsive width, full on small screens, fixed on larger ones */}
           <div className="relative w-full sm:w-[300px] h-auto min-h-[200px] sm:min-h-0 sm:h-48 bg-center aspect-[3/4] sm:aspect-[16/9]">
             <Image
-              src={image_url || "/missing_image.png"}
+              src={getImageUrl(image_url)}
               fill={true}
               alt={title}
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               className="object-cover h-full w-full transform transition-transform duration-700 ease-in-out group-hover:scale-110 group-hover:brightness-50"
+              onError={(e) => {
+                e.currentTarget.src = "/missing_image.png";
+              }}
             />
             <div className="absolute bottom-0 left-0 w-full p-5 bg-gradient-to-t via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               <div className="text-md font-semibold uppercase">{title}</div>

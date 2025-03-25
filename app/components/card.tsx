@@ -1,5 +1,6 @@
 "use client";
 
+import { getImageUrl } from "@/utils";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -22,9 +23,10 @@ export default function Card({
         <div className="group overflow-hidden flex flex-col transition-transform">
           <div className="relative w-full h-48 overflow-hidden ">
             <Image
-              src={image_url || "/missing_image.png"}
+              src={getImageUrl(image_url)}
               fill={true}
               alt={title}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="object-cover transform transition-transform duration-700 ease-in-out group-hover:scale-110 group-hover:brightness-50"
               onError={(e) => {
                 e.currentTarget.src = "/missing_image.png";

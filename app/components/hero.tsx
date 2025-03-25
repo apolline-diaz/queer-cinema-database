@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Searchfield from "./searchfield";
+import { getImageUrl } from "@/utils";
 
 interface CardProps {
   id: string;
@@ -16,10 +17,14 @@ export default function Hero({ id, title, image_url }: CardProps) {
       <Link href={`/movies/${id}`}>
         <div className="h-full w-full relative bg-center">
           <Image
-            src={image_url || "/missing_image.png"}
+            src={getImageUrl(image_url)}
             fill={true}
             alt={title}
+            sizes="100vw"
             style={{ objectFit: "cover" }}
+            onError={(e) => {
+              e.currentTarget.src = "/missing_image.png";
+            }}
           />
           <div className="absolute flex flex-col  items-left justify-center w-full h-full  line-clamp-2 px-10 py-5">
             <div className="absolute inset-0 bg-gradient-to-r from-black via-black/60 to-transparent"></div>
