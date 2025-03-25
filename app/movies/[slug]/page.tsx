@@ -1,9 +1,7 @@
 import Image from "next/image";
-import { createClient } from "@supabase/supabase-js";
 import { getImageUrl, getCanonicalUrl } from "@/utils/index";
 import { getMovie } from "@/app/server-actions/movies/get-movie";
 
-import { Metadata, ResolvingMetadata } from "next";
 import Link from "next/link";
 
 export const revalidate = 0;

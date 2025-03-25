@@ -24,7 +24,7 @@ export default async function Home() {
             <Hero
               key={`${movie.title}-${movie.id}`}
               {...movie}
-              image_url={getImageUrl(movie.image_url || "")}
+              image_url={getImageUrl(movie.image_url)}
             />
           ))}
         </div>

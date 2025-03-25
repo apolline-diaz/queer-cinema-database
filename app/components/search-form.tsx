@@ -28,7 +28,7 @@ export default function SearchForm({
   keywords: { value: string; label: string }[];
   releaseYears: { value: string; label: string }[];
 }) {
-  const { control, handleSubmit, reset } = useForm<FormValues>({
+  const { control, handleSubmit, reset, watch } = useForm<FormValues>({
     defaultValues: {
       countryId: "",
       genreId: "",
@@ -40,16 +40,19 @@ export default function SearchForm({
   const [movies, setMovies] = useState<Movie[]>(initialMovies);
   const [isLoading, setIsLoading] = useState(false);
 
+  // Memoize search parameters to prevent unnecessary re-renders
+  const searchParams = watch();
+
   // handle form submission
   const onSubmit = async (data: FormValues) => {
     setIsLoading(true); // Show loading indicator
 
     try {
       const results = await searchMovies({
-        countryId: data.countryId || undefined,
-        genreId: data.genreId || undefined,
-        keywordId: data.keywordId || undefined,
-        releaseYear: data.releaseYear || undefined,
+        countryId: data.countryId,
+        genreId: data.genreId,
+        keywordId: data.keywordId,
+        releaseYear: data.releaseYear,
       });
 
       setMovies(results); // Update the movie list with search results
@@ -67,7 +70,12 @@ export default function SearchForm({
     setIsLoading(true);
 
     try {
-      const results = await searchMovies({}); // Trigger search with no filters
+      const results = await searchMovies({
+        countryId: "",
+        genreId: "",
+        keywordId: "",
+        releaseYear: "",
+      }); // Trigger search with no filters
       setMovies(results);
       setIsLoading(false);
     } catch (error) {

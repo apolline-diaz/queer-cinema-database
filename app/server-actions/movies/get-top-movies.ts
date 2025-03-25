@@ -1,7 +1,7 @@
 "use server";
+
 import { PrismaClient } from "@prisma/client";
 
-// Initialisez le client Prisma
 const prisma = new PrismaClient();
 
 export async function getTopMovies() {
@@ -17,7 +17,7 @@ export async function getTopMovies() {
         description: true,
         release_date: true,
       },
-      take: 2, // équivalent à range(0, 1)
+      take: 2,
     });
 
     return movies;

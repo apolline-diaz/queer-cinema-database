@@ -4,9 +4,15 @@ export const getCanonicalUrl = () => {
     : "http://localhost:3000";
 };
 
-export const getImageUrl = (image_url: string) => {
+export const getImageUrl = (image_url: string | null | undefined): string => {
+  if (!image_url) {
+    return "/missing_image.png";
+  }
   // Si l'URL commence par "https://" ou "http://", on considère que c'est une URL externe complète
-  if (image_url.startsWith("http://") || image_url.startsWith("https://")) {
+  if (
+    image_url?.trim().startsWith("http://") ||
+    image_url?.trim().startsWith("https://")
+  ) {
     return image_url; // URL externe (ex: image MUBI), on la retourne telle quelle
   }
 
