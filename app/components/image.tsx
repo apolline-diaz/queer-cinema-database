@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { getImageUrl } from "@/utils";
 
@@ -25,7 +27,7 @@ export const Image: React.FC<SafeImageProps> = ({
     // eslint-disable-next-line @next/next/no-img-element
     <img
       src={src}
-      alt={`Poster for ${title}`}
+      alt={`${title}`}
       onError={handleError}
       className={className}
       {...props}

@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { Image } from "@/app/components/image";
 import { getImageUrl, getCanonicalUrl } from "@/utils/index";
 import { getMovie } from "@/app/server-actions/movies/get-movie";
 
@@ -27,15 +27,11 @@ export default async function Page({ params }: Props) {
       <div className="w-full text-white mx-auto min-h-screen">
         <div className="h-96 relative">
           <Image
-            className=""
-            fill={true}
+            className="object-cover h-96 "
             alt={movie.title}
-            style={{ objectFit: "cover" }}
-            src={getImageUrl(
-              movie.image_url || "public/assets/no_image_found.png"
-            )}
+            src={getImageUrl(movie.image_url)}
+            title={movie.title}
           />
-
           <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-30 w-full h-full text-white p-10 flex justify-between items-end">
             <div className="flex flex-col ">
               <h2 className="text-3xl font-bold uppercase">{movie.title}</h2>
