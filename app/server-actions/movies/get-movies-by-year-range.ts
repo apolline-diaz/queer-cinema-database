@@ -30,7 +30,7 @@ export async function getMoviesByYearRange(startYear: string, endYear: string) {
       orderBy: {
         created_at: "desc",
       },
-      take: 15, // équivalent à range(0, 10)
+      take: 15,
     });
 
     return movies;

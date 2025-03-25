@@ -5,17 +5,25 @@ export const getCanonicalUrl = () => {
 };
 
 export const getImageUrl = (image_url: string | null | undefined): string => {
-  if (!image_url) {
+  // If no image URL is provided, return the default missing image
+  if (!image_url || image_url.trim() === "No image available") {
     return "/missing_image.png";
   }
-  // Si l'URL commence par "https://" ou "http://", on considère que c'est une URL externe complète
+
+  // Check for fully qualified URLs
   if (
-    image_url?.trim().startsWith("http://") ||
-    image_url?.trim().startsWith("https://")
+    image_url.trim().startsWith("http://") ||
+    image_url.trim().startsWith("https://")
   ) {
-    return image_url; // URL externe (ex: image MUBI), on la retourne telle quelle
+    return image_url.trim();
   }
 
-  // Sinon, on considère que c'est une image stockée dans Supabase et on ajoute l'URL de base de Supabase
-  return `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/storage/${image_url}`;
+  // Sanitize the image path
+  const sanitizedPath = image_url
+    .trim()
+    .replace(/^\/+/, "") // Remove leading slashes
+    .replace(/\s+/g, "%20"); // Replace spaces with URL encoding
+
+  // Construct Supabase URL
+  return `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/storage/${sanitizedPath}`;
 };
