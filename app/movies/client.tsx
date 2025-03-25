@@ -41,20 +41,20 @@ export default function ClientSearchComponent({
           : "Rechercher par titre ou mot-clé? "}
       </button>
 
-      {/* {searchMode === "field" ? (
+      {searchMode === "field" ? (
         <Searchfield
           initialMovies={initialMovies}
           initialKeyword={initialKeyword}
         />
-      ) : ( */}
-      <SearchForm
-        initialMovies={initialMovies}
-        countries={countries}
-        genres={genres}
-        keywords={keywords}
-        releaseYears={releaseYears}
-      />
-      {/* )} */}
+      ) : (
+        <SearchForm
+          initialMovies={initialMovies}
+          countries={countries}
+          genres={genres}
+          keywords={keywords}
+          releaseYears={releaseYears}
+        />
+      )}
     </div>
   );
 }
