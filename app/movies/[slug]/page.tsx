@@ -27,7 +27,7 @@ export default async function Page({ params }: Props) {
       <div className="w-full text-white mx-auto min-h-screen">
         <div className="h-96 relative">
           <Image
-            className="object-cover h-96 "
+            className="object-cover w-full h-full"
             alt={movie.title}
             src={getImageUrl(movie.image_url)}
             title={movie.title}
