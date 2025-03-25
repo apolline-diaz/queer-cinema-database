@@ -1,5 +1,3 @@
-"use client";
-import Image from "next/image";
 import { useState } from "react";
 import { getImageUrl } from "@/utils";
 
@@ -18,17 +16,15 @@ export const SafeImage: React.FC<SafeImageProps> = ({
 }) => {
   const [src, setSrc] = useState(getImageUrl(image_url));
 
-  // In your component
-  console.log("Original image URL:", image_url);
-  console.log("Processed image URL:", getImageUrl(image_url));
-
   const handleError = () => {
     console.warn(`Image failed to load: ${src}`);
     setSrc("/missing_image.png");
   };
 
+  // If the image URL is from Supabase, use the <img> tag instead of Next.js <Image> component
   return (
-    <Image
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
       src={src}
       alt={`Poster for ${title}`}
       onError={handleError}
