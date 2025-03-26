@@ -92,31 +92,46 @@ export default function SearchForm({
         onSubmit={handleSubmit(onSubmit)}
         className="mt-4 p-4 border rounded-xl mb-4"
       >
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <Controller
-            name="countryId"
-            control={control}
-            render={({ field }) => (
-              <Select
-                label="Pays"
-                options={countries}
-                {...field}
-                placeholder="Tous les pays"
-              />
-            )}
-          />
-          <Controller
-            name="genreId"
-            control={control}
-            render={({ field }) => (
-              <Select
-                label="Genre"
-                options={genres}
-                {...field}
-                placeholder="Tous les genres"
-              />
-            )}
-          />
+        <div className="flex flex-col mb-5">
+          <div className="flex flex-col justify-between">
+            <Controller
+              name="countryId"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  label="Pays"
+                  options={countries}
+                  {...field}
+                  placeholder="Tous les pays"
+                />
+              )}
+            />
+            <Controller
+              name="genreId"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  label="Genre"
+                  options={genres}
+                  {...field}
+                  placeholder="Tous les genres"
+                />
+              )}
+            />
+
+            <Controller
+              name="releaseYear"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  label="Année de sortie"
+                  options={releaseYears}
+                  {...field}
+                  placeholder="Toutes les années"
+                />
+              )}
+            />
+          </div>
           <Controller
             name="keywordIds"
             control={control}
@@ -128,18 +143,6 @@ export default function SearchForm({
                 label="Mots-clés"
                 placeholder="Rechercher des mots-clés"
                 onChange={field.onChange}
-              />
-            )}
-          />
-          <Controller
-            name="releaseYear"
-            control={control}
-            render={({ field }) => (
-              <Select
-                label="Année de sortie"
-                options={releaseYears}
-                {...field}
-                placeholder="Toutes les années"
               />
             )}
           />
