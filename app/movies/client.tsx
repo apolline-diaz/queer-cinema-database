@@ -10,6 +10,7 @@ interface ClientSearchComponentProps {
   countries: { value: string; label: string }[];
   genres: { value: string; label: string }[];
   keywords: { value: string; label: string }[];
+  directors: { value: string; label: string }[];
   releaseYears: { value: string; label: string }[];
   initialKeyword?: string;
 }
@@ -19,6 +20,7 @@ export default function ClientSearchComponent({
   countries,
   genres,
   keywords,
+  directors,
   releaseYears,
   initialKeyword = "",
 }: ClientSearchComponentProps) {
@@ -66,6 +68,7 @@ export default function ClientSearchComponent({
           countries={countries}
           genres={genres}
           keywords={keywords}
+          directors={directors}
           releaseYears={releaseYears}
         />
       )}

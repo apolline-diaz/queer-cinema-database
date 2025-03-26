@@ -9,17 +9,20 @@ export async function searchMovies({
   countryId,
   genreId,
   keywordIds,
+  directorId,
   releaseYear,
 }: {
   countryId: string;
   genreId: string;
   keywordIds: string[]; // Array of keyword IDs
+  directorId: string;
   releaseYear: string;
 }) {
   return cachedQuery(
     [
       "search-movies",
       countryId,
+      directorId,
       genreId,
       JSON.stringify(keywordIds),
       releaseYear,
@@ -45,7 +48,11 @@ export async function searchMovies({
                 },
               })),
             }),
-
+            ...(directorId && {
+              movie_directors: {
+                some: { director_id: BigInt(directorId) },
+              },
+            }),
             ...(releaseYear && {
               release_date: { startsWith: releaseYear },
             }),
@@ -57,6 +64,7 @@ export async function searchMovies({
             release_date: true,
           },
           orderBy: { created_at: "desc" },
+          take: 150,
         });
 
         return movies.map((movie) => ({
@@ -132,6 +140,26 @@ export async function getKeywords() {
     },
     {
       tags: ["keywords"],
+      revalidate: 86400, // 24 hours cache
+    }
+  );
+}
+
+export async function getDirectors() {
+  return cachedQuery(
+    ["directors"],
+    async () => {
+      const directors = await prisma.directors.findMany({
+        orderBy: { name: "asc" },
+        where: { name: { not: null } },
+      });
+      return directors.map((director) => ({
+        value: director.id.toString(),
+        label: director.name || "",
+      }));
+    },
+    {
+      tags: ["directors"],
       revalidate: 86400, // 24 hours cache
     }
   );

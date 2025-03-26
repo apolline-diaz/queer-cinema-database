@@ -13,6 +13,7 @@ interface FormValues {
   countryId: string;
   genreId: string;
   keywordIds: { value: string; label: string }[]; // Changed to array of keywords
+  directorId: string;
   releaseYear: string;
 }
 
@@ -21,12 +22,14 @@ export default function SearchForm({
   countries,
   genres,
   keywords,
+  directors,
   releaseYears,
 }: {
   initialMovies: Movie[];
   countries: { value: string; label: string }[];
   genres: { value: string; label: string }[];
   keywords: { value: string; label: string }[];
+  directors: { value: string; label: string }[];
   releaseYears: { value: string; label: string }[];
 }) {
   const { control, handleSubmit, reset, watch } = useForm<FormValues>({
@@ -34,6 +37,7 @@ export default function SearchForm({
       countryId: "",
       genreId: "",
       keywordIds: [], // Initialize as empty array
+      directorId: "",
       releaseYear: "",
     },
   });
@@ -53,6 +57,7 @@ export default function SearchForm({
         countryId: data.countryId,
         genreId: data.genreId,
         keywordIds: data.keywordIds.map((keyword) => keyword.value), // Convert to array of keyword IDs
+        directorId: data.directorId,
         releaseYear: data.releaseYear,
       });
 
@@ -75,6 +80,7 @@ export default function SearchForm({
         countryId: "",
         genreId: "",
         keywordIds: [], // Pass empty array for keywords
+        directorId: "",
         releaseYear: "",
       }); // Trigger search with no filters
       setMovies(results);
@@ -92,8 +98,8 @@ export default function SearchForm({
         onSubmit={handleSubmit(onSubmit)}
         className="mt-4 p-4 border rounded-xl mb-4"
       >
-        <div className="flex flex-col mb-5">
-          <div className="flex flex-col justify-between">
+        <div className="flex flex-col w-full mb-5">
+          <div className="grid sm:grid-cols-2 xs:grid-col-1 w-full gap-4 justify-between">
             <Controller
               name="countryId"
               control={control}
@@ -118,7 +124,6 @@ export default function SearchForm({
                 />
               )}
             />
-
             <Controller
               name="releaseYear"
               control={control}
@@ -128,6 +133,18 @@ export default function SearchForm({
                   options={releaseYears}
                   {...field}
                   placeholder="Toutes les années"
+                />
+              )}
+            />
+            <Controller
+              name="directorId"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  label="Réalisateur-ice"
+                  options={directors}
+                  {...field}
+                  placeholder="Toutes les réalisateur-ices"
                 />
               )}
             />
