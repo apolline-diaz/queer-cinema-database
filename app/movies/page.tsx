@@ -19,7 +19,7 @@ export default async function Page({
   const initialMovies = await searchMovies({
     countryId: "",
     genreId: "",
-    keywordId: "",
+    keywordIds: [],
     releaseYear: "",
   });
   const countries = await getCountries();

@@ -8,16 +8,22 @@ const prisma = new PrismaClient();
 export async function searchMovies({
   countryId,
   genreId,
-  keywordId,
+  keywordIds,
   releaseYear,
 }: {
   countryId: string;
   genreId: string;
-  keywordId: string;
+  keywordIds: string[]; // Array of keyword IDs
   releaseYear: string;
 }) {
   return cachedQuery(
-    ["search-movies", countryId, genreId, keywordId, releaseYear],
+    [
+      "search-movies",
+      countryId,
+      genreId,
+      JSON.stringify(keywordIds),
+      releaseYear,
+    ],
     async () => {
       try {
         const movies = await prisma.movies.findMany({
@@ -32,11 +38,14 @@ export async function searchMovies({
                 some: { genre_id: BigInt(genreId) },
               },
             }),
-            ...(keywordId && {
-              movie_keywords: {
-                some: { keyword_id: parseInt(keywordId) },
-              },
+            ...(keywordIds.length > 0 && {
+              AND: keywordIds.map((id) => ({
+                movie_keywords: {
+                  some: { keyword_id: parseInt(id) },
+                },
+              })),
             }),
+
             ...(releaseYear && {
               release_date: { startsWith: releaseYear },
             }),

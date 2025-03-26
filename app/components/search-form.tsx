@@ -7,11 +7,12 @@ import Card from "./card";
 import { getImageUrl } from "@/utils";
 import Select from "./select";
 import { Movie } from "../types/movie";
+import MultiSelect from "./multi-select";
 
 interface FormValues {
   countryId: string;
   genreId: string;
-  keywordId: string;
+  keywordIds: { value: string; label: string }[]; // Changed to array of keywords
   releaseYear: string;
 }
 
@@ -32,7 +33,7 @@ export default function SearchForm({
     defaultValues: {
       countryId: "",
       genreId: "",
-      keywordId: "",
+      keywordIds: [], // Initialize as empty array
       releaseYear: "",
     },
   });
@@ -51,7 +52,7 @@ export default function SearchForm({
       const results = await searchMovies({
         countryId: data.countryId,
         genreId: data.genreId,
-        keywordId: data.keywordId,
+        keywordIds: data.keywordIds.map((keyword) => keyword.value), // Convert to array of keyword IDs
         releaseYear: data.releaseYear,
       });
 
@@ -73,7 +74,7 @@ export default function SearchForm({
       const results = await searchMovies({
         countryId: "",
         genreId: "",
-        keywordId: "",
+        keywordIds: [], // Pass empty array for keywords
         releaseYear: "",
       }); // Trigger search with no filters
       setMovies(results);
@@ -117,14 +118,16 @@ export default function SearchForm({
             )}
           />
           <Controller
-            name="keywordId"
+            name="keywordIds"
             control={control}
             render={({ field }) => (
-              <Select
-                label="Mot-clé"
+              <MultiSelect
+                name="keywordIds"
+                control={control}
                 options={keywords}
-                {...field}
-                placeholder="Tous les mots-clés"
+                label="Mots-clés"
+                placeholder="Rechercher des mots-clés"
+                onChange={field.onChange}
               />
             )}
           />

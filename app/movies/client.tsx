@@ -26,9 +26,9 @@ export default function ClientSearchComponent({
     initialKeyword ? "field" : "form"
   );
 
-  const toggleSearchMode = () => {
-    setSearchMode(searchMode === "field" ? "form" : "field");
-  };
+  // const toggleSearchMode = () => {
+  //   setSearchMode(searchMode === "field" ? "form" : "field");
+  // };
 
   return (
     <div>
