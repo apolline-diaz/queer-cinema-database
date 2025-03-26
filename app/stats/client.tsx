@@ -46,20 +46,20 @@ export default function KeywordStatsClientComponent({
           <div className="flex flex-wrap gap-4 xs:w-full">
             <button
               onClick={() => setChartType("bar")}
-              className={`px-4 py-2 rounded ${
+              className={`w-auto text-sm font-light px-4 py-1 border rounded-full transition-colors ${
                 chartType === "bar"
-                  ? "bg-rose-500 text-white font-light"
-                  : "bg-transparent border border-rose-500 text-rose-500"
+                  ? "bg-rose-500 text-white border-rose-500 "
+                  : "bg-transparent text-rose-500 border-rose-500 hover:bg-rose-600 hover:text-white"
               }`}
             >
               Diagramme en bâton
             </button>
             <button
               onClick={() => setChartType("pie")}
-              className={`px-4 py-2 rounded ${
+              className={`w-auto text-sm font-light px-4 py-1 border rounded-full transition-colors ${
                 chartType === "pie"
-                  ? "bg-rose-500 text-white font-light"
-                  : "bg-transparent border border-rose-500 text-rose-500"
+                  ? "bg-rose-500 text-white border-rose-500 "
+                  : "bg-transparent text-rose-500 border-rose-500 hover:bg-rose-600 hover:text-white"
               }`}
             >
               Diagramme en camembert
@@ -87,7 +87,11 @@ export default function KeywordStatsClientComponent({
                   height={70}
                 />
                 <YAxis />
-                <Tooltip formatter={(value) => [`${value} films`, "Nombre"]} />
+                <Tooltip
+                  formatter={(value) => [`${value} films`]}
+                  labelFormatter={(label) => `${label}`}
+                  contentStyle={{ color: "black", background: "white" }}
+                />
                 <Legend />
                 <Bar
                   dataKey="count"

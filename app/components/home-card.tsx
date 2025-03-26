@@ -20,12 +20,12 @@ export default function HomeCard({
   return (
     <>
       <Link href={`/movies/${id}`}>
-        <div className="group bg-gray-950 rounded-md overflow-hidden h-full flex flex-col justify-between">
+        <div className="group bg-gray-950 rounded-xl overflow-hidden h-full flex flex-col justify-between">
           {/* Responsive width, full on small screens, fixed on larger ones */}
-          <div className="relative w-full sm:w-[300px] h-auto min-h-[200px] sm:min-h-0 sm:h-48 bg-center aspect-[3/4] sm:aspect-[16/9]">
+          <div className="relative w-full sm:w-[300px] rounded-xl h-auto min-h-[200px] sm:min-h-0 sm:h-48 bg-center aspect-[3/4] sm:aspect-[16/9]">
             <Image
               src={getImageUrl(image_url)}
-              fill={true}
+              fill="true"
               alt={title}
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               className="object-cover h-full w-full transform transition-transform duration-700 ease-in-out group-hover:scale-110 group-hover:brightness-50"

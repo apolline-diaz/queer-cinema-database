@@ -20,11 +20,11 @@ export default function Card({
   return (
     <>
       <Link href={`/movies/${id}`}>
-        <div className="group rounded-md overflow-hidden flex flex-col transition-transform">
+        <div className="group rounded-xl overflow-hidden flex flex-col transition-transform">
           <div className="relative h-48 overflow-hidden">
             <Image
               src={getImageUrl(image_url)}
-              fill={true}
+              fill="true"
               alt={title}
               className="object-cover w-full h-full  transform transition-transform duration-700 ease-in-out group-hover:scale-110 group-hover:brightness-50"
               title={title}

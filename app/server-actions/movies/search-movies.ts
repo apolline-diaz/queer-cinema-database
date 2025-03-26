@@ -8,16 +8,25 @@ const prisma = new PrismaClient();
 export async function searchMovies({
   countryId,
   genreId,
-  keywordId,
+  keywordIds,
+  directorId,
   releaseYear,
 }: {
   countryId: string;
   genreId: string;
-  keywordId: string;
+  keywordIds: string[]; // Array of keyword IDs
+  directorId: string;
   releaseYear: string;
 }) {
   return cachedQuery(
-    ["search-movies", countryId, genreId, keywordId, releaseYear],
+    [
+      "search-movies",
+      countryId,
+      directorId,
+      genreId,
+      JSON.stringify(keywordIds),
+      releaseYear,
+    ],
     async () => {
       try {
         const movies = await prisma.movies.findMany({
@@ -32,9 +41,16 @@ export async function searchMovies({
                 some: { genre_id: BigInt(genreId) },
               },
             }),
-            ...(keywordId && {
-              movie_keywords: {
-                some: { keyword_id: parseInt(keywordId) },
+            ...(keywordIds.length > 0 && {
+              AND: keywordIds.map((id) => ({
+                movie_keywords: {
+                  some: { keyword_id: parseInt(id) },
+                },
+              })),
+            }),
+            ...(directorId && {
+              movie_directors: {
+                some: { director_id: BigInt(directorId) },
               },
             }),
             ...(releaseYear && {
@@ -48,6 +64,7 @@ export async function searchMovies({
             release_date: true,
           },
           orderBy: { created_at: "desc" },
+          take: 150,
         });
 
         return movies.map((movie) => ({
@@ -123,6 +140,26 @@ export async function getKeywords() {
     },
     {
       tags: ["keywords"],
+      revalidate: 86400, // 24 hours cache
+    }
+  );
+}
+
+export async function getDirectors() {
+  return cachedQuery(
+    ["directors"],
+    async () => {
+      const directors = await prisma.directors.findMany({
+        orderBy: { name: "asc" },
+        where: { name: { not: null } },
+      });
+      return directors.map((director) => ({
+        value: director.id.toString(),
+        label: director.name || "",
+      }));
+    },
+    {
+      tags: ["directors"],
       revalidate: 86400, // 24 hours cache
     }
   );

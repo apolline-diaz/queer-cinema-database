@@ -4,7 +4,7 @@ import { useForm, Controller } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { updateMovie } from "@/app/server-actions/movies/update-movie";
-import Image from "next/image";
+import { Image } from "@/app/components/image";
 import { getImageUrl } from "@/utils/index";
 import { Movie } from "@/app/types/movie";
 import { getKeywords } from "@/app/server-actions/keywords/get-keywords";
@@ -320,14 +320,15 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
           <label className="block text-sm font-medium mb-3">
             Image actuelle
           </label>
-          <div className="relative h-64 bg-gray-700 rounded-md overflow-hidden">
+          <div className="relative rounded-xl h-64 bg-gray-700 overflow-hidden">
             {imagePreview ? (
               <Image
                 src={getImageUrl(imagePreview)}
                 alt={movie.title}
-                fill
+                fill="true"
                 style={{ objectFit: "cover" }}
-                className="rounded-md"
+                className="rounded-md  w-full h-full"
+                title={movie.title}
               />
             ) : (
               <div className="h-full flex items-center justify-center text-gray-400">
