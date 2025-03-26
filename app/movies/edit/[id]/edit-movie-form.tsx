@@ -327,7 +327,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
                 alt={movie.title}
                 fill="true"
                 style={{ objectFit: "cover" }}
-                className="rounded-md"
+                className="rounded-md  w-full h-full"
                 title={movie.title}
               />
             ) : (
