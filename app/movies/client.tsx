@@ -32,15 +32,29 @@ export default function ClientSearchComponent({
 
   return (
     <div>
-      <button
-        onClick={toggleSearchMode}
-        className="xs:w-full w-auto my-2 font-light hover:bg-rose-500 hover:text-white bg-transparent text-rose-500 border p-2 border-rose-500 rounded-md"
-      >
-        {searchMode === "field"
-          ? "Faire une recherche avancée?"
-          : "Rechercher par titre ou mot-clé? "}
-      </button>
+      <div className="flex space-x-2 w-full my-2">
+        <button
+          onClick={() => setSearchMode("field")}
+          className={`w-auto text-sm font-light px-4 py-1 border rounded-full transition-colors ${
+            searchMode === "field"
+              ? "bg-rose-500 text-white border-rose-500 "
+              : "bg-transparent text-rose-500 border-rose-500 hover:bg-rose-600 hover:text-white"
+          }`}
+        >
+          Recherche simple
+        </button>
 
+        <button
+          onClick={() => setSearchMode("form")}
+          className={`w-auto text-sm font-light px-4 py-1 border rounded-full transition-colors ${
+            searchMode === "form"
+              ? "bg-rose-500 text-white border-rose-500 "
+              : "bg-transparent text-rose-500 border-rose-500 hover:bg-rose-600 hover:text-white"
+          }`}
+        >
+          Recherche avancée
+        </button>
+      </div>
       {searchMode === "field" ? (
         <Searchfield
           initialMovies={initialMovies}
