@@ -2,6 +2,8 @@ import { ListCard } from "@/app/components/list-card";
 import Link from "next/link";
 import { getLists } from "../server-actions/lists/get-lists";
 
+export const revalidate = 0;
+
 export default async function ProfilePage() {
   const lists = await getLists();
 

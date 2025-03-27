@@ -1,49 +1,30 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useForm, Controller } from "react-hook-form";
-import { z } from "zod";
+import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { updateList } from "@/app/server-actions/lists/update-list";
 import { getList } from "@/app/server-actions/lists/get-list";
 import { getMovies } from "@/app/server-actions/movies/get-movies";
-import { SubmitButton } from "@/app/components/submit-button";
-
-// Types
-interface Movie {
-  id: string;
-  title: string;
-  release_date: string;
-  genres: { name: string }[];
-  countries: { name: string }[];
-  keywords: { name: string }[];
-}
-
-// Validation Schema
-const ListUpdateSchema = z.object({
-  title: z.string().min(1, "Le titre est requis"),
-  description: z.string().optional(),
-  movie_id: z.string().optional(),
-});
-
-type ListUpdateFormData = z.infer<typeof ListUpdateSchema>;
+import MoviesMultiSelect from "@/app/components/movies-multi-select";
 
 export default function EditListPage({ params }: { params: { id: string } }) {
   const { id } = params;
   const router = useRouter();
-  const [movies, setMovies] = useState<Movie[]>([]);
-  const [selectedMovies, setSelectedMovies] = useState<Movie[]>([]);
-  const [movieInput, setMovieInput] = useState("");
-  const [isSearching, setIsSearching] = useState(false);
+  const [movies, setMovies] = useState<{ value: string; label: string }[]>([]);
+  const [selectedMovies, setSelectedMovies] = useState<
+    { value: string; label: string }[]
+  >([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const {
-    control,
     register,
     handleSubmit,
     setValue,
-    formState: { errors },
-  } = useForm<ListUpdateFormData>({
+    control,
+    formState: { errors, isSubmitting },
+  } = useForm({
     defaultValues: {
       title: "",
       description: "",
@@ -54,18 +35,7 @@ export default function EditListPage({ params }: { params: { id: string } }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch list details
         const list = await getList(id);
-
-        // Set form values
-        setValue("title", list.title);
-        setValue("description", list.description || "");
-
-        // Set selected movies
-        const listMovies = list.lists_movies.map((item: any) => item.movies);
-        setSelectedMovies(listMovies);
-
-        // Fetch all movies for search
         const moviesData = await getMovies({
           title: "",
           keyword: "",
@@ -74,172 +44,118 @@ export default function EditListPage({ params }: { params: { id: string } }) {
           genre: "",
           year: "",
         });
-        setMovies(moviesData);
+
+        setValue("title", list.title);
+        setValue("description", list.description || "");
+        setSelectedMovies(
+          list.lists_movies.map((item: any) => ({
+            value: item.movies.id,
+            label: item.movies.title,
+          }))
+        );
+        setMovies(
+          moviesData.map((movie: any) => ({
+            value: movie.id,
+            label: movie.title,
+          }))
+        );
 
         setIsLoading(false);
       } catch (error) {
-        console.error("Failed to fetch list data:", error);
-        router.push("/lists");
+        console.error("Impossible de récupérer les données:", error);
+        router.push(`/lists/${id}`);
       }
     };
 
     fetchData();
   }, [id, router, setValue]);
 
-  const handleMovieInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMovieInput(e.target.value);
-    setIsSearching(e.target.value.length > 0);
+  const onMovieChange = (selected: { value: string; label: string }[]) => {
+    setSelectedMovies(selected);
+    setValue("movie_id", selected.map((s) => s.value).join(","));
   };
 
-  const handleAddMovie = (movie: Movie) => {
-    if (!selectedMovies.find((m) => m.id === movie.id)) {
-      setSelectedMovies((prev) => [...prev, movie]);
-      setValue(
-        "movie_id",
-        [...selectedMovies, movie].map((m) => m.id).join(",")
-      );
+  const onSubmit = async (data: any) => {
+    try {
+      const formData = new FormData();
+      formData.append("title", data.title);
+      formData.append("description", data.description || "");
+      formData.append("movie_id", data.movie_id || "");
+
+      const result = await updateList(id, formData);
+
+      if (result.type === "success") {
+        router.push(`/lists/${id}`);
+      } else {
+        setError(result.message || "Une erreur s'est produite");
+      }
+    } catch (err) {
+      console.error("Erreur lors de la mise à jour:", err);
+      setError("Une erreur inattendue s'est produite");
     }
-    setMovieInput("");
-    setIsSearching(false);
   };
-
-  const handleRemoveMovie = (id: string) => {
-    const updatedMovies = selectedMovies.filter((m) => m.id !== id);
-    setSelectedMovies(updatedMovies);
-    setValue("movie_id", updatedMovies.map((m) => m.id).join(","));
-  };
-
-  const filteredMovies = movies
-    .filter(
-      (movie) =>
-        movie.title.toLowerCase().includes(movieInput.toLowerCase()) &&
-        !selectedMovies.find((m) => m.id === movie.id)
-    )
-    .slice(0, 5);
-
-  const onSubmit = async (data: ListUpdateFormData) => {
-    const formData = new FormData();
-    formData.append("id", id);
-    formData.append("title", data.title);
-    formData.append("description", data.description || "");
-    formData.append("movie_id", data.movie_id || "");
-
-    await updateList(id, formData);
-  };
-
-  if (isLoading) {
-    return <div>Chargement...</div>;
-  }
 
   return (
     <div className="p-10">
-      <div className="tracking-wide text-xl text-rose-500 mb-5">
-        Modifier la liste
-      </div>
-
-      <form onSubmit={handleSubmit(onSubmit)} className="py-5">
-        {/* Hidden input for list ID */}
-        <input type="hidden" {...register("movie_id")} />
-
-        {/* Title of the list */}
-        <div className="w-full md:w-1/2 mb-6 md:mb-0">
-          <label className="block tracking-wide text-sm mb-2" htmlFor="title">
-            Titre de la liste
-          </label>
-          <input
-            className="appearance-none block w-full text-sm font-light bg-neutral-950 border-b py-3 mb-3 leading-tight focus:outline-none"
-            id="title"
-            type="text"
-            {...register("title")}
-            placeholder="Mon top 2025"
-          />
-          {errors.title && (
-            <span className="text-red-500 text-xs italic">
-              {errors.title.message}
-            </span>
-          )}
+      <div className="text-xl text-rose-500 mb-5">Modifier la liste</div>
+      {isLoading ? (
+        <div className="space-y-4 w-full sm:w-1/2">
+          <div className={"animate-pulse bg-neutral-800 rounded h-10 w-full"} />
+          <div className={"animate-pulse bg-neutral-800 rounded h-20 w-full"} />
+          <div className={"animate-pulse bg-neutral-800 rounded h-10 w-full"} />
+          <div className={"animate-pulse bg-neutral-800 rounded h-10 w-32"} />
         </div>
+      ) : (
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="py-5 w-full sm:w-1/2"
+        >
+          <input type="hidden" {...register("movie_id")} />
 
-        {/* Description of the list */}
-        <div className="w-full md:w-1/2 mt-3 mb-6">
-          <label
-            className="block tracking-wide text-sm mb-2"
-            htmlFor="description"
-          >
-            Description
-          </label>
-          <textarea
-            className="appearance-none block w-full text-sm font-light bg-neutral-950 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none"
-            id="description"
-            {...register("description")}
-            placeholder="Liste des films préférés sortis en 2025"
-          ></textarea>
-          {errors.description && (
-            <span className="text-red-500 text-xs italic">
-              {errors.description.message}
-            </span>
-          )}
-        </div>
-
-        {/* Movies Selection */}
-        <div className="w-full md:w-1/2 mt-3 mb-6 md:mb-0">
-          <label
-            className="block tracking-wide text-sm mb-2"
-            htmlFor="movie_search"
-          >
-            Films
-          </label>
-          <div className="relative">
+          <div className="mb-6">
+            <label className="block text-sm mb-2">Titre</label>
             <input
-              className="block appearance-none w-full text-sm font-light bg-neutral-950 border py-2 px-3 pr-8 rounded leading-tight focus:outline-none"
-              id="movie_search"
-              value={movieInput}
-              onChange={handleMovieInputChange}
-              placeholder="Tapez pour rechercher des films"
+              className="w-full border-b text-sm font-light py-3 bg-neutral-950"
+              {...register("title")}
+              placeholder="Mon top 2025"
             />
-
-            {/* Display movie options */}
-            {isSearching && filteredMovies.length > 0 && (
-              <ul className="absolute left-0 right-0 border bg-neutral-950 rounded-lg text-sm font-light border-gray-300 mt-1 z-10">
-                {filteredMovies.map((movie) => (
-                  <li
-                    key={movie.id}
-                    className="px-4 py-2 cursor-pointer hover:bg-gray-800"
-                    onClick={() => handleAddMovie(movie)}
-                  >
-                    <div className="font-medium flex gap-2 items-center">
-                      {movie.title}
-                      <span className="font-light text-gray-400">
-                        {movie.release_date}
-                      </span>
-                    </div>
-                  </li>
-                ))}
-              </ul>
+            {errors.title && (
+              <span className="text-red-500 text-xs">
+                {errors.title.message}
+              </span>
             )}
           </div>
 
-          {/* Display selected movies as tags */}
-          <div className="mt-3 mb-6">
-            {selectedMovies.map((movie) => (
-              <span
-                key={movie.id}
-                className="inline-flex items-center bg-rose-100 text-rose-500 text-xs font-medium mr-2 px-3 py-1 rounded"
-              >
-                {movie.title}
-                <button
-                  type="button"
-                  onClick={() => handleRemoveMovie(movie.id)}
-                  className="ml-2 text-rose-500 hover:text-rose-700"
-                >
-                  &times;
-                </button>
-              </span>
-            ))}
+          <div className="mb-6">
+            <label className="block text-sm mb-2">Description</label>
+            <textarea
+              className="w-full rounded-md text-sm font-light border py-3 px-4 bg-neutral-950"
+              {...register("description")}
+              placeholder="Liste des films préférés"
+            />
           </div>
-        </div>
-        <SubmitButton />
-      </form>
+
+          <div className="mb-6">
+            <MoviesMultiSelect
+              name="movie_id"
+              options={movies}
+              defaultValues={selectedMovies}
+              onChange={onMovieChange}
+              label="Films"
+              placeholder="Rechercher des films"
+              control={control}
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="bg-rose-500 text-white px-4 py-2 rounded-md hover:bg-rose-600"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Modification en cours..." : "Enregistrer"}
+          </button>
+        </form>
+      )}
     </div>
   );
 }

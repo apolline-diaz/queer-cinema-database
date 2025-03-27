@@ -49,7 +49,7 @@ export default function ListPage({ params }: { params: { id: string } }) {
           <div className="animate-pulse bg-gray-400 h-10 w-48 mb-6 rounded-md"></div>
 
           {/* Skeleton grid for movie cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-5">
             {Array.from({ length: 4 }).map((_, index) => (
               <div
                 key={index}
@@ -80,7 +80,7 @@ export default function ListPage({ params }: { params: { id: string } }) {
           </button>
 
           {/* Movie grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-5">
+          <div className="grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-5">
             {movies.length === 0 ? (
               <p>Aucun film trouvé</p>
             ) : (

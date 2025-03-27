@@ -1,6 +1,7 @@
 "use client";
 
 import { Image } from "@/app/components/image";
+import { getImageUrl } from "@/utils";
 import Link from "next/link";
 
 interface List {
@@ -29,7 +30,7 @@ export const ListCard: React.FC<ListCardProps> = ({ list }) => {
         <div className="group rounded-xl overflow-hidden flex flex-col transition-transform">
           <div className="relative h-48 overflow-hidden">
             <Image
-              src={firstMoviePoster}
+              src={getImageUrl(firstMoviePoster)}
               fill={true}
               alt={list.title}
               className="object-cover w-full h-full  transform transition-transform duration-700 ease-in-out group-hover:scale-110 group-hover:brightness-50"
