@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import Card from "@/app/components/card";
+import { getList } from "@/app/server-actions/lists/get.list";
 
 export default function ListPage({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -14,61 +15,15 @@ export default function ListPage({ params }: { params: { id: string } }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Récupération des informations de la liste
-        const { data: list, error: listError } = await supabase
-          .from("lists")
-          .select("*")
-          .eq("id", id)
-          .single();
-
-        if (listError) {
-          console.error(
-            "Erreur lors de la récupération de la liste :",
-            listError.message
-          );
-          return;
+        const list = await getList(id);
+        if (list) {
+          setListData(list);
+          setMovies(list.lists_movies.map((item: any) => item.movie)); // Extraction des films
+        } else {
+          console.error("List not found");
         }
-
-        setListData(list);
-
-        // Récupération des films liés à la liste
-        const { data: listsMovies, error: moviesError } = await supabase
-          .from("lists_movies")
-          .select("movie_id, added_at")
-          .eq("list_id", id);
-
-        if (moviesError) {
-          console.error(
-            "Erreur lors de la récupération des films :",
-            moviesError.message
-          );
-          return;
-        }
-
-        // Récupération des informations détaillées des films
-        const movieDetails = await Promise.all(
-          listsMovies.map(async ({ movie_id }) => {
-            const { data: movie, error: movieError } = await supabase
-              .from("movies")
-              .select("*")
-              .eq("id", movie_id)
-              .single();
-
-            if (movieError) {
-              console.error(
-                `Erreur lors de la récupération du film ${movie_id} :`,
-                movieError.message
-              );
-              return null;
-            }
-            return movie;
-          })
-        );
-
-        // Filtrer les résultats valides
-        setMovies(movieDetails.filter((movie) => movie !== null));
       } catch (error) {
-        console.error("Erreur inattendue :", error);
+        console.error("Failed to fetch list data:", error);
       }
     };
 
@@ -76,7 +31,7 @@ export default function ListPage({ params }: { params: { id: string } }) {
   }, [id]);
 
   if (!listData) {
-    return <div>Chargement...</div>;
+    return <div>Loading...</div>;
   }
 
   return (
