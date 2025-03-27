@@ -12,8 +12,6 @@ export type Movie = {
   runtime?: number | null;
   image_url?: string | null;
   boost?: boolean | null;
-  director?: string | null;
-  country?: string | null;
   genres?: Genre[];
   keywords?: Keyword[];
   directors?: Director[];

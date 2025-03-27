@@ -4,6 +4,7 @@ import {
   getGenres,
   getKeywords,
   getReleaseYears,
+  getDirectors,
 } from "@/app/server-actions/movies/search-movies";
 import ClientSearchComponent from "./client";
 
@@ -16,10 +17,17 @@ export default async function Page({
   const keywordParam = (searchParams?.keyword as string) || "";
 
   // get filter data and all movies (initial movies)
-  const initialMovies = await searchMovies({});
+  const initialMovies = await searchMovies({
+    countryId: "",
+    genreId: "",
+    keywordIds: [],
+    directorId: "",
+    releaseYear: "",
+  });
   const countries = await getCountries();
   const genres = await getGenres();
   const keywords = await getKeywords();
+  const directors = await getDirectors();
   const releaseYears = await getReleaseYears();
 
   return (
@@ -34,6 +42,7 @@ export default async function Page({
               countries={countries}
               genres={genres}
               keywords={keywords}
+              directors={directors}
               releaseYears={releaseYears}
               initialKeyword={keywordParam}
             />

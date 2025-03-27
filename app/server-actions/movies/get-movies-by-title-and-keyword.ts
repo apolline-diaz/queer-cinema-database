@@ -17,7 +17,7 @@ export const getMoviesByTitle = async (search: string): Promise<Movie[]> => {
       orderBy: {
         created_at: "desc",
       },
-      take: 50,
+      take: 150,
     });
 
     return movies;
@@ -85,6 +85,9 @@ export const getMoviesByKeyword = async (search: string): Promise<Movie[]> => {
         title: true,
         image_url: true,
         release_date: true,
+      },
+      orderBy: {
+        created_at: "desc",
       },
     });
 

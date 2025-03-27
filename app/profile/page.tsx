@@ -1,30 +1,9 @@
-import { redirect } from "next/navigation";
-import { createClient } from "@/utils/supabase/server";
-import ListCard from "../components/list-card";
+import { ListCard } from "@/app/components/list-card";
 import Link from "next/link";
+import { getLists } from "../server-actions/lists/get-lists";
 
 export default async function ProfilePage() {
-  const supabase = createClient();
-
-  // get user
-  const { data, error } = await supabase.auth.getUser();
-  if (error || !data?.user) {
-    redirect("/login");
-  }
-
-  // get movies user's lists
-  const userId = data.user.id;
-
-  const { data: lists, error: listsError } = await supabase
-    .from("lists")
-    .select(`id, title, lists_movies(movie_id), movies(image_url) `)
-    .eq("user_id", userId);
-
-  // error handler
-  if (listsError) {
-    console.error("Error fetching data", listsError);
-    redirect("/error");
-  }
+  const lists = await getLists();
 
   return (
     <div className="flex flex-col  gap-5 p-10">
@@ -66,12 +45,7 @@ export default async function ProfilePage() {
           </Link>
 
           {lists?.map((list) => (
-            <ListCard
-              key={list.id}
-              id={list.id}
-              title={list.title}
-              image_url={list.movies[0]?.image_url || "/placeholder-image.png"} // Utiliser l'image du premier film ou une image par défaut
-            />
+            <ListCard key={list.id} list={list} />
           ))}
         </div>
       </section>

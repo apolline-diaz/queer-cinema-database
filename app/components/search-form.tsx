@@ -7,11 +7,13 @@ import Card from "./card";
 import { getImageUrl } from "@/utils";
 import Select from "./select";
 import { Movie } from "../types/movie";
+import MultiSelect from "./multi-select";
 
 interface FormValues {
   countryId: string;
   genreId: string;
-  keywordId: string;
+  keywordIds: { value: string; label: string }[]; // Changed to array of keywords
+  directorId: string;
   releaseYear: string;
 }
 
@@ -20,19 +22,22 @@ export default function SearchForm({
   countries,
   genres,
   keywords,
+  directors,
   releaseYears,
 }: {
   initialMovies: Movie[];
   countries: { value: string; label: string }[];
   genres: { value: string; label: string }[];
   keywords: { value: string; label: string }[];
+  directors: { value: string; label: string }[];
   releaseYears: { value: string; label: string }[];
 }) {
-  const { control, handleSubmit, reset } = useForm<FormValues>({
+  const { control, handleSubmit, reset, watch } = useForm<FormValues>({
     defaultValues: {
       countryId: "",
       genreId: "",
-      keywordId: "",
+      keywordIds: [], // Initialize as empty array
+      directorId: "",
       releaseYear: "",
     },
   });
@@ -40,16 +45,20 @@ export default function SearchForm({
   const [movies, setMovies] = useState<Movie[]>(initialMovies);
   const [isLoading, setIsLoading] = useState(false);
 
+  // Memoize search parameters to prevent unnecessary re-renders
+  const searchParams = watch();
+
   // handle form submission
   const onSubmit = async (data: FormValues) => {
     setIsLoading(true); // Show loading indicator
 
     try {
       const results = await searchMovies({
-        countryId: data.countryId || undefined,
-        genreId: data.genreId || undefined,
-        keywordId: data.keywordId || undefined,
-        releaseYear: data.releaseYear || undefined,
+        countryId: data.countryId,
+        genreId: data.genreId,
+        keywordIds: data.keywordIds.map((keyword) => keyword.value), // Convert to array of keyword IDs
+        directorId: data.directorId,
+        releaseYear: data.releaseYear,
       });
 
       setMovies(results); // Update the movie list with search results
@@ -67,7 +76,13 @@ export default function SearchForm({
     setIsLoading(true);
 
     try {
-      const results = await searchMovies({}); // Trigger search with no filters
+      const results = await searchMovies({
+        countryId: "",
+        genreId: "",
+        keywordIds: [], // Pass empty array for keywords
+        directorId: "",
+        releaseYear: "",
+      }); // Trigger search with no filters
       setMovies(results);
       setIsLoading(false);
     } catch (error) {
@@ -81,54 +96,70 @@ export default function SearchForm({
     <>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="mt-4 p-4 border rounded-lg mb-4"
+        className="mt-4 p-4 border rounded-xl mb-4"
       >
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="flex flex-col w-full mb-5">
+          <div className="grid sm:grid-cols-2 xs:grid-col-1 w-full gap-4 justify-between">
+            <Controller
+              name="countryId"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  label="Pays"
+                  options={countries}
+                  {...field}
+                  placeholder="Tous les pays"
+                />
+              )}
+            />
+            <Controller
+              name="genreId"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  label="Genre"
+                  options={genres}
+                  {...field}
+                  placeholder="Tous les genres"
+                />
+              )}
+            />
+            <Controller
+              name="releaseYear"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  label="Année de sortie"
+                  options={releaseYears}
+                  {...field}
+                  placeholder="Toutes les années"
+                />
+              )}
+            />
+            <Controller
+              name="directorId"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  label="Réalisateur-ice"
+                  options={directors}
+                  {...field}
+                  placeholder="Toutes les réalisateur-ices"
+                />
+              )}
+            />
+          </div>
           <Controller
-            name="countryId"
+            name="keywordIds"
             control={control}
             render={({ field }) => (
-              <Select
-                label="Pays"
-                options={countries}
-                {...field}
-                placeholder="Tous les pays"
-              />
-            )}
-          />
-          <Controller
-            name="genreId"
-            control={control}
-            render={({ field }) => (
-              <Select
-                label="Genre"
-                options={genres}
-                {...field}
-                placeholder="Tous les genres"
-              />
-            )}
-          />
-          <Controller
-            name="keywordId"
-            control={control}
-            render={({ field }) => (
-              <Select
-                label="Mot-clé"
+              <MultiSelect
+                name="keywordIds"
+                control={control}
                 options={keywords}
-                {...field}
-                placeholder="Tous les mots-clés"
-              />
-            )}
-          />
-          <Controller
-            name="releaseYear"
-            control={control}
-            render={({ field }) => (
-              <Select
-                label="Année de sortie"
-                options={releaseYears}
-                {...field}
-                placeholder="Toutes les années"
+                label="Mots-clés"
+                placeholder="Rechercher des mots-clés"
+                onChange={field.onChange}
               />
             )}
           />

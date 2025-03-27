@@ -1,9 +1,7 @@
-import Image from "next/image";
-import { createClient } from "@supabase/supabase-js";
+import { Image } from "@/app/components/image";
 import { getImageUrl, getCanonicalUrl } from "@/utils/index";
 import { getMovie } from "@/app/server-actions/movies/get-movie";
 
-import { Metadata, ResolvingMetadata } from "next";
 import Link from "next/link";
 
 export const revalidate = 0;
@@ -12,52 +10,7 @@ type Props = {
   params: { slug: string };
 };
 
-// MetaData for accessibility (missing types for movie and others data : to update)
-
-// export async function generateMetadata(
-//   { params }: Props,
-//   parent: ResolvingMetadata
-// ): Promise<Metadata> {
-//   const id = params.slug;
-
-//   const supabase = createClient(
-//     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-//     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-//   );
-//   const { data: movie } = await supabase
-//     .from("movies")
-//     .select(
-//       `id,
-//        title,
-//        description,
-//        image_url,
-//        release_date,
-//        runtime,
-//        directors(id, name),
-//        countries(id, name),
-//        movie_genres(genre_id, genres(name))
-//        movie_keywords(keyword_id, keywords(name))`
-//     )
-//     .eq("id", params.slug)
-//     .single();
-
-//   if (!movie) {
-//     return { title: "", description: "" };
-//   }
-
-//   return {
-//     title: movie.title,
-//     description: movie.description,
-//     openGraph: {
-//       images: [getImageUrl(movie.image_url)],
-//     },
-//     alternates: {
-//       canonical: `/movies/${id}`,
-//     },
-//   };
-// }
-
-export default async function Page({ params }: { params: { slug: string } }) {
+export default async function Page({ params }: Props) {
   const { movie, error } = await getMovie(params.slug);
 
   if (error) {
@@ -74,20 +27,22 @@ export default async function Page({ params }: { params: { slug: string } }) {
       <div className="w-full text-white mx-auto min-h-screen">
         <div className="h-96 relative">
           <Image
-            className=""
-            fill={true}
+            className="object-cover w-full h-full"
             alt={movie.title}
-            style={{ objectFit: "cover" }}
-            src={getImageUrl(
-              movie.image_url || "public/assets/no_image_found.png"
-            )}
+            src={getImageUrl(movie.image_url)}
+            title={movie.title}
           />
-
           <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-30 w-full h-full text-white p-10 flex justify-between items-end">
             <div className="flex flex-col ">
               <h2 className="text-3xl font-bold uppercase">{movie.title}</h2>
               <h2 className="text-lg font-light ">
-                {movie.directors?.map((director) => director.name).join(", ")}
+                {movie.directors?.length > 0 && (
+                  <span>
+                    {movie.directors
+                      .map((director) => director.name)
+                      .join(", ")}
+                  </span>
+                )}
               </h2>
             </div>
           </div>
@@ -131,7 +86,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                   <span
                     key={keyword.id}
                     className="font-light text-sm rounded-full border border-rose-500 text-rose-500 shadow-md px-2 mr-1 py-1
-                  hover:bg-rose-500 hover:text-white hover:border-none hover:cursor-pointer"
+                  hover:bg-rose-500 hover:text-white  hover:cursor-pointer"
                   >
                     {keyword.name}
                   </span>

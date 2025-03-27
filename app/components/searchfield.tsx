@@ -74,7 +74,7 @@ export default function Searchfield({
 
   return (
     <div className="w-full  my-4">
-      <div className="px-4 py-2 border rounded-lg mb-4">
+      <div className="px-4 py-2 border rounded-xl mb-4">
         <form>
           <div className="text-sm w-full xs:w-1/2 my-2 flex flex-col sm:flex-row gap-3">
             <div className="w-full">
