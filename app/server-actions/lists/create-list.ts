@@ -72,11 +72,6 @@ export async function createList(prevState: FormState, formData: FormData) {
     });
 
     redirect(`/lists/${newList.id}`);
-    return {
-      type: "success",
-      message: "List created successfully",
-      errors: null,
-    };
   } catch (err) {
     console.error("Error creating list:", err);
     return {

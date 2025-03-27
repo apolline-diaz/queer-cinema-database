@@ -1,8 +1,20 @@
 "use server";
 
 import { prisma } from "@/lib/prisma"; // Assurez-vous que vous avez bien configuré Prisma
+import { createClient } from "@/utils/supabase/server";
 
 export async function getList(id: string) {
+  const supabase = createClient();
+
+  // Vérifier l'utilisateur authentifié avec Supabase
+  const { data, error } = await supabase.auth.getUser();
+
+  if (error || !data?.user) {
+    // Rediriger l'utilisateur si non authentifié
+    throw new Error("User not authenticated");
+  }
+
+  const userId = data.user.id;
   try {
     const list = await prisma.lists.findUnique({
       where: {
