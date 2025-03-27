@@ -1,56 +1,83 @@
-import { PrismaClient } from "@prisma/client";
+"use server";
 
-const prisma = new PrismaClient();
+import { createClient } from "@/utils/supabase/server";
+import { redirect } from "next/navigation";
+import { z } from "zod";
+import { prisma } from "@/lib/prisma";
+import { ensureUserExists } from "@/utils/ensure-user-exist";
 
-export async function createList(data: {
-  title: string;
-  description: string;
-  userId: string;
-  movieIds: string[];
-}) {
-  const { title, description, userId, movieIds } = data;
+export interface FormState {
+  type: string;
+  message: string;
+  errors: {
+    title?: string[];
+    description?: string[];
+    movie_id?: string[];
+  } | null;
+}
 
-  // Validation des entrées
-  if (!title || !userId) {
-    return { type: "error", message: "Title and user ID are required." };
+const ListSchema = z.object({
+  title: z.string().min(1, "Le titre est requis"),
+  description: z.string().optional(),
+  movie_id: z.string().optional(),
+});
+
+export async function createList(prevState: FormState, formData: FormData) {
+  // Assurez-vous que l'utilisateur existe avant de créer la liste
+  const userSync = await ensureUserExists();
+
+  if (!userSync.success) {
+    return { type: "error", message: userSync.message, errors: null };
   }
 
-  // Ajouter la liste à la base de données
+  const supabase = createClient();
+  const { data, error } = await supabase.auth.getUser();
+
+  if (error || !data?.user) {
+    return { type: "error", message: "You must be connected", errors: null };
+  }
+
+  const userId = data.user.id;
+  const validatedFields = ListSchema.safeParse({
+    title: formData.get("title"),
+    description: formData.get("description"),
+    movie_id: formData.get("movie_id"),
+  });
+
+  if (!validatedFields.success) {
+    return {
+      type: "error",
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: "Some fields are not valid",
+    };
+  }
+
+  const { title, description, movie_id } = validatedFields.data;
+
   try {
-    // Créer la liste et les associations avec les films en une seule transaction
-    const result = await prisma.$transaction(async (tx) => {
-      // Créer la liste dans la base de données
-      const createdList = await tx.lists.create({
-        data: {
-          title,
-          description,
-          user_id: userId,
-        },
-      });
-
-      // Ajouter les films associés à la liste
-      if (movieIds.length > 0) {
-        await tx.lists_movies.createMany({
-          data: movieIds.map((movieId) => ({
-            list_id: createdList.id,
-            movie_id: movieId,
-          })),
-        });
-      }
-
-      return createdList;
+    const newList = await prisma.lists.create({
+      data: {
+        title,
+        description: description || undefined,
+        user_id: userId,
+        lists_movies: movie_id
+          ? {
+              create: movie_id.split(",").map((id) => ({
+                movie_id: id,
+                added_at: new Date(),
+              })),
+            }
+          : undefined,
+      },
     });
 
-    return { type: "success", message: "List created successfully!" };
+    redirect(`/lists/${newList.id}`);
   } catch (err) {
     console.error("Error creating list:", err);
     return {
       type: "error",
-      message: "An error occurred while creating the list.",
+      message: "An error happened during the list creation",
+      errors: null,
     };
-  } finally {
-    // Bonnes pratiques : déconnexion de Prisma
-    // Mais on peut généralement laisser le client Prisma en vie pendant la durée de vie de l'application
-    // await prisma.$disconnect();
   }
 }

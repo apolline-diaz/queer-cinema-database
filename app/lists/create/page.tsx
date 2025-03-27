@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useFormState } from "react-dom";
-import { createList } from "@/app/server-actions/lists";
+import { createList } from "@/app/server-actions/lists/create-list";
 import { SubmitButton } from "@/app/components/submit-button";
 import { getMovies } from "@/app/server-actions/movies/get-movies";
 
@@ -23,7 +23,6 @@ interface FormState {
     title?: string[];
     description?: string[];
     movie_id?: string[];
-    image_url?: string[];
   } | null;
 }
 

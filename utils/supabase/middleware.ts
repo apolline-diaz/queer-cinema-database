@@ -1,3 +1,4 @@
+import { prisma } from "@/lib/prisma";
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
@@ -37,6 +38,29 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
+  // Synchronisation de l'utilisateur
+  if (user) {
+    try {
+      // Vérifie si l'utilisateur existe déjà dans Prisma
+      const existingUser = await prisma.users.findUnique({
+        where: { id: user.id },
+      });
+
+      // S'il n'existe pas, créez-le
+      if (!existingUser) {
+        await prisma.users.create({
+          data: {
+            id: user.id,
+            email: user.email!,
+            created_at: new Date(),
+            // Ajoutez d'autres champs si nécessaire
+          },
+        });
+      }
+    } catch (err) {
+      console.error("Erreur de synchronisation utilisateur:", err);
+    }
+  }
   if (
     !user &&
     !request.nextUrl.pathname.startsWith("/") && // Allow home page

@@ -1,36 +1,48 @@
-// Server Action for User's Movie Lists
-import { PrismaClient } from "@prisma/client";
+"use server";
 
-const prisma = new PrismaClient();
+import { createClient } from "@/utils/supabase/server";
+import { redirect } from "next/navigation";
+import { prisma } from "@/lib/prisma";
+import { cache } from "react";
 
-export async function getUserMovieLists(userId: string) {
-  "use server";
+export const getLists = cache(async () => {
+  const supabase = createClient();
+  const { data, error } = await supabase.auth.getUser();
 
-  const lists = await prisma.lists.findMany({
-    where: {
-      user_id: userId,
-    },
-    include: {
-      lists_movies: {
-        include: {
-          movies: {
-            include: {
-              movie_directors: {
-                include: {
-                  directors: true,
-                },
-              },
-              movie_genres: {
-                include: {
-                  genres: true,
-                },
-              },
+  if (error || !data?.user) {
+    redirect("/login");
+  }
+
+  const userId = data.user.id;
+
+  try {
+    const lists = await prisma.lists.findMany({
+      where: { user_id: userId },
+      include: {
+        lists_movies: {
+          include: {
+            movies: {
+              select: { id: true, image_url: true, title: true },
             },
           },
         },
       },
-    },
-  });
+    });
 
-  return lists;
-}
+    return lists.map((list) => ({
+      id: list.id.toString(),
+      title: list.title,
+      description: list.description ?? undefined,
+      lists_movies: list.lists_movies.map((lm) => ({
+        movie: {
+          id: lm.movies?.id,
+          image_url: lm.movies?.image_url,
+          title: lm.movies?.title,
+        },
+      })),
+    }));
+  } catch (err) {
+    console.error("Error fetching lists:", err);
+    redirect("/error");
+  }
+});
