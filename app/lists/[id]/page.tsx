@@ -16,13 +16,11 @@ export default function ListPage({ params }: { params: { id: string } }) {
     const fetchData = async () => {
       try {
         const list = await getList(id);
-        console.log("List data:", list);
         if (list) {
           setListData(list);
           const extractedMovies = list.lists_movies.map(
             (item: any) => item.movies
           );
-          console.log("Extracted movies:", extractedMovies);
           setMovies(extractedMovies.flat()); // Flatten array if necessary
           setIsLoading(false);
         } else {
