@@ -25,7 +25,7 @@ export default async function ProfilePage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           <Link
             href="/lists/create"
-            className="flex flex-col justify-center rounded-lg border border-xl text-red-100 border-red-100 items-center  text-center p-4 cursor-pointer hover:text-rose-500 hover:border-rose-500"
+            className="flex flex-col justify-center rounded-xl border border-xl text-red-100 border-red-100 items-center  text-center p-4 cursor-pointer hover:text-rose-500 hover:border-rose-500"
           >
             Créer une nouvelle liste
             <svg

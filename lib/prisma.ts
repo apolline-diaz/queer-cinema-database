@@ -6,6 +6,13 @@ const globalForPrisma = global as unknown as { prisma: PrismaClient };
 export const prisma =
   globalForPrisma.prisma ||
   new PrismaClient({
+    // Configuration pour supporter l'Edge Runtime
+
+    datasources: {
+      db: {
+        url: process.env.DATABASE_URL,
+      },
+    },
     log: ["query", "info", "warn", "error"],
   });
 

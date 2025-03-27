@@ -9,6 +9,7 @@ interface List {
   description?: string;
   lists_movies: {
     movie: {
+      id: string;
       image_url?: string | null;
       title: string;
     };
@@ -25,13 +26,13 @@ export const ListCard: React.FC<ListCardProps> = ({ list }) => {
   return (
     <div className="gap-4">
       <Link href={`/lists/${list.id}`}>
-        <div className="bg-gray-953 rounded-sm overflow-hidden h-full flex flex-col justify-between">
-          <div className="w-full relative h-48 bg-center">
+        <div className="group rounded-xl overflow-hidden flex flex-col transition-transform">
+          <div className="relative h-48 overflow-hidden">
             <Image
               src={firstMoviePoster}
               fill={true}
               alt={list.title}
-              className="object-cover transform transition-transform duration-700 ease-in-out group-hover:scale-110"
+              className="object-cover w-full h-full  transform transition-transform duration-700 ease-in-out group-hover:scale-110 group-hover:brightness-50"
               title={list.title}
             />
             <div className="absolute inset-0 bg-black bg-opacity-20 flex flex-col p-4 text-white uppercase justify-end">

@@ -18,7 +18,8 @@ export async function getList(id: string) {
   try {
     const list = await prisma.lists.findUnique({
       where: {
-        id: parseInt(id), // Assurez-vous que l'ID est un nombre
+        id: parseInt(id),
+        user_id: userId, // Assurez-vous que l'ID est un nombre
       },
       include: {
         lists_movies: {
@@ -28,6 +29,11 @@ export async function getList(id: string) {
         },
       },
     });
+
+    // Vérifier si la liste appartient bien à l'utilisateur connecté
+    if (list?.user_id !== userId) {
+      throw new Error("You do not have permission to view this list");
+    }
 
     return list;
   } catch (error) {

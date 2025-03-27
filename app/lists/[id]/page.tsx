@@ -2,9 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabase";
 import Card from "@/app/components/card";
-import { getList } from "@/app/server-actions/lists/get.list";
+import { getList } from "@/app/server-actions/lists/get-list";
 
 export default function ListPage({ params }: { params: { id: string } }) {
   const { id } = params;

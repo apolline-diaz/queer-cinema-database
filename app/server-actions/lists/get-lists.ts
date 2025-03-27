@@ -24,10 +24,9 @@ export async function getLists() {
             lists_movies: {
               include: {
                 movies: {
-                  select: { image_url: true, title: true },
+                  select: { id: true, image_url: true, title: true },
                 },
               },
-              take: 1,
             },
           },
         });
@@ -38,6 +37,7 @@ export async function getLists() {
           description: list.description ?? undefined,
           lists_movies: list.lists_movies.map((lm) => ({
             movie: {
+              id: lm.movies?.id,
               image_url: lm.movies?.image_url,
               title: lm.movies?.title,
             },
