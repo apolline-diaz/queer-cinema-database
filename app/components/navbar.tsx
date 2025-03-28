@@ -4,17 +4,34 @@ import Link from "next/link";
 import { useState } from "react";
 import { logout } from "../logout/actions";
 import { User } from "@supabase/supabase-js";
+import { usePathname } from "next/navigation";
 
 interface HeaderProps {
   user: User | null; // import or define User type
+  userIsAdmin: boolean;
 }
 
-export default function Navbar({ user }: HeaderProps) {
+export default function Navbar({ user, userIsAdmin }: HeaderProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
 
   const handleClick = () => {
     setIsOpen(!isOpen);
   };
+
+  // Fonction pour déterminer si un lien est actif
+  const isActive = (path: string) => {
+    // Pour la page d'accueil
+    if (path === "/" && pathname === "/") {
+      return true;
+    }
+    // Pour les autres pages, vérifier si le pathname commence par le path
+    return path !== "/" && pathname.startsWith(path);
+  };
+
+  // Classe CSS pour les liens actifs
+  const activeLinkClass = "underline underline-offset-8 text-rose-500";
+  const normalLinkClass = "hover:underline underline-offset-8";
 
   return (
     <div className="w-full fixed top-0 left-0 z-50 text-md bg-neutral-950">
@@ -47,7 +64,7 @@ export default function Navbar({ user }: HeaderProps) {
                     d="M1 2H1.75H14.25H15V3.5H14.25H1.75H1V2ZM1 12.5H1.75H14.25H15V14H14.25H1.75H1V12.5ZM1.75 7.25H1V8.75H1.75H14.25H15V7.25H14.25H1.75Z"
                     fill="currentColor"
                   ></path>
-                </svg>{" "}
+                </svg>
               </button>
 
               {/* mobile menu */}
@@ -59,7 +76,7 @@ export default function Navbar({ user }: HeaderProps) {
                 {/* close button */}
                 <button
                   onClick={handleClick}
-                  className="absolute top-8 right-8"
+                  className="absolute top-O right-0 px-8"
                 >
                   <svg
                     className="h-5 w-5 text-gray-black hover:text-rose-500"
@@ -76,71 +93,126 @@ export default function Navbar({ user }: HeaderProps) {
                 </button>
 
                 {/* mobile navigation links */}
-                <ul className="flex text-white flex-col items-center justify-center gap-5 min-h-[250px]">
-                  <li className="hover:underline underline-offset-8">
-                    <Link href="/movies">Catalogue</Link>
-                  </li>
-                  <li className="hover:underline underline-offset-8">
-                    <Link href="/stats">Statistiques</Link>
-                  </li>
-                  {user && (
-                    <li className="hover:underline underline-offset-8">
-                      <Link href="/profile" data-testid="profile-link-mobile">
-                        Profil
-                      </Link>
+                <ul className="flex text-white flex-col items-center justify-between gap-5 h-full mt-6">
+                  <div className="flex flex-col items-center justify-center gap-5">
+                    <li
+                      className={
+                        pathname === "/movies"
+                          ? activeLinkClass
+                          : normalLinkClass
+                      }
+                    >
+                      <Link href="/movies">Catalogue</Link>
                     </li>
-                  )}
-                  {!user ? (
-                    <li className="hover:text-rose-500 hover:border-rose-500 py-2 px-3 rounded-full border ">
-                      <Link href="/login">Connexion</Link>
+                    <li
+                      className={
+                        pathname === "/movies/create"
+                          ? activeLinkClass
+                          : normalLinkClass
+                      }
+                    >
+                      {userIsAdmin && (
+                        <Link href="/movies/create">Contribuer</Link>
+                      )}
                     </li>
-                  ) : (
-                    <li>
-                      <form action={logout}>
-                        <button className="hover:text-rose-500 hover:border-rose-500 py-2 px-3 rounded-full border ">
-                          Se déconnecter
-                        </button>
-                      </form>
+                    <li
+                      className={
+                        isActive("/stats") ? activeLinkClass : normalLinkClass
+                      }
+                    >
+                      <Link href="/stats">Statistiques</Link>
                     </li>
-                  )}
+                    {user && (
+                      <li
+                        className={
+                          isActive("/profile")
+                            ? activeLinkClass
+                            : normalLinkClass
+                        }
+                      >
+                        <Link href="/profile" data-testid="profile-link-mobile">
+                          Profil
+                        </Link>
+                      </li>
+                    )}
+                  </div>
+                  <div className="py-10">
+                    {!user ? (
+                      <li className="hover:text-rose-500 hover:border-rose-500 py-1 px-3 rounded-full border ">
+                        <Link href="/login">Connexion</Link>
+                      </li>
+                    ) : (
+                      <li>
+                        <form action={logout}>
+                          <button className="hover:text-rose-500 hover:border-rose-500 py-1 px-3 rounded-full border ">
+                            Se déconnecter
+                          </button>
+                        </form>
+                      </li>
+                    )}
+                  </div>
                 </ul>
               </div>
             </section>
 
             {/* desktop menu */}
-            <div className="text-white">
-              <ul className="DESKTOP-MENU hidden space-x-8 lg:flex items-center">
-                <li className="hover:underline underline-offset-8">
+            <div className="text-white ">
+              <ul className="DESKTOP-MENU hidden space-x-12 lg:flex  items-center">
+                <li
+                  className={
+                    pathname === "/movies" ? activeLinkClass : normalLinkClass
+                  }
+                >
                   <Link href="/movies">Catalogue</Link>
                 </li>
-                <li className="hover:underline underline-offset-8">
+
+                <li
+                  className={
+                    pathname === "/movies/create"
+                      ? activeLinkClass
+                      : normalLinkClass
+                  }
+                >
+                  {userIsAdmin && <Link href="/movies/create">Contribuer</Link>}
+                </li>
+                <li
+                  className={
+                    isActive("/stats") ? activeLinkClass : normalLinkClass
+                  }
+                >
                   <Link href="/stats">Statistiques</Link>
                 </li>
                 {user && (
-                  <li className="hover:underline underline-offset-8">
+                  <li
+                    className={
+                      isActive("/profile") ? activeLinkClass : normalLinkClass
+                    }
+                  >
                     <Link href="/profile" data-testid="profile-link-desktop">
                       Profil
                     </Link>
                   </li>
                 )}
-                {!user ? (
-                  <li>
-                    <Link
-                      href="/login"
-                      className="hover:text-rose-500 hover:border-rose-500 py-2 px-3 rounded-full border"
-                    >
-                      Connexion
-                    </Link>
-                  </li>
-                ) : (
-                  <li>
-                    <form action={logout}>
-                      <button className="hover:text-rose-500 hover:border-rose-500 py-2 px-3 rounded-full border ">
-                        Se déconnecter
-                      </button>
-                    </form>
-                  </li>
-                )}
+                <div className="pl-5">
+                  {!user ? (
+                    <li>
+                      <Link
+                        href="/login"
+                        className="hover:text-rose-500 hover:border-rose-500 py-1 px-3 rounded-full border"
+                      >
+                        Connexion
+                      </Link>
+                    </li>
+                  ) : (
+                    <li>
+                      <form action={logout}>
+                        <button className="hover:text-rose-500 hover:border-rose-500 py-1 px-3 rounded-full border ">
+                          Se déconnecter
+                        </button>
+                      </form>
+                    </li>
+                  )}
+                </div>
               </ul>
             </div>
           </nav>

@@ -16,7 +16,7 @@ const initialState = {
   errors: null,
 };
 
-const UploadFormPage: React.FC = () => {
+const CreateMoviePage: React.FC = () => {
   const [state, formAction] = useFormState<any>(addMovie as any, initialState);
   const [countries, setCountries] = useState<any[]>([]);
   const [genres, setGenres] = useState<any[]>([]);
@@ -65,7 +65,7 @@ const UploadFormPage: React.FC = () => {
 
   return (
     <div className="p-10">
-      <div className="tracking-wide text-rose-500 text-xl mb-5">
+      <div className="tracking-wide text-rose-500 text-2xl mb-5">
         Ajouter un film au catalogue
       </div>
       {state?.type === "error" && (
@@ -364,4 +364,4 @@ const UploadFormPage: React.FC = () => {
   );
 };
 
-export default UploadFormPage;
+export default CreateMoviePage;

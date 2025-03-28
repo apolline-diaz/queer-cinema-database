@@ -24,7 +24,7 @@ const test = base.extend<CustomFixtures>({
   },
 });
 
-test("contribute", async ({ authenticatedPage: page }) => {
+test("create", async ({ authenticatedPage: page }) => {
   await page.goto("/");
 
   await expect(page.getByTestId("profile-link-desktop")).toBeVisible();

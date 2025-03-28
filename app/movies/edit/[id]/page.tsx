@@ -1,19 +1,22 @@
 import { getMovie } from "@/app/server-actions/movies/get-movie";
 import EditMovieForm from "./edit-movie-form";
 import { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+import { auth } from "@/utils/auth";
 
 export const metadata: Metadata = {
   title: "Edit Movie",
   description: "Edit a movie in the database",
 };
 
-export default async function EditMoviePage({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default async function Page({ params }: { params: { id: string } }) {
   const { movie, error } = await getMovie(params.id);
+  const session = await auth();
+
+  // If no session exists, redirect to login page
+  if (!session) {
+    redirect("/login"); // Adjust the login path as needed
+  }
 
   if (error || !movie) {
     return notFound();
