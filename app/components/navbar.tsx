@@ -7,9 +7,10 @@ import { User } from "@supabase/supabase-js";
 
 interface HeaderProps {
   user: User | null; // import or define User type
+  userIsAdmin: boolean;
 }
 
-export default function Navbar({ user }: HeaderProps) {
+export default function Navbar({ user, userIsAdmin }: HeaderProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = () => {
@@ -47,7 +48,7 @@ export default function Navbar({ user }: HeaderProps) {
                     d="M1 2H1.75H14.25H15V3.5H14.25H1.75H1V2ZM1 12.5H1.75H14.25H15V14H14.25H1.75H1V12.5ZM1.75 7.25H1V8.75H1.75H14.25H15V7.25H14.25H1.75Z"
                     fill="currentColor"
                   ></path>
-                </svg>{" "}
+                </svg>
               </button>
 
               {/* mobile menu */}
@@ -81,6 +82,11 @@ export default function Navbar({ user }: HeaderProps) {
                     <Link href="/movies">Catalogue</Link>
                   </li>
                   <li className="hover:underline underline-offset-8">
+                    {userIsAdmin && (
+                      <Link href="/movies/create">Contribuer</Link>
+                    )}
+                  </li>
+                  <li className="hover:underline underline-offset-8">
                     <Link href="/stats">Statistiques</Link>
                   </li>
                   {user && (
@@ -109,9 +115,13 @@ export default function Navbar({ user }: HeaderProps) {
 
             {/* desktop menu */}
             <div className="text-white">
-              <ul className="DESKTOP-MENU hidden space-x-8 lg:flex items-center">
+              <ul className="DESKTOP-MENU hidden space-x-12 lg:flex  items-center">
                 <li className="hover:underline underline-offset-8">
                   <Link href="/movies">Catalogue</Link>
+                </li>
+                is
+                <li className="hover:underline underline-offset-8">
+                  {userIsAdmin && <Link href="/movies/create">Contribuer</Link>}
                 </li>
                 <li className="hover:underline underline-offset-8">
                   <Link href="/stats">Statistiques</Link>

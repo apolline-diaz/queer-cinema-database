@@ -1,9 +1,7 @@
 import { Image } from "@/app/components/image";
 import { getImageUrl, getCanonicalUrl } from "@/utils/index";
 import { getMovie } from "@/app/server-actions/movies/get-movie";
-
 import Link from "next/link";
-import { auth } from "@/utils/auth";
 import { isAdmin } from "@/utils/is-user-admin";
 
 export const revalidate = 0;

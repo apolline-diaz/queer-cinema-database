@@ -1,6 +1,7 @@
 import { ListCard } from "@/app/components/list-card";
 import Link from "next/link";
 import { getLists } from "../server-actions/lists/get-lists";
+import { isAdmin } from "@/utils/is-user-admin";
 
 export const revalidate = 0;
 
@@ -8,22 +9,12 @@ export default async function ProfilePage() {
   const lists = await getLists();
 
   return (
-    <div className="flex flex-col  gap-5 p-10">
+    <div className="flex flex-col gap-5 p-10">
       {/* <h1>Bienvenue {data.user.email} !</h1> */}
-      <div className="">
-        <p className="text-xl text-rose-500 font-semibold mb-4">Contribuer</p>
-
-        <Link
-          href="/movies/create"
-          className="bg-gradient-to-r from-rose-500 to-red-500 text-white px-4 py-2 rounded-md hover:from-rose-600  hover:to-red-600"
-        >
-          Ajouter un film
-        </Link>
-      </div>
 
       {/* Mes listes */}
-      <section className="mt-8">
-        <h2 className="text-xl text-rose-500 font-semibold mb-4">Mes listes</h2>
+      <section className="">
+        <h2 className="text-2xl text-rose-500 font-medium mb-4">Mes listes</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           <Link
             href="/lists/create"
