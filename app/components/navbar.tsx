@@ -137,7 +137,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                   ) : (
                     <li>
                       <form action={logout}>
-                        <button className="hover:text-rose-500 hover:border-rose-500 py-2 px-3 rounded-full border ">
+                        <button className="hover:text-rose-500 hover:border-rose-500 py-1 px-3 rounded-full border ">
                           Se déconnecter
                         </button>
                       </form>
@@ -197,7 +197,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                 ) : (
                   <li>
                     <form action={logout}>
-                      <button className="hover:text-rose-500 hover:border-rose-500 py-2 px-3 rounded-full border ">
+                      <button className="hover:text-rose-500 hover:border-rose-500 py-1 px-3 rounded-full border ">
                         Se déconnecter
                       </button>
                     </form>
