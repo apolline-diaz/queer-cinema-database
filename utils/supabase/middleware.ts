@@ -52,8 +52,8 @@ export async function updateSession(request: NextRequest) {
           data: {
             id: user.id,
             email: user.email!,
+            role: "user",
             created_at: new Date(),
-            // Ajoutez d'autres champs si nécessaire
           },
         });
       }
