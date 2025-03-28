@@ -131,7 +131,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                     </li>
                   )}
                   {!user ? (
-                    <li className="hover:text-rose-500 hover:border-rose-500 py-2 px-3 rounded-full border ">
+                    <li className="hover:text-rose-500 hover:border-rose-500 py-1 px-3 rounded-full border ">
                       <Link href="/login">Connexion</Link>
                     </li>
                   ) : (
@@ -189,7 +189,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                   <li>
                     <Link
                       href="/login"
-                      className="hover:text-rose-500 hover:border-rose-500 py-2 px-3 rounded-full border"
+                      className="hover:text-rose-500 hover:border-rose-500 py-1 px-3 rounded-full border"
                     >
                       Connexion
                     </Link>
