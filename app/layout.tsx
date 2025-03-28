@@ -8,10 +8,10 @@ import { getCanonicalUrl } from "@/utils/index";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  // metadataBase: new URL(getCanonicalUrl()),
+  metadataBase: new URL(getCanonicalUrl()),
   title: "Movie Diary",
   description:
-    "Explorez le catalogue de films de Movie Diary : cherchez et ajoutez de nouvelles références pour de votre cinémathèque personnelle.",
+    "Le site de référence des films LGBTQIA+ : découvrez l'histoire du cinéma et des représentations queer avec Movie Diary .",
   openGraph: {
     images: [`/assets/diary.svg`],
   },
