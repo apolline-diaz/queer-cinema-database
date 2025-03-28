@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { logout } from "../logout/actions";
 import { User } from "@supabase/supabase-js";
+import { usePathname } from "next/navigation";
 
 interface HeaderProps {
   user: User | null; // import or define User type
@@ -12,10 +13,25 @@ interface HeaderProps {
 
 export default function Navbar({ user, userIsAdmin }: HeaderProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
 
   const handleClick = () => {
     setIsOpen(!isOpen);
   };
+
+  // Fonction pour déterminer si un lien est actif
+  const isActive = (path: string) => {
+    // Pour la page d'accueil
+    if (path === "/" && pathname === "/") {
+      return true;
+    }
+    // Pour les autres pages, vérifier si le pathname commence par le path
+    return path !== "/" && pathname.startsWith(path);
+  };
+
+  // Classe CSS pour les liens actifs
+  const activeLinkClass = "underline underline-offset-8 text-rose-500";
+  const normalLinkClass = "hover:underline underline-offset-8";
 
   return (
     <div className="w-full fixed top-0 left-0 z-50 text-md bg-neutral-950">
@@ -78,19 +94,37 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
 
                 {/* mobile navigation links */}
                 <ul className="flex text-white flex-col items-center justify-center gap-5 min-h-[250px]">
-                  <li className="hover:underline underline-offset-8">
+                  <li
+                    className={
+                      pathname === "/movies" ? activeLinkClass : normalLinkClass
+                    }
+                  >
                     <Link href="/movies">Catalogue</Link>
                   </li>
-                  <li className="hover:underline underline-offset-8">
+                  <li
+                    className={
+                      pathname === "/movies/create"
+                        ? activeLinkClass
+                        : normalLinkClass
+                    }
+                  >
                     {userIsAdmin && (
                       <Link href="/movies/create">Contribuer</Link>
                     )}
                   </li>
-                  <li className="hover:underline underline-offset-8">
+                  <li
+                    className={
+                      isActive("/stats") ? activeLinkClass : normalLinkClass
+                    }
+                  >
                     <Link href="/stats">Statistiques</Link>
                   </li>
                   {user && (
-                    <li className="hover:underline underline-offset-8">
+                    <li
+                      className={
+                        isActive("/profile") ? activeLinkClass : normalLinkClass
+                      }
+                    >
                       <Link href="/profile" data-testid="profile-link-mobile">
                         Profil
                       </Link>
@@ -116,18 +150,36 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
             {/* desktop menu */}
             <div className="text-white">
               <ul className="DESKTOP-MENU hidden space-x-12 lg:flex  items-center">
-                <li className="hover:underline underline-offset-8">
+                <li
+                  className={
+                    pathname === "/movies" ? activeLinkClass : normalLinkClass
+                  }
+                >
                   <Link href="/movies">Catalogue</Link>
                 </li>
-                is
-                <li className="hover:underline underline-offset-8">
+
+                <li
+                  className={
+                    pathname === "/movies/create"
+                      ? activeLinkClass
+                      : normalLinkClass
+                  }
+                >
                   {userIsAdmin && <Link href="/movies/create">Contribuer</Link>}
                 </li>
-                <li className="hover:underline underline-offset-8">
+                <li
+                  className={
+                    isActive("/stats") ? activeLinkClass : normalLinkClass
+                  }
+                >
                   <Link href="/stats">Statistiques</Link>
                 </li>
                 {user && (
-                  <li className="hover:underline underline-offset-8">
+                  <li
+                    className={
+                      isActive("/profile") ? activeLinkClass : normalLinkClass
+                    }
+                  >
                     <Link href="/profile" data-testid="profile-link-desktop">
                       Profil
                     </Link>
