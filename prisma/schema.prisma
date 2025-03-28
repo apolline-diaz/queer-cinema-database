@@ -1,6 +1,9 @@
 generator client {
   provider = "prisma-client-js"
   // engineType = "binary"  // Pour un environnement Edge
+    binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"] //permettra à Prisma de générer les binaires corrects pour votre environnement Docker Linux ARM64.
+
+
 }
 
 datasource db {
