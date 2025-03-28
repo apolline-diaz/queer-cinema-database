@@ -52,7 +52,7 @@ export async function updateSession(request: NextRequest) {
           data: {
             id: user.id,
             email: user.email!,
-            role: "user",
+            // role: "user",
             created_at: new Date(),
           },
         });
