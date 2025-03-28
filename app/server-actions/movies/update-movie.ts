@@ -2,8 +2,8 @@
 
 import { PrismaClient } from "@prisma/client";
 import { revalidatePath } from "next/cache";
-import { supabase } from "@/lib/supabase";
 import { createClient } from "@/utils/supabase/server";
+import { isAdmin } from "@/utils/is-user-admin";
 
 export type UpdateMovieInput = {
   id: string;
@@ -26,12 +26,12 @@ export type UpdateMovieInput = {
 
 export async function updateMovie(movie: UpdateMovieInput) {
   const supabase = createClient();
-  const { data, error } = await supabase.auth.getUser();
+  const userIsAdmin = await isAdmin();
 
-  if (error || !data?.user) {
+  if (!userIsAdmin) {
     return {
       type: "error",
-      message: "You must be connected to add a movie",
+      message: "You must be admin to update a movie",
       errors: null,
     };
   }

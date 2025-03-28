@@ -134,6 +134,6 @@ model users {
   email      String   @unique(map: "users_email_unique") @db.VarChar(255)
   full_name  String?  @db.VarChar(255)
   created_at DateTime @db.Timestamp(6)
-  // role       String   @default("user") @db.VarChar // Ajoutez ce champ pour gérer les rôles
+  role       String   @default("user") @db.VarChar // Ajoutez ce champ pour gérer les rôles
   lists      lists[]
 }
