@@ -76,7 +76,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                 {/* close button */}
                 <button
                   onClick={handleClick}
-                  className="absolute top-8 right-8"
+                  className="absolute top-O right-0 px-8"
                 >
                   <svg
                     className="h-5 w-5 text-gray-black hover:text-rose-500"
@@ -93,62 +93,70 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                 </button>
 
                 {/* mobile navigation links */}
-                <ul className="flex text-white flex-col items-center justify-center gap-5 min-h-[250px]">
-                  <li
-                    className={
-                      pathname === "/movies" ? activeLinkClass : normalLinkClass
-                    }
-                  >
-                    <Link href="/movies">Catalogue</Link>
-                  </li>
-                  <li
-                    className={
-                      pathname === "/movies/create"
-                        ? activeLinkClass
-                        : normalLinkClass
-                    }
-                  >
-                    {userIsAdmin && (
-                      <Link href="/movies/create">Contribuer</Link>
-                    )}
-                  </li>
-                  <li
-                    className={
-                      isActive("/stats") ? activeLinkClass : normalLinkClass
-                    }
-                  >
-                    <Link href="/stats">Statistiques</Link>
-                  </li>
-                  {user && (
+                <ul className="flex text-white flex-col items-center justify-between gap-5 h-full mt-6">
+                  <div className="flex flex-col items-center justify-center gap-5">
                     <li
                       className={
-                        isActive("/profile") ? activeLinkClass : normalLinkClass
+                        pathname === "/movies"
+                          ? activeLinkClass
+                          : normalLinkClass
                       }
                     >
-                      <Link href="/profile" data-testid="profile-link-mobile">
-                        Profil
-                      </Link>
+                      <Link href="/movies">Catalogue</Link>
                     </li>
-                  )}
-                  {!user ? (
-                    <li className="hover:text-rose-500 hover:border-rose-500 py-1 px-3 rounded-full border ">
-                      <Link href="/login">Connexion</Link>
+                    <li
+                      className={
+                        pathname === "/movies/create"
+                          ? activeLinkClass
+                          : normalLinkClass
+                      }
+                    >
+                      {userIsAdmin && (
+                        <Link href="/movies/create">Contribuer</Link>
+                      )}
                     </li>
-                  ) : (
-                    <li>
-                      <form action={logout}>
-                        <button className="hover:text-rose-500 hover:border-rose-500 py-1 px-3 rounded-full border ">
-                          Se déconnecter
-                        </button>
-                      </form>
+                    <li
+                      className={
+                        isActive("/stats") ? activeLinkClass : normalLinkClass
+                      }
+                    >
+                      <Link href="/stats">Statistiques</Link>
                     </li>
-                  )}
+                    {user && (
+                      <li
+                        className={
+                          isActive("/profile")
+                            ? activeLinkClass
+                            : normalLinkClass
+                        }
+                      >
+                        <Link href="/profile" data-testid="profile-link-mobile">
+                          Profil
+                        </Link>
+                      </li>
+                    )}
+                  </div>
+                  <div className="py-10">
+                    {!user ? (
+                      <li className="hover:text-rose-500 hover:border-rose-500 py-1 px-3 rounded-full border ">
+                        <Link href="/login">Connexion</Link>
+                      </li>
+                    ) : (
+                      <li>
+                        <form action={logout}>
+                          <button className="hover:text-rose-500 hover:border-rose-500 py-1 px-3 rounded-full border ">
+                            Se déconnecter
+                          </button>
+                        </form>
+                      </li>
+                    )}
+                  </div>
                 </ul>
               </div>
             </section>
 
             {/* desktop menu */}
-            <div className="text-white">
+            <div className="text-white ">
               <ul className="DESKTOP-MENU hidden space-x-12 lg:flex  items-center">
                 <li
                   className={
@@ -185,24 +193,26 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                     </Link>
                   </li>
                 )}
-                {!user ? (
-                  <li>
-                    <Link
-                      href="/login"
-                      className="hover:text-rose-500 hover:border-rose-500 py-1 px-3 rounded-full border"
-                    >
-                      Connexion
-                    </Link>
-                  </li>
-                ) : (
-                  <li>
-                    <form action={logout}>
-                      <button className="hover:text-rose-500 hover:border-rose-500 py-1 px-3 rounded-full border ">
-                        Se déconnecter
-                      </button>
-                    </form>
-                  </li>
-                )}
+                <div className="pl-5">
+                  {!user ? (
+                    <li>
+                      <Link
+                        href="/login"
+                        className="hover:text-rose-500 hover:border-rose-500 py-1 px-3 rounded-full border"
+                      >
+                        Connexion
+                      </Link>
+                    </li>
+                  ) : (
+                    <li>
+                      <form action={logout}>
+                        <button className="hover:text-rose-500 hover:border-rose-500 py-1 px-3 rounded-full border ">
+                          Se déconnecter
+                        </button>
+                      </form>
+                    </li>
+                  )}
+                </div>
               </ul>
             </div>
           </nav>
