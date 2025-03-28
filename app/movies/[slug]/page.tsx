@@ -3,6 +3,7 @@ import { getImageUrl, getCanonicalUrl } from "@/utils/index";
 import { getMovie } from "@/app/server-actions/movies/get-movie";
 
 import Link from "next/link";
+import { auth } from "@/utils/auth";
 
 export const revalidate = 0;
 
@@ -11,6 +12,8 @@ type Props = {
 };
 
 export default async function Page({ params }: Props) {
+  const session = await auth();
+
   const { movie, error } = await getMovie(params.slug);
 
   if (error) {
@@ -48,13 +51,15 @@ export default async function Page({ params }: Props) {
           </div>
         </div>
 
-        <div className="absolute top-20 right-4">
-          <Link href={`/movies/edit/${movie.id}`}>
-            <button className="bg-gradient-to-r from-rose-500 to-red-500 text-white px-4 py-2 mx-4 rounded-md hover:from-rose-600 hover:to-red-600">
-              Modifier
-            </button>
-          </Link>
-        </div>
+        {session && (
+          <div className="absolute top-20 right-4">
+            <Link href={`/movies/edit/${movie.id}`}>
+              <button className="bg-gradient-to-r from-rose-500 to-red-500 text-white px-4 py-2 mx-4 rounded-md hover:from-rose-600 hover:to-red-600">
+                Modifier
+              </button>
+            </Link>
+          </div>
+        )}
 
         <div className="p-10 gap-3 flex flex-col">
           <div className="flex flex-col font-light">

@@ -1,8 +1,8 @@
 import { auth } from "@/utils/auth"; // Adjust the import path to your auth utility
 import { redirect } from "next/navigation";
-import UploadFormPage from "./client"; // Import the client-side form component
+import CreateMoviePage from "./client"; // Import the client-side form component
 
-export default async function UploadMoviePage() {
+export default async function Page() {
   // Check user authentication
   const session = await auth();
 
@@ -12,5 +12,5 @@ export default async function UploadMoviePage() {
   }
 
   // If authenticated, render the upload form
-  return <UploadFormPage />;
+  return <CreateMoviePage />;
 }

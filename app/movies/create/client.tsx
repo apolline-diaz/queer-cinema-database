@@ -16,7 +16,7 @@ const initialState = {
   errors: null,
 };
 
-const UploadFormPage: React.FC = () => {
+const CreateMoviePage: React.FC = () => {
   const [state, formAction] = useFormState<any>(addMovie as any, initialState);
   const [countries, setCountries] = useState<any[]>([]);
   const [genres, setGenres] = useState<any[]>([]);
@@ -364,4 +364,4 @@ const UploadFormPage: React.FC = () => {
   );
 };
 
-export default UploadFormPage;
+export default CreateMoviePage;

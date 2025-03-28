@@ -3,6 +3,7 @@
 import { PrismaClient } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { supabase } from "@/lib/supabase";
+import { createClient } from "@/utils/supabase/server";
 
 export type UpdateMovieInput = {
   id: string;
@@ -24,6 +25,17 @@ export type UpdateMovieInput = {
 };
 
 export async function updateMovie(movie: UpdateMovieInput) {
+  const supabase = createClient();
+  const { data, error } = await supabase.auth.getUser();
+
+  if (error || !data?.user) {
+    return {
+      type: "error",
+      message: "You must be connected to add a movie",
+      errors: null,
+    };
+  }
+
   const prisma = new PrismaClient();
 
   try {
