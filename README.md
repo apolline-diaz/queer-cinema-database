@@ -35,7 +35,7 @@
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/movie-diary.git
+   git clone https://github.com/apolline-diaz/movie-diary.git
    cd movie-diary
    ```
 
