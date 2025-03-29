@@ -190,7 +190,7 @@ export default function SearchForm({
           Array.from({ length: 8 }).map((_, index) => (
             <div
               key={index}
-              className="animate-pulse bg-gray-500 h-48 w-full justify-end max-w-xs mx-auto group overflow-hidden flex flex-col transition-transform"
+              className="animate-pulse rounded-xl bg-gray-500 h-48 w-full justify-end max-w-xs mx-auto group overflow-hidden flex flex-col transition-transform"
             >
               <div className="flex flex-col p-5 space-y-2">
                 <div className="h-6 bg-gray-400 rounded w-3/4 mb-2"></div>
