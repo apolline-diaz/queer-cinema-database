@@ -7,6 +7,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 import { prisma } from "@/lib/prisma";
+import { isAdmin } from "@/utils/is-user-admin";
 
 const MAX_FILE_SIZE = 5000000;
 
@@ -18,13 +19,12 @@ const ACCEPTED_IMAGE_TYPES = [
 ];
 
 export async function addMovie(prevState: any, formData: FormData) {
-  const supabase = createClient();
-  const { data, error } = await supabase.auth.getUser();
+  const userIsAdmin = await isAdmin();
 
-  if (error || !data?.user) {
+  if (!userIsAdmin) {
     return {
       type: "error",
-      message: "You must be connected to add a movie",
+      message: "You must be admin to update a movie",
       errors: null,
     };
   }
