@@ -7,6 +7,7 @@ import { updateList } from "@/app/server-actions/lists/update-list";
 import { getList } from "@/app/server-actions/lists/get-list";
 import { getMovies } from "@/app/server-actions/movies/get-movies";
 import MoviesMultiSelect from "@/app/components/movies-multi-select";
+import { SubmitButton } from "@/app/components/submit-button";
 
 export default function EditListPage({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -147,13 +148,10 @@ export default function EditListPage({ params }: { params: { id: string } }) {
             />
           </div>
 
-          <button
-            type="submit"
-            className="bg-rose-500 text-white px-4 py-2 rounded-md hover:bg-rose-600"
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? "Modification en cours..." : "Enregistrer"}
-          </button>
+          <SubmitButton
+            defaultText="Enregistrer les modifications"
+            loadingText="Chargement..."
+          />
         </form>
       )}
     </div>

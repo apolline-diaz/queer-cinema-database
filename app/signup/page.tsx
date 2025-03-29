@@ -1,10 +1,13 @@
+"use client";
+
 import Link from "next/link";
 import { signup } from "../login/actions";
+import { SubmitButton } from "../components/submit-button";
 
 export default function SignUpPage() {
   return (
     <div className="justify-center items-center p-10 flex flex-col">
-      <form className="w-full md:w-[500px] text-left border border-pink-200 p-10 rounded-md ">
+      <form className="w-full md:w-[500px] text-left border border-pink-200 p-10 rounded-xl">
         <div className="flex flex-col gap-3 mb-10">
           <label htmlFor="email">Adresse e-mail</label>
           <input
@@ -12,7 +15,7 @@ export default function SignUpPage() {
             id="email"
             name="email"
             type="email"
-            placeholder="Tapez votre adresse"
+            placeholder="Tapez votre adresse e-mail"
             required
           />
           <label htmlFor="password">Mot de passe</label>
@@ -26,12 +29,11 @@ export default function SignUpPage() {
           />
         </div>
         <div className="w-full justify-center flex flex-wrap gap-4">
-          <button
-            className="hover:text-rose-500 hover:border-rose-500 py-2 px-3 rounded-full border "
+          <SubmitButton
+            defaultText="S'inscrire"
+            loadingText="Envoi..."
             formAction={signup}
-          >
-            Inscrivez-vous
-          </button>
+          />
           <div className="rounded-full  hover:underline underline-offset-8 p-2 ">
             <Link href="/login">Déjà inscrit-e?</Link>
           </div>
