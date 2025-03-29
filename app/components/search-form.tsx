@@ -24,6 +24,7 @@ export default function SearchForm({
   keywords,
   directors,
   releaseYears,
+  userIsAdmin,
 }: {
   initialMovies: Movie[];
   countries: { value: string; label: string }[];
@@ -31,6 +32,7 @@ export default function SearchForm({
   keywords: { value: string; label: string }[];
   directors: { value: string; label: string }[];
   releaseYears: { value: string; label: string }[];
+  userIsAdmin: boolean;
 }) {
   const { control, handleSubmit, reset, watch } = useForm<FormValues>({
     defaultValues: {
@@ -205,6 +207,7 @@ export default function SearchForm({
             <Card
               key={`${movie.title}-${movie.id}`}
               {...movie}
+              userIsAdmin={userIsAdmin}
               image_url={getImageUrl(movie.image_url || "")}
             />
           ))

@@ -13,6 +13,7 @@ interface CardProps {
   title: string;
   release_date?: string | null;
   image_url?: string | null;
+  userIsAdmin: boolean;
 }
 
 export default function Card({
@@ -20,6 +21,7 @@ export default function Card({
   title,
   release_date,
   image_url,
+  userIsAdmin,
 }: CardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -70,27 +72,29 @@ export default function Card({
               <p className="text-sm text-gray-300">{release_date}</p>
               {/* <p className="absolute text-sm text-gray-200 mt-2">{description}</p> */}
             </div>
-            <button
-              onClick={handleDeleteClick}
-              className="absolute top-2 right-2 z-10 bg-black bg-opacity-60 p-2 rounded-full text-rose-500 transition-all duration-300 ease-in-out opacity-100 visible hover:bg-rose-500 hover:text-white"
-              title="Supprimer cette liste"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+            {userIsAdmin && (
+              <button
+                onClick={handleDeleteClick}
+                className="absolute top-2 right-2 z-10 bg-black bg-opacity-60 p-2 rounded-full text-rose-500 transition-all duration-300 ease-in-out opacity-100 visible hover:bg-rose-500 hover:text-white"
+                title="Supprimer cette liste"
               >
-                <path d="M3 6h18"></path>
-                <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
-                <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
-              </svg>
-            </button>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M3 6h18"></path>
+                  <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                  <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                </svg>
+              </button>
+            )}
           </div>
         </div>
         {/* Modal de confirmation de suppression */}

@@ -10,7 +10,7 @@ export async function deleteMovie(movieId: string) {
   if (!userIsAdmin) {
     return {
       type: "error",
-      message: "You must be admin to update a movie",
+      message: "You must be admin to delete a movie",
       errors: null,
     };
   }
@@ -21,7 +21,7 @@ export async function deleteMovie(movieId: string) {
     });
 
     if (!movie) {
-      return { success: false, message: "Le film n'existe pas." };
+      return { success: false, message: "Movie doesn't exist" };
     }
 
     // Supprimer les dépendances liées au film
@@ -36,12 +36,12 @@ export async function deleteMovie(movieId: string) {
     // Rafraîchir la page
     revalidatePath("/");
 
-    return { success: true, message: "Film supprimé avec succès." };
+    return { success: true, message: "Success to delete the movie" };
   } catch (err) {
-    console.error("Erreur lors de la suppression du film:", err);
+    console.error("Error when try to delete movie:", err);
     return {
       success: false,
-      message: "Erreur interne lors de la suppression du film.",
+      message: "Internal error when try to delete movie.",
     };
   }
 }

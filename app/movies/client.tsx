@@ -13,6 +13,7 @@ interface ClientSearchComponentProps {
   directors: { value: string; label: string }[];
   releaseYears: { value: string; label: string }[];
   initialKeyword?: string;
+  userIsAdmin: boolean;
 }
 
 export default function ClientSearchComponent({
@@ -23,6 +24,7 @@ export default function ClientSearchComponent({
   directors,
   releaseYears,
   initialKeyword = "",
+  userIsAdmin,
 }: ClientSearchComponentProps) {
   const [searchMode, setSearchMode] = useState<"field" | "form">(
     initialKeyword ? "field" : "form"
@@ -61,9 +63,11 @@ export default function ClientSearchComponent({
         <Searchfield
           initialMovies={initialMovies}
           initialKeyword={initialKeyword}
+          userIsAdmin={userIsAdmin}
         />
       ) : (
         <SearchForm
+          userIsAdmin={userIsAdmin}
           initialMovies={initialMovies}
           countries={countries}
           genres={genres}
