@@ -9,7 +9,7 @@ export default function LoginPage() {
 
   return (
     <div className="justify-center items-center p-10 flex flex-col">
-      <div className="w-full md:w-[500px] text-left border border-pink-200 p-10 rounded-md">
+      <div className="w-full md:w-[500px] text-left border border-pink-200 p-10 rounded-xl">
         <form>
           <div className="flex flex-col gap-3 mb-10">
             <label htmlFor="email">Adresse e-mail</label>

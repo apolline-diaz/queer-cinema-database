@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
@@ -8,6 +10,7 @@ import {
 import Card from "./card";
 import { getImageUrl } from "@/utils";
 import { Movie } from "../types/movie";
+import { isAdmin } from "@/utils/is-user-admin";
 
 interface FormValues {
   title: string;
@@ -17,14 +20,15 @@ interface FormValues {
 export default function Searchfield({
   initialMovies,
   initialKeyword = "",
+  userIsAdmin,
 }: {
   initialMovies: Movie[];
   initialKeyword?: string;
+  userIsAdmin: boolean;
 }) {
   const { control, watch, setValue } = useForm<FormValues>({
     defaultValues: { title: "", keyword: initialKeyword },
   });
-
   const router = useRouter();
   const searchParams = useSearchParams();
   const [movies, setMovies] = useState<Movie[]>(initialMovies);
@@ -135,6 +139,7 @@ export default function Searchfield({
             <Card
               key={`${movie.title}-${movie.id}`}
               {...movie}
+              userIsAdmin={userIsAdmin}
               image_url={getImageUrl(movie.image_url || "")}
             />
           ))

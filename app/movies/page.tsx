@@ -7,6 +7,7 @@ import {
   getDirectors,
 } from "@/app/server-actions/movies/search-movies";
 import ClientSearchComponent from "./client";
+import { isAdmin } from "@/utils/is-user-admin";
 
 export default async function Page({
   searchParams,
@@ -15,7 +16,7 @@ export default async function Page({
 }) {
   // Get keyword from URL parameters if it exists
   const keywordParam = (searchParams?.keyword as string) || "";
-
+  const userIsAdmin = await isAdmin();
   // get filter data and all movies (initial movies)
   const initialMovies = await searchMovies({
     countryId: "",
@@ -45,6 +46,7 @@ export default async function Page({
               directors={directors}
               releaseYears={releaseYears}
               initialKeyword={keywordParam}
+              userIsAdmin={userIsAdmin}
             />
           </div>
         </div>
