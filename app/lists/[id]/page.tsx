@@ -89,6 +89,7 @@ export default function ListPage({ params }: { params: { id: string } }) {
                   key={movie.id}
                   id={movie.id}
                   title={movie.title}
+                  userIsAdmin
                   release_date={movie.release_date}
                   image_url={movie.image_url}
                 />
