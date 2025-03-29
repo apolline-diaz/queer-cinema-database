@@ -1,5 +1,6 @@
 "use client";
 
+import { Icon } from "@iconify/react";
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { searchMovies } from "@/app/server-actions/movies/search-movies";
@@ -15,6 +16,34 @@ interface FormValues {
   keywordIds: { value: string; label: string }[]; // Changed to array of keywords
   directorId: string;
   releaseYear: string;
+}
+
+interface CollapsibleSectionProps {
+  title: string;
+  children: React.ReactNode;
+}
+
+// component for folding sections
+function CollapsibleSection({ title, children }: CollapsibleSectionProps) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div className=" overflow-hidden border-b border-white">
+      <button
+        type="button"
+        className="w-full flex justify-between items-center text-left"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <span className="font-medium text-sm mb-2">{title}</span>
+        {isOpen ? (
+          <Icon icon="line-md:chevron-up" className="size-5" />
+        ) : (
+          <Icon icon="line-md:chevron-down" className="size-5" />
+        )}
+      </button>
+      {isOpen && <div className="mb-2">{children}</div>}
+    </div>
+  );
 }
 
 export default function SearchForm({
@@ -101,70 +130,82 @@ export default function SearchForm({
         className="mt-4 p-4 border rounded-xl mb-4"
       >
         <div className="flex flex-col w-full mb-5">
-          <div className="grid sm:grid-cols-2 xs:grid-col-1 w-full gap-4 justify-between">
-            <Controller
-              name="countryId"
-              control={control}
-              render={({ field }) => (
-                <Select
-                  label="Pays"
-                  options={countries}
-                  {...field}
-                  placeholder="Tous les pays"
-                />
-              )}
-            />
-            <Controller
-              name="genreId"
-              control={control}
-              render={({ field }) => (
-                <Select
-                  label="Genre"
-                  options={genres}
-                  {...field}
-                  placeholder="Tous les genres"
-                />
-              )}
-            />
-            <Controller
-              name="releaseYear"
-              control={control}
-              render={({ field }) => (
-                <Select
-                  label="Année de sortie"
-                  options={releaseYears}
-                  {...field}
-                  placeholder="Toutes les années"
-                />
-              )}
-            />
-            <Controller
-              name="directorId"
-              control={control}
-              render={({ field }) => (
-                <Select
-                  label="Réalisateur-ice"
-                  options={directors}
-                  {...field}
-                  placeholder="Toutes les réalisateur-ices"
-                />
-              )}
-            />
+          <div className="grid  grid-cols-1 sm:grid-cols-2 w-full gap-4 justify-between">
+            <CollapsibleSection title="Pays">
+              <Controller
+                name="countryId"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    label="Pays"
+                    options={countries}
+                    {...field}
+                    placeholder="Tous les pays"
+                  />
+                )}
+              />
+            </CollapsibleSection>
+            <CollapsibleSection title="Genre">
+              <Controller
+                name="genreId"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    label="Genre"
+                    options={genres}
+                    {...field}
+                    placeholder="Tous les genres"
+                  />
+                )}
+              />
+            </CollapsibleSection>
+            <CollapsibleSection title="Année">
+              <Controller
+                name="releaseYear"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    label="Année de sortie"
+                    options={releaseYears}
+                    {...field}
+                    placeholder="Toutes les années"
+                  />
+                )}
+              />
+            </CollapsibleSection>
+            <CollapsibleSection title="Réalisateur-ice">
+              <Controller
+                name="directorId"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    label="Réalisateur-ice"
+                    options={directors}
+                    {...field}
+                    placeholder="Toutes les réalisateur-ices"
+                  />
+                )}
+              />
+            </CollapsibleSection>
           </div>
-          <Controller
-            name="keywordIds"
-            control={control}
-            render={({ field }) => (
-              <MultiSelect
+          <div className="py-2 mt-2 z-10">
+            <CollapsibleSection title="Mots-clé">
+              <Controller
                 name="keywordIds"
                 control={control}
-                options={keywords}
-                label="Mots-clés"
-                placeholder="Rechercher des mots-clés"
-                onChange={field.onChange}
+                render={({ field }) => (
+                  <MultiSelect
+                    name="keywordIds"
+                    control={control}
+                    options={keywords}
+                    label="Mots-clés"
+                    placeholder="Rechercher des mots-clé"
+                    onChange={field.onChange}
+                  />
+                )}
               />
-            )}
-          />
+            </CollapsibleSection>
+          </div>
         </div>
 
         <div className="flex flex-col sm:flex-row sm:w-full gap-4">

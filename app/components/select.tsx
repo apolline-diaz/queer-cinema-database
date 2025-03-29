@@ -18,13 +18,13 @@ export default function Select({
   placeholder = "Sélectionner...",
 }: SelectProps) {
   return (
-    <div className="mb-4">
-      <label
+    <div className="">
+      {/* <label
         htmlFor={label}
         className="block text-sm font-medium text-white mb-2"
       >
         {label}
-      </label>
+      </label> */}
       <select
         id={label}
         value={value}

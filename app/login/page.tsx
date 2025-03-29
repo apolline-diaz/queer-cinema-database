@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { login } from "./actions";
 import { useFormStatus } from "react-dom";
+import { SubmitButton } from "../components/submit-button";
 
 export default function LoginPage() {
   const { pending } = useFormStatus();
@@ -19,7 +20,7 @@ export default function LoginPage() {
               name="email"
               type="email"
               aria-label="email"
-              placeholder="Tapez votre adresse"
+              placeholder="Tapez votre adresse e-mail"
               required
             />
             <label htmlFor="password">Mot de passe</label>
@@ -34,13 +35,11 @@ export default function LoginPage() {
             />
           </div>
           <div className="w-full justify-center flex flex-wrap gap-4">
-            <button
-              className="hover:text-rose-500 hover:border-rose-500 py-2 px-3 rounded-full border "
+            <SubmitButton
+              defaultText="Se connecter"
+              loadingText="Connexion..."
               formAction={login}
-              disabled={pending}
-            >
-              {pending ? "Connexion..." : "Se connecter"}
-            </button>
+            />
 
             <div className="items-center rounded-full  hover:underline underline-offset-8 p-2">
               <Link href="/signup">Pas encore inscrit-e?</Link>

@@ -50,7 +50,7 @@ export default function MultiSelect({
 
   return (
     <div className="col-span-2 relative">
-      <label className="block text-sm font-medium mb-1">{label}</label>
+      {/* <label className="block text-sm font-medium mb-1">{label}</label> */}
       <Controller
         name={name}
         control={control}
@@ -90,7 +90,7 @@ export default function MultiSelect({
 
               {/* Dropdown Suggestions */}
               {inputValue && filteredOptions.length > 0 && (
-                <ul className="absolute left-0 right-0 bg-black rounded-md border mt-1 z-10 max-h-40 overflow-y-auto">
+                <ul className="left-0 right-0 bg-black rounded-md border font-light mt-1 z-10 max-h-40 overflow-y-auto">
                   {filteredOptions.map((option) => (
                     <li
                       key={option.value}

@@ -35,11 +35,11 @@ export default function ClientSearchComponent({
   // };
 
   return (
-    <div>
-      <div className="flex space-x-2 w-full my-2">
+    <div className="">
+      <div className="flex flex-wrap gap-2 w-full my-2">
         <button
           onClick={() => setSearchMode("field")}
-          className={`w-auto text-sm font-light px-4 py-1 border rounded-full transition-colors ${
+          className={`w-full sm:w-auto text-sm font-light px-4 py-1 border rounded-full transition-colors ${
             searchMode === "field"
               ? "bg-rose-500 text-white border-rose-500 "
               : "bg-transparent text-rose-500 border-rose-500 hover:bg-rose-600 hover:text-white"
@@ -50,7 +50,7 @@ export default function ClientSearchComponent({
 
         <button
           onClick={() => setSearchMode("form")}
-          className={`w-auto text-sm font-light px-4 py-1 border rounded-full transition-colors ${
+          className={`w-full sm:w-auto text-sm font-light px-4 py-1 border rounded-full transition-colors ${
             searchMode === "form"
               ? "bg-rose-500 text-white border-rose-500 "
               : "bg-transparent text-rose-500 border-rose-500 hover:bg-rose-600 hover:text-white"

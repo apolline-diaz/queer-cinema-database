@@ -25,6 +25,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@iconify/react": "^5.2.0",
     "@playwright/test": "^1.50.1",
     "@types/node": "^20",
     "@types/react": "^18",

@@ -12,6 +12,7 @@ import { getCountries } from "@/app/server-actions/countries/get-countries";
 import { getGenres } from "@/app/server-actions/genres/get-genres";
 import { getDirectors } from "@/app/server-actions/directors/get-directors";
 import MultiSelect from "@/app/components/multi-select";
+import { SubmitButton } from "@/app/components/submit-button";
 
 type KeywordOption = {
   value: string;
@@ -494,13 +495,10 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
         >
           Annuler
         </button>
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="px-4 py-2 bg-gradient-to-r from-rose-500 to-red-500 rounded-md hover:from-rose-600 hover:to-red-600 transition-colors disabled:opacity-50"
-        >
-          {isSubmitting ? "Mise à jour..." : "Enregistrer les modifications"}
-        </button>
+        <SubmitButton
+          defaultText="Enregistrer les modifications"
+          loadingText="Chargement..."
+        />
       </div>
     </form>
   );
