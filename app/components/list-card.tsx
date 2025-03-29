@@ -65,15 +65,16 @@ export const ListCard: React.FC<ListCardProps> = ({ list }) => {
               src={getImageUrl(firstMoviePoster)}
               fill={true}
               alt={list.title}
-              className="object-cover w-full h-full  transform transition-transform duration-700 ease-in-out group-hover:scale-110 group-hover:brightness-50"
+              className="object-cover w-full h-full z-20 transform transition-transform duration-700 ease-in-out group-hover:scale-110 group-hover:brightness-50"
               title={list.title}
             />
-          </Link>
-          <div className="absolute inset-0 bg-black bg-opacity-20 flex flex-col p-4 text-white uppercase justify-end">
-            <div className="text-xl font-semibold line-clamp-2">
-              {list.title}
+
+            <div className="absolute inset-0 bg-black bg-opacity-20 flex flex-col p-4 text-white uppercase justify-end">
+              <div className="text-xl font-semibold line-clamp-2">
+                {list.title}
+              </div>
             </div>
-          </div>
+          </Link>
 
           <button
             onClick={handleDeleteClick}
