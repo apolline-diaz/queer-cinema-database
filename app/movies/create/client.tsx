@@ -64,10 +64,10 @@ const CreateMoviePage: React.FC = () => {
   );
 
   return (
-    <div className="p-10">
-      <div className="tracking-wide text-rose-500 text-2xl mb-5">
+    <div className="px-10 py-5">
+      <h1 className="tracking-wide text-rose-500 text-2xl mb-5">
         Ajouter un film au catalogue
-      </div>
+      </h1>
       {state?.type === "error" && (
         <p id="title-error" className="text-red-500 text-xs italic">
           {state.message}

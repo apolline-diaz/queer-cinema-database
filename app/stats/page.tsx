@@ -5,8 +5,8 @@ export default async function StatisticsPage() {
   const keywordStats = await getKeywordStats();
 
   return (
-    <div className="p-10">
-      <h1 className="text-2xl text-rose-500 font-medium mb-5">
+    <div className="px-10 py-5">
+      <h1 className="text-2xl text-rose-500 mb-5">
         Statistiques des films par mot-clé
       </h1>
 

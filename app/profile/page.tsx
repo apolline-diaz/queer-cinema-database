@@ -9,12 +9,10 @@ export default async function ProfilePage() {
   const lists = await getLists();
 
   return (
-    <div className="flex flex-col gap-5 p-10">
-      {/* <h1>Bienvenue {data.user.email} !</h1> */}
-
-      {/* Mes listes */}
+    <div className="flex flex-col gap-5 px-10 py-5">
+      {/* Users lists */}
       <section className="">
-        <h2 className="text-2xl text-rose-500 font-medium mb-4">Mes listes</h2>
+        <h1 className="text-2xl text-rose-500 mb-5">Mes listes</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           <Link
             href="/lists/create"
