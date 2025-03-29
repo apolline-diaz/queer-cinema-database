@@ -23,9 +23,9 @@ export default async function Page({ params }: { params: { id: string } }) {
   }
 
   return (
-    <div className="p-10 flex justify-start">
+    <div className="px-10 py-5 flex justify-start">
       <div className="w-full max-w-3xl">
-        <h1 className="text-2xl text-rose-500 font-medium mb-5">Modifier</h1>
+        <h1 className="text-2xl text-rose-500 mb-5">Modifier le film</h1>
         <EditMovieForm movie={movie} />
       </div>
     </div>

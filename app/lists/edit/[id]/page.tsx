@@ -97,8 +97,8 @@ export default function EditListPage({ params }: { params: { id: string } }) {
   };
 
   return (
-    <div className="p-10">
-      <div className="text-xl text-rose-500 mb-5">Modifier la liste</div>
+    <div className="px-10 py-5">
+      <h1 className="text-2xl text-rose-500 mb-5">Modifier la liste</h1>
       {isLoading ? (
         <div className="space-y-4 w-full sm:w-1/2">
           <div className={"animate-pulse bg-neutral-800 rounded h-10 w-full"} />
