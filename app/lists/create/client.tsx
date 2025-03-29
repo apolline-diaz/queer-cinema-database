@@ -19,6 +19,7 @@ interface Movie {
 interface FormState {
   type: string;
   message: string;
+  id?: string;
   errors: {
     title?: string[];
     description?: string[];
@@ -86,6 +87,14 @@ const CreateListPage: React.FC = () => {
         !selectedMovies.find((m) => m.id === movie.id)
     )
     .slice(0, 5);
+
+  // In your CreateListPage component
+  useEffect(() => {
+    if (state?.type === "success" && state.id) {
+      // Redirect client-side after successful creation
+      window.location.href = `/lists/${state.id}`;
+    }
+  }, [state]);
 
   return (
     <div className="p-10">

@@ -1,7 +1,6 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { ensureUserExists } from "@/utils/ensure-user-exist";
@@ -9,6 +8,7 @@ import { ensureUserExists } from "@/utils/ensure-user-exist";
 export interface FormState {
   type: string;
   message: string;
+  id?: string | number | bigint | null; // Make it accept multiple types to be safe
   errors: {
     title?: string[];
     description?: string[];
@@ -71,7 +71,12 @@ export async function createList(prevState: FormState, formData: FormData) {
       },
     });
 
-    redirect(`/lists/${newList.id}`);
+    return {
+      type: "success",
+      message: "List created successfully",
+      errors: null,
+      id: String(newList.id),
+    };
   } catch (err) {
     console.error("Error creating list:", err);
     return {
