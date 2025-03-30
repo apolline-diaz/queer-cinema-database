@@ -36,6 +36,9 @@ export default defineConfig({
     baseURL,
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: "on-first-retry",
+
+    //Assurez-vous que votre configuration Playwright utilise une taille d'écran qui rend visible le menu desktop :
+    viewport: { width: 1280, height: 720 },
   },
 
   /* Configure projects for major browsers */

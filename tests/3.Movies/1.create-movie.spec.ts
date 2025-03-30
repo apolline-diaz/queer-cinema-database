@@ -24,18 +24,13 @@ const test = base.extend<CustomFixtures>({
   },
 });
 
-test("create", async ({ authenticatedPage: page }) => {
+test("create movie", async ({ authenticatedPage: page }) => {
   await page.goto("/");
 
-  await expect(page.getByTestId("profile-link-desktop")).toBeVisible();
-
-  await page.getByTestId("profile-link-desktop").click();
-
-  await expect(page.getByText("Contribuer")).toBeVisible();
-
-  await page.getByRole("link", { name: "Ajouter un film" }).click();
-
-  await expect(page.getByText("Ajouter un film au catalogue")).toBeVisible();
+  await page.getByRole("link", { name: "Contribuer" }).click();
+  await expect(
+    page.getByRole("heading", { name: "Ajouter un film au catalogue" })
+  ).toBeVisible();
 
   // fill in the form with proper selectors matching your form
   await page.locator("#title").click();
