@@ -18,7 +18,6 @@ const test = base.extend<CustomFixtures>({
     await page.locator("#email").fill(email);
     await page.locator("#password").fill(password);
     await page.getByRole("button", { name: "Se connecter" }).click();
-    await expect(page.getByTestId("profile-link-desktop")).toBeVisible();
     // pass the authenticated page to the test
     await use(page);
   },

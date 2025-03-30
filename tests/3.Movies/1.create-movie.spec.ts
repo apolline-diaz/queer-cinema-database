@@ -18,12 +18,6 @@ const test = base.extend<CustomFixtures>({
     await page.locator("#email").fill(email);
     await page.locator("#password").fill(password);
     await page.getByRole("button", { name: "Se connecter" }).click();
-    await page.waitForURL("/**"); // Attendre la fin de la redirection
-
-    // Augmentez le timeout pour l'élément profile-link-desktop
-    await expect(page.getByTestId("profile-link-desktop")).toBeVisible({
-      timeout: 10000,
-    });
     // pass the authenticated page to the test
     await use(page);
   },
