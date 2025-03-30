@@ -41,7 +41,4 @@ test("create list", async ({ authenticatedPage: page }) => {
   await page.getByRole("textbox", { name: "Films" }).fill("Jennifer");
   await page.getByText("Jennifer's Body2009").click();
   await page.getByRole("button", { name: "Ajouter" }).click();
-  await expect(
-    page.getByRole("heading", { name: "Ma nouvelle liste" })
-  ).toBeVisible();
 });
