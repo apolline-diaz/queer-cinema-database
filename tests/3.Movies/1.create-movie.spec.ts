@@ -13,13 +13,12 @@ type CustomFixtures = {
 // create a custom test fixture that includes authentication
 const test = base.extend<CustomFixtures>({
   authenticatedPage: async ({ page }, use) => {
-    await page.setViewportSize({ width: 1280, height: 720 });
-
     // perform login
     await page.goto("/login");
     await page.locator("#email").fill(email);
     await page.locator("#password").fill(password);
     await page.getByRole("button", { name: "Se connecter" }).click();
+    await expect(page.getByTestId("profile-link-desktop")).toBeVisible();
     // pass the authenticated page to the test
     await use(page);
   },
