@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { Image } from "@/app/components/image";
-import Searchfield from "./searchfield";
 import { getImageUrl } from "@/utils";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -34,8 +33,8 @@ export default function Hero({ id, title, image_url }: CardProps) {
       />
       <div className="absolute inset-0 flex flex-col justify-center items-center pt-18 px-10 gap-y-8">
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
-        <div className="relative w-full mb-10">
-          <h2 className="sm:text-5xl text-4xl font-medium text-white text-center">
+        <div className="relative font-semibold w-full sm:text-5xl text-4xl ">
+          <h2 className=" text-white text-center">
             Découvrez l&apos;histoire du cinéma{" "}
             <span className="text-transparent text-bold bg-clip-text bg-gradient-to-r from-red-500 via-yellow-500 via-green-500 via-blue-500 via-indigo-500 to-purple-500">
               LGBTQI+
@@ -48,7 +47,7 @@ export default function Hero({ id, title, image_url }: CardProps) {
           <div className="flex flex-row items-center bg-black justify-center border rounded-xl px-4 border-white">
             <input
               type="text"
-              className="z-10 max-h-12  min-w-52 flex-1 py-4  bg-black  text-white focus:outline-none"
+              className="z-10 max-h-12  min-w-52 flex-1 py-4 bg-black text-white focus:outline-none"
               placeholder="Rechercher un mot-clé..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
