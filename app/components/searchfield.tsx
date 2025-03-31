@@ -1,6 +1,5 @@
-"use client";
-
 import React, { useState, useEffect } from "react";
+import { Icon } from "@iconify/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
 import {
@@ -10,12 +9,13 @@ import {
 import Card from "./card";
 import { getImageUrl } from "@/utils";
 import { Movie } from "../types/movie";
-import { isAdmin } from "@/utils/is-user-admin";
 
 interface FormValues {
   title: string;
   keyword: string;
 }
+
+const MOVIES_PER_PAGE = 50;
 
 export default function Searchfield({
   initialMovies,
@@ -29,10 +29,12 @@ export default function Searchfield({
   const { control, watch, setValue } = useForm<FormValues>({
     defaultValues: { title: "", keyword: initialKeyword },
   });
+
   const router = useRouter();
   const searchParams = useSearchParams();
   const [movies, setMovies] = useState<Movie[]>(initialMovies);
   const [isLoading, setIsLoading] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(MOVIES_PER_PAGE);
 
   const titleSearch = watch("title");
   const keywordSearch = watch("keyword");
@@ -55,6 +57,7 @@ export default function Searchfield({
   useEffect(() => {
     const fetchMovies = async () => {
       setIsLoading(true);
+      setVisibleCount(MOVIES_PER_PAGE); // Réinitialise l'affichage à 100 films au départ
       if (titleSearch) {
         setMovies(await getMoviesByTitle(titleSearch));
       } else if (keywordSearch) {
@@ -73,11 +76,16 @@ export default function Searchfield({
     setValue("title", "");
     setValue("keyword", "");
     setMovies(initialMovies);
+    setVisibleCount(MOVIES_PER_PAGE);
     router.push("/movies", { scroll: false });
   };
 
+  const loadMore = () => {
+    setVisibleCount((prevCount) => prevCount + MOVIES_PER_PAGE);
+  };
+
   return (
-    <div className="w-full  my-4">
+    <div className="w-full my-4">
       <div className="px-4 py-2 border rounded-xl mb-4">
         <form>
           <div className="text-sm w-full xs:w-1/2 my-2 flex flex-col sm:flex-row gap-3">
@@ -142,16 +150,26 @@ export default function Searchfield({
         ) : movies.length === 0 ? (
           <p>Aucun film trouvé</p>
         ) : (
-          movies.map((movie) => (
-            <Card
-              key={`${movie.title}-${movie.id}`}
-              {...movie}
-              userIsAdmin={userIsAdmin}
-              image_url={getImageUrl(movie.image_url || "")}
-            />
-          ))
+          movies
+            .slice(0, visibleCount)
+            .map((movie) => (
+              <Card
+                key={`${movie.title}-${movie.id}`}
+                {...movie}
+                userIsAdmin={userIsAdmin}
+                image_url={getImageUrl(movie.image_url || "")}
+              />
+            ))
         )}
       </div>
+      {visibleCount < movies.length && !isLoading && (
+        <button
+          onClick={loadMore}
+          className="w-full flex flex-row justify-center items-center border-b border-t mt-4 px-4 py-2 hover:border-rose-500 text-white hover:text-rose-600"
+        >
+          Voir plus <Icon icon="mdi:chevron-down" className="size-5" />
+        </button>
+      )}
     </div>
   );
 }

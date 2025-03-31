@@ -23,6 +23,8 @@ interface CollapsibleSectionProps {
   children: React.ReactNode;
 }
 
+const MOVIES_PER_PAGE = 50;
+
 // component for folding sections
 function CollapsibleSection({ title, children }: CollapsibleSectionProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -75,6 +77,7 @@ export default function SearchForm({
 
   const [movies, setMovies] = useState<Movie[]>(initialMovies);
   const [isLoading, setIsLoading] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(MOVIES_PER_PAGE);
 
   // Memoize search parameters to prevent unnecessary re-renders
   const searchParams = watch();
@@ -116,11 +119,16 @@ export default function SearchForm({
       }); // Trigger search with no filters
       setMovies(results);
       setIsLoading(false);
+      setVisibleCount(MOVIES_PER_PAGE); // Réinitialise l'affichage à 100 films au départ
     } catch (error) {
       console.error("Error resetting search:", error);
       setMovies([]); // Reset the movie list on error
       setIsLoading(false);
     }
+  };
+
+  const loadMore = () => {
+    setVisibleCount((prevCount) => prevCount + MOVIES_PER_PAGE);
   };
 
   return (
@@ -250,16 +258,26 @@ export default function SearchForm({
         ) : movies.length === 0 ? (
           <p>Aucun film trouvé</p>
         ) : (
-          movies.map((movie) => (
-            <Card
-              key={`${movie.title}-${movie.id}`}
-              {...movie}
-              userIsAdmin={userIsAdmin}
-              image_url={getImageUrl(movie.image_url || "")}
-            />
-          ))
+          movies
+            .slice(0, visibleCount)
+            .map((movie) => (
+              <Card
+                key={`${movie.title}-${movie.id}`}
+                {...movie}
+                userIsAdmin={userIsAdmin}
+                image_url={getImageUrl(movie.image_url || "")}
+              />
+            ))
         )}
       </div>
+      {visibleCount < movies.length && !isLoading && (
+        <button
+          onClick={loadMore}
+          className="w-full flex flex-row justify-center items-center border-b border-t mt-4 px-4 py-2 hover:border-rose-500 text-white hover:text-rose-600"
+        >
+          Voir plus <Icon icon="mdi:chevron-down" className="size-5" />
+        </button>
+      )}
     </>
   );
 }
