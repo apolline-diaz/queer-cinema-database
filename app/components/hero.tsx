@@ -35,7 +35,7 @@ export default function Hero({ id, title, image_url }: CardProps) {
       <div className="absolute inset-0 flex flex-col justify-center items-center pt-18 px-10 gap-y-8">
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
         <div className="relative w-full mb-10">
-          <h2 className="sm:text-5xl text-3xl font-medium text-white text-center">
+          <h2 className="text-5xl font-medium text-white text-center">
             Découvrez l&apos;histoire du cinéma{" "}
             <span className="text-transparent text-bold bg-clip-text bg-gradient-to-r from-red-500 via-yellow-500 via-green-500 via-blue-500 via-indigo-500 to-purple-500">
               LGBTQI+
