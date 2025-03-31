@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "./components/header";
 import Footer from "./components/footer";
 import { getCanonicalUrl } from "@/utils/index";
+import TopLoader from "nextjs-toploader";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,6 +31,16 @@ export default function RootLayout({
       <body
         className={`${inter.className} bg-neutral-950 min-h-screen text-white flex flex-col`}
       >
+        <TopLoader
+          color="#c42d50" // Rose foncé tirant vers le rouge
+          initialPosition={0.08} // Position de départ
+          crawlSpeed={200} // Vitesse de progression
+          height={4} // Épaisseur de la barre
+          easing="ease"
+          speed={500}
+          shadow="0 0 10px #c42d50, 0 0 5px #c42d50" // Ombre assortie
+        />
+
         <div className="mb-10">
           <Header />
         </div>
