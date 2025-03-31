@@ -227,7 +227,13 @@ export default function SearchForm({
           </button>
         </div>
       </form>
-
+      <div className="text-rose-500 border-b border-rose-500 text-md font-light mb-5">
+        {isLoading ? (
+          <div className="animate-pulse rounded-xl h-6 bg-gray-400 w-3/4 mb-2"></div>
+        ) : (
+          `${movies.length} films trouvés`
+        )}
+      </div>
       <div className="w-full grid xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
         {isLoading ? (
           Array.from({ length: 8 }).map((_, index) => (
