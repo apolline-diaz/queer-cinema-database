@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "./components/header";
 import Footer from "./components/footer";
 import { getCanonicalUrl } from "@/utils/index";
+import ProgressLoader from "./components/progress-loader";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,6 +32,8 @@ export default function RootLayout({
         className={`${inter.className} bg-neutral-950 min-h-screen text-white flex flex-col`}
       >
         <div className="mb-10">
+          <ProgressLoader />
+
           <Header />
         </div>
         <main className="">{children}</main>
