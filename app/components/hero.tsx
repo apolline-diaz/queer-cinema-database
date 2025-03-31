@@ -3,10 +3,9 @@
 import Link from "next/link";
 import { Image } from "@/app/components/image";
 import { getImageUrl } from "@/utils";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { getMoviesCount } from "@/app/server-actions/movies/get-movies"; // Importer ta fonction pour récupérer le nombre de films
 
 interface CardProps {
   id: string;
@@ -17,14 +16,6 @@ interface CardProps {
 export default function Hero({ id, title, image_url }: CardProps) {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
-  const [movieCount, setMovieCount] = useState(0);
-  useEffect(() => {
-    const fetchMovieCount = async () => {
-      const totalMovies = await getMoviesCount(); // Appelle la fonction pour récupérer le nombre de films
-      setMovieCount(totalMovies); // Mettre à jour l'état avec le nombre total
-    };
-    fetchMovieCount();
-  }, []);
 
   const handleSearch = () => {
     if (searchQuery.trim()) {
