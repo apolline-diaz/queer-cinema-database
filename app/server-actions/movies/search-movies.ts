@@ -64,7 +64,7 @@ export async function searchMovies({
             release_date: true,
           },
           orderBy: { created_at: "desc" },
-          take: 150,
+          // take: 150,
         });
 
         return movies.map((movie) => ({
