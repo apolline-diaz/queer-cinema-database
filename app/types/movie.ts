@@ -16,6 +16,7 @@ export type Movie = {
   keywords?: Keyword[];
   directors?: Director[];
   countries?: Country[];
+  source?: string | null;
   created_at?: Date | null;
   updated_at?: Date | null;
 };

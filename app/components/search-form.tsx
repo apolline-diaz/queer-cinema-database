@@ -1,9 +1,13 @@
 "use client";
 
 import { Icon } from "@iconify/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { searchMovies } from "@/app/server-actions/movies/search-movies";
+import {
+  getLgbtTmdbMovies,
+  searchTmdbMovies,
+} from "@/app/server-actions/movies/get-tmdb-movies";
 import Card from "./card";
 import { getImageUrl } from "@/utils";
 import Select from "./select";
@@ -13,7 +17,7 @@ import MultiSelect from "./multi-select";
 interface FormValues {
   countryId: string;
   genreId: string;
-  keywordIds: { value: string; label: string }[]; // Changed to array of keywords
+  keywordIds: { value: string; label: string }[];
   directorId: string;
   releaseYear: string;
 }
@@ -23,14 +27,14 @@ interface CollapsibleSectionProps {
   children: React.ReactNode;
 }
 
-const MOVIES_PER_PAGE = 50;
+const MOVIES_PER_PAGE = 20;
 
-// component for folding sections
+// Component for folding sections
 function CollapsibleSection({ title, children }: CollapsibleSectionProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className=" overflow-hidden border-b border-white">
+    <div className="overflow-hidden border-b border-white">
       <button
         type="button"
         className="w-full flex justify-between items-center text-left"
@@ -69,7 +73,7 @@ export default function SearchForm({
     defaultValues: {
       countryId: "",
       genreId: "",
-      keywordIds: [], // Initialize as empty array
+      keywordIds: [],
       directorId: "",
       releaseYear: "",
     },
@@ -77,58 +81,140 @@ export default function SearchForm({
 
   const [movies, setMovies] = useState<Movie[]>(initialMovies);
   const [isLoading, setIsLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [visibleCount, setVisibleCount] = useState(MOVIES_PER_PAGE);
 
   // Memoize search parameters to prevent unnecessary re-renders
   const searchParams = watch();
 
-  // handle form submission
+  // Handle form submission
   const onSubmit = async (data: FormValues) => {
-    setIsLoading(true); // Show loading indicator
+    setIsLoading(true);
+    setCurrentPage(1);
+    setVisibleCount(MOVIES_PER_PAGE);
 
     try {
-      const results = await searchMovies({
+      // Search in your database
+      const dbResults = await searchMovies({
         countryId: data.countryId,
         genreId: data.genreId,
-        keywordIds: data.keywordIds.map((keyword) => keyword.value), // Convert to array of keyword IDs
+        keywordIds: data.keywordIds.map((keyword) => keyword.value),
         directorId: data.directorId,
         releaseYear: data.releaseYear,
       });
 
-      setMovies(results); // Update the movie list with search results
+      // Mark source
+      const dbMoviesWithSource = dbResults.map((movie) => ({
+        ...movie,
+        source: "db" as const,
+      }));
+
+      // Search in TMDB
+      const { movies: tmdbResults, totalPages } = await searchTmdbMovies({
+        query: "", // Use empty query for discovery
+        year: data.releaseYear,
+        genreId: data.genreId,
+        keywordIds: data.keywordIds.map((k) => k.value),
+        page: 1,
+      });
+
+      // Combine results and remove duplicates
+      const allMovies = [...dbMoviesWithSource, ...tmdbResults];
+      const uniqueMovies = Array.from(
+        new Map(
+          allMovies.map((movie) => [
+            `${movie.title}-${movie.release_date || "unknown"}`,
+            movie,
+          ])
+        ).values()
+      );
+
+      setMovies(uniqueMovies);
+      setTotalPages(totalPages);
       setIsLoading(false);
     } catch (error) {
       console.error("Error searching movies:", error);
-      setMovies([]); // Reset the movie list on error
+      setMovies([]);
       setIsLoading(false);
     }
   };
 
   // Reset form and fetch all movies
   const handleReset = async () => {
-    reset(); // Reset all form values
+    reset();
     setIsLoading(true);
+    setCurrentPage(1);
+    setVisibleCount(MOVIES_PER_PAGE);
 
     try {
-      const results = await searchMovies({
-        countryId: "",
-        genreId: "",
-        keywordIds: [], // Pass empty array for keywords
-        directorId: "",
-        releaseYear: "",
-      }); // Trigger search with no filters
-      setMovies(results);
-      setIsLoading(false);
-      setVisibleCount(MOVIES_PER_PAGE); // Réinitialise l'affichage à 100 films au départ
+      // Reset to initial movies from your database
+      const dbMoviesWithSource = initialMovies.map((movie) => ({
+        ...movie,
+        source: "db" as const,
+      }));
+
+      // Get default LGBT movies from TMDB
+      const { movies: tmdbMovies, totalPages } = await getLgbtTmdbMovies(1);
+
+      // Combine and remove duplicates
+      const allMovies = [...dbMoviesWithSource, ...tmdbMovies];
+      const uniqueMovies = Array.from(
+        new Map(
+          allMovies.map((movie) => [
+            `${movie.title}-${movie.release_date || "unknown"}`,
+            movie,
+          ])
+        ).values()
+      );
+
+      setMovies(uniqueMovies);
+      setTotalPages(totalPages);
     } catch (error) {
       console.error("Error resetting search:", error);
-      setMovies([]); // Reset the movie list on error
+      setMovies(initialMovies);
+    } finally {
       setIsLoading(false);
     }
   };
 
-  const loadMore = () => {
-    setVisibleCount((prevCount) => prevCount + MOVIES_PER_PAGE);
+  const loadMore = async () => {
+    // If we haven't shown all current movies yet, just show more
+    if (visibleCount < movies.length) {
+      setVisibleCount((prevCount) => prevCount + MOVIES_PER_PAGE);
+      return;
+    }
+
+    // Otherwise, fetch the next page from TMDB
+    if (currentPage < totalPages) {
+      setIsLoading(true);
+      const nextPage = currentPage + 1;
+
+      try {
+        // Get form values
+        const data = watch();
+
+        // Fetch next page from TMDB
+        const { movies: newTmdbMovies } = await searchTmdbMovies({
+          query: "",
+          year: data.releaseYear,
+          genreId: data.genreId,
+          keywordIds: data.keywordIds.map((k) => k.value),
+          page: nextPage,
+        });
+
+        // Add to current movies
+        setMovies((prevMovies) => [...prevMovies, ...newTmdbMovies]);
+        setCurrentPage(nextPage);
+        setVisibleCount(
+          (prevVisibleCount) => prevVisibleCount + newTmdbMovies.length
+        );
+      } catch (error) {
+        console.error("Error loading more movies:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
   };
 
   return (
@@ -138,7 +224,7 @@ export default function SearchForm({
         className="mt-4 p-4 border rounded-xl mb-4"
       >
         <div className="flex flex-col w-full mb-5">
-          <div className="grid  grid-cols-1 sm:grid-cols-2 w-full gap-4 justify-between">
+          <div className="grid grid-cols-1 sm:grid-cols-2 w-full gap-4 justify-between">
             <CollapsibleSection title="Pays">
               <Controller
                 name="countryId"
@@ -236,14 +322,14 @@ export default function SearchForm({
         </div>
       </form>
       <div className="text-rose-500 border-b border-rose-500 text-md font-light mb-5">
-        {isLoading ? (
+        {isLoading && movies.length === 0 ? (
           <div className="animate-pulse rounded-xl h-6 bg-gray-400 w-3/4 mb-2"></div>
         ) : (
           `${movies.length} films trouvés`
         )}
       </div>
       <div className="w-full grid xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-        {isLoading ? (
+        {isLoading && movies.length === 0 ? (
           Array.from({ length: 8 }).map((_, index) => (
             <div
               key={index}
@@ -258,25 +344,29 @@ export default function SearchForm({
         ) : movies.length === 0 ? (
           <p>Aucun film trouvé</p>
         ) : (
-          movies
-            .slice(0, visibleCount)
-            .map((movie) => (
-              <Card
-                key={`${movie.title}-${movie.id}`}
-                {...movie}
-                userIsAdmin={userIsAdmin}
-                image_url={getImageUrl(movie.image_url || "")}
-              />
-            ))
+          movies.slice(0, visibleCount).map((movie) => (
+            <Card
+              key={`${movie.title}-${movie.id}`}
+              {...movie}
+              userIsAdmin={userIsAdmin && movie.source === "db"} // Only allow admin actions on your own DB movies
+              image_url={getImageUrl(movie.image_url || "")}
+            />
+          ))
         )}
       </div>
-      {visibleCount < movies.length && !isLoading && (
-        <button
-          onClick={loadMore}
-          className="w-full flex flex-row justify-center items-center border-b border-t mt-4 px-4 py-2 hover:border-rose-500 text-white hover:text-rose-600"
-        >
-          Voir plus <Icon icon="mdi:chevron-down" className="size-5" />
-        </button>
+      {(visibleCount < movies.length || currentPage < totalPages) &&
+        !isLoading && (
+          <button
+            onClick={loadMore}
+            className="w-full flex flex-row justify-center items-center border-b border-t mt-4 px-4 py-2 hover:border-rose-500 text-white hover:text-rose-600"
+          >
+            Voir plus <Icon icon="mdi:chevron-down" className="size-5" />
+          </button>
+        )}
+      {isLoading && visibleCount > 0 && (
+        <div className="w-full flex justify-center p-4">
+          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-rose-500"></div>
+        </div>
       )}
     </>
   );
