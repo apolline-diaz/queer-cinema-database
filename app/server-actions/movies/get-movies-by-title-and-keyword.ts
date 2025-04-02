@@ -61,7 +61,7 @@ export const getMoviesByKeyword = async (search: string): Promise<Movie[]> => {
   if (keywords.length > 0) {
     const keywordIds = keywords.map((k) => k.id);
 
-    const movieKeywords = await prisma.movie_keywords.findMany({
+    const movieKeywords = await prisma.movies_keywords.findMany({
       where: {
         keyword_id: {
           in: keywordIds,

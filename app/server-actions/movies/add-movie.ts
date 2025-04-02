@@ -133,7 +133,7 @@ export async function addMovie(prevState: any, formData: FormData) {
 
       // Insert movie countries
       const countryIds = country_id.split(",").map(Number);
-      await prisma.movie_countries.createMany({
+      await prisma.movies_countries.createMany({
         data: countryIds.map((countryId) => ({
           movie_id: movie.id,
           country_id: countryId,
@@ -141,7 +141,7 @@ export async function addMovie(prevState: any, formData: FormData) {
       });
 
       // Link director to movie
-      await prisma.movie_directors.create({
+      await prisma.movies_directors.create({
         data: {
           movie_id: movie.id,
           director_id: director.id,
@@ -150,7 +150,7 @@ export async function addMovie(prevState: any, formData: FormData) {
 
       // Insert genres
       const genreIds = genre_id.split(",").map(Number);
-      await prisma.movie_genres.createMany({
+      await prisma.movies_genres.createMany({
         data: genreIds.map((genreId) => ({
           movie_id: movie.id,
           genre_id: genreId,
@@ -159,7 +159,7 @@ export async function addMovie(prevState: any, formData: FormData) {
 
       // Insert keywords
       const keywordIds = keyword_id.split(",").map(Number);
-      await prisma.movie_keywords.createMany({
+      await prisma.movies_keywords.createMany({
         data: keywordIds.map((keywordId) => ({
           movie_id: movie.id,
           keyword_id: keywordId,

@@ -32,24 +32,24 @@ export async function searchMovies({
         const movies = await prisma.movies.findMany({
           where: {
             ...(countryId && {
-              movie_countries: {
+              movies_countries: {
                 some: { country_id: parseInt(countryId) },
               },
             }),
             ...(genreId && {
-              movie_genres: {
+              movies_genres: {
                 some: { genre_id: BigInt(genreId) },
               },
             }),
             ...(keywordIds.length > 0 && {
               AND: keywordIds.map((id) => ({
-                movie_keywords: {
+                movies_keywords: {
                   some: { keyword_id: parseInt(id) },
                 },
               })),
             }),
             ...(directorId && {
-              movie_directors: {
+              movies_directors: {
                 some: { director_id: BigInt(directorId) },
               },
             }),

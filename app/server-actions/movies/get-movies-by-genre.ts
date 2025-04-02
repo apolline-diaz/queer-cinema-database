@@ -8,7 +8,7 @@ export async function getMoviesByGenre(genreId: number) {
   try {
     const movies = await prisma.movies.findMany({
       where: {
-        movie_genres: {
+        movies_genres: {
           some: {
             genre_id: genreId,
           },
@@ -19,7 +19,7 @@ export async function getMoviesByGenre(genreId: number) {
         title: true,
         image_url: true,
         release_date: true,
-        movie_genres: {
+        movies_genres: {
           include: {
             genres: {
               select: {

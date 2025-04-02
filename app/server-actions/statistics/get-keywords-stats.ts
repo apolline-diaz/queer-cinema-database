@@ -17,7 +17,7 @@ export async function getKeywordStats(
     const keywordStats = await prisma.$queryRaw<KeywordStat[]>`
       SELECT k.name, COUNT(mk.movie_id) as count
       FROM keywords k
-      JOIN movie_keywords mk ON k.id = mk.keyword_id
+      JOIN movies_keywords mk ON k.id = mk.keyword_id
       GROUP BY k.name
       ORDER BY count DESC
       LIMIT ${limit}
