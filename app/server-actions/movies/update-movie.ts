@@ -1,136 +1,94 @@
 "use server";
 
-import { PrismaClient } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/utils/supabase/server";
 import { isAdmin } from "@/utils/is-user-admin";
+import { PrismaClient } from "@prisma/client";
 
-export type UpdateMovieInput = {
-  id: string;
-  title: string;
-  description: string | null;
-  release_date: string | null;
-  language: string | null;
-  runtime: number | null;
-  image_url: string | null;
-  image: File | null;
-  director_id: string;
-  directors: string[];
-  country_id: string;
-  countries: string[];
-  genre_ids: string[];
-  genres: string[];
-  keyword_ids: string[];
-  keywords: string[];
-};
-
-export async function updateMovie(movie: UpdateMovieInput) {
+export async function updateMovie(formData: FormData) {
   const supabase = createClient();
   const userIsAdmin = await isAdmin();
 
   if (!userIsAdmin) {
-    return {
-      type: "error",
-      message: "You must be admin to update a movie",
-      errors: null,
-    };
+    return { type: "error", message: "You must be admin to update a movie" };
   }
 
   const prisma = new PrismaClient();
 
   try {
-    let imageUrl = movie.image_url;
+    const id = formData.get("id") as string;
+    const title = formData.get("title") as string;
+    const description = formData.get("description") as string;
+    const release_date = formData.get("release_date") as string;
+    const language = formData.get("language") as string;
+    const runtime = formData.get("runtime")
+      ? Number(formData.get("runtime"))
+      : null;
+    const image_url = formData.get("image_url") as string;
+    const image = formData.get("image") as File | null;
+    const director_id = formData.get("director_id") as string;
+    const country_id = formData.get("country_id") as string;
+    const genre_ids = JSON.parse(
+      formData.get("genre_ids") as string
+    ) as string[];
+    const keyword_ids = JSON.parse(
+      formData.get("keyword_ids") as string
+    ) as string[];
 
-    if (movie.image && movie.image instanceof File) {
-      const filename = `${Date.now()}-${movie.image.name.replace(/\s+/g, "-")}`;
-      const file = movie.image;
+    let imageUrl = image_url;
 
+    // Upload l'image si elle est fournie
+    if (image) {
+      const filename = `${Date.now()}-${image.name.replace(/\s+/g, "-")}`;
       const { data, error } = await supabase.storage
         .from("storage")
-        .upload(filename, file, {
-          cacheControl: "3600",
-          upsert: true,
-        });
+        .upload(filename, image, { cacheControl: "3600", upsert: true });
 
       if (error) {
         throw new Error(error.message);
       }
-      imageUrl = `${process.env.SUPABASE_URL}/storage/v1/object/public/storage/${data?.path}`;
+      imageUrl = `${data?.path}`;
     }
 
-    const runtimeValue = movie.runtime ? Number(movie.runtime) : null;
-
     await prisma.movies.update({
-      where: { id: movie.id },
+      where: { id },
       data: {
-        title: movie.title,
-        description: movie.description,
-        release_date: movie.release_date,
-        language: movie.language,
-        runtime: runtimeValue,
+        title,
+        description,
+        release_date,
+        language,
+        runtime,
         image_url: imageUrl,
         updated_at: new Date(),
       },
     });
 
-    // Update director relationship
-    if (movie.director_id) {
-      // Delete existing director relationships
-      await prisma.movie_directors.deleteMany({
-        where: { movie_id: movie.id },
-      });
+    // Update relationships (directors, countries, genres, keywords)
+    await prisma.movie_directors.deleteMany({ where: { movie_id: id } });
+    await prisma.movie_directors.create({
+      data: { movie_id: id, director_id: BigInt(director_id) },
+    });
 
-      // Create new director relationship
-      await prisma.movie_directors.create({
-        data: {
-          movie_id: movie.id,
-          director_id: BigInt(movie.director_id),
-        },
-      });
-    }
+    await prisma.movie_countries.deleteMany({ where: { movie_id: id } });
+    await prisma.movie_countries.create({
+      data: { movie_id: id, country_id: parseInt(country_id) },
+    });
 
-    // Update country relationship
-    if (movie.country_id) {
-      // Delete existing country relationships
-      await prisma.movie_countries.deleteMany({
-        where: { movie_id: movie.id },
-      });
-
-      // Create new country relationship
-      await prisma.movie_countries.create({
-        data: {
-          movie_id: movie.id,
-          country_id: parseInt(movie.country_id),
-        },
-      });
-    }
-
-    // Update genres & keywords
-    await prisma.movie_genres.deleteMany({ where: { movie_id: movie.id } });
-    await prisma.movie_keywords.deleteMany({ where: { movie_id: movie.id } });
-
-    for (const genreName of movie.genres) {
-      let genre = await prisma.genres.findFirst({ where: { name: genreName } });
-      if (!genre)
-        genre = await prisma.genres.create({ data: { name: genreName } });
+    await prisma.movie_genres.deleteMany({ where: { movie_id: id } });
+    for (const genreId of genre_ids) {
       await prisma.movie_genres.create({
-        data: { movie_id: movie.id, genre_id: genre.id },
+        data: { movie_id: id, genre_id: BigInt(genreId) },
       });
     }
 
-    for (const keywordName of movie.keywords) {
-      let keyword = await prisma.keywords.findFirst({
-        where: { name: keywordName },
-      });
-      if (!keyword)
-        keyword = await prisma.keywords.create({ data: { name: keywordName } });
+    await prisma.movie_keywords.deleteMany({ where: { movie_id: id } });
+    for (const keywordId of keyword_ids) {
       await prisma.movie_keywords.create({
-        data: { movie_id: movie.id, keyword_id: keyword.id },
+        data: { movie_id: id, keyword_id: Number(keywordId) },
       });
     }
 
-    // Revalidate UI
-    revalidatePath(`/movies/${movie.id}`);
+    revalidatePath(`/movies/${id}`);
     return { success: true };
   } catch (error) {
     console.error("Error updating movie:", error);
