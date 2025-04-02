@@ -13,6 +13,7 @@ import { getGenres } from "@/app/server-actions/genres/get-genres";
 import { getDirectors } from "@/app/server-actions/directors/get-directors";
 import MultiSelect from "@/app/components/multi-select";
 import { SubmitButton } from "@/app/components/submit-button";
+import { uploadImage } from "@/utils/upload-image";
 
 type KeywordOption = {
   value: string;
@@ -111,6 +112,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
 
   // Watch for image changes to update preview
   const imageFile = watch("image");
+  const imageUrl = watch("image_url");
 
   // Fetch all reference data on component mount
   useEffect(() => {
@@ -203,57 +205,54 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
 
       // Clean up the object URL when the component unmounts or the file changes
       return () => URL.revokeObjectURL(fileUrl);
+    } else if (imageUrl) {
+      // Use the image URL if no file is uploaded
+      setImagePreview(imageUrl);
     }
-  }, [imageFile]);
+  }, [imageFile, imageUrl]);
 
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
     setError(null);
 
     try {
-      // Get keyword and genre IDs from selected keywords adn genres
-      const keywordIds = data.keywords;
-      const genreIds = data.genres;
+      // Garde l'ancienne image si aucune nouvelle image n'est uploadée
+      let imageUrl = data.image_url;
 
-      // Get selected director and country
-      const selectedDirector = availableDirectors.find(
-        (d) => d.value === data.director_id
-      );
-      const selectedCountry = availableCountries.find(
-        (c) => c.value === data.country_id
-      );
+      if (imageFile && imageFile instanceof File) {
+        // Si une nouvelle image a été choisie, on l'upload
+        imageUrl = await uploadImage(imageFile, data.title); // Upload l'image et récupère l'URL
+      }
 
-      // Get names of all selected genres
-      const selectedGenreNames = selectedGenres.map((g) => g.label);
+      // Préparer le FormData pour l'envoi à l'API
+      const formDataToUpdate = new FormData();
+      formDataToUpdate.append("id", movie.id);
+      formDataToUpdate.append("title", data.title);
+      formDataToUpdate.append("description", data.description ?? "");
+      formDataToUpdate.append("release_date", data.release_date ?? "");
+      formDataToUpdate.append("language", data.language ?? "");
+      formDataToUpdate.append("runtime", data.runtime?.toString() ?? "");
+      formDataToUpdate.append("image_url", imageUrl); // Utilise l'URL d'image après upload
 
-      // Get names of all selected keywords
-      const selectedKeywordNames = selectedKeywords.map((k) => k.label);
+      // Ajouter l'image si elle existe
+      if (data.image && data.image.length > 0) {
+        // data.image[0] correspond au premier fichier dans FileList
+        formDataToUpdate.append("image", data.image[0]);
+      }
 
-      // Prepare movie data for update
-      const movieData = {
-        id: movie.id,
-        title: data.title,
-        description: data.description ?? null,
-        release_date: data.release_date ?? null,
-        language: data.language ?? null,
-        runtime: data.runtime ?? null,
-        image_url: data.image_url ?? null,
-        image: data.image && data.image.length > 0 ? data.image[0] : null,
-        // Add director and country data
-        director_id: data.director_id,
-        directors: selectedDirector ? [selectedDirector.label] : [],
-        country_id: data.country_id,
-        countries: selectedCountry ? [selectedCountry.label] : [],
-        genre_ids: genreIds,
-        genres: selectedGenreNames,
-        keyword_ids: keywordIds,
-        keywords: selectedKeywordNames,
-      };
+      formDataToUpdate.append("director_id", data.director_id);
+      formDataToUpdate.append("country_id", data.country_id);
+      formDataToUpdate.append("genre_ids", JSON.stringify(data.genres));
+      formDataToUpdate.append("keyword_ids", JSON.stringify(data.keywords));
 
-      const { success, error } = await updateMovie(movieData);
+      console.log("Sending FormData:", formDataToUpdate);
+
+      // Appeler la fonction pour mettre à jour le film
+      const { success, error } = await updateMovie(formDataToUpdate);
+      console.log("Response from updateMovie:", success, error);
 
       if (success) {
-        // Navigate back to movie page
+        // Naviguer vers la page du film après la mise à jour
         router.push(`/movies/${movie.id}`);
         router.refresh();
       } else {
@@ -339,6 +338,18 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
           </div>
         </div>
 
+        {/* Image URL */}
+        <div className="col-span-2">
+          <label className="block text-sm font-medium mb-1">Image URL</label>
+          <input
+            {...register("image_url")}
+            className="w-full py-2 text-sm font-light border-b bg-transparent"
+          />
+          <p className="text-gray-400 text-xs mt-1">
+            Sera utilisée si aucune image n&apos;est téléchargée
+          </p>
+        </div>
+
         {/* Image Upload */}
         <div className="col-span-2">
           <label className="block text-sm font-medium mb-1">
@@ -351,19 +362,8 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
             className="w-full py-2 hover:cursor-pointer focus:outline-none"
           />
           <p className="text-gray-400 text-xs mt-1">
-            Laisser vide pour garder l&apos;image actuelle
-          </p>
-        </div>
-
-        {/* Image URL */}
-        <div className="col-span-2">
-          <label className="block text-sm font-medium mb-1">Image URL</label>
-          <input
-            {...register("image_url")}
-            className="w-full py-2 text-sm font-light border-b bg-transparent"
-          />
-          <p className="text-gray-400 text-xs mt-1">
-            Will be used if no image is uploaded
+            Laisser vide pour garder l&apos;image actuelle ou utiliser
+            l&apos;URL ci-dessus
           </p>
         </div>
 
