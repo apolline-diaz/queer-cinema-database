@@ -4,13 +4,11 @@ import { useState, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { addMovie } from "@/app/server-actions/movies/add-movie";
 import { SubmitButton } from "@/app/components/submit-button";
-import {
-  getGenres,
-  getCountries,
-  getKeywords,
-} from "@/utils/get-data-to-upload-movie";
 import { useRouter } from "next/navigation";
 import MultiSelect from "@/app/components/multi-select"; // Importez le composant MultiSelect
+import { getGenres } from "@/app/server-actions/genres/get-genres";
+import { getCountries } from "@/app/server-actions/countries/get-countries";
+import { getKeywords } from "@/app/server-actions/keywords/get-keywords";
 
 const CreateMoviePage: React.FC = () => {
   const {
@@ -29,6 +27,7 @@ const CreateMoviePage: React.FC = () => {
       country_id: "",
       runtime: "",
       genre_id: "",
+      type: "",
       keyword_id: "",
       image_url: null,
     },
@@ -48,11 +47,7 @@ const CreateMoviePage: React.FC = () => {
       ]);
       setGenres(genresData);
       setCountries(countriesData);
-      const formattedKeywords = keywordsData.map((k) => ({
-        value: k.id.toString(), // Convertir en string pour correspondre à l'interface Option
-        label: k.name,
-      }));
-      setKeywords(formattedKeywords);
+      setKeywords(keywordsData);
     };
     fetchData();
   }, []);
@@ -67,6 +62,7 @@ const CreateMoviePage: React.FC = () => {
       formData.append("country_id", data.country_id);
       formData.append("runtime", data.runtime);
       formData.append("genre_id", data.genre_id);
+      formData.append("type", data.type);
       if (selectedKeywords && selectedKeywords.length > 0) {
         const keywordIds = selectedKeywords.map((k) => k.value).join(",");
         formData.append("keyword_id", keywordIds);
@@ -100,7 +96,7 @@ const CreateMoviePage: React.FC = () => {
         <div className="mb-4">
           <label className="block mb-2">Titre</label>
           <input
-            className="w-full font-light border-b py-2 bg-neutral-950"
+            className="w-full font-light border-b p-2 bg-neutral-950"
             {...register("title", { required: "Le titre est obligatoire" })}
             placeholder="Tapez le titre..."
           />
@@ -112,7 +108,7 @@ const CreateMoviePage: React.FC = () => {
         <div className="mb-4">
           <label className="block mb-2">Réalisateur-ice</label>
           <input
-            className="w-full font-light  border-b py-2 bg-neutral-950"
+            className="w-full font-light  border-b p-2 bg-neutral-950"
             {...register("director_name", {
               required: "Le nom du réalisateur est obligatoire",
             })}
@@ -180,6 +176,21 @@ const CreateMoviePage: React.FC = () => {
             placeholder="00"
             min="0"
           />
+        </div>
+
+        {/* Type */}
+        <div className="mb-4">
+          <label className="block mb-2">Type</label>
+          <select
+            className="w-full rounded-md font-light  border p-2 bg-neutral-950"
+            {...register("type")}
+          >
+            <option value="">Sélectionnez un type</option>
+            <option value="Long-métrage">Long-métrage</option>
+            <option value="Court-métrage">Court-métrage</option>
+            <option value="Série">Série</option>
+            <option value="Emission TV">Emission TV</option>
+          </select>
         </div>
 
         {/* Genre */}

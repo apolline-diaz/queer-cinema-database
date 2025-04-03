@@ -1,25 +1,58 @@
 import { supabase } from "@/lib/supabase";
 
 export const getGenres = async () => {
-  const { data, error } = await supabase.from("genres").select("id, name");
-  if (error) {
+  try {
+    const genres = await prisma.genres.findMany({
+      orderBy: {
+        name: "asc", // Tri par nom en ordre alphabétique croissant
+      },
+      select: {
+        id: true,
+        name: true,
+      },
+    });
+    return genres;
+  } catch (error) {
     console.error("Erreur lors de la récupération des genres :", error);
+    return [];
   }
-  return data || [];
 };
 
+import { prisma } from "@/lib/prisma"; // Assurez-vous d'importer votre instance Prisma
+
 export const getCountries = async () => {
-  const { data, error } = await supabase.from("countries").select("id, name");
-  if (error) {
+  try {
+    // Récupérer les pays triés par nom en ordre croissant (A-Z)
+    const countries = await prisma.countries.findMany({
+      orderBy: {
+        name: "asc", // Tri par nom en ordre alphabétique croissant
+      },
+      select: {
+        id: true,
+        name: true,
+      },
+    });
+    return countries;
+  } catch (error) {
     console.error("Erreur lors de la récupération des pays :", error);
+    return [];
   }
-  return data || [];
 };
 
 export const getKeywords = async () => {
-  const { data, error } = await supabase.from("keywords").select("id, name");
-  if (error) {
+  try {
+    const keywords = await prisma.keywords.findMany({
+      orderBy: {
+        name: "asc", // Tri par nom en ordre alphabétique croissant
+      },
+      select: {
+        id: true,
+        name: true,
+      },
+    });
+    return keywords;
+  } catch (error) {
     console.error("Erreur lors de la récupération des mots-clés :", error);
+    return [];
   }
-  return data || [];
 };
