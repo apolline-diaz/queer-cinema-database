@@ -24,6 +24,7 @@ export default async function Page({
     keywordIds: [],
     directorId: "",
     releaseYear: "",
+    type: "",
   });
   const countries = await getCountries();
   const genres = await getGenres();
