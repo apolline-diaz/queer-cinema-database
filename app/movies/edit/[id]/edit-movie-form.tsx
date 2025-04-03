@@ -510,6 +510,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
         <SubmitButton
           defaultText="Enregistrer les modifications"
           loadingText="Chargement..."
+          isSubmitting={isSubmitting}
         />
       </div>
     </form>
