@@ -63,9 +63,10 @@ export default async function Page({ params }: Props) {
         <div className="p-10 gap-3 flex flex-col">
           <div className="flex flex-col font-light">
             <span className="font-semibold text-rose-500">
-              {movie.countries?.map((country) => country.name).join(", ")},{" "}
-              {movie.release_date},{" "}
+              {movie.countries?.map((country) => country.name).join(", ")} •{" "}
+              {movie.release_date} •{" "}
               {<span>{movie.runtime ? movie.runtime.toString() : ""}</span>}min
+              • {movie.type}
             </span>
           </div>
           <div className="font-bold">

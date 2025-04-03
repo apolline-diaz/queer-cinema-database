@@ -16,6 +16,8 @@ export async function getMovie(id: string) {
       },
     });
 
+    console.log(movie); // Vérifie ici si "type" est présent
+
     if (!movie) {
       return { movie: null, error: "Movie not found" };
     }
@@ -28,6 +30,7 @@ export async function getMovie(id: string) {
       release_date: movie.release_date,
       language: movie.language,
       runtime: movie.runtime ? Number(movie.runtime) : null,
+      type: movie.type,
       image_url: movie.image_url,
       boost: movie.boost || false,
       genres: movie.movies_genres.map((g) => ({
