@@ -5,7 +5,6 @@ import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { createClient } from "@/utils/supabase/server";
 import { prisma } from "@/lib/prisma";
 import { isAdmin } from "@/utils/is-user-admin";
 
@@ -18,7 +17,7 @@ const ACCEPTED_IMAGE_TYPES = [
   "image/webp",
 ];
 
-export async function addMovie(prevState: any, formData: FormData) {
+export async function addMovie(formData: FormData) {
   const userIsAdmin = await isAdmin();
 
   if (!userIsAdmin) {
@@ -44,7 +43,8 @@ export async function addMovie(prevState: any, formData: FormData) {
     runtime: z.number().min(4, "L'année de sortie est obligatoire"),
     country_id: z.string().min(1, "Le pays est obligatoire"),
     genre_id: z.string().min(1, "Le genre est obligatoire"),
-    keyword_id: z.string().min(1, "Un mot-clé est obligatoire"),
+    type: z.string().min(1, "Le type est obligatoire"),
+    keyword_id: z.string().min(1, "Un mot-clé est obligatoire").optional(),
     image_url: z
       .any()
       .refine(
@@ -65,6 +65,7 @@ export async function addMovie(prevState: any, formData: FormData) {
     runtime: Number(formData.get("runtime")),
     country_id: formData.get("country_id"),
     genre_id: formData.get("genre_id"),
+    type: formData.get("type"),
     keyword_id: formData.get("keyword_id"),
     image_url: formData.get("image_url"),
   });
@@ -84,6 +85,7 @@ export async function addMovie(prevState: any, formData: FormData) {
     description,
     country_id,
     genre_id,
+    type,
     runtime,
     keyword_id,
     release_date,
@@ -126,6 +128,7 @@ export async function addMovie(prevState: any, formData: FormData) {
           title,
           release_date,
           runtime,
+          type,
           description,
           image_url: imageData?.path,
         },
@@ -158,13 +161,20 @@ export async function addMovie(prevState: any, formData: FormData) {
       });
 
       // Insert keywords
-      const keywordIds = keyword_id.split(",").map(Number);
-      await prisma.movies_keywords.createMany({
-        data: keywordIds.map((keywordId) => ({
-          movie_id: movie.id,
-          keyword_id: keywordId,
-        })),
-      });
+      const keywordIds = keyword_id
+        ? keyword_id
+            .split(",")
+            .filter((id) => id.trim() !== "")
+            .map(Number)
+        : [];
+      if (keywordIds.length > 0) {
+        await prisma.movies_keywords.createMany({
+          data: keywordIds.map((keywordId) => ({
+            movie_id: movie.id,
+            keyword_id: keywordId,
+          })),
+        });
+      }
 
       return movie;
     });
