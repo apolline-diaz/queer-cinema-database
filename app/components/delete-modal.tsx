@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useForm } from "react-hook-form";
+import { SubmitButton } from "./submit-button";
 
 interface DeleteModalProps {
   isOpen: boolean;
@@ -16,7 +18,10 @@ export const DeleteModal: React.FC<DeleteModalProps> = ({
   title,
 }) => {
   const modalRef = useRef<HTMLDivElement>(null);
-
+  const {
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm();
   // Ferme le modal lors d'un clic en dehors
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -39,6 +44,10 @@ export const DeleteModal: React.FC<DeleteModalProps> = ({
 
   if (!isOpen) return null;
 
+  const onSubmit = () => {
+    onConfirm();
+    onClose();
+  };
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 text-center flex items-center justify-center z-50">
       <div
@@ -49,20 +58,22 @@ export const DeleteModal: React.FC<DeleteModalProps> = ({
           Voulez-vous vraiment supprimer cet élément? <br />
           Cette action est irréversible.
         </p>
-        <div className="flex justify-center space-x-3">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex justify-center space-x-3"
+        >
           <button
             onClick={onClose}
             className="px-4 py-2 bg-none border rounded-md hover:border-rose-500 hover:text-rose-500 transition-colors"
           >
             Annuler
           </button>
-          <button
-            onClick={onConfirm}
-            className="px-4 py-2 bg-gradient-to-r from-rose-500 to-red-500 rounded-md hover:from-rose-600 hover:to-red-600 transition-colors disabled:opacity-50"
-          >
-            Confirmer la suppression
-          </button>
-        </div>
+          <SubmitButton
+            isSubmitting={isSubmitting}
+            defaultText="Confirmer la suppression"
+            loadingText="Suppression en cours..."
+          />
+        </form>
       </div>
     </div>
   );
