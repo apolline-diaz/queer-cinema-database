@@ -17,7 +17,7 @@ export async function getMoviesByYearRange(startYear: string, endYear: string) {
         title: true,
         image_url: true,
         release_date: true,
-        movie_genres: {
+        movies_genres: {
           include: {
             genres: {
               select: {

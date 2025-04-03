@@ -16,7 +16,7 @@ model countries {
   name            String            @unique @db.VarChar
   id              Int               @id @default(autoincrement())
   code            String?
-  movie_countries movie_countries[]
+  movies_countries movies_countries[]
 }
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
@@ -25,7 +25,7 @@ model directors {
   created_at      DateTime          @default(now()) @db.Timestamptz(6)
   name            String?           @db.VarChar
   id              BigInt            @id @unique @default(autoincrement())
-  movie_directors movie_directors[]
+  movies_directors movies_directors[]
 }
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
@@ -34,7 +34,7 @@ model genres {
   created_at   DateTime       @default(now()) @db.Timestamptz(6)
   name         String?        @unique @db.VarChar
   id           BigInt         @id @default(autoincrement())
-  movie_genres movie_genres[]
+  movies_genres movies_genres[]
 }
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
@@ -43,7 +43,7 @@ model keywords {
   id             Int              @id @default(autoincrement())
   created_at     DateTime         @default(now()) @db.Timestamptz(6)
   name           String?          @db.VarChar
-  movie_keywords movie_keywords[]
+  movies_keywords movies_keywords[]
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -71,7 +71,7 @@ model lists_movies {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
-model movie_countries {
+model movies_countries {
   movie_id   String    @db.Uuid
   country_id Int
   countries  countries @relation(fields: [country_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -81,7 +81,7 @@ model movie_countries {
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-model movie_directors {
+model movies_directors {
   movie_id    String    @db.Uuid
   director_id BigInt
   directors   directors @relation(fields: [director_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
@@ -91,7 +91,7 @@ model movie_directors {
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-model movie_genres {
+model movies_genres {
   movie_id String @db.Uuid
   genre_id BigInt
   genres   genres @relation(fields: [genre_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
@@ -101,7 +101,7 @@ model movie_genres {
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-model movie_keywords {
+model movies_keywords {
   movie_id   String   @db.Uuid
   keyword_id Int
   keywords   keywords @relation(fields: [keyword_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
@@ -123,10 +123,10 @@ model movies {
   id              String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   boost           Boolean?          @default(false)
   lists_movies    lists_movies[]
-  movie_countries movie_countries[]
-  movie_directors movie_directors[]
-  movie_genres    movie_genres[]
-  movie_keywords  movie_keywords[]
+  movies_countries movies_countries[]
+  movies_directors movies_directors[]
+  movies_genres    movies_genres[]
+  movies_keywords  movies_keywords[]
 }
 
 model users {

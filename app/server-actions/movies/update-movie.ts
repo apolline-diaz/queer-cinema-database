@@ -64,26 +64,26 @@ export async function updateMovie(formData: FormData) {
     });
 
     // Update relationships (directors, countries, genres, keywords)
-    await prisma.movie_directors.deleteMany({ where: { movie_id: id } });
-    await prisma.movie_directors.create({
+    await prisma.movies_directors.deleteMany({ where: { movie_id: id } });
+    await prisma.movies_directors.create({
       data: { movie_id: id, director_id: BigInt(director_id) },
     });
 
-    await prisma.movie_countries.deleteMany({ where: { movie_id: id } });
-    await prisma.movie_countries.create({
+    await prisma.movies_countries.deleteMany({ where: { movie_id: id } });
+    await prisma.movies_countries.create({
       data: { movie_id: id, country_id: parseInt(country_id) },
     });
 
-    await prisma.movie_genres.deleteMany({ where: { movie_id: id } });
+    await prisma.movies_genres.deleteMany({ where: { movie_id: id } });
     for (const genreId of genre_ids) {
-      await prisma.movie_genres.create({
+      await prisma.movies_genres.create({
         data: { movie_id: id, genre_id: BigInt(genreId) },
       });
     }
 
-    await prisma.movie_keywords.deleteMany({ where: { movie_id: id } });
+    await prisma.movies_keywords.deleteMany({ where: { movie_id: id } });
     for (const keywordId of keyword_ids) {
-      await prisma.movie_keywords.create({
+      await prisma.movies_keywords.create({
         data: { movie_id: id, keyword_id: Number(keywordId) },
       });
     }
