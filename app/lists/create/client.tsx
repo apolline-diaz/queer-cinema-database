@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useFormState } from "react-dom";
 import { createList } from "@/app/server-actions/lists/create-list";
 import { SubmitButton } from "@/app/components/submit-button";
 import { getMovies } from "@/app/server-actions/movies/get-movies";

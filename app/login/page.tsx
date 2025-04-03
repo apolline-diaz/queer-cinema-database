@@ -18,7 +18,6 @@ export default function LoginPage() {
   } = useForm<LoginFormInputs>();
 
   const onSubmit = async (data: LoginFormInputs) => {
-    // Transformer l'objet `data` en FormData
     const formData = new FormData();
     formData.append("email", data.email);
     formData.append("password", data.password);
