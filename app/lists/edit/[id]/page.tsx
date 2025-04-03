@@ -151,6 +151,7 @@ export default function EditListPage({ params }: { params: { id: string } }) {
           <SubmitButton
             defaultText="Enregistrer les modifications"
             loadingText="Chargement..."
+            isSubmitting={isSubmitting}
           />
         </form>
       )}

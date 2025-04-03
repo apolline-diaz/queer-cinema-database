@@ -22,7 +22,7 @@ const ListSchema = z.object({
   movie_id: z.string().optional(),
 });
 
-export async function createList(prevState: FormState, formData: FormData) {
+export async function createList(formData: FormData) {
   // Assurez-vous que l'utilisateur existe avant de créer la liste
   const userSync = await ensureUserExists();
 
