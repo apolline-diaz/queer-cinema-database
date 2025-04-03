@@ -21,6 +21,7 @@ export async function updateMovie(formData: FormData) {
     const description = formData.get("description") as string;
     const release_date = formData.get("release_date") as string;
     const language = formData.get("language") as string;
+    const type = formData.get("type") as string;
     const runtime = formData.get("runtime")
       ? Number(formData.get("runtime"))
       : null;
@@ -57,6 +58,7 @@ export async function updateMovie(formData: FormData) {
         description,
         release_date,
         language,
+        type,
         runtime,
         image_url: imageUrl,
         updated_at: new Date(),

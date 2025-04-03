@@ -11,12 +11,14 @@ export async function searchMovies({
   keywordIds,
   directorId,
   releaseYear,
+  type,
 }: {
   countryId: string;
   genreId: string;
   keywordIds: string[]; // Array of keyword IDs
   directorId: string;
   releaseYear: string;
+  type: string;
 }) {
   return cachedQuery(
     [
@@ -26,6 +28,7 @@ export async function searchMovies({
       genreId,
       JSON.stringify(keywordIds),
       releaseYear,
+      type,
     ],
     async () => {
       try {
@@ -55,6 +58,9 @@ export async function searchMovies({
             }),
             ...(releaseYear && {
               release_date: { startsWith: releaseYear },
+            }),
+            ...(type && {
+              type: type,
             }),
           },
           select: {

@@ -16,6 +16,7 @@ interface FormValues {
   keywordIds: { value: string; label: string }[]; // Changed to array of keywords
   directorId: string;
   releaseYear: string;
+  type: string;
 }
 
 interface CollapsibleSectionProps {
@@ -72,6 +73,7 @@ export default function SearchForm({
       keywordIds: [], // Initialize as empty array
       directorId: "",
       releaseYear: "",
+      type: "",
     },
   });
 
@@ -93,6 +95,7 @@ export default function SearchForm({
         keywordIds: data.keywordIds.map((keyword) => keyword.value), // Convert to array of keyword IDs
         directorId: data.directorId,
         releaseYear: data.releaseYear,
+        type: data.type,
       });
 
       setMovies(results); // Update the movie list with search results
@@ -116,6 +119,7 @@ export default function SearchForm({
         keywordIds: [], // Pass empty array for keywords
         directorId: "",
         releaseYear: "",
+        type: "",
       }); // Trigger search with no filters
       setMovies(results);
       setIsLoading(false);
@@ -137,83 +141,102 @@ export default function SearchForm({
         onSubmit={handleSubmit(onSubmit)}
         className="mt-4 p-4 border rounded-xl mb-4"
       >
-        <div className="flex flex-col w-full mb-5">
-          <div className="grid  grid-cols-1 sm:grid-cols-2 w-full gap-4 justify-between">
-            <CollapsibleSection title="Pays">
-              <Controller
-                name="countryId"
-                control={control}
-                render={({ field }) => (
-                  <Select
-                    label="Pays"
-                    options={countries}
-                    {...field}
-                    placeholder="Tous les pays"
-                  />
-                )}
-              />
-            </CollapsibleSection>
-            <CollapsibleSection title="Genre">
-              <Controller
-                name="genreId"
-                control={control}
-                render={({ field }) => (
-                  <Select
-                    label="Genre"
-                    options={genres}
-                    {...field}
-                    placeholder="Tous les genres"
-                  />
-                )}
-              />
-            </CollapsibleSection>
-            <CollapsibleSection title="Année">
-              <Controller
-                name="releaseYear"
-                control={control}
-                render={({ field }) => (
-                  <Select
-                    label="Année de sortie"
-                    options={releaseYears}
-                    {...field}
-                    placeholder="Toutes les années"
-                  />
-                )}
-              />
-            </CollapsibleSection>
-            <CollapsibleSection title="Réalisateur-ice">
-              <Controller
-                name="directorId"
-                control={control}
-                render={({ field }) => (
-                  <Select
-                    label="Réalisateur-ice"
-                    options={directors}
-                    {...field}
-                    placeholder="Toutes les réalisateur-ices"
-                  />
-                )}
-              />
-            </CollapsibleSection>
-          </div>
-          <div className="py-2 mt-2 z-10">
-            <CollapsibleSection title="Mots-clé">
-              <Controller
-                name="keywordIds"
-                control={control}
-                render={({ field }) => (
-                  <MultiSelect
-                    name="keywordIds"
-                    control={control}
-                    options={keywords}
-                    label="Mots-clés"
-                    placeholder="Rechercher des mots-clé"
-                    onChange={field.onChange}
-                  />
-                )}
-              />
-            </CollapsibleSection>
-          </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 w-full gap-4 justify-between mb-5">
+          <CollapsibleSection title="Année">
+            <Controller
+              name="releaseYear"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  label="Année de sortie"
+                  options={releaseYears}
+                  {...field}
+                  placeholder="Toutes les années"
+                />
+              )}
+            />
+          </CollapsibleSection>
+          <CollapsibleSection title="Pays">
+            <Controller
+              name="countryId"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  label="Pays"
+                  options={countries}
+                  {...field}
+                  placeholder="Tous les pays"
+                />
+              )}
+            />
+          </CollapsibleSection>
+
+          <CollapsibleSection title="Genre">
+            <Controller
+              name="genreId"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  label="Genre"
+                  options={genres}
+                  {...field}
+                  placeholder="Tous les genres"
+                />
+              )}
+            />
+          </CollapsibleSection>
+          <CollapsibleSection title="Type">
+            <Controller
+              name="type"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  label="Type"
+                  options={[
+                    { value: "", label: "Tous les types" },
+                    { value: "Long-métrage", label: "Long-métrage" },
+                    { value: "Court-métrage", label: "Court-métrage" },
+                    { value: "Emission TV", label: "Emission TV" },
+                    { value: "Série", label: "Série" },
+                  ]}
+                  {...field}
+                  placeholder="Tous les types"
+                />
+              )}
+            />
+          </CollapsibleSection>
+
+          <CollapsibleSection title="Réalisateur-ice">
+            <Controller
+              name="directorId"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  label="Réalisateur-ice"
+                  options={directors}
+                  {...field}
+                  placeholder="Toutes les réalisateur-ices"
+                />
+              )}
+            />
+          </CollapsibleSection>
+
+          <CollapsibleSection title="Mots-clé">
+            <Controller
+              name="keywordIds"
+              control={control}
+              render={({ field }) => (
+                <MultiSelect
+                  name="keywordIds"
+                  control={control}
+                  options={keywords}
+                  label="Mots-clés"
+                  placeholder="Rechercher des mots-clé"
+                  onChange={field.onChange}
+                />
+              )}
+            />
+          </CollapsibleSection>
         </div>
 
         <div className="flex flex-col sm:flex-row sm:w-full gap-4">

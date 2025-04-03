@@ -43,6 +43,7 @@ type FormData = {
   runtime: number | null;
   image_url: string;
   image: FileList | null;
+  type: string | null;
   director_id: string;
   director: string;
   country_id: string;
@@ -94,6 +95,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
       description: movie.description || "",
       release_date: movie.release_date || "",
       language: movie.language || "",
+      type: movie.type || "",
       runtime: movie.runtime || null,
       image_url: movie.image_url || "",
       image: null,
@@ -231,6 +233,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
       formDataToUpdate.append("description", data.description ?? "");
       formDataToUpdate.append("release_date", data.release_date ?? "");
       formDataToUpdate.append("language", data.language ?? "");
+      formDataToUpdate.append("type", data.type ?? "");
       formDataToUpdate.append("runtime", data.runtime?.toString() ?? "");
       formDataToUpdate.append("image_url", imageUrl); // Utilise l'URL d'image après upload
 
@@ -442,6 +445,15 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
           <label className="block text-sm font-medium mb-1">Langue</label>
           <input
             {...register("language")}
+            className="w-full text-sm font-light py-2 border-b bg-transparent"
+          />
+        </div>
+
+        {/* Type */}
+        <div>
+          <label className="block text-sm font-medium mb-1">Type</label>
+          <input
+            {...register("type")}
             className="w-full text-sm font-light py-2 border-b bg-transparent"
           />
         </div>

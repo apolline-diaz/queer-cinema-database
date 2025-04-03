@@ -122,6 +122,7 @@ model movies {
   image_url       String?
   id              String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   boost           Boolean?          @default(false)
+  type            String?
   lists_movies    lists_movies[]
   movies_countries movies_countries[]
   movies_directors movies_directors[]
