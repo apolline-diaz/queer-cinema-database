@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { getLists } from "@/app/server-actions/lists/get-lists";
 import { addMovieToList } from "@/app/server-actions/lists/add-movie-to-list";
 import { removeMovieFromList } from "@/app/server-actions/lists/remove-movie-from-list";
@@ -23,42 +23,86 @@ type ListWithStatus = {
 export default function ClientMovieActions({ movieId, userIsAdmin }: Props) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [lists, setLists] = useState<ListWithStatus[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isDataFetched, setIsDataFetched] = useState(false);
   const router = useRouter();
 
-  const toggleMenu = async () => {
-    if (!isMenuOpen) {
-      await fetchListsWithStatus();
+  // Mémoriser la fonction avec useCallback
+  const fetchListsWithStatus = useCallback(async () => {
+    // Cette correction utilise useCallback pour mémoriser la fonction fetchListsWithStatus, ce qui garantit qu'elle ne sera recréée que lorsque movieId change.
+    setIsLoading(true);
+    try {
+      // Exécuter ces requêtes en parallèle pour gagner du temps
+      const [fetchedLists, movieInLists] = await Promise.all([
+        getLists(),
+        checkMovieInLists(movieId),
+      ]);
+
+      const listsWithStatus = fetchedLists.map((list) => ({
+        ...list,
+        hasMovie: movieInLists.includes(list.id),
+      }));
+
+      setLists(listsWithStatus);
+      setIsDataFetched(true);
+    } catch (error) {
+      console.error("Erreur lors du chargement des listes:", error);
+    } finally {
+      setIsLoading(false);
     }
+  }, [movieId]); // movieId est la seule dépendance externe
+
+  // Pré-charger les données dès le montage du composant
+  useEffect(() => {
+    const preloadData = async () => {
+      if (!isDataFetched && !isLoading) {
+        await fetchListsWithStatus();
+      }
+    };
+
+    preloadData();
+  }, [isDataFetched, isLoading, fetchListsWithStatus]); // Maintenant fetchListsWithStatus est inclus
+
+  const toggleMenu = () => {
+    // Simplement basculer l'état du menu sans attendre
     setIsMenuOpen(!isMenuOpen);
-  };
 
-  const fetchListsWithStatus = async () => {
-    const fetchedLists = await getLists();
-    const movieInLists = await checkMovieInLists(movieId);
-
-    const listsWithStatus = fetchedLists.map((list) => ({
-      ...list,
-      hasMovie: movieInLists.includes(list.id),
-    }));
-
-    setLists(listsWithStatus);
-  };
-
-  const toggleMovieInList = async (listId: string, hasMovie: boolean) => {
-    if (hasMovie) {
-      await removeMovieFromList(listId, movieId);
-    } else {
-      await addMovieToList(listId, movieId);
+    // Si les données n'ont pas encore été chargées, les charger en arrière-plan
+    if (!isDataFetched && !isLoading) {
+      fetchListsWithStatus();
     }
+  };
 
-    // Mettre à jour l'état local pour refléter le changement
+  const toggleMovieInList = async (
+    listId: string,
+    hasMovie: boolean,
+    event: React.MouseEvent
+  ) => {
+    event.stopPropagation();
+
+    // Mettre à jour l'UI immédiatement (optimistic update)
     setLists(
       lists.map((list) =>
         list.id === listId ? { ...list, hasMovie: !hasMovie } : list
       )
     );
 
-    router.refresh();
+    // Exécuter l'action en arrière-plan
+    try {
+      if (hasMovie) {
+        await removeMovieFromList(listId, movieId);
+      } else {
+        await addMovieToList(listId, movieId);
+      }
+    } catch (error) {
+      // En cas d'erreur, revenir à l'état précédent
+      console.error("Erreur lors de la mise à jour de la liste:", error);
+      setLists(
+        lists.map((list) =>
+          list.id === listId ? { ...list, hasMovie: hasMovie } : list
+        )
+      );
+    }
   };
 
   return (
@@ -69,24 +113,38 @@ export default function ClientMovieActions({ movieId, userIsAdmin }: Props) {
           aria-label="Gérer les listes"
           className="z-10 p-2 bg-gray-800 rounded-full transition-all duration-300 ease-in-out hover:bg-gray-700"
         >
-          <Icon icon="lucide:list" />
+          <Icon
+            icon={isLoading && !isDataFetched ? "lucide:loader" : "lucide:list"}
+            className={isLoading && !isDataFetched ? "animate-spin" : ""}
+          />
         </button>
 
         {isMenuOpen && (
           <div className="absolute top-full mt-2 w-48 rounded-lg text-white bg-black shadow-lg">
             {lists.length === 0 ? (
               <p className="text-sm text-gray-500 px-3 py-2">
-                Aucune liste trouvée
+                {isLoading
+                  ? "Chargement des listes..."
+                  : "Aucune liste trouvée"}
               </p>
             ) : (
               lists.map((list) => (
                 <div
                   key={list.id}
-                  onClick={() => toggleMovieInList(list.id, list.hasMovie)}
                   className="px-3 py-2 gap-2 text-sm font-light flex justify-between items-center hover:rounded-xl hover:text-rose-500 cursor-pointer"
                 >
                   <span>{list.title}</span>
-                  <span className="text-rose-500">
+                  <button
+                    onClick={(e) =>
+                      toggleMovieInList(list.id, list.hasMovie, e)
+                    }
+                    className="text-rose-500 hover:text-rose-700 focus:outline-none"
+                    aria-label={
+                      list.hasMovie
+                        ? "Retirer de la liste"
+                        : "Ajouter à la liste"
+                    }
+                  >
                     {list.hasMovie ? (
                       <Icon
                         icon="tdesign:circle-filled"
@@ -95,7 +153,7 @@ export default function ClientMovieActions({ movieId, userIsAdmin }: Props) {
                     ) : (
                       <Icon icon="lucide:circle" style={{ fontSize: 15 }} />
                     )}
-                  </span>
+                  </button>
                 </div>
               ))
             )}

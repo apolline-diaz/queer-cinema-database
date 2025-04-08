@@ -86,7 +86,7 @@ const CreateMoviePage: React.FC = () => {
   };
 
   return (
-    <div className="px-10 py-5 text-sm w-full sm:w-3/4">
+    <div className="px-10 py-5 text-sm w-full sm:w-1/2">
       <h1 className="tracking-wide text-rose-500 text-2xl mb-5">
         Ajouter un film au catalogue
       </h1>
