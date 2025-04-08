@@ -27,10 +27,12 @@ export default async function Page({ params }: Props) {
 
   return (
     <div className="w-full text-white mx-auto min-h-screen">
-      <ClientMovieActions
-        movieId={movie.id.toString()}
-        userIsAdmin={userIsAdmin}
-      />
+      {session && (
+        <ClientMovieActions
+          movieId={movie.id.toString()}
+          userIsAdmin={userIsAdmin}
+        />
+      )}
       <div className="h-96 relative">
         <Image
           className="object-cover w-full h-full"
