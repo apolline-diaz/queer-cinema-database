@@ -131,13 +131,11 @@ export default function ClientMovieActions({ movieId, userIsAdmin }: Props) {
               lists.map((list) => (
                 <div
                   key={list.id}
+                  onClick={(e) => toggleMovieInList(list.id, list.hasMovie, e)}
                   className="px-3 py-2 gap-2 text-sm font-light flex justify-between items-center hover:rounded-xl hover:text-rose-500 cursor-pointer"
                 >
                   <span>{list.title}</span>
                   <button
-                    onClick={(e) =>
-                      toggleMovieInList(list.id, list.hasMovie, e)
-                    }
                     className="text-rose-500 hover:text-rose-700 focus:outline-none"
                     aria-label={
                       list.hasMovie
