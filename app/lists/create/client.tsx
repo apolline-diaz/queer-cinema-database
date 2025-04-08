@@ -83,7 +83,16 @@ const CreateListPage: React.FC = () => {
     .slice(0, 5);
 
   const onSubmit = async (data: FormData) => {
-    const response = await createList(new FormData());
+    const formData = new FormData();
+    formData.append("title", data.title);
+    if (data.description) {
+      formData.append("description", data.description);
+    }
+    if (data.movie_ids.length > 0) {
+      formData.append("movie_id", data.movie_ids.join(","));
+    }
+
+    const response = await createList(formData);
     if (response?.type === "success" && response.id) {
       router.push(`/lists/${response.id}`);
     }
