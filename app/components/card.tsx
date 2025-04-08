@@ -1,12 +1,10 @@
-import { Icon } from "@iconify/react/dist/iconify.js";
+import { Icon } from "@iconify/react";
 import { DeleteModal } from "./delete-modal";
 import { getImageUrl } from "@/utils";
 import Link from "next/link";
 import { deleteMovie } from "../server-actions/movies/delete-movie";
-import { addMovieToList } from "../server-actions/lists/add-movie-to-list";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { getLists } from "../server-actions/lists/get-lists";
 import { Image } from "@/app/components/image";
 
 interface CardProps {
@@ -26,23 +24,7 @@ export default function Card({
 }: CardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [lists, setLists] = useState<{ id: string; title: string }[]>([]);
   const router = useRouter();
-
-  const handleOpenMenu = async () => {
-    if (!isMenuOpen) {
-      const userLists = await getLists();
-      setLists(userLists);
-    }
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  const handleAddToList = async (listId: string) => {
-    await addMovieToList(listId, id);
-    setIsMenuOpen(false);
-    router.refresh();
-  };
 
   const handleConfirmDelete = async () => {
     setIsDeleting(true);
@@ -81,41 +63,11 @@ export default function Card({
               {/* <p className="absolute text-sm text-gray-200 mt-2">{description}</p> */}
             </div>
           </Link>
-        </div>
-        <div className="absolute flex items-center rounded-xl p-2 top-0 justify-between w-full">
-          <button
-            onClick={handleOpenMenu}
-            aria-label="Ajouter le film à une liste"
-            className="relative z-5 p-2 m-2 right-0 bg-gray-800 rounded-full transition-all duration-300 ease-in-out hover:bg-gray-700"
-          >
-            <Icon icon="lucide:plus" style={{ fontSize: 15 }} />
-          </button>
-          {isMenuOpen && (
-            <div className="z-10 top-14 rounded-xl absolute w-3/4 text-white bg-black shadow-lg">
-              {lists.length === 0 ? (
-                <p className="text-sm text-gray-500">Aucune liste trouvée</p>
-              ) : (
-                lists.map((list) => (
-                  <div
-                    key={list.id}
-                    className="px-3 py-2 gap-2 text-sm font-light flex justify-between items-center hover:rounded-xl hover:bg-gray-900 cursor-pointer"
-                  >
-                    <span>{list.title}</span>
-                    <button
-                      onClick={() => handleAddToList(list.id)}
-                      className="text-blue-500 hover:text-blue-700"
-                    >
-                      <Icon icon="lucide:plus" style={{ fontSize: 15 }} />
-                    </button>
-                  </div>
-                ))
-              )}
-            </div>
-          )}
+
           {userIsAdmin && (
             <button
               onClick={() => setIsModalOpen(true)}
-              className="right-2 z-5 bg-black bg-opacity-60 p-2 rounded-full text-rose-500 transition-all duration-300 ease-in-out opacity-100 visible hover:bg-rose-500 hover:text-white"
+              className="absolute top-2 right-2 z-10 bg-black bg-opacity-60 p-2 rounded-full text-rose-500 transition-all duration-300 ease-in-out opacity-100 visible hover:bg-rose-500 hover:text-white"
               title="Supprimer ce film"
             >
               <Icon icon="lucide:trash" style={{ fontSize: 15 }} />
