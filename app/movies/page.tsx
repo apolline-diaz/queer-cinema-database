@@ -23,7 +23,8 @@ export default async function Page({
     genreId: "",
     keywordIds: [],
     directorId: "",
-    releaseYear: "",
+    startYear: "",
+    endYear: "",
     type: "",
   });
   const countries = await getCountries();
