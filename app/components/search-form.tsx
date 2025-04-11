@@ -50,6 +50,24 @@ function CollapsibleSection({ title, children }: CollapsibleSectionProps) {
     </div>
   );
 }
+interface SearchFormProps {
+  initialMovies: Movie[];
+  countries: { value: string; label: string }[];
+  genres: { value: string; label: string }[];
+  keywords: { value: string; label: string }[];
+  directors: { value: string; label: string }[];
+  releaseYears: { value: string; label: string }[];
+  userIsAdmin: boolean;
+  urlParams?: {
+    countryId: string;
+    genreId: string;
+    keywordIds: string[];
+    directorId: string;
+    startYear: string;
+    endYear: string;
+    type: string;
+  };
+}
 
 export default function SearchForm({
   initialMovies,
@@ -59,15 +77,16 @@ export default function SearchForm({
   directors,
   releaseYears,
   userIsAdmin,
-}: {
-  initialMovies: Movie[];
-  countries: { value: string; label: string }[];
-  genres: { value: string; label: string }[];
-  keywords: { value: string; label: string }[];
-  directors: { value: string; label: string }[];
-  releaseYears: { value: string; label: string }[];
-  userIsAdmin: boolean;
-}) {
+  urlParams = {
+    countryId: "",
+    genreId: "",
+    keywordIds: [],
+    directorId: "",
+    startYear: "",
+    endYear: "",
+    type: "",
+  },
+}: SearchFormProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -93,13 +112,13 @@ export default function SearchForm({
   const { control, setValue, handleSubmit, reset, watch } = useForm<FormValues>(
     {
       defaultValues: {
-        countryId: "",
-        genreId: "",
-        keywordIds: [], // Initialize as empty array
-        directorId: "",
-        startYear: "",
-        endYear: "",
-        type: "",
+        countryId: urlCountryId,
+        genreId: urlGenreId,
+        keywordIds: urlKeywordIds as any, // Cast pour satisfaire TypeScript
+        directorId: urlDirectorId,
+        startYear: urlStartYear,
+        endYear: urlEndYear,
+        type: urlType,
       },
     }
   );

@@ -56,7 +56,7 @@ export default function ClientSearchComponent({
     urlParams.type;
 
   const [searchMode, setSearchMode] = useState<"field" | "form">(
-    initialKeyword ? "field" : "form"
+    initialKeyword ? "field" : hasAdvancedParams ? "form" : "field"
   );
 
   // const toggleSearchMode = () => {
