@@ -15,17 +15,29 @@ export default async function Page({
   searchParams?: { [key: string]: string | string[] | undefined };
 }) {
   // Get keyword from URL parameters if it exists
-  const keywordParam = (searchParams?.keyword as string) || "";
   const userIsAdmin = await isAdmin();
+
+  // Extraire tous les paramètres d'URL
+  const countryId = (searchParams?.countryId as string) || "";
+  const genreId = (searchParams?.genreId as string) || "";
+  const keywordIds = searchParams?.keywordIds
+    ? (searchParams.keywordIds as string).split(",")
+    : [];
+  const directorId = (searchParams?.directorId as string) || "";
+  const startYear = (searchParams?.startYear as string) || "";
+  const endYear = (searchParams?.endYear as string) || "";
+  const type = (searchParams?.type as string) || "";
+  const keywordParam = (searchParams?.keyword as string) || "";
+
   // get filter data and all movies (initial movies)
   const initialMovies = await searchMovies({
-    countryId: "",
-    genreId: "",
-    keywordIds: [],
-    directorId: "",
-    startYear: "",
-    endYear: "",
-    type: "",
+    countryId,
+    genreId,
+    keywordIds,
+    directorId,
+    startYear,
+    endYear,
+    type,
   });
   const countries = await getCountries();
   const genres = await getGenres();
@@ -49,6 +61,16 @@ export default async function Page({
               releaseYears={releaseYears}
               initialKeyword={keywordParam}
               userIsAdmin={userIsAdmin}
+              // Passez les paramètres d'URL au composant client
+              urlParams={{
+                countryId,
+                genreId,
+                keywordIds,
+                directorId,
+                startYear,
+                endYear,
+                type,
+              }}
             />
           </div>
         </div>
