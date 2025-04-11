@@ -20,13 +20,11 @@ export default function About() {
           <br /> Je crois que les images ont beaucoup à nous dire de
           l&apos;histoire qui nous précède et du présent dans lequel nous
           vivons. Alors montrer la richesse et la diversité des films qui
-          existent et des sujets qui les entourent semblait essentiel.
-          <br /> Afin de préserver la multitude de références collectés et
-          partagés au fil du temps grâce aux communautés (LGBTQI+ et
-          d&apos;autres), j&apos;ai réfléchi à une manière plus pérenne de
-          préserver la connaissance de ces films. Développer un site avec une
-          base de données propre dédiée à ces films m&apos;est apparu comme la
-          solution la plus viable.
+          existent et des sujets abordés semblait essentiel.
+          <br /> Afin de préserver les multiples références collectées et
+          partagées au fil du temps grâce aux communautés (LGBTQI+ et
+          d&apos;autres), j&apos;ai pensé que développer un site avec une base
+          de données propre serait la solution la plus viable et accessible.
         </p>
         <h3 className="font-bold mb-3">Le choix des films</h3>
         <p className="text-sm mb-3">
@@ -38,7 +36,7 @@ export default function About() {
           histoire des communautés LGBQTI+ à travers le monde.
           <br /> Ce projet est né en France et donc le travail de recherche se
           fait depuis cette localisation et ce point de vue.
-          <br /> Mon intérêt se porte surtout sur les oeuvres datés, avec un
+          <br /> Mon intérêt se porte surtout sur les oeuvres datées, avec un
           intérêt plus fort pour les années 90 et 2000.
           <br />
           <span className="italic font-light text-xs">
@@ -65,21 +63,22 @@ export default function About() {
             </li>
             <li>
               - Recherche avancée : choisissez un critère de recherche ou
-              plusieurs combinés afin de trouver des résultats plus précis )
+              plusieurs combinés afin de trouver des résultats plus précis
             </li>
           </ul>
           <br />
         </p>
         <h3 className="font-bold mb-3">Le choix des mots-clé</h3>
         <p className="text-sm">
-          Afin de mieux répertorier les films, j&apos;ai choisi de leur associer
-          des mots-clé qui permettent à l&apos;utilisateur d&apos;avoir une
-          vision globale des sujets dotn traite les productions.
+          Afin de mieux répertorier les films, les mots-clé qui leur sont
+          associés permettent à l&apos;utilisateur d&apos;avoir une vision
+          globale des sujets abordés.
           <br />
-          J&apos;ai surtout mis en avant les thématiques, l&apos;identité et
+          J&apos;ai surtout mis en avant les thématiques (sociales, économiques,
+          politiques, culturelles), l&apos;identité de genre et
           l&apos;orientation sexuelle/romantique des personnages, et celles avec
-          qui ils flirtent. J&apos;ai intégré les expériences de vie, les
-          formats et genres cinématographiques, les régions géographiques.
+          qui ils flirtent. J&apos;ai aussi intégré les expériences de vie, les
+          formats et genres cinématographiques et les régions géographiques.
           <br />
           J&apos;ai choisi de ne pas identifier les réalisateur-ices sur leur
           identité de genre, orientation ou profession car les informations ne
