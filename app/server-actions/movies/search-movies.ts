@@ -10,14 +10,16 @@ export async function searchMovies({
   genreId,
   keywordIds,
   directorId,
-  releaseYear,
+  startYear,
+  endYear,
   type,
 }: {
   countryId: string;
   genreId: string;
   keywordIds: string[]; // Array of keyword IDs
   directorId: string;
-  releaseYear: string;
+  startYear: string; // Changed from releaseYear to startYear
+  endYear: string; //
   type: string;
 }) {
   return cachedQuery(
@@ -27,11 +29,38 @@ export async function searchMovies({
       directorId,
       genreId,
       JSON.stringify(keywordIds),
-      releaseYear,
+      startYear,
+      endYear,
       type,
     ],
     async () => {
       try {
+        // Build date range condition
+        let releaseCondition = {};
+
+        if (startYear && endYear) {
+          // Both years are provided - search for range
+          releaseCondition = {
+            release_date: {
+              gte: `${startYear}`,
+              lte: `${endYear}-12-31`,
+            },
+          };
+        } else if (startYear) {
+          // Only start year provided
+          releaseCondition = {
+            release_date: {
+              gte: `${startYear}`,
+            },
+          };
+        } else if (endYear) {
+          // Only end year provided
+          releaseCondition = {
+            release_date: {
+              lte: `${endYear}-12-31`,
+            },
+          };
+        }
         const movies = await prisma.movies.findMany({
           where: {
             ...(countryId && {
@@ -56,9 +85,7 @@ export async function searchMovies({
                 some: { director_id: BigInt(directorId) },
               },
             }),
-            ...(releaseYear && {
-              release_date: { startsWith: releaseYear },
-            }),
+            ...releaseCondition, // Use our new date range condition
             ...(type && {
               type: type,
             }),

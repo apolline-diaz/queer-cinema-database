@@ -19,17 +19,17 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
     setIsOpen(!isOpen);
   };
 
-  // Fonction pour déterminer si un lien est actif
+  // Function to define if a link is active
   const isActive = (path: string) => {
-    // Pour la page d'accueil
+    // Ror homepage
     if (path === "/" && pathname === "/") {
       return true;
     }
-    // Pour les autres pages, vérifier si le pathname commence par le path
+    // For other pages, check if the pathname starts with the path
     return path !== "/" && pathname.startsWith(path);
   };
 
-  // Classe CSS pour les liens actifs
+  // Classe CSS for active links
   const activeLinkClass = "underline underline-offset-8 text-rose-500";
   const normalLinkClass = "hover:underline underline-offset-8";
 
@@ -104,17 +104,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                     >
                       <Link href="/movies">Catalogue</Link>
                     </li>
-                    <li
-                      className={
-                        pathname === "/movies/create"
-                          ? activeLinkClass
-                          : normalLinkClass
-                      }
-                    >
-                      {userIsAdmin && (
-                        <Link href="/movies/create">Contribuer</Link>
-                      )}
-                    </li>
+
                     <li
                       className={
                         isActive("/stats") ? activeLinkClass : normalLinkClass
@@ -135,6 +125,17 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                         </Link>
                       </li>
                     )}
+                    <li
+                      className={
+                        pathname === "/movies/create"
+                          ? activeLinkClass
+                          : normalLinkClass
+                      }
+                    >
+                      {userIsAdmin && (
+                        <Link href="/movies/create">Contribuer</Link>
+                      )}
+                    </li>
                   </div>
                   <div className="py-10">
                     {!user ? (
@@ -168,15 +169,6 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
 
                 <li
                   className={
-                    pathname === "/movies/create"
-                      ? activeLinkClass
-                      : normalLinkClass
-                  }
-                >
-                  {userIsAdmin && <Link href="/movies/create">Contribuer</Link>}
-                </li>
-                <li
-                  className={
                     isActive("/stats") ? activeLinkClass : normalLinkClass
                   }
                 >
@@ -193,6 +185,15 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                     </Link>
                   </li>
                 )}
+                <li
+                  className={
+                    pathname === "/movies/create"
+                      ? activeLinkClass
+                      : normalLinkClass
+                  }
+                >
+                  {userIsAdmin && <Link href="/movies/create">Contribuer</Link>}
+                </li>
                 <div className="pl-5">
                   {!user ? (
                     <li>

@@ -1,7 +1,7 @@
 "use client";
 
 import { Icon } from "@iconify/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { searchMovies } from "@/app/server-actions/movies/search-movies";
 import Card from "./card";
@@ -15,7 +15,8 @@ interface FormValues {
   genreId: string;
   keywordIds: { value: string; label: string }[]; // Changed to array of keywords
   directorId: string;
-  releaseYear: string;
+  startYear: string; // Changed from releaseYear to startYear
+  endYear: string;
   type: string;
 }
 
@@ -66,20 +67,34 @@ export default function SearchForm({
   releaseYears: { value: string; label: string }[];
   userIsAdmin: boolean;
 }) {
-  const { control, handleSubmit, reset, watch } = useForm<FormValues>({
-    defaultValues: {
-      countryId: "",
-      genreId: "",
-      keywordIds: [], // Initialize as empty array
-      directorId: "",
-      releaseYear: "",
-      type: "",
-    },
-  });
+  const { control, setValue, handleSubmit, reset, watch } = useForm<FormValues>(
+    {
+      defaultValues: {
+        countryId: "",
+        genreId: "",
+        keywordIds: [], // Initialize as empty array
+        directorId: "",
+        startYear: "",
+        endYear: "",
+        type: "",
+      },
+    }
+  );
 
   const [movies, setMovies] = useState<Movie[]>(initialMovies);
   const [isLoading, setIsLoading] = useState(false);
   const [visibleCount, setVisibleCount] = useState(MOVIES_PER_PAGE);
+
+  // Get the currently selected years to enforce validation
+  const startYear = watch("startYear");
+  const endYear = watch("endYear");
+
+  // Validate year selection - ensure endYear >= startYear if both are selected
+  useEffect(() => {
+    if (startYear && endYear && parseInt(startYear) > parseInt(endYear)) {
+      setValue("endYear", startYear);
+    }
+  }, [startYear, endYear, setValue]);
 
   // Memoize search parameters to prevent unnecessary re-renders
   const searchParams = watch();
@@ -94,7 +109,8 @@ export default function SearchForm({
         genreId: data.genreId,
         keywordIds: data.keywordIds.map((keyword) => keyword.value), // Convert to array of keyword IDs
         directorId: data.directorId,
-        releaseYear: data.releaseYear,
+        startYear: data.startYear, // Added startYear
+        endYear: data.endYear,
         type: data.type,
       });
 
@@ -118,7 +134,8 @@ export default function SearchForm({
         genreId: "",
         keywordIds: [], // Pass empty array for keywords
         directorId: "",
-        releaseYear: "",
+        startYear: "", // Reset startYear
+        endYear: "",
         type: "",
       }); // Trigger search with no filters
       setMovies(results);
@@ -142,19 +159,33 @@ export default function SearchForm({
         className="mt-4 p-4 border rounded-xl mb-4"
       >
         <div className="grid grid-cols-1 sm:grid-cols-2 w-full gap-4 justify-between mb-5">
-          <CollapsibleSection title="Année">
-            <Controller
-              name="releaseYear"
-              control={control}
-              render={({ field }) => (
-                <Select
-                  label="Année de sortie"
-                  options={releaseYears}
-                  {...field}
-                  placeholder="Toutes les années"
-                />
-              )}
-            />
+          <CollapsibleSection title="Période">
+            <div className="grid grid-cols-2 gap-2">
+              <Controller
+                name="startYear"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    label="De l'année"
+                    options={releaseYears}
+                    {...field}
+                    placeholder="Année min"
+                  />
+                )}
+              />
+              <Controller
+                name="endYear"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    label="À l'année"
+                    options={releaseYears}
+                    {...field}
+                    placeholder="Année max"
+                  />
+                )}
+              />
+            </div>
           </CollapsibleSection>
           <CollapsibleSection title="Pays">
             <Controller
