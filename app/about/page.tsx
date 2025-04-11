@@ -1,4 +1,4 @@
-import Link from "next/link";
+/* eslint-disable react/no-unescaped-entities */
 
 export default function About() {
   return (
@@ -28,7 +28,7 @@ export default function About() {
         </p>
         <h3 className="font-bold mb-3">Le choix des films</h3>
         <p className="text-sm mb-3">
-          Cette base de données n&apos;a pas pour objectif d'&apos;être
+          Cette base de données n&apos;a pas pour objectif d&apos;être
           exhaustive et d&apos;inclure toutes les oeuvres existantes. Elle
           provient de recherches personnelles et collectives. L&apos;intérêt est
           de présenter des oeuvres qui portent un certain travail
