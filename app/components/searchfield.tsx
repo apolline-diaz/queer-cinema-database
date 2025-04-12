@@ -26,12 +26,17 @@ export default function Searchfield({
   initialKeyword?: string;
   userIsAdmin: boolean;
 }) {
-  const { control, watch, setValue } = useForm<FormValues>({
-    defaultValues: { title: "", keyword: initialKeyword },
-  });
-
   const router = useRouter();
   const searchParams = useSearchParams();
+
+  // Récupérer les valeurs depuis l'URL
+  const urlTitle = searchParams.get("title") || "";
+  const urlKeyword = searchParams.get("keyword") || initialKeyword;
+
+  const { control, watch, setValue } = useForm<FormValues>({
+    defaultValues: { title: urlTitle, keyword: urlKeyword },
+  });
+
   const [movies, setMovies] = useState<Movie[]>(initialMovies);
   const [isLoading, setIsLoading] = useState(false);
   const [visibleCount, setVisibleCount] = useState(MOVIES_PER_PAGE);
@@ -40,44 +45,77 @@ export default function Searchfield({
   const keywordSearch = watch("keyword");
 
   useEffect(() => {
-    const updateURL = (title: string, keyword: string) => {
-      const params = new URLSearchParams(searchParams);
-      title ? params.set("title", title) : params.delete("title");
-      keyword ? params.set("keyword", keyword) : params.delete("keyword");
+    // Ne rien faire si les deux champs sont vides
+    if (!titleSearch && !keywordSearch) return;
+
+    const updateURL = () => {
+      // Créer un nouvel objet URLSearchParams à partir de l'URL actuelle
+      const params = new URLSearchParams(searchParams.toString());
+
+      // Mettre à jour les paramètres
+      if (titleSearch) {
+        params.set("title", titleSearch);
+      } else {
+        params.delete("title");
+      }
+
+      if (keywordSearch) {
+        params.set("keyword", keywordSearch);
+      } else {
+        params.delete("keyword");
+      }
+
+      // Toujours maintenir le mode de recherche simple
+      params.set("searchMode", "field");
+
+      // Mettre à jour l'URL sans recharger la page
       router.push(`/movies?${params.toString()}`, { scroll: false });
     };
 
-    const delayDebounceFn = setTimeout(() => {
-      updateURL(titleSearch, keywordSearch);
-    });
-
+    // Utiliser un délai pour éviter trop de mises à jour pendant la frappe
+    const delayDebounceFn = setTimeout(updateURL, 500);
     return () => clearTimeout(delayDebounceFn);
   }, [titleSearch, keywordSearch, router, searchParams]);
 
   useEffect(() => {
     const fetchMovies = async () => {
-      setIsLoading(true);
-      setVisibleCount(MOVIES_PER_PAGE); // Réinitialise l'affichage à 100 films au départ
-      if (titleSearch) {
-        setMovies(await getMoviesByTitle(titleSearch));
-      } else if (keywordSearch) {
-        setMovies(await getMoviesByKeyword(keywordSearch));
-      } else {
-        setMovies(initialMovies);
+      try {
+        setIsLoading(true);
+        setVisibleCount(MOVIES_PER_PAGE);
+
+        // Utiliser les valeurs actuelles des champs ou les valeurs de l'URL si les champs sont vides
+        const title = titleSearch || urlTitle;
+        const keyword = keywordSearch || urlKeyword;
+
+        if (title) {
+          const results = await getMoviesByTitle(title);
+          setMovies(results);
+        } else if (keyword) {
+          const results = await getMoviesByKeyword(keyword);
+          setMovies(results);
+        } else {
+          setMovies(initialMovies);
+        }
+      } catch (error) {
+        console.error("Erreur lors de la recherche:", error);
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false);
     };
 
-    const delayDebounceFn = setTimeout(fetchMovies, 0);
+    const delayDebounceFn = setTimeout(fetchMovies, 300);
     return () => clearTimeout(delayDebounceFn);
-  }, [titleSearch, keywordSearch, initialMovies]);
+  }, [titleSearch, keywordSearch, urlTitle, urlKeyword, initialMovies]);
 
   const handleReset = () => {
     setValue("title", "");
     setValue("keyword", "");
     setMovies(initialMovies);
     setVisibleCount(MOVIES_PER_PAGE);
-    router.push("/movies", { scroll: false });
+
+    const params = new URLSearchParams();
+    params.set("searchMode", "field");
+    router.push(`/movies?${params.toString()}`, { scroll: false });
   };
 
   const loadMore = () => {

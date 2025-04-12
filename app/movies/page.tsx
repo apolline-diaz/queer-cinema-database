@@ -8,6 +8,10 @@ import {
 } from "@/app/server-actions/movies/search-movies";
 import ClientSearchComponent from "./client";
 import { isAdmin } from "@/utils/is-user-admin";
+import {
+  getMoviesByKeyword,
+  getMoviesByTitle,
+} from "../server-actions/movies/get-movies-by-title-and-keyword";
 
 export default async function Page({
   searchParams,
@@ -28,17 +32,46 @@ export default async function Page({
   const endYear = (searchParams?.endYear as string) || "";
   const type = (searchParams?.type as string) || "";
   const keywordParam = (searchParams?.keyword as string) || "";
+  const titleParam = (searchParams?.title as string) || "";
+  const searchModeParam = (searchParams?.searchMode as string) || "";
 
-  // get filter data and all movies (initial movies)
-  const initialMovies = await searchMovies({
-    countryId,
-    genreId,
-    keywordIds,
-    directorId,
-    startYear,
-    endYear,
-    type,
-  });
+  // Récupérer les films selon le mode de recherche
+  let initialMovies;
+
+  if (
+    searchModeParam === "field" ||
+    (!searchModeParam && (titleParam || keywordParam))
+  ) {
+    if (titleParam) {
+      // Récupérer les films par titre côté serveur
+      initialMovies = await getMoviesByTitle(titleParam);
+    } else if (keywordParam) {
+      // Récupérer les films par mot-clé côté serveur
+      initialMovies = await getMoviesByKeyword(keywordParam);
+    } else {
+      // Sinon récupérer tous les films
+      initialMovies = await searchMovies({
+        countryId,
+        genreId,
+        keywordIds,
+        directorId,
+        startYear,
+        endYear,
+        type,
+      });
+    }
+  } else {
+    // Recherche avancée
+    initialMovies = await searchMovies({
+      countryId,
+      genreId,
+      keywordIds,
+      directorId,
+      startYear,
+      endYear,
+      type,
+    });
+  }
   const countries = await getCountries();
   const genres = await getGenres();
   const keywords = await getKeywords();

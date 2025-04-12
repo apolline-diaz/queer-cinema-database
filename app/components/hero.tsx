@@ -19,7 +19,9 @@ export default function Hero({ id, title, image_url }: CardProps) {
 
   const handleSearch = () => {
     if (searchQuery.trim()) {
-      router.push(`/movies?keyword=${encodeURIComponent(searchQuery)}`);
+      router.push(
+        `/movies?keyword=${encodeURIComponent(searchQuery)}&searchMode=field`
+      );
     }
   };
 
