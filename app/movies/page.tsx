@@ -61,16 +61,6 @@ export default async function Page({
               releaseYears={releaseYears}
               initialKeyword={keywordParam}
               userIsAdmin={userIsAdmin}
-              // Passez les paramètres d'URL au composant client
-              urlParams={{
-                countryId,
-                genreId,
-                keywordIds,
-                directorId,
-                startYear,
-                endYear,
-                type,
-              }}
             />
           </div>
         </div>

@@ -14,15 +14,6 @@ interface ClientSearchComponentProps {
   releaseYears: { value: string; label: string }[];
   initialKeyword?: string;
   userIsAdmin: boolean;
-  urlParams?: {
-    countryId: string;
-    genreId: string;
-    keywordIds: string[];
-    directorId: string;
-    startYear: string;
-    endYear: string;
-    type: string;
-  };
 }
 
 export default function ClientSearchComponent({
@@ -34,29 +25,9 @@ export default function ClientSearchComponent({
   releaseYears,
   initialKeyword = "",
   userIsAdmin,
-  urlParams = {
-    countryId: "",
-    genreId: "",
-    keywordIds: [],
-    directorId: "",
-    startYear: "",
-    endYear: "",
-    type: "",
-  },
 }: ClientSearchComponentProps) {
-  // Déterminer si nous devons commencer avec la recherche avancée
-  // basé sur la présence de paramètres de filtres avancés
-  const hasAdvancedParams =
-    urlParams.countryId ||
-    urlParams.genreId ||
-    urlParams.keywordIds.length > 0 ||
-    urlParams.directorId ||
-    urlParams.startYear ||
-    urlParams.endYear ||
-    urlParams.type;
-
   const [searchMode, setSearchMode] = useState<"field" | "form">(
-    initialKeyword ? "field" : hasAdvancedParams ? "form" : "field"
+    initialKeyword ? "form" : "field"
   );
 
   // const toggleSearchMode = () => {
@@ -103,7 +74,6 @@ export default function ClientSearchComponent({
           keywords={keywords}
           directors={directors}
           releaseYears={releaseYears}
-          urlParams={urlParams}
         />
       )}
     </div>

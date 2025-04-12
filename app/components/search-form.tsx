@@ -58,15 +58,6 @@ interface SearchFormProps {
   directors: { value: string; label: string }[];
   releaseYears: { value: string; label: string }[];
   userIsAdmin: boolean;
-  urlParams?: {
-    countryId: string;
-    genreId: string;
-    keywordIds: string[];
-    directorId: string;
-    startYear: string;
-    endYear: string;
-    type: string;
-  };
 }
 
 export default function SearchForm({
@@ -77,15 +68,6 @@ export default function SearchForm({
   directors,
   releaseYears,
   userIsAdmin,
-  urlParams = {
-    countryId: "",
-    genreId: "",
-    keywordIds: [],
-    directorId: "",
-    startYear: "",
-    endYear: "",
-    type: "",
-  },
 }: SearchFormProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -137,9 +119,6 @@ export default function SearchForm({
       setValue("endYear", startYear);
     }
   }, [startYear, endYear, setValue]);
-
-  // Memoize search parameters to prevent unnecessary re-renders
-  // const searchParams = watch();
 
   // handle form submission
   const onSubmit = async (data: FormValues) => {
