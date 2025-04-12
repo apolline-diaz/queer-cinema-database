@@ -9,6 +9,7 @@ import { getImageUrl } from "@/utils";
 import Select from "./select";
 import { Movie } from "../types/movie";
 import MultiSelect from "./multi-select";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface FormValues {
   countryId: string;
@@ -49,6 +50,24 @@ function CollapsibleSection({ title, children }: CollapsibleSectionProps) {
     </div>
   );
 }
+interface SearchFormProps {
+  initialMovies: Movie[];
+  countries: { value: string; label: string }[];
+  genres: { value: string; label: string }[];
+  keywords: { value: string; label: string }[];
+  directors: { value: string; label: string }[];
+  releaseYears: { value: string; label: string }[];
+  userIsAdmin: boolean;
+  urlParams?: {
+    countryId: string;
+    genreId: string;
+    keywordIds: string[];
+    directorId: string;
+    startYear: string;
+    endYear: string;
+    type: string;
+  };
+}
 
 export default function SearchForm({
   initialMovies,
@@ -58,25 +77,40 @@ export default function SearchForm({
   directors,
   releaseYears,
   userIsAdmin,
-}: {
-  initialMovies: Movie[];
-  countries: { value: string; label: string }[];
-  genres: { value: string; label: string }[];
-  keywords: { value: string; label: string }[];
-  directors: { value: string; label: string }[];
-  releaseYears: { value: string; label: string }[];
-  userIsAdmin: boolean;
-}) {
+  
+}: SearchFormProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // Récupérer les paramètres de l'URL
+  const urlCountryId = searchParams.get("countryId") || "";
+  const urlGenreId = searchParams.get("genreId") || "";
+  const urlDirectorId = searchParams.get("directorId") || "";
+  const urlStartYear = searchParams.get("startYear") || "";
+  const urlEndYear = searchParams.get("endYear") || "";
+  const urlType = searchParams.get("type") || "";
+
+  const urlKeywordIds = searchParams.get("keywordIds")
+    ? searchParams
+        .get("keywordIds")
+        ?.split(",")
+        .map((id) => {
+          const keyword = keywords.find((k) => k.value === id);
+          return keyword ? { value: id, label: keyword.label } : null;
+        })
+        .filter(Boolean) || []
+    : [];
+
   const { control, setValue, handleSubmit, reset, watch } = useForm<FormValues>(
     {
       defaultValues: {
-        countryId: "",
-        genreId: "",
-        keywordIds: [], // Initialize as empty array
-        directorId: "",
-        startYear: "",
-        endYear: "",
-        type: "",
+        countryId: urlCountryId,
+        genreId: urlGenreId,
+        keywordIds: urlKeywordIds as any, // Cast pour satisfaire TypeScript
+        directorId: urlDirectorId,
+        startYear: urlStartYear,
+        endYear: urlEndYear,
+        type: urlType,
       },
     }
   );
@@ -97,11 +131,27 @@ export default function SearchForm({
   }, [startYear, endYear, setValue]);
 
   // Memoize search parameters to prevent unnecessary re-renders
-  const searchParams = watch();
+  // const searchParams = watch();
 
   // handle form submission
   const onSubmit = async (data: FormValues) => {
     setIsLoading(true); // Show loading indicator
+
+    // Construire les paramètres de recherche pour l'URL
+    const params = new URLSearchParams();
+    if (data.countryId) params.set("countryId", data.countryId);
+    if (data.genreId) params.set("genreId", data.genreId);
+    if (data.keywordIds.length > 0) {
+      const keywordIdsString = data.keywordIds.map((k) => k.value).join(",");
+      params.set("keywordIds", keywordIdsString);
+    }
+    if (data.directorId) params.set("directorId", data.directorId);
+    if (data.startYear) params.set("startYear", data.startYear);
+    if (data.endYear) params.set("endYear", data.endYear);
+    if (data.type) params.set("type", data.type);
+
+    // Mettre à jour l'URL sans recharger la page
+    router.replace(`/movies?${params.toString()}`);
 
     try {
       const results = await searchMovies({
@@ -127,6 +177,9 @@ export default function SearchForm({
   const handleReset = async () => {
     reset(); // Reset all form values
     setIsLoading(true);
+
+    // Nettoyer l'URL
+    router.replace("/movies");
 
     try {
       const results = await searchMovies({

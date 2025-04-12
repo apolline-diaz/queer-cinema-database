@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import SearchForm from "@/app/components/search-form";
 import Searchfield from "@/app/components/searchfield";
 import { Movie } from "../types/movie";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface ClientSearchComponentProps {
   initialMovies: Movie[];
@@ -12,7 +13,7 @@ interface ClientSearchComponentProps {
   keywords: { value: string; label: string }[];
   directors: { value: string; label: string }[];
   releaseYears: { value: string; label: string }[];
-  initialKeyword?: string;
+  initialSearch?: string;
   userIsAdmin: boolean;
 }
 
@@ -23,22 +24,54 @@ export default function ClientSearchComponent({
   keywords,
   directors,
   releaseYears,
-  initialKeyword = "",
+  initialSearch = "",
   userIsAdmin,
 }: ClientSearchComponentProps) {
-  const [searchMode, setSearchMode] = useState<"field" | "form">(
-    initialKeyword ? "field" : "form"
-  );
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
-  // const toggleSearchMode = () => {
-  //   setSearchMode(searchMode === "field" ? "form" : "field");
-  // };
+  // Vérifier tous les paramètres pertinents
+  const urlSearchMode = searchParams.get("searchMode") || "";
+  const hasSearch = searchParams.has("search") || initialSearch !== "";
 
+  // Définir le mode initial en fonction des paramètres d'URL
+  // Priorité: 1. Mode explicite dans l'URL, 2. Présence de title/keyword, 3. Mode par défaut
+  const initialMode =
+    urlSearchMode === "field"
+      ? "field"
+      : urlSearchMode === "form"
+        ? "form"
+        : hasSearch
+          ? "field"
+          : "form";
+
+  const [searchMode, setSearchMode] = useState<"field" | "form">(initialMode);
+
+  // Mettre à jour l'URL quand le mode change
+  const toggleSearchMode = (newMode: "field" | "form") => {
+    const params = new URLSearchParams(searchParams.toString());
+    // Définir le nouveau mode de recherche
+    params.set("searchMode", newMode);
+
+    // Si on passe en mode simple, effacer les paramètres avancés
+    if (newMode === "field") {
+      params.delete("countryId");
+      params.delete("genreId");
+      params.delete("keywordIds");
+      params.delete("directorId");
+      params.delete("startYear");
+      params.delete("endYear");
+      params.delete("type");
+    }
+
+    router.push(`/movies?${params.toString()}`, { scroll: false });
+    setSearchMode(newMode);
+  };
   return (
     <div className="">
       <div className="flex flex-wrap gap-2 w-full my-2">
         <button
-          onClick={() => setSearchMode("field")}
+          onClick={() => toggleSearchMode("field")}
           className={`w-full sm:w-auto text-sm font-light px-4 py-1 border rounded-full transition-colors ${
             searchMode === "field"
               ? "bg-rose-500 text-white border-rose-500 "
@@ -49,7 +82,7 @@ export default function ClientSearchComponent({
         </button>
 
         <button
-          onClick={() => setSearchMode("form")}
+          onClick={() => toggleSearchMode("form")}
           className={`w-full sm:w-auto text-sm font-light px-4 py-1 border rounded-full transition-colors ${
             searchMode === "form"
               ? "bg-rose-500 text-white border-rose-500 "
@@ -62,7 +95,7 @@ export default function ClientSearchComponent({
       {searchMode === "field" ? (
         <Searchfield
           initialMovies={initialMovies}
-          initialKeyword={initialKeyword}
+          initialSearch={initialSearch}
           userIsAdmin={userIsAdmin}
         />
       ) : (

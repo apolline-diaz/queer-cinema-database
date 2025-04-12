@@ -8,6 +8,7 @@ import {
 } from "@/app/server-actions/movies/search-movies";
 import ClientSearchComponent from "./client";
 import { isAdmin } from "@/utils/is-user-admin";
+import { getMoviesByWord } from "../server-actions/movies/get-movies-by-word";
 
 export default async function Page({
   searchParams,
@@ -15,18 +16,42 @@ export default async function Page({
   searchParams?: { [key: string]: string | string[] | undefined };
 }) {
   // Get keyword from URL parameters if it exists
-  const keywordParam = (searchParams?.keyword as string) || "";
   const userIsAdmin = await isAdmin();
-  // get filter data and all movies (initial movies)
-  const initialMovies = await searchMovies({
-    countryId: "",
-    genreId: "",
-    keywordIds: [],
-    directorId: "",
-    startYear: "",
-    endYear: "",
-    type: "",
-  });
+
+  // Extraire tous les paramètres d'URL pour le searchform
+  const countryId = (searchParams?.countryId as string) || "";
+  const genreId = (searchParams?.genreId as string) || "";
+  const keywordIds = searchParams?.keywordIds
+    ? (searchParams.keywordIds as string).split(",")
+    : [];
+  const directorId = (searchParams?.directorId as string) || "";
+  const startYear = (searchParams?.startYear as string) || "";
+  const endYear = (searchParams?.endYear as string) || "";
+  const type = (searchParams?.type as string) || "";
+
+  // Extraire tous les paramètres d'URL pour le searchfield
+  const searchParam = (searchParams?.search as string) || "";
+  const searchModeParam = (searchParams?.searchMode as string) || "";
+
+  // Récupérer les films selon le mode de recherche
+  let initialMovies;
+
+  if (searchModeParam === "field" || (!searchModeParam && searchParam)) {
+    initialMovies = await getMoviesByWord(searchParam);
+  } else {
+    // Sinon récupérer tous les films
+    initialMovies = await searchMovies({
+      countryId,
+      genreId,
+      keywordIds,
+      directorId,
+      startYear,
+      endYear,
+      type,
+    });
+  }
+
+  // Récupération des données annexes (pays, genres, etc.)
   const countries = await getCountries();
   const genres = await getGenres();
   const keywords = await getKeywords();
@@ -47,7 +72,7 @@ export default async function Page({
               keywords={keywords}
               directors={directors}
               releaseYears={releaseYears}
-              initialKeyword={keywordParam}
+              initialSearch={searchParam} // Utiliser initialSearch au lieu de initialKeyword
               userIsAdmin={userIsAdmin}
             />
           </div>

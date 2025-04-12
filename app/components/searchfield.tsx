@@ -2,84 +2,100 @@ import React, { useState, useEffect } from "react";
 import { Icon } from "@iconify/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
-import {
-  getMoviesByKeyword,
-  getMoviesByTitle,
-} from "@/app/server-actions/movies/get-movies-by-title-and-keyword";
+import { getMoviesByWord } from "@/app/server-actions/movies/get-movies-by-word";
+
 import Card from "./card";
 import { getImageUrl } from "@/utils";
 import { Movie } from "../types/movie";
 
-interface FormValues {
-  title: string;
-  keyword: string;
-}
+type FormValues = {
+  search: string;
+};
 
 const MOVIES_PER_PAGE = 50;
 
 export default function Searchfield({
   initialMovies,
-  initialKeyword = "",
+  initialSearch = "",
   userIsAdmin,
 }: {
   initialMovies: Movie[];
+
+  initialSearch?: string;
+
   initialKeyword?: string;
   userIsAdmin: boolean;
 }) {
-  const { control, watch, setValue } = useForm<FormValues>({
-    defaultValues: { title: "", keyword: initialKeyword },
-  });
-
   const router = useRouter();
   const searchParams = useSearchParams();
+
+  // Récupérer les valeurs depuis l'URL
+  const urlSearch = searchParams.get("search") || initialSearch;
+
+  const { control, handleSubmit, reset } = useForm<FormValues>({
+    defaultValues: { search: urlSearch },
+  });
+
   const [movies, setMovies] = useState<Movie[]>(initialMovies);
   const [isLoading, setIsLoading] = useState(false);
   const [visibleCount, setVisibleCount] = useState(MOVIES_PER_PAGE);
 
-  const titleSearch = watch("title");
-  const keywordSearch = watch("keyword");
-
-  useEffect(() => {
-    const updateURL = (title: string, keyword: string) => {
-      const params = new URLSearchParams(searchParams);
-      title ? params.set("title", title) : params.delete("title");
-      keyword ? params.set("keyword", keyword) : params.delete("keyword");
-      router.push(`/movies?${params.toString()}`, { scroll: false });
-    };
-
-    const delayDebounceFn = setTimeout(() => {
-      updateURL(titleSearch, keywordSearch);
-    });
-
-    return () => clearTimeout(delayDebounceFn);
-  }, [titleSearch, keywordSearch, router, searchParams]);
-
-  useEffect(() => {
-    const fetchMovies = async () => {
+  // Fonction pour effectuer la recherche
+  const performSearch = async (searchTerm: string) => {
+    try {
       setIsLoading(true);
-      setVisibleCount(MOVIES_PER_PAGE); // Réinitialise l'affichage à 100 films au départ
-      if (titleSearch) {
-        setMovies(await getMoviesByTitle(titleSearch));
-      } else if (keywordSearch) {
-        setMovies(await getMoviesByKeyword(keywordSearch));
+      setVisibleCount(MOVIES_PER_PAGE);
+
+      if (searchTerm) {
+        const results = await getMoviesByWord(searchTerm);
+        setMovies(results);
       } else {
-        setMovies(initialMovies);
+        const results = await getMoviesByWord("");
+        setMovies(results);
       }
+    } catch (error) {
+      console.error("Erreur lors de la recherche:", error);
+    } finally {
       setIsLoading(false);
-    };
-
-    const delayDebounceFn = setTimeout(fetchMovies, 0);
-    return () => clearTimeout(delayDebounceFn);
-  }, [titleSearch, keywordSearch, initialMovies]);
-
-  const handleReset = () => {
-    setValue("title", "");
-    setValue("keyword", "");
-    setMovies(initialMovies);
-    setVisibleCount(MOVIES_PER_PAGE);
-    router.push("/movies", { scroll: false });
+    }
   };
 
+  // Gestion de la soumission du formulaire de recherche simple
+  const onSubmit = (data: FormValues) => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    // Mettre à jour les paramètres
+    if (data.search) {
+      params.set("search", data.search);
+    } else {
+      params.delete("search");
+    }
+
+    // Toujours définir le mode de recherche sur "field" pour la recherche simple
+    params.set("searchMode", "field");
+
+    // Navigation avec les nouveaux paramètres
+    router.push(`/movies?${params.toString()}`);
+  };
+
+  useEffect(() => {
+    const term = searchParams.get("search") || "";
+    performSearch(term);
+  }, [searchParams]);
+
+  // Fonction pour réinitialiser la recherche
+  const handleReset = () => {
+    reset({ search: "" });
+
+    const params = new URLSearchParams();
+    params.set("searchMode", "field");
+    router.push(`/movies?${params.toString()}`);
+
+    // Réinitialiser les résultats
+    performSearch("");
+  };
+
+  // Fonction pour charger plus de résultats
   const loadMore = () => {
     setVisibleCount((prevCount) => prevCount + MOVIES_PER_PAGE);
   };
@@ -87,45 +103,38 @@ export default function Searchfield({
   return (
     <div className="w-full my-4">
       <div className="px-4 py-2 border rounded-xl mb-4">
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="text-sm w-full xs:w-1/2 my-2 flex flex-col sm:flex-row gap-3">
             <div className="w-full">
-              Titre
               <Controller
-                name="title"
+                name="search"
                 control={control}
                 render={({ field }) => (
                   <input
                     {...field}
                     className="appearance-none text-md font-light block w-full bg-neutral-950 border-b border-b-white text-gray-200 py-2 leading-tight focus:none focus:outline-none"
-                    placeholder="Entrez un titre de film"
-                  />
-                )}
-              />
-            </div>
-            <div className="w-full">
-              Mot-clé
-              <Controller
-                name="keyword"
-                control={control}
-                render={({ field }) => (
-                  <input
-                    {...field}
-                    className="appearance-none text-md font-light block w-full bg-neutral-950 border-b border-b-white text-gray-200 py-2 leading-tight focus:none focus:outline-none"
-                    placeholder="Entrez un mot-clé"
+                    placeholder="Entrez un mot ou titre"
                   />
                 )}
               />
             </div>
           </div>
+          <div className="flex flex-col sm:flex-row sm:w-full gap-4 py-2">
+            <button
+              type="submit"
+              className="xs:w-full sm:w-[200px] bg-gradient-to-r from-rose-500 to-red-500 text-white px-4 py-2 rounded-md hover:from-rose-600 hover:to-red-600"
+            >
+              Rechercher
+            </button>
+            <button
+              type="button"
+              onClick={handleReset}
+              className="xs:w-full sm:w-[200px] border hover:border-rose-500 hover:text-rose-500 text-white px-4 py-2 rounded-md"
+            >
+              Réinitialiser
+            </button>
+          </div>
         </form>
-        <button
-          type="button"
-          onClick={handleReset}
-          className="my-2 xs:w-full w-full sm:w-[200px] border hover:border-rose-500 hover:text-rose-500 text-white px-4 py-2 rounded-md"
-        >
-          Réinitialiser
-        </button>
       </div>
       <div className="text-rose-500 border-b border-rose-500 text-md font-light mb-5">
         {isLoading ? (
