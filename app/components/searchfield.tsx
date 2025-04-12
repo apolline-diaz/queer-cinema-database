@@ -33,91 +33,76 @@ export default function Searchfield({
   const urlTitle = searchParams.get("title") || "";
   const urlKeyword = searchParams.get("keyword") || initialKeyword;
 
-  const { control, watch, setValue } = useForm<FormValues>({
-    defaultValues: { title: urlTitle, keyword: urlKeyword },
-  });
+  const { control, watch, handleSubmit, setValue, reset } = useForm<FormValues>(
+    {
+      defaultValues: { title: urlTitle, keyword: urlKeyword },
+    }
+  );
 
   const [movies, setMovies] = useState<Movie[]>(initialMovies);
   const [isLoading, setIsLoading] = useState(false);
   const [visibleCount, setVisibleCount] = useState(MOVIES_PER_PAGE);
 
-  const titleSearch = watch("title");
-  const keywordSearch = watch("keyword");
+  // Fonction pour effectuer la recherche
+  const performSearch = async (title: string, keyword: string) => {
+    try {
+      setIsLoading(true);
+      setVisibleCount(MOVIES_PER_PAGE);
 
-  useEffect(() => {
-    // Ne rien faire si les deux champs sont vides
-    if (!titleSearch && !keywordSearch) return;
-
-    const updateURL = () => {
-      // Créer un nouvel objet URLSearchParams à partir de l'URL actuelle
-      const params = new URLSearchParams(searchParams.toString());
-
-      // Mettre à jour les paramètres
-      if (titleSearch) {
-        params.set("title", titleSearch);
+      if (title) {
+        const results = await getMoviesByTitle(title);
+        setMovies(results);
+      } else if (keyword) {
+        const results = await getMoviesByKeyword(keyword);
+        setMovies(results);
       } else {
-        params.delete("title");
+        setMovies(initialMovies);
       }
+    } catch (error) {
+      console.error("Erreur lors de la recherche:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-      if (keywordSearch) {
-        params.set("keyword", keywordSearch);
-      } else {
-        params.delete("keyword");
-      }
-
-      // Toujours maintenir le mode de recherche simple
-      params.set("searchMode", "field");
-
-      // Mettre à jour l'URL sans recharger la page
-      router.push(`/movies?${params.toString()}`, { scroll: false });
-    };
-
-    // Utiliser un délai pour éviter trop de mises à jour pendant la frappe
-    const delayDebounceFn = setTimeout(updateURL, 500);
-    return () => clearTimeout(delayDebounceFn);
-  }, [titleSearch, keywordSearch, router, searchParams]);
-
+  // Mettre à jour l'URL et effectuer la recherche lors du changement d'URL
   useEffect(() => {
-    const fetchMovies = async () => {
-      try {
-        setIsLoading(true);
-        setVisibleCount(MOVIES_PER_PAGE);
+    performSearch(urlTitle, urlKeyword);
+  }, [urlTitle, urlKeyword, initialMovies]);
 
-        // Utiliser les valeurs actuelles des champs ou les valeurs de l'URL si les champs sont vides
-        const title = titleSearch || urlTitle;
-        const keyword = keywordSearch || urlKeyword;
+  // Gestion de la soumission du formulaire de recherche simple
+  const onSubmit = (data: FormValues) => {
+    const params = new URLSearchParams(searchParams.toString());
 
-        if (title) {
-          const results = await getMoviesByTitle(title);
-          setMovies(results);
-        } else if (keyword) {
-          const results = await getMoviesByKeyword(keyword);
-          setMovies(results);
-        } else {
-          setMovies(initialMovies);
-        }
-      } catch (error) {
-        console.error("Erreur lors de la recherche:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+    // Mettre à jour les paramètres
+    if (data.title) {
+      params.set("title", data.title);
+      params.delete("keyword");
+    } else if (data.keyword) {
+      params.set("keyword", data.keyword);
+      params.delete("title");
+    } else {
+      params.delete("title");
+      params.delete("keyword");
+    }
 
-    const delayDebounceFn = setTimeout(fetchMovies, 300);
-    return () => clearTimeout(delayDebounceFn);
-  }, [titleSearch, keywordSearch, urlTitle, urlKeyword, initialMovies]);
+    // Toujours définir le mode de recherche sur "field" pour la recherche simple
+    params.set("searchMode", "field");
 
+    // Navigation avec les nouveaux paramètres
+    router.push(`/movies?${params.toString()}`);
+  };
+
+  // Fonction pour réinitialiser la recherche
   const handleReset = () => {
-    setValue("title", "");
-    setValue("keyword", "");
-    setMovies(initialMovies);
-    setVisibleCount(MOVIES_PER_PAGE);
+    reset({ title: "", keyword: "" });
 
     const params = new URLSearchParams();
     params.set("searchMode", "field");
-    router.push(`/movies?${params.toString()}`, { scroll: false });
+    router.push(`/movies?${params.toString()}`);
   };
 
+  // Fonction pour charger plus de résultats
   const loadMore = () => {
     setVisibleCount((prevCount) => prevCount + MOVIES_PER_PAGE);
   };
@@ -125,7 +110,7 @@ export default function Searchfield({
   return (
     <div className="w-full my-4">
       <div className="px-4 py-2 border rounded-xl mb-4">
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="text-sm w-full xs:w-1/2 my-2 flex flex-col sm:flex-row gap-3">
             <div className="w-full">
               Titre
@@ -156,14 +141,22 @@ export default function Searchfield({
               />
             </div>
           </div>
+          <div className="flex flex-col sm:flex-row sm:w-full gap-4 py-2">
+            <button
+              type="submit"
+              className="xs:w-full sm:w-[200px] bg-gradient-to-r from-rose-500 to-red-500 text-white px-4 py-2 rounded-md hover:from-rose-600 hover:to-red-600"
+            >
+              Rechercher
+            </button>
+            <button
+              type="button"
+              onClick={handleReset}
+              className="xs:w-full sm:w-[200px] border hover:border-rose-500 hover:text-rose-500 text-white px-4 py-2 rounded-md"
+            >
+              Réinitialiser
+            </button>
+          </div>
         </form>
-        <button
-          type="button"
-          onClick={handleReset}
-          className="my-2 xs:w-full w-full sm:w-[200px] border hover:border-rose-500 hover:text-rose-500 text-white px-4 py-2 rounded-md"
-        >
-          Réinitialiser
-        </button>
       </div>
       <div className="text-rose-500 border-b border-rose-500 text-md font-light mb-5">
         {isLoading ? (
