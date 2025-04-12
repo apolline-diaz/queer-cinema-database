@@ -20,7 +20,7 @@ export default function Hero({ id, title, image_url }: CardProps) {
   const handleSearch = () => {
     if (searchQuery.trim()) {
       router.push(
-        `/movies?keyword=${encodeURIComponent(searchQuery)}&searchMode=field`
+        `/movies?search=${encodeURIComponent(searchQuery)}&searchMode=field`
       );
     }
   };
@@ -50,7 +50,7 @@ export default function Hero({ id, title, image_url }: CardProps) {
             <input
               type="text"
               className="z-10 max-h-12  min-w-52 flex-1 py-4 bg-black text-white focus:outline-none"
-              placeholder="Rechercher un mot-clé..."
+              placeholder="Rechercher un mot..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSearch()}

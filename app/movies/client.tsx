@@ -13,7 +13,7 @@ interface ClientSearchComponentProps {
   keywords: { value: string; label: string }[];
   directors: { value: string; label: string }[];
   releaseYears: { value: string; label: string }[];
-  initialKeyword?: string;
+  initialSearch?: string;
   userIsAdmin: boolean;
 }
 
@@ -24,7 +24,7 @@ export default function ClientSearchComponent({
   keywords,
   directors,
   releaseYears,
-  initialKeyword = "",
+  initialSearch = "",
   userIsAdmin,
 }: ClientSearchComponentProps) {
   const searchParams = useSearchParams();
@@ -32,8 +32,7 @@ export default function ClientSearchComponent({
 
   // Vérifier tous les paramètres pertinents
   const urlSearchMode = searchParams.get("searchMode") || "";
-  const hasTitle = searchParams.has("title");
-  const hasKeyword = searchParams.has("keyword") || initialKeyword !== "";
+  const hasSearch = searchParams.has("search") || initialSearch !== "";
 
   // Définir le mode initial en fonction des paramètres d'URL
   // Priorité: 1. Mode explicite dans l'URL, 2. Présence de title/keyword, 3. Mode par défaut
@@ -42,7 +41,7 @@ export default function ClientSearchComponent({
       ? "field"
       : urlSearchMode === "form"
         ? "form"
-        : hasTitle || hasKeyword
+        : hasSearch
           ? "field"
           : "form";
 
@@ -96,7 +95,7 @@ export default function ClientSearchComponent({
       {searchMode === "field" ? (
         <Searchfield
           initialMovies={initialMovies}
-          initialKeyword={initialKeyword}
+          initialSearch={initialSearch}
           userIsAdmin={userIsAdmin}
         />
       ) : (

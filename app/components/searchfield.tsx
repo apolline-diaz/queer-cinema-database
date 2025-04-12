@@ -2,27 +2,27 @@ import React, { useState, useEffect } from "react";
 import { Icon } from "@iconify/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
-import {
-  getMoviesByKeyword,
-  getMoviesByTitle,
-} from "@/app/server-actions/movies/get-movies-by-title-and-keyword";
+import { getMoviesByWord } from "@/app/server-actions/movies/get-movies-by-word";
+
 import Card from "./card";
 import { getImageUrl } from "@/utils";
 import { Movie } from "../types/movie";
 
-interface FormValues {
-  title: string;
-  keyword: string;
-}
+type FormValues = {
+  search: string;
+};
 
 const MOVIES_PER_PAGE = 50;
 
 export default function Searchfield({
   initialMovies,
-  initialKeyword = "",
+  initialSearch = "",
   userIsAdmin,
 }: {
   initialMovies: Movie[];
+
+  initialSearch?: string;
+
   initialKeyword?: string;
   userIsAdmin: boolean;
 }) {
@@ -30,33 +30,28 @@ export default function Searchfield({
   const searchParams = useSearchParams();
 
   // Récupérer les valeurs depuis l'URL
-  const urlTitle = searchParams.get("title") || "";
-  const urlKeyword = searchParams.get("keyword") || initialKeyword;
+  const urlSearch = searchParams.get("search") || initialSearch;
 
-  const { control, watch, handleSubmit, setValue, reset } = useForm<FormValues>(
-    {
-      defaultValues: { title: urlTitle, keyword: urlKeyword },
-    }
-  );
+  const { control, handleSubmit, reset } = useForm<FormValues>({
+    defaultValues: { search: urlSearch },
+  });
 
   const [movies, setMovies] = useState<Movie[]>(initialMovies);
   const [isLoading, setIsLoading] = useState(false);
   const [visibleCount, setVisibleCount] = useState(MOVIES_PER_PAGE);
 
   // Fonction pour effectuer la recherche
-  const performSearch = async (title: string, keyword: string) => {
+  const performSearch = async (searchTerm: string) => {
     try {
       setIsLoading(true);
       setVisibleCount(MOVIES_PER_PAGE);
 
-      if (title) {
-        const results = await getMoviesByTitle(title);
-        setMovies(results);
-      } else if (keyword) {
-        const results = await getMoviesByKeyword(keyword);
+      if (searchTerm) {
+        const results = await getMoviesByWord(searchTerm);
         setMovies(results);
       } else {
-        setMovies(initialMovies);
+        const results = await getMoviesByWord("");
+        setMovies(results);
       }
     } catch (error) {
       console.error("Erreur lors de la recherche:", error);
@@ -65,25 +60,15 @@ export default function Searchfield({
     }
   };
 
-  // Mettre à jour l'URL et effectuer la recherche lors du changement d'URL
-  useEffect(() => {
-    performSearch(urlTitle, urlKeyword);
-  }, [urlTitle, urlKeyword, initialMovies]);
-
   // Gestion de la soumission du formulaire de recherche simple
   const onSubmit = (data: FormValues) => {
     const params = new URLSearchParams(searchParams.toString());
 
     // Mettre à jour les paramètres
-    if (data.title) {
-      params.set("title", data.title);
-      params.delete("keyword");
-    } else if (data.keyword) {
-      params.set("keyword", data.keyword);
-      params.delete("title");
+    if (data.search) {
+      params.set("search", data.search);
     } else {
-      params.delete("title");
-      params.delete("keyword");
+      params.delete("search");
     }
 
     // Toujours définir le mode de recherche sur "field" pour la recherche simple
@@ -93,13 +78,21 @@ export default function Searchfield({
     router.push(`/movies?${params.toString()}`);
   };
 
+  useEffect(() => {
+    const term = searchParams.get("search") || "";
+    performSearch(term);
+  }, [searchParams]);
+
   // Fonction pour réinitialiser la recherche
   const handleReset = () => {
-    reset({ title: "", keyword: "" });
+    reset({ search: "" });
 
     const params = new URLSearchParams();
     params.set("searchMode", "field");
     router.push(`/movies?${params.toString()}`);
+
+    // Réinitialiser les résultats
+    performSearch("");
   };
 
   // Fonction pour charger plus de résultats
@@ -113,29 +106,14 @@ export default function Searchfield({
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="text-sm w-full xs:w-1/2 my-2 flex flex-col sm:flex-row gap-3">
             <div className="w-full">
-              Titre
               <Controller
-                name="title"
+                name="search"
                 control={control}
                 render={({ field }) => (
                   <input
                     {...field}
                     className="appearance-none text-md font-light block w-full bg-neutral-950 border-b border-b-white text-gray-200 py-2 leading-tight focus:none focus:outline-none"
-                    placeholder="Entrez un titre de film"
-                  />
-                )}
-              />
-            </div>
-            <div className="w-full">
-              Mot-clé
-              <Controller
-                name="keyword"
-                control={control}
-                render={({ field }) => (
-                  <input
-                    {...field}
-                    className="appearance-none text-md font-light block w-full bg-neutral-950 border-b border-b-white text-gray-200 py-2 leading-tight focus:none focus:outline-none"
-                    placeholder="Entrez un mot-clé"
+                    placeholder="Entrez un mot ou titre"
                   />
                 )}
               />

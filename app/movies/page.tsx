@@ -8,10 +8,7 @@ import {
 } from "@/app/server-actions/movies/search-movies";
 import ClientSearchComponent from "./client";
 import { isAdmin } from "@/utils/is-user-admin";
-import {
-  getMoviesByKeyword,
-  getMoviesByTitle,
-} from "../server-actions/movies/get-movies-by-title-and-keyword";
+import { getMoviesByWord } from "../server-actions/movies/get-movies-by-word";
 
 export default async function Page({
   searchParams,
@@ -21,7 +18,7 @@ export default async function Page({
   // Get keyword from URL parameters if it exists
   const userIsAdmin = await isAdmin();
 
-  // Extraire tous les paramètres d'URL
+  // Extraire tous les paramètres d'URL pour le searchform
   const countryId = (searchParams?.countryId as string) || "";
   const genreId = (searchParams?.genreId as string) || "";
   const keywordIds = searchParams?.keywordIds
@@ -31,37 +28,18 @@ export default async function Page({
   const startYear = (searchParams?.startYear as string) || "";
   const endYear = (searchParams?.endYear as string) || "";
   const type = (searchParams?.type as string) || "";
-  const keywordParam = (searchParams?.keyword as string) || "";
-  const titleParam = (searchParams?.title as string) || "";
+
+  // Extraire tous les paramètres d'URL pour le searchfield
+  const searchParam = (searchParams?.search as string) || "";
   const searchModeParam = (searchParams?.searchMode as string) || "";
 
   // Récupérer les films selon le mode de recherche
   let initialMovies;
 
-  if (
-    searchModeParam === "field" ||
-    (!searchModeParam && (titleParam || keywordParam))
-  ) {
-    if (titleParam) {
-      // Récupérer les films par titre côté serveur
-      initialMovies = await getMoviesByTitle(titleParam);
-    } else if (keywordParam) {
-      // Récupérer les films par mot-clé côté serveur
-      initialMovies = await getMoviesByKeyword(keywordParam);
-    } else {
-      // Sinon récupérer tous les films
-      initialMovies = await searchMovies({
-        countryId,
-        genreId,
-        keywordIds,
-        directorId,
-        startYear,
-        endYear,
-        type,
-      });
-    }
+  if (searchModeParam === "field" || (!searchModeParam && searchParam)) {
+    initialMovies = await getMoviesByWord(searchParam);
   } else {
-    // Recherche avancée
+    // Sinon récupérer tous les films
     initialMovies = await searchMovies({
       countryId,
       genreId,
@@ -72,6 +50,8 @@ export default async function Page({
       type,
     });
   }
+
+  // Récupération des données annexes (pays, genres, etc.)
   const countries = await getCountries();
   const genres = await getGenres();
   const keywords = await getKeywords();
@@ -92,7 +72,7 @@ export default async function Page({
               keywords={keywords}
               directors={directors}
               releaseYears={releaseYears}
-              initialKeyword={keywordParam}
+              initialSearch={searchParam} // Utiliser initialSearch au lieu de initialKeyword
               userIsAdmin={userIsAdmin}
             />
           </div>
