@@ -25,6 +25,9 @@ export default async function Page({ params }: Props) {
     return <div>Film introuvable</div>;
   }
 
+  // Determine if we display "min" or "saison(s)" depending on the type
+  const durationText = movie.type === "Série" ? " saison(s)" : "min";
+
   return (
     <div className="w-full text-white mx-auto min-h-screen">
       {session && (
@@ -58,8 +61,9 @@ export default async function Page({ params }: Props) {
         <div className="flex flex-col font-light">
           <span className="font-semibold text-rose-500">
             {movie.countries?.map((country) => country.name).join(", ")} •{" "}
-            {movie.release_date} • {movie.runtime ? `${movie.runtime}min` : ""}{" "}
-            • {movie.type}
+            {movie.release_date} •{" "}
+            {movie.runtime ? `${movie.runtime}${durationText}` : ""} •{" "}
+            {movie.type}
           </span>
         </div>
         <div className="font-bold">
