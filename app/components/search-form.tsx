@@ -77,7 +77,6 @@ export default function SearchForm({
   directors,
   releaseYears,
   userIsAdmin,
-  
 }: SearchFormProps) {
   const router = useRouter();
   const searchParams = useSearchParams();

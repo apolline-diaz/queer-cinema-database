@@ -78,7 +78,7 @@ export default async function Page({ params }: Props) {
           {movie.keywords?.map((keyword) => (
             <Link
               key={keyword.id}
-              href={`/movies?keyword=${encodeURIComponent(keyword.name || "")}`}
+              href={`/movies?keywordIds=${encodeURIComponent(keyword.id.toString())}&searchMode=form`}
             >
               <span className="font-light text-sm rounded-full border border-rose-500 text-rose-500 shadow-md px-2 mr-1 py-1 hover:bg-rose-500 hover:text-white hover:cursor-pointer">
                 {keyword.name}
