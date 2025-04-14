@@ -17,5 +17,5 @@ export const getImageUrl = (image_url: string | null | undefined): string => {
   }
 
   // Sinon, on considère que c'est une image stockée dans Supabase et on ajoute l'URL de base de Supabase
-  return `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/storage/${image_url}`;
+  return `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/storage/${encodeURIComponent(image_url)}`;
 };
