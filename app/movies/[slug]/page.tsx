@@ -40,7 +40,6 @@ export default async function Page({ params }: Props) {
         <Image
           className="object-cover w-full h-full"
           alt={movie.title}
-          priority
           src={getImageUrl(movie.image_url)}
           // title={movie.title}
         />
