@@ -18,14 +18,12 @@ export const getMoviesByWord = async (search: string): Promise<Movie[]> => {
       orderBy: {
         created_at: "desc",
       },
-      take: 20, // Limiter à 20 résultats pour améliorer les performances
     });
 
     return movies;
   }
 
   // Recherche unifiée avec une seule requête utilisant des jointures
-  // Recherche unifiée avec Prisma
   const movies = await prisma.movies.findMany({
     where: {
       OR: [
@@ -78,13 +76,4 @@ export const getMoviesByWord = async (search: string): Promise<Movie[]> => {
   });
 
   return movies;
-};
-
-// Conserver les anciennes fonctions pour rétrocompatibilité si nécessaire
-export const getMoviesByTitle = async (search: string): Promise<Movie[]> => {
-  return getMoviesByWord(search);
-};
-
-export const getMoviesByKeyword = async (search: string): Promise<Movie[]> => {
-  return getMoviesByWord(search);
 };
