@@ -1,6 +1,6 @@
 "use client";
 
-import { Image } from "@/app/components/image";
+import Image from "next/image";
 import { getImageUrl } from "@/utils";
 import Link from "next/link";
 import { DeleteModal } from "./delete-modal";
@@ -64,7 +64,7 @@ export const ListCard: React.FC<ListCardProps> = ({ list }) => {
           <Link href={`/lists/${list.id}`}>
             <Image
               src={getImageUrl(firstMoviePoster)}
-              fill={true}
+              priority
               alt={list.title}
               className="object-cover w-full h-full z-20 transform transition-transform duration-700 ease-in-out group-hover:scale-110 group-hover:brightness-50"
               title={list.title}

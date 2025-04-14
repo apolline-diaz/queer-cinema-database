@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Image } from "@/app/components/image";
+import Image from "next/image";
 import { getImageUrl } from "@/utils";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -30,6 +30,7 @@ export default function Hero({ id, title, image_url }: CardProps) {
       <Image
         src={getImageUrl(image_url)}
         alt={title}
+        priority
         className="absolute inset-0 object-cover w-full h-full"
         title={title}
       />
