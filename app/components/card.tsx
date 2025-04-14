@@ -52,7 +52,7 @@ export default function Card({
             <Image
               src={getImageUrl(image_url)}
               alt={title}
-              className="object-cover w-full h-full transform transition-transform duration-700 ease-in-out group-hover:scale-110 group-hover:brightness-50"
+              className="object-cover w-full h-full transform transition-transform duration-700 ease-in-out group-hover:scale-110 group-hover:brightness-50 group-hover:rounded-xl"
             />
             <div className="absolute bottom-0 left-0 w-full p-5 bg-gradient-to-t via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               <div className="text-md font-semibold uppercase">{title}</div>
