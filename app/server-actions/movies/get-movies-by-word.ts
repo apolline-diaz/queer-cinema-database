@@ -25,26 +25,59 @@ export const getMoviesByWord = async (search: string): Promise<Movie[]> => {
   }
 
   // Recherche unifiée avec une seule requête utilisant des jointures
-  const movies = await prisma.$queryRaw<Movie[]>`
-    SELECT DISTINCT m.id, m.title, m.image_url, m.release_date
-    FROM movies m
-    LEFT JOIN movies_keywords mk ON m.id = mk.movie_id
-    LEFT JOIN keywords k ON mk.keyword_id = k.id
-    LEFT JOIN movies_directors md ON m.id = md.movie_id
-    LEFT JOIN directors d ON md.director_id = d.id
-    LEFT JOIN movies_countries mc ON m.id = mc.movie_id
-    LEFT JOIN countries c ON mc.country_id = c.id
-    LEFT JOIN movies_genres mg ON m.id = mg.movie_id
-    LEFT JOIN genres g ON mg.genre_id = g.id
-    WHERE 
-      m.title ILIKE ${`%${search}%`} OR
-      m.description ILIKE ${`%${search}%`} OR
-      k.name ILIKE ${`%${search}%`} OR
-      d.name ILIKE ${`%${search}%`} OR
-      c.name ILIKE ${`%${search}%`} OR
-      g.name ILIKE ${`%${search}%`}
-    LIMIT 50
-  `;
+  // Recherche unifiée avec Prisma
+  const movies = await prisma.movies.findMany({
+    where: {
+      OR: [
+        { title: { contains: search, mode: "insensitive" } },
+        { description: { contains: search, mode: "insensitive" } },
+        {
+          movies_keywords: {
+            some: {
+              keywords: {
+                name: { contains: search, mode: "insensitive" },
+              },
+            },
+          },
+        },
+        {
+          movies_directors: {
+            some: {
+              directors: {
+                name: { contains: search, mode: "insensitive" },
+              },
+            },
+          },
+        },
+        {
+          movies_countries: {
+            some: {
+              countries: {
+                name: { contains: search, mode: "insensitive" },
+              },
+            },
+          },
+        },
+        {
+          movies_genres: {
+            some: {
+              genres: {
+                name: { contains: search, mode: "insensitive" },
+              },
+            },
+          },
+        },
+      ],
+    },
+    select: {
+      id: true,
+      title: true,
+      image_url: true,
+      release_date: true,
+    },
+    take: 50, // Limiter le nombre de résultats
+    distinct: ["id"], // Éviter les doublons
+  });
 
   return movies;
 };

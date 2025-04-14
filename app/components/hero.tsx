@@ -58,7 +58,12 @@ export default function Hero({ id, title, image_url }: CardProps) {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSearch()}
               />
-              <Icon icon="radix-icons:magnifying-glass" fontSize={20} />
+              <Icon
+                icon="radix-icons:magnifying-glass"
+                fontSize={20}
+                onClick={handleSearch}
+                className="hover:cursor-pointer"
+              />
             </div>
             <Link
               href="/movies"
