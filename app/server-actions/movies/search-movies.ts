@@ -118,12 +118,17 @@ export async function searchMovies({
   );
 }
 
-// Similar approach for other query functions
 export async function getCountries() {
   return cachedQuery(
-    ["countries"],
+    ["countries-with-movies"],
     async () => {
+      // Récupérer uniquement les pays qui ont des associations avec des films
       const countries = await prisma.countries.findMany({
+        where: {
+          movies_countries: {
+            some: {}, // Ceci filtre pour ne garder que les pays ayant au moins une entrée dans movies_countries
+          },
+        },
         orderBy: { name: "asc" },
       });
       return countries.map((country) => ({
@@ -132,7 +137,7 @@ export async function getCountries() {
       }));
     },
     {
-      tags: ["countries"],
+      tags: ["countries-with-movies"],
       revalidate: 86400, // 24 hours cache
     }
   );
