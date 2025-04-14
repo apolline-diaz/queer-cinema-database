@@ -16,6 +16,7 @@ interface CardProps {
 export default function Hero({ id, title, image_url }: CardProps) {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
 
   const handleSearch = () => {
     if (searchQuery.trim()) {
@@ -58,12 +59,16 @@ export default function Hero({ id, title, image_url }: CardProps) {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSearch()}
               />
-              <Icon
-                icon="radix-icons:magnifying-glass"
-                fontSize={20}
-                onClick={handleSearch}
-                className="hover:cursor-pointer"
-              />
+              {isSearching ? (
+                <div className="animate-spin w-5 h-5 border-2 border-white border-t-transparent rounded-full mr-1"></div>
+              ) : (
+                <Icon
+                  icon="radix-icons:magnifying-glass"
+                  fontSize={20}
+                  onClick={handleSearch}
+                  className="hover:cursor-pointer hover:text-rose-500 transition-colors"
+                />
+              )}
             </div>
             <Link
               href="/movies"
