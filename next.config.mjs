@@ -4,15 +4,16 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "media.themoviedb.org",
-      },
-      {
-        protocol: "https",
         hostname: "xcwrhyjbfgzsaslstssc.supabase.co",
       },
       {
         protocol: "https",
         hostname: "images.mubicdn.net",
+      },
+      {
+        protocol: "http",
+        hostname: "127.0.0.1",
+        port: "54331",
       },
     ],
   },
