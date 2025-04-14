@@ -75,8 +75,6 @@ export const getMoviesByWord = async (search: string): Promise<Movie[]> => {
       image_url: true,
       release_date: true,
     },
-    take: 50, // Limiter le nombre de résultats
-    distinct: ["id"], // Éviter les doublons
   });
 
   return movies;
