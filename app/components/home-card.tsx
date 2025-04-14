@@ -26,9 +26,9 @@ export default function HomeCard({
             <Image
               src={getImageUrl(image_url)}
               alt={title}
-              priority
+              fill
+              className="object-cover rounded-xl transition-transform duration-700 ease-in-out group-hover:scale-110 group-hover:brightness-50"
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              className="object-cover h-full w-full rounded-xl transform transition-transform duration-700 ease-in-out group-hover:scale-110 group-hover:brightness-50"
             />
             <div className="absolute bottom-0 left-0 w-full p-5 bg-gradient-to-t via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               <div className="text-md font-semibold uppercase">{title}</div>
