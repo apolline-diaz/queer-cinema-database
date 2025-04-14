@@ -5,7 +5,7 @@ import Link from "next/link";
 import { deleteMovie } from "../server-actions/movies/delete-movie";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Image } from "@/app/components/image";
+import Image from "next/image";
 
 interface CardProps {
   id: string;
@@ -49,13 +49,11 @@ export default function Card({
       <div className="group rounded-xl overflow-hidden flex flex-col transition-transform">
         <div className="relative h-48 overflow-hidden">
           <Link href={`/movies/${id}`}>
-            {/* // eslint-disable-next-line react/jsx-no-undef */}
             <Image
               src={getImageUrl(image_url)}
-              fill={true}
               alt={title}
+              priority
               className="object-cover w-full h-full transform transition-transform duration-700 ease-in-out group-hover:scale-110 group-hover:brightness-50"
-              title={title}
             />
             <div className="absolute bottom-0 left-0 w-full p-5 bg-gradient-to-t via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               <div className="text-md font-semibold uppercase">{title}</div>

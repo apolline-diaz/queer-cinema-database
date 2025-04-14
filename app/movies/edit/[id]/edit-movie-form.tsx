@@ -4,7 +4,7 @@ import { useForm, Controller } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { updateMovie } from "@/app/server-actions/movies/update-movie";
-import { Image } from "@/app/components/image";
+import Image from "next/image";
 import { getImageUrl } from "@/utils/index";
 import { Movie } from "@/app/types/movie";
 import { getKeywords } from "@/app/server-actions/keywords/get-keywords";
@@ -328,7 +328,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
               <Image
                 src={getImageUrl(imagePreview)}
                 alt={movie.title}
-                fill="true"
+                fill={true}
                 style={{ objectFit: "cover" }}
                 className="rounded-md  w-full h-full"
                 title={movie.title}
