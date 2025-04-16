@@ -28,15 +28,6 @@ export default function Hero({ id, title, image_url }: CardProps) {
 
   return (
     <>
-      <style jsx>{`
-        .text-shadow-stroke {
-          text-shadow:
-            -1px -1px 0 #ffffff,
-            1px -1px 0 #ffffff,
-            -1px 1px 0 #ffffff,
-            1px 1px 0 #ffffff;
-        }
-      `}</style>
       <div className="relative bg-red-100 w-full overflow-hidden">
         <div className="relative w-full overflow-hidden h-[70vh]">
           <Image
@@ -46,15 +37,15 @@ export default function Hero({ id, title, image_url }: CardProps) {
             title={title}
           />
           <div className="absolute inset-0 flex flex-col justify-center items-center px-10 gap-y-8">
-            <div className="relative font-semibold w-full sm:text-5xl text-4xl ">
-              <h2 className="text-center">
-                <span className="text-rose-500 text-shadow-stroke">
+            <div className="relative w-full sm:text-5xl text-4xl ">
+              <h2 className="text-center font-bold">
+                <span className="text-white ">
                   Découvrez une sélection de films et d&apos;archives{" "}
                 </span>
-                <span className="text-transparent font-bold bg-clip-text bg-gradient-to-r from-orange-400 via-yellow-300 via-green-400 via-blue-500 to-violet-500">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-yellow-300 via-green-400 via-blue-500 to-violet-500">
                   {/* <span className="text-transparent font-bold bg-clip-text bg-gradient-to-r from-rose-500 via-red-500 via-orange-400 to-yellow-300"> */}
                   LGBTQI+
-                </span>{" "}
+                </span>
               </h2>
             </div>
             {/* Barre de recherche qui redirige vers /movies */}
