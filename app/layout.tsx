@@ -41,7 +41,7 @@ export default function RootLayout({
           shadow="0 0 10px #c42d50, 0 0 5px #c42d50" // Ombre assortie
         />
 
-        <div className="mb-10">
+        <div className="">
           <Header />
         </div>
         <main className="bg-red-100">{children}</main>
