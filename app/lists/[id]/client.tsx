@@ -73,7 +73,9 @@ export default function ListClientPage({
           <h1 className="text-xl text-rose-500 font-semibold">
             {listData.title}
           </h1>
-          <p className="text-white mt-2 mb-6">{listData.description}</p>
+          <p className="text-black font-light mt-2 mb-6">
+            {listData.description}
+          </p>
 
           {/* Button to edit list */}
           <button

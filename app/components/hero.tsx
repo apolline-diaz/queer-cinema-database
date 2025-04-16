@@ -50,10 +50,10 @@ export default function Hero({ id, title, image_url }: CardProps) {
             </div>
             {/* Barre de recherche qui redirige vers /movies */}
             <div className="z-10 flex flex-col sm:flex-row gap-5 justify-center items-center">
-              <div className="flex flex-row items-center bg-red-100 justify-center border rounded-xl px-4 border-red-500">
+              <div className="flex flex-row items-center bg-white justify-center border rounded-xl px-4 border-red-500">
                 <input
                   type="text"
-                  className="z-10 max-h-12  min-w-52 flex-1 py-4 bg-red-100 text-rose-500 font-light focus:outline-none"
+                  className="z-10 max-h-12  min-w-52 flex-1 py-4 bg-white placeholder-rose-500 text-rose-500 font-light focus:outline-none"
                   placeholder="Rechercher un mot..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}

@@ -157,13 +157,13 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                     </li>
 
                     {!user ? (
-                      <li className="hover:text-rose-500 hover:border-rose-500 py-1 px-3 rounded-full border border-rose-500">
+                      <li className="hover:text-rose-500 hover:bg-red-100 hover:border-rose-500 py-1 px-3 rounded-full border border-rose-500">
                         <Link href="/login">Connexion</Link>
                       </li>
                     ) : (
                       <li>
                         <form action={logout}>
-                          <button className="hover:text-rose-500 hover:border-rose-500 py-1 px-3 rounded-full border border-rose-500">
+                          <button className="hover:text-rose-500 hover:bg-red-100 hover:border-rose-500 py-1 px-3 rounded-full border border-rose-500">
                             Se déconnecter
                           </button>
                         </form>
@@ -217,7 +217,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                     <li>
                       <Link
                         href="/login"
-                        className="hover:text-rose-500 hover:border-rose-500 py-1 px-3 rounded-full border border-rose-500"
+                        className="hover:text-rose-500 hover:bg-red-100 hover:border-rose-500 py-1 px-3 rounded-full border border-rose-500"
                       >
                         Connexion
                       </Link>
@@ -225,7 +225,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                   ) : (
                     <li>
                       <form action={logout}>
-                        <button className="hover:text-rose-500 hover:border-rose-500 py-1 px-3 rounded-full border border-rose-500">
+                        <button className="hover:text-rose-500 hover:bg-red-100 hover:border-rose-500 py-1 px-3 rounded-full border border-rose-500">
                           Se déconnecter
                         </button>
                       </form>

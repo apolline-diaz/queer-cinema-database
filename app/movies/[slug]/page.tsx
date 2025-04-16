@@ -73,7 +73,7 @@ export default async function Page({ params }: Props) {
             </span>
           )}
         </div>
-        <p className="py-2 font-light text-rose-500">{movie.description}</p>
+        <p className="py-2 font-light text-black">{movie.description}</p>
         <div className="font-bold flex items-center flex-wrap gap-2">
           {movie.keywords?.map((keyword) => (
             <Link
