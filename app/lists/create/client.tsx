@@ -99,7 +99,7 @@ const CreateListPage: React.FC = () => {
   };
 
   return (
-    <div className="px-10 py-5">
+    <div className="px-10 py-20">
       <div className="tracking-wide text-2xl text-rose-500 mb-5">
         Créer une liste de films
       </div>

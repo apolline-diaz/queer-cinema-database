@@ -31,10 +31,10 @@ export default function Hero({ id, title, image_url }: CardProps) {
       <style jsx>{`
         .text-shadow-stroke {
           text-shadow:
-            -1px -1px 0 #fee2e2,
-            1px -1px 0 #fee2e2,
-            -1px 1px 0 #fee2e2,
-            1px 1px 0 #fee2e2;
+            -1px -1px 0 #ffffff,
+            1px -1px 0 #ffffff,
+            -1px 1px 0 #ffffff,
+            1px 1px 0 #ffffff;
         }
       `}</style>
       <div className="relative bg-red-100 w-full overflow-hidden">
@@ -47,8 +47,8 @@ export default function Hero({ id, title, image_url }: CardProps) {
           />
           <div className="absolute inset-0 flex flex-col justify-center items-center px-10 gap-y-8">
             <div className="relative font-semibold w-full sm:text-5xl text-4xl ">
-              <h2 className=" text-center">
-                <span className="text-white text-shadow-stroke">
+              <h2 className="text-center">
+                <span className="text-rose-500 text-shadow-stroke">
                   Découvrez une sélection de films et d&apos;archives{" "}
                 </span>
                 <span className="text-transparent font-bold bg-clip-text bg-gradient-to-r from-orange-400 via-yellow-300 via-green-400 via-blue-500 to-violet-500">

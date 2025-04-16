@@ -29,7 +29,7 @@ export default async function Home() {
             <div className="flex justify-between items-center mb-2">
               <h2 className="text-md text-rose-500">Derniers ajouts </h2>
               <Link
-                href="/movies?startYear=1990&endYear=1999"
+                href="/movies"
                 className="border rounded-xl px-2 py-1 border-rose-500 text-rose-500 hover:text-rose-400 hover:border-rose-400 text-sm"
               >
                 Voir plus{" "}

@@ -111,16 +111,16 @@ export default function ClientMovieActions({ movieId, userIsAdmin }: Props) {
         <button
           onClick={toggleMenu}
           aria-label="Gérer les listes"
-          className="z-10 p-2 bg-gray-800 rounded-full transition-all duration-300 ease-in-out hover:bg-gray-700"
+          className="z-10 p-2 bg-red-100 text-rose-500 rounded-full transition-all duration-300 ease-in-out hover:bg-rose-500 hover:text-white"
         >
           <Icon
-            icon={isLoading && !isDataFetched ? "lucide:loader" : "lucide:list"}
+            icon={isLoading && !isDataFetched ? "lucide:loader" : "lucide:plus"}
             className={isLoading && !isDataFetched ? "animate-spin" : ""}
           />
         </button>
 
         {isMenuOpen && (
-          <div className="absolute top-full mt-2 w-48 rounded-lg text-white bg-black shadow-lg">
+          <div className="absolute top-full mt-2 w-48 rounded-lg text-rose-500 bg-red-100 shadow-lg">
             {lists.length === 0 ? (
               <p className="text-sm text-gray-500 px-3 py-2">
                 {isLoading

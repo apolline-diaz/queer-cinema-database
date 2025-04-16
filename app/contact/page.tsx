@@ -54,7 +54,7 @@ export default function ContactForm() {
   };
 
   return (
-    <div className="px-10 py-5">
+    <div className="px-10 py-20">
       <h2 className="text-2xl text-rose-500 mb-4">Contactez-nous</h2>
       <div className="sm:w-1/2 w-full">
         {status === "success" && (
