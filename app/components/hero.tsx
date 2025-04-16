@@ -27,8 +27,8 @@ export default function Hero({ id, title, image_url }: CardProps) {
   };
 
   return (
-    <div className="relative bg-black min-h-screen w-full">
-      <div className="relative w-full h-[100vh]">
+    <div className="relative bg-red-100 w-full">
+      <div className="relative w-full h-[70vh]">
         <Image
           src={getImageUrl(image_url)}
           alt={title}
@@ -38,7 +38,6 @@ export default function Hero({ id, title, image_url }: CardProps) {
           className="object-cover"
         />
         <div className="absolute inset-0 flex flex-col justify-center items-center pt-18 px-10 gap-y-8">
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
           <div className="relative font-semibold w-full sm:text-5xl text-4xl ">
             <h2 className=" text-white text-center">
               Découvrez l&apos;histoire du cinéma{" "}
@@ -50,10 +49,10 @@ export default function Hero({ id, title, image_url }: CardProps) {
           </div>
           {/* Barre de recherche qui redirige vers /movies */}
           <div className="z-10 flex flex-col sm:flex-row gap-5 justify-center items-center">
-            <div className="flex flex-row items-center bg-black justify-center border rounded-xl px-4 border-white">
+            <div className="flex flex-row items-center bg-white justify-center border rounded-xl px-4 border-red-500">
               <input
                 type="text"
-                className="z-10 max-h-12  min-w-52 flex-1 py-4 bg-black text-white focus:outline-none"
+                className="z-10 max-h-12  min-w-52 flex-1 py-4 bg-white text-white focus:outline-none"
                 placeholder="Rechercher un mot..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -66,7 +65,7 @@ export default function Hero({ id, title, image_url }: CardProps) {
                   icon="radix-icons:magnifying-glass"
                   fontSize={20}
                   onClick={handleSearch}
-                  className="hover:cursor-pointer hover:text-rose-500 transition-colors"
+                  className="text-rose-500 hover:cursor-pointer hover:text-rose-600 transition-colors"
                 />
               )}
             </div>

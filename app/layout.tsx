@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} bg-neutral-950 min-h-screen text-white flex flex-col`}
+        className={`${inter.className} bg-red-100 min-h-screen text-white flex flex-col`}
       >
         <TopLoader
           color="#c42d50" // Rose foncé tirant vers le rouge
@@ -44,7 +44,7 @@ export default function RootLayout({
         <div className="mb-10">
           <Header />
         </div>
-        <main className="">{children}</main>
+        <main className="bg-red-100">{children}</main>
         <div className="mt-auto">
           <Footer />
         </div>

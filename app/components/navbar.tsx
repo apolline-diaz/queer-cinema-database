@@ -34,12 +34,13 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
   const normalLinkClass = "hover:underline underline-offset-8";
 
   return (
-    <div className="w-full fixed top-0 left-0 z-50 text-md bg-neutral-950">
+    <div className="w-full fixed top-0 left-0 z-50 text-md bg-red-100">
       <div className="flex flex-row w-full items-center justify-between gap-10  px-10 py-3">
         {/* Logo */}
         <Link href="/">
           <h2 className="text-white text-xl xs:text-md">
-            movie <span className="text-rose-500">diary</span>
+            <span className="text-rose-500">queer</span>{" "}
+            <span className="">videoclub</span>
           </h2>
         </Link>
 

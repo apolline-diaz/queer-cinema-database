@@ -20,8 +20,8 @@ export default async function Home() {
     const ninetiesMovies = await getMoviesByYearRange("1990", "1999");
 
     return (
-      <main className="w-full bg-black ">
-        <div className="w-full min-h-screen flex items-center justify-center cover">
+      <main className="w-full bg-red-100">
+        <div className="w-full">
           {topMovies.map((movie) => (
             <Hero
               key={`${movie.title}-${movie.id}`}

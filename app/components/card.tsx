@@ -11,6 +11,8 @@ interface CardProps {
   id: string;
   title: string;
   image_url?: string | null;
+  description?: string | null;
+
   userIsAdmin: boolean;
   release_date?: string | null;
 }
@@ -19,6 +21,7 @@ export default function Card({
   id,
   title,
   image_url,
+  description,
   userIsAdmin,
   release_date,
 }: CardProps) {
@@ -45,8 +48,8 @@ export default function Card({
 
   // **Ici on s'assure de retourner un JSX valide !**
   return (
-    <div className="gap-4 relative group">
-      <div className="group rounded-xl overflow-hidden flex flex-col transition-transform">
+    <div className="relative group">
+      <div className="rounded-xl overflow-hidden flex flex-col">
         <div className="relative h-48 overflow-hidden">
           <Link href={`/movies/${id}`}>
             <Image
@@ -55,11 +58,6 @@ export default function Card({
               fill
               className="object-cover w-full h-full transform transition-transform duration-700 ease-in-out group-hover:scale-110 group-hover:brightness-50 group-hover:rounded-xl"
             />
-            <div className="absolute bottom-0 left-0 w-full p-5 bg-gradient-to-t via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <div className="text-md font-semibold uppercase">{title}</div>
-              <p className="text-sm text-gray-300">{release_date}</p>
-              {/* <p className="absolute text-sm text-gray-200 mt-2">{description}</p> */}
-            </div>
           </Link>
 
           {userIsAdmin && (
@@ -71,8 +69,20 @@ export default function Card({
               <Icon icon="lucide:trash" style={{ fontSize: 15 }} />
             </button>
           )}
+          <div className="absolute bottom-0 left-0 w-full p-5 ">
+            <div className="text-md font-semibold uppercase">{title}</div>
+            <p className="text-sm">{release_date}</p>
+          </div>
         </div>
       </div>
+      {/* Description qui s'ouvre vers le bas */}
+      {description && (
+        <div className="absolute left-0 right-0 z-10 transform translate-y-0 transition-all duration-300 ease-in-out opacity-0 max-h-0 overflow-hidden group-hover:opacity-100 group-hover:max-h-40 group-hover:translate-y-0">
+          <div className="bg-black bg-opacity-80 mt-0 p-3 rounded-b-xl text-sm text-gray-200">
+            {description}
+          </div>
+        </div>
+      )}{" "}
       <DeleteModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
