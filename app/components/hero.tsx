@@ -40,11 +40,11 @@ export default function Hero({ id, title, image_url }: CardProps) {
         <div className="absolute inset-0 flex flex-col justify-center items-center pt-18 px-10 gap-y-8">
           <div className="relative font-semibold w-full sm:text-5xl text-4xl ">
             <h2 className=" text-white text-center">
-              Découvrez l&apos;histoire du cinéma{" "}
-              <span className="text-transparent text-bold bg-clip-text bg-gradient-to-r from-red-500 via-yellow-500 via-green-500 via-blue-500 via-indigo-500 to-purple-500">
+              Découvrez une sélection de films et d&apos;archives{" "}
+              <span className="text-transparent font-bold bg-clip-text bg-gradient-to-r from-red-500 via-orange-400 to-yellow-300">
+                {/* <span className="text-transparent font-bold bg-clip-text bg-gradient-to-r from-rose-500 via-red-500 via-orange-400 to-yellow-300"> */}
                 LGBTQI+
               </span>{" "}
-              et ses archives.
             </h2>
           </div>
           {/* Barre de recherche qui redirige vers /movies */}

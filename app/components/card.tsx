@@ -11,8 +11,6 @@ interface CardProps {
   id: string;
   title: string;
   image_url?: string | null;
-  description?: string | null;
-
   userIsAdmin: boolean;
   release_date?: string | null;
 }
@@ -21,7 +19,6 @@ export default function Card({
   id,
   title,
   image_url,
-  description,
   userIsAdmin,
   release_date,
 }: CardProps) {
@@ -75,14 +72,7 @@ export default function Card({
           </div>
         </div>
       </div>
-      {/* Description qui s'ouvre vers le bas */}
-      {description && (
-        <div className="absolute left-0 right-0 z-10 transform translate-y-0 transition-all duration-300 ease-in-out opacity-0 max-h-0 overflow-hidden group-hover:opacity-100 group-hover:max-h-40 group-hover:translate-y-0">
-          <div className="bg-black bg-opacity-80 mt-0 p-3 rounded-b-xl text-sm text-gray-200">
-            {description}
-          </div>
-        </div>
-      )}{" "}
+
       <DeleteModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
