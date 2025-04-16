@@ -37,9 +37,9 @@ export default function Hero({ id, title, image_url }: CardProps) {
         />
         <div className="absolute inset-0 flex flex-col justify-center items-center px-10 gap-y-8">
           <div className="relative font-semibold w-full sm:text-5xl text-4xl ">
-            <h2 className=" text-white text-center">
+            <h2 className=" text-rose-500 text-center">
               Découvrez une sélection de films et d&apos;archives{" "}
-              <span className="text-transparent font-bold bg-clip-text bg-gradient-to-r from-red-500 via-orange-400 to-yellow-300">
+              <span className="text-transparent font-bold bg-clip-text bg-gradient-to-r from-orange-400 via-yellow-300 via-green-400 via-blue-500 to-violet-500">
                 {/* <span className="text-transparent font-bold bg-clip-text bg-gradient-to-r from-rose-500 via-red-500 via-orange-400 to-yellow-300"> */}
                 LGBTQI+
               </span>{" "}
@@ -47,10 +47,10 @@ export default function Hero({ id, title, image_url }: CardProps) {
           </div>
           {/* Barre de recherche qui redirige vers /movies */}
           <div className="z-10 flex flex-col sm:flex-row gap-5 justify-center items-center">
-            <div className="flex flex-row items-center bg-white justify-center border rounded-xl px-4 border-red-500">
+            <div className="flex flex-row items-center bg-red-100 justify-center border rounded-xl px-4 border-red-500">
               <input
                 type="text"
-                className="z-10 max-h-12  min-w-52 flex-1 py-4 bg-white text-white focus:outline-none"
+                className="z-10 max-h-12  min-w-52 flex-1 py-4 bg-red-100 text-white focus:outline-none"
                 placeholder="Rechercher un mot..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}

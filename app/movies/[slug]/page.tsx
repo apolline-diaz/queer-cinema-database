@@ -36,7 +36,7 @@ export default async function Page({ params }: Props) {
           userIsAdmin={userIsAdmin}
         />
       )}
-      <div className="h-[50vh] relative">
+      <div className="h-[75vh] relative">
         <Image
           className="object-cover w-full h-full"
           alt={movie.title}

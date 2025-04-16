@@ -33,17 +33,17 @@ function CollapsibleSection({ title, children }: CollapsibleSectionProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className=" overflow-hidden border-b border-white">
+    <div className=" overflow-hidden border-b border-rose-500">
       <button
         type="button"
         className="w-full flex justify-between items-center text-left"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <span className="font-medium text-sm mb-2">{title}</span>
+        <span className="font-medium text-rose-500 text-sm mb-2">{title}</span>
         {isOpen ? (
-          <Icon icon="line-md:chevron-up" className="size-5" />
+          <Icon icon="line-md:chevron-up" className="text-rose-500 size-5" />
         ) : (
-          <Icon icon="line-md:chevron-down" className="size-5" />
+          <Icon icon="line-md:chevron-down" className="size-5 text-rose-500 " />
         )}
       </button>
       {isOpen && <div className="mb-2">{children}</div>}
@@ -206,10 +206,7 @@ export default function SearchForm({
 
   return (
     <>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="mt-4 p-4 border rounded-xl mb-4"
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className="mt-4 mb-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 w-full gap-4 justify-between mb-5">
           <CollapsibleSection title="Période">
             <div className="grid grid-cols-2 gap-2">
@@ -334,7 +331,7 @@ export default function SearchForm({
           <button
             type="button"
             onClick={handleReset}
-            className="xs:w-full sm:w-[200px] border hover:border-rose-500 hover:text-rose-500 text-white px-4 py-2 rounded-md"
+            className="xs:w-full sm:w-[200px] border hover:border-red-600 hover:text-red-600 text-rose-500 px-4 py-2 border-rose-500 rounded-md"
             disabled={isLoading}
           >
             Réinitialiser

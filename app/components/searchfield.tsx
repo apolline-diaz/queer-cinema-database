@@ -102,7 +102,7 @@ export default function Searchfield({
 
   return (
     <div className="w-full my-4">
-      <div className="px-4 py-2 border rounded-xl mb-4">
+      <div className=" mb-4">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="text-sm w-full xs:w-1/2 my-2 flex flex-col sm:flex-row gap-3">
             <div className="w-full">
@@ -112,8 +112,8 @@ export default function Searchfield({
                 render={({ field }) => (
                   <input
                     {...field}
-                    className="appearance-none text-md font-light block w-full bg-neutral-950 border-b border-b-white text-gray-200 py-2 leading-tight focus:none focus:outline-none"
-                    placeholder="Entrez un mot ou titre"
+                    className="appearance-none text-md font-light block w-full bg-red-100 border-b border-rose-500 text-gray-200 py-2 leading-tight focus:none focus:outline-none"
+                    placeholder="Entrez un mot ou un titre..."
                   />
                 )}
               />
