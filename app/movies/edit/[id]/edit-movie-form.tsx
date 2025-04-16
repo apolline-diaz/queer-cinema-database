@@ -328,7 +328,6 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
               <Image
                 src={getImageUrl(imagePreview)}
                 alt={movie.title}
-                fill={true}
                 style={{ objectFit: "cover" }}
                 className="rounded-md  w-full h-full"
                 title={movie.title}

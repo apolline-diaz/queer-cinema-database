@@ -27,13 +27,11 @@ export default function Hero({ id, title, image_url }: CardProps) {
   };
 
   return (
-    <div className="relative bg-red-100 w-full">
-      <div className="relative w-full h-[70vh]">
+    <div className="relative bg-red-100 w-full overflow-hidden">
+      <div className="relative w-full overflow-hidden h-[70vh]">
         <Image
           src={getImageUrl(image_url)}
           alt={title}
-          priority
-          fill
           sizes="100vw"
           className="object-cover"
           title={title}

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { logout } from "../logout/actions";
 import { User } from "@supabase/supabase-js";
 import { usePathname } from "next/navigation";
@@ -14,10 +14,23 @@ interface HeaderProps {
 export default function Navbar({ user, userIsAdmin }: HeaderProps) {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const handleClick = () => {
     setIsOpen(!isOpen);
   };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   // Function to define if a link is active
   const isActive = (path: string) => {
@@ -35,7 +48,11 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
     "hover:underline hover:decoration-rose-500 underline-offset-8";
 
   return (
-    <div className="text-rose-500 w-full fixed top-0 left-0 z-50 text-md bg-red-100">
+    <div
+      className={`text-rose-500 w-full fixed top-0 left-0 z-50 text-md transition-all duration-300 ${
+        isScrolled ? "bg-red-100" : "bg-transparent"
+      }`}
+    >
       <div className="flex flex-row w-full items-center justify-between gap-10  px-10 py-3">
         {/* Logo */}
         <Link href="/">
@@ -71,7 +88,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
 
               {/* mobile menu */}
               <div
-                className={`text-black absolute top-0 right-0 h-screen w-1/2 xs:w-1/2 sm:w-1/2 bg-rose-100 border-l border-rose-500 md:w-1/3 p-4 transform ${
+                className={`text-black absolute top-0 right-0 h-screen w-1/2 xs:w-1/2 sm:w-1/2 bg-red-100 border-l border-rose-500 md:w-1/3 p-4 transform ${
                   isOpen ? "translate-x-0" : "translate-x-full"
                 } transition-transform duration-300 ease-in-out`}
               >
@@ -95,7 +112,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                 </button>
 
                 {/* mobile navigation links */}
-                <ul className="bg-rose-100 flex text-rose-500 flex-col items-center justify-between gap-5 h-full mt-6">
+                <ul className="bg-red-100 flex text-rose-500 flex-col items-center justify-between gap-5 h-full mt-6">
                   <div className="flex flex-col items-center justify-center gap-5">
                     <li
                       className={

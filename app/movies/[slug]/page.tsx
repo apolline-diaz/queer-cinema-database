@@ -40,7 +40,6 @@ export default async function Page({ params }: Props) {
         <Image
           className="object-cover w-full h-full"
           alt={movie.title}
-          fill
           src={getImageUrl(movie.image_url)}
           title={movie.title}
         />
@@ -74,14 +73,14 @@ export default async function Page({ params }: Props) {
             </span>
           )}
         </div>
-        <p className="py-2 font-light">{movie.description}</p>
+        <p className="py-2 font-light text-rose-500">{movie.description}</p>
         <div className="font-bold flex items-center flex-wrap gap-2">
           {movie.keywords?.map((keyword) => (
             <Link
               key={keyword.id}
               href={`/movies?keywordIds=${encodeURIComponent(keyword.id.toString())}&searchMode=form`}
             >
-              <span className="font-light text-sm rounded-full border border-rose-500 text-rose-500 shadow-md px-2 mr-1 py-1 hover:bg-rose-500 hover:text-white hover:cursor-pointer">
+              <span className="font-light text-sm rounded-full border border-rose-500 text-rose-500 px-2 mr-1 py-1 hover:bg-rose-500 hover:text-white hover:cursor-pointer">
                 {keyword.name}
               </span>
             </Link>
