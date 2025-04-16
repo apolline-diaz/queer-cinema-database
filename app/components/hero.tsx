@@ -32,11 +32,10 @@ export default function Hero({ id, title, image_url }: CardProps) {
         <Image
           src={getImageUrl(image_url)}
           alt={title}
-          sizes="100vw"
-          className="object-cover"
+          className="object-cover h-full w-full"
           title={title}
         />
-        <div className="absolute inset-0 flex flex-col justify-center items-center pt-18 px-10 gap-y-8">
+        <div className="absolute inset-0 flex flex-col justify-center items-center px-10 gap-y-8">
           <div className="relative font-semibold w-full sm:text-5xl text-4xl ">
             <h2 className=" text-white text-center">
               Découvrez une sélection de films et d&apos;archives{" "}

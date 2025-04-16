@@ -26,7 +26,7 @@ export default function HomeCard({
             <Image
               src={getImageUrl(image_url)}
               alt={title}
-              className="object-cover rounded-xl transition-transform duration-700 ease-in-out group-hover:scale-110 group-hover:brightness-50 group-hover:rounded-xl"
+              className="object-cover w-full h-full rounded-xl transition-transform duration-700 ease-in-out group-hover:scale-110 group-hover:brightness-50 group-hover:rounded-xl"
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               title={title}
             />

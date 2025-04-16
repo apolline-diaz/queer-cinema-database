@@ -20,7 +20,7 @@ export default async function Home() {
 
     return (
       <main className="w-full bg-red-100">
-        <div className="w-full border border-rose-500">
+        <div className="w-full ">
           {topMovies.map((movie) => (
             <Hero
               key={`${movie.title}-${movie.id}`}
