@@ -129,7 +129,7 @@ export default function Searchfield({
             <button
               type="button"
               onClick={handleReset}
-              className="xs:w-full sm:w-[200px] border hover:border-rose-500 hover:text-rose-500 text-white px-4 py-2 rounded-md"
+              className="xs:w-full sm:w-[200px] border hover:border-red-600 hover:text-red-600 text-rose-500 px-4 py-2 border-rose-500 rounded-md"
             >
               Réinitialiser
             </button>

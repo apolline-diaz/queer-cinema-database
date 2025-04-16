@@ -1,3 +1,5 @@
+"use server";
+
 import { prisma } from "@/lib/prisma"; // à adapter selon ton path réel
 
 export const getLatestMovies = async () => {

@@ -4,7 +4,7 @@ export default function About() {
   return (
     <div className="px-10 py-20 mb-5">
       <h2 className="text-rose-500 text-xl mb-6">À propos</h2>
-      <div className="text-rose-500">
+      <div className="text-black">
         <p className="sm:w-3/4 w-full text-sm font-light  mb-4">
           Ce site est né du souhait d&apos;archiver le compte Instagram
           <a

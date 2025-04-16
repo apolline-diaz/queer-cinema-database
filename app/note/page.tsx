@@ -4,10 +4,10 @@ export default function Note() {
   return (
     <div className="px-10 py-20 mb-5">
       <h2 className="text-rose-500 text-xl mb-6">Note d'intention</h2>
-      <div className="text-rose-500">
+      <div className="text-rose-500 ">
         <div className="grid grid-col-1 gap-5">
-          <h3 className="font-bold mb-3">Le choix des films</h3>
-          <p className="text-sm text-black">
+          <h3 className="font-bold">Le choix des films</h3>
+          <p className="text-sm font-light text-black">
             Cette base de données n&apos;a pas pour objectif d&apos;être
             exhaustive et d&apos;inclure toutes les oeuvres existantes. Elle
             provient de recherches personnelles et collectives. L&apos;intérêt
@@ -24,8 +24,8 @@ export default function Note() {
             </span>
           </p>
 
-          <h3 className="font-bold mb-3">Pourquoi indexer les films?</h3>
-          <p className="text-sm text-black">
+          <h3 className="font-bold">Pourquoi indexer les films?</h3>
+          <p className="text-sm font-light text-black">
             L&apos;indexation permet une recherche plus spécifique des films.
             Face à la masse de productions sur les sujets LGBTQI+ qui existe
             aujourd&apos;hui, il est difficile de trouver une oeuvre qui
@@ -50,8 +50,8 @@ export default function Note() {
             <br />
           </p>
 
-          <h3 className="font-bold mb-3">Le choix des mots-clé</h3>
-          <p className="text-sm text-black">
+          <h3 className="font-bold">Le choix des mots-clé</h3>
+          <p className="text-sm font-light text-black">
             Afin de mieux répertorier les films, les mots-clé qui leur sont
             associés permettent à l&apos;utilisateur d&apos;avoir une vision
             globale des sujets abordés.
