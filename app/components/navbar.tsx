@@ -155,8 +155,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                         <Link href="/movies/create">Contribuer</Link>
                       )}
                     </li>
-                  </div>
-                  <div className="py-10">
+
                     {!user ? (
                       <li className="hover:text-rose-500 hover:border-rose-500 py-1 px-3 rounded-full border border-rose-500">
                         <Link href="/login">Connexion</Link>
@@ -164,7 +163,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                     ) : (
                       <li>
                         <form action={logout}>
-                          <button className="hover:text-rose-500 hover:border-rose-500 py-1 px-3 rounded-full border borderr-rose-500">
+                          <button className="hover:text-rose-500 hover:border-rose-500 py-1 px-3 rounded-full border border-rose-500">
                             Se déconnecter
                           </button>
                         </form>

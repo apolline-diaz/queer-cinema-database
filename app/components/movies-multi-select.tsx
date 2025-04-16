@@ -81,7 +81,7 @@ export default function MoviesMultiSelect({
               {/* Input de recherche */}
               <input
                 type="text"
-                className="block appearance-none w-full text-sm font-light p-2 border rounded-md bg-transparent"
+                className="block appearance-none w-full text-sm font-light p-2 border rounded-md bg-white border-rose-500"
                 placeholder={placeholder || "Rechercher..."}
                 value={inputValue}
                 onChange={handleInputChange}

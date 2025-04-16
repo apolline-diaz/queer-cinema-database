@@ -104,15 +104,15 @@ const CreateListPage: React.FC = () => {
         Créer une liste de films
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="py-5">
+      <form onSubmit={handleSubmit(onSubmit)} className="py-5 text-rose-500">
         {/* Title of the list */}
         <div className="w-full md:w-1/2 mb-6">
-          <label className="block text-sm mb-2" htmlFor="title">
+          <label className="block font-medium text-sm mb-2" htmlFor="title">
             Titre de la liste
           </label>
           <input
             {...register("title", { required: "Le titre est requis" })}
-            className="block w-full text-sm bg-neutral-950 border-b py-3 focus:outline-none"
+            className="block w-full text-sm border-rose-500 bg-transparent border-b py-2 focus:outline-none"
             placeholder="Mon top 2025"
           />
           {errors.title && (
@@ -122,39 +122,47 @@ const CreateListPage: React.FC = () => {
 
         {/* Description of the list */}
         <div className="w-full md:w-1/2 mt-3 mb-6">
-          <label className="block text-sm mb-2" htmlFor="description">
+          <label
+            className="block font-medium text-sm mb-2"
+            htmlFor="description"
+          >
             Description
           </label>
           <textarea
             {...register("description")}
-            className="block w-full text-sm bg-neutral-950 border py-3 px-4 rounded focus:outline-none"
+            className="block w-full text-sm bg-white border-rose-500 border py-3 px-4 rounded focus:outline-none"
             placeholder="Liste des films préférés sortis en 2025"
           />
         </div>
 
         {/* Movies Selection */}
         <div className="w-full md:w-1/2 mt-3 mb-6">
-          <label className="block text-sm mb-2" htmlFor="movie_search">
+          <label
+            className="block font-medium text-sm mb-2"
+            htmlFor="movie_search"
+          >
             Films
           </label>
           <input
             value={movieInput}
             onChange={handleMovieInputChange}
             placeholder="Rechercher des films"
-            className="block w-full text-sm bg-neutral-950 border py-2 px-3 rounded focus:outline-none"
+            className="block w-full text-sm bg-white border-rose-500 border py-2 px-3 rounded focus:outline-none"
           />
 
           {/* Suggestions de films */}
           {isSearching && filteredMovies.length > 0 && (
-            <ul className="absolute border bg-neutral-950 rounded-lg text-sm border-gray-300 mt-1 z-10">
+            <ul className="absolute border bg-red-100 rounded-lg text-sm border-rose-500 mt-1 z-10">
               {filteredMovies.map((movie) => (
                 <li
                   key={movie.id}
-                  className="px-4 py-2 cursor-pointer hover:bg-gray-800"
+                  className="px-4 py-2 cursor-pointer uppercase hover:bg-red-100"
                   onClick={() => handleAddMovie(movie)}
                 >
                   {movie.title}{" "}
-                  <span className="text-gray-400">{movie.release_date}</span>
+                  <span className="text-red-600 font-semibold">
+                    {movie.release_date}
+                  </span>
                 </li>
               ))}
             </ul>

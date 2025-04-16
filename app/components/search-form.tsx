@@ -350,11 +350,11 @@ export default function SearchForm({
           Array.from({ length: 8 }).map((_, index) => (
             <div
               key={index}
-              className="animate-pulse rounded-xl bg-gray-500 h-48 w-full justify-end max-w-xs mx-auto group overflow-hidden flex flex-col transition-transform"
+              className="animate-pulse rounded-xl bg-gray-300 h-48 w-full justify-end max-w-xs mx-auto group overflow-hidden flex flex-col transition-transform"
             >
               <div className="flex flex-col p-5 space-y-2">
-                <div className="h-6 bg-gray-400 rounded w-3/4 mb-2"></div>
-                <div className="h-4 bg-gray-400 rounded w-1/3 mb-2"></div>
+                <div className="h-6 bg-gray-200 rounded w-3/4 mb-2"></div>
+                <div className="h-4 bg-gray-200 rounded w-1/3 mb-2"></div>
               </div>
             </div>
           ))
@@ -376,7 +376,7 @@ export default function SearchForm({
       {visibleCount < movies.length && !isLoading && (
         <button
           onClick={loadMore}
-          className="w-full flex flex-row justify-center items-center border-b border-t mt-4 px-4 py-2 hover:border-rose-500 text-white hover:text-rose-600"
+          className="w-full flex flex-row justify-center items-center border-b border-t mt-4 px-4 py-2 hover:border-red-600 text-rose-500 hover:text-red-600"
         >
           Voir plus <Icon icon="mdi:chevron-down" className="size-5" />
         </button>

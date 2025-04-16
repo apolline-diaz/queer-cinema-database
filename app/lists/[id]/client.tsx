@@ -40,7 +40,7 @@ export default function ListClientPage({
   }, [id]);
 
   return (
-    <div className="p-10">
+    <div className="p-10 py-20">
       {isLoading ? (
         <div>
           {/* Skeleton for the title */}
