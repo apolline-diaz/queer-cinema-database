@@ -5,7 +5,7 @@ import Link from "next/link";
 import { deleteMovie } from "../server-actions/movies/delete-movie";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
+import { Image } from "@/app/components/image";
 
 interface CardProps {
   id: string;
@@ -54,6 +54,7 @@ export default function Card({
               alt={title}
               fill
               className="object-cover w-full h-full transform transition-transform duration-700 ease-in-out group-hover:scale-110 group-hover:brightness-50 group-hover:rounded-xl"
+              title={title}
             />
           </Link>
 

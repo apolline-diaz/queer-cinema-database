@@ -2,7 +2,7 @@
 
 import { getImageUrl } from "@/utils";
 import Link from "next/link";
-import Image from "next/image";
+import { Image } from "@/app/components/image";
 
 interface CardProps {
   id: string;
@@ -29,6 +29,7 @@ export default function HomeCard({
               fill
               className="object-cover rounded-xl transition-transform duration-700 ease-in-out group-hover:scale-110 group-hover:brightness-50 group-hover:rounded-xl"
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              title={title}
             />
 
             <div className="bottom-0 absolute w-full p-5">

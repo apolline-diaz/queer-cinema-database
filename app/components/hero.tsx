@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
+import { Image } from "@/app/components/image";
 import { getImageUrl } from "@/utils";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -36,6 +36,7 @@ export default function Hero({ id, title, image_url }: CardProps) {
           fill
           sizes="100vw"
           className="object-cover"
+          title={title}
         />
         <div className="absolute inset-0 flex flex-col justify-center items-center pt-18 px-10 gap-y-8">
           <div className="relative font-semibold w-full sm:text-5xl text-4xl ">

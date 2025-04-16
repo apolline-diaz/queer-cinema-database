@@ -4,7 +4,7 @@ import { useForm, Controller } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { updateMovie } from "@/app/server-actions/movies/update-movie";
-import Image from "next/image";
+import { Image } from "@/app/components/image";
 import { getImageUrl } from "@/utils/index";
 import { Movie } from "@/app/types/movie";
 import { getKeywords } from "@/app/server-actions/keywords/get-keywords";

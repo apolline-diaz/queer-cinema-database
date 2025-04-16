@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { Image } from "@/app/components/image";
 import { getImageUrl } from "@/utils/index";
 import { getMovie } from "@/app/server-actions/movies/get-movie";
 import Link from "next/link";
@@ -42,7 +42,7 @@ export default async function Page({ params }: Props) {
           alt={movie.title}
           fill
           src={getImageUrl(movie.image_url)}
-          // title={movie.title}s"
+          title={movie.title}
         />
 
         <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-30 w-full h-full text-white p-10 flex justify-between items-end">
