@@ -116,7 +116,7 @@ export default function EditListPage({ params }: { params: { id: string } }) {
           <div className="mb-6">
             <label className="block text-sm font-medium mb-2">Titre</label>
             <input
-              className="w-full border-b text-sm font-light py-2 bg-transparent border-rose-500"
+              className="w-full border-b text-sm placeholder-gray-500 text-black font-light py-2 bg-transparent border-rose-500"
               {...register("title")}
               placeholder="Mon top 2025"
             />
@@ -132,9 +132,9 @@ export default function EditListPage({ params }: { params: { id: string } }) {
               Description
             </label>
             <textarea
-              className="w-full rounded-md text-sm font-light border py-3 px-4  bg-white border-rose-500"
+              className="w-full rounded-md text-sm text-black placeholder-gray-500 font-light border py-3 px-4  bg-white border-rose-500"
               {...register("description")}
-              placeholder="Liste des films préférés"
+              placeholder="Entrez une description..."
             />
           </div>
 
@@ -144,8 +144,8 @@ export default function EditListPage({ params }: { params: { id: string } }) {
               options={movies}
               defaultValues={selectedMovies}
               onChange={onMovieChange}
-              label="Films"
-              placeholder="Rechercher des films"
+              label="Sélection de films"
+              placeholder="Chercher des films..."
               control={control}
             />
           </div>

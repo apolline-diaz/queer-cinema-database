@@ -38,13 +38,12 @@ export default function RootLayout({
           height={4} // Épaisseur de la barre
           easing="ease"
           speed={500}
-          shadow="0 0 10px #c42d50, 0 0 5px #c42d50" // Ombre assortie
         />
 
         <div className="">
           <Header />
         </div>
-        <main className="bg-red-100">{children}</main>
+        <main className="bg-rose-100">{children}</main>
         <div className="mt-auto">
           <Footer />
         </div>

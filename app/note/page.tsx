@@ -50,9 +50,9 @@ export default function Note() {
             <br />
           </p>
 
-          <h3 className="font-bold">Le choix des mots-clé</h3>
+          <h3 className="font-bold">Le choix des mots-clés</h3>
           <p className="text-sm font-light text-black">
-            Afin de mieux répertorier les films, les mots-clé qui leur sont
+            Afin de mieux répertorier les films, les mots-clés qui leur sont
             associés permettent à l&apos;utilisateur d&apos;avoir une vision
             globale des sujets abordés.
             <br />

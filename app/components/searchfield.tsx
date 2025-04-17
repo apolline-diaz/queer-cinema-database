@@ -112,7 +112,7 @@ export default function Searchfield({
                 render={({ field }) => (
                   <input
                     {...field}
-                    className="appearance-none text-md font-light block w-full bg-red-100 border-b border-rose-500 text-gray-200 py-2 leading-tight focus:none focus:outline-none"
+                    className="appearance-none text-md placeholder-gray-500 font-light block w-full bg-white rounded-md border  border-rose-500 text-rose-500 p-2 leading-tight focus:none focus:outline-none"
                     placeholder="Entrez un mot ou un titre..."
                   />
                 )}
@@ -174,7 +174,7 @@ export default function Searchfield({
       {visibleCount < movies.length && !isLoading && (
         <button
           onClick={loadMore}
-          className="w-full flex flex-row justify-center items-center border-b border-t mt-4 px-4 py-2 hover:border-red-600 text-rose-500 hover:text-red-600"
+          className="w-full flex flex-row justify-center items-center border rounded-md border-rose-500 border-t mt-4 px-4 py-2 hover:border-red-500 text-rose-500 hover:text-red-500"
         >
           Voir plus <Icon icon="mdi:chevron-down" className="size-5" />
         </button>

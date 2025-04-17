@@ -301,7 +301,7 @@ export default function SearchForm({
             />
           </CollapsibleSection>
 
-          <CollapsibleSection title="Mots-clé">
+          <CollapsibleSection title="Mots-clés">
             <Controller
               name="keywordIds"
               control={control}
@@ -376,7 +376,7 @@ export default function SearchForm({
       {visibleCount < movies.length && !isLoading && (
         <button
           onClick={loadMore}
-          className="w-full flex flex-row justify-center items-center border-b border-t mt-4 px-4 py-2 hover:border-red-600 text-rose-500 hover:text-red-600"
+          className="w-full flex flex-row justify-center items-center border rounded-md border-rose-500 border-t mt-4 px-4 py-2 hover:border-red-500 text-rose-500 hover:text-red-500"
         >
           Voir plus <Icon icon="mdi:chevron-down" className="size-5" />
         </button>
