@@ -10,9 +10,9 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL(getCanonicalUrl()),
-  title: "Movie Diary",
+  title: "Queer Cinema Database",
   description:
-    "Le site de référence des films LGBTQIA+ : découvrez l'histoire du cinéma et des représentations queer avec Movie Diary .",
+    "Le site de référence des films LGBTQIA+ : découvrez l'histoire du cinéma et des représentations queer avec Queer Cinema Database.",
   openGraph: {
     images: [`/assets/diary.svg`],
   },

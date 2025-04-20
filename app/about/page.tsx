@@ -1,5 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 
+import Link from "next/link";
+
 export default function About() {
   return (
     <div className="px-10 py-20 mb-5">
@@ -26,6 +28,12 @@ export default function About() {
           d&apos;autres), j&apos;ai pensé que développer un site avec une base
           de données propre serait la solution la plus viable et accessible.
         </p>
+        <Link
+          href="/note"
+          className="link text-rose-500  font-light link-hover hover:underline hover:underline-offset-8"
+        >
+          Note d&apos;intention
+        </Link>
       </div>
     </div>
   );

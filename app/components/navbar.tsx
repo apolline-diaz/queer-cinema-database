@@ -56,7 +56,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
       <div className="flex flex-row w-full items-center justify-between gap-10  px-10 py-3">
         {/* Logo */}
         <Link href="/">
-          <h2 className="text-white font-raleway font-bold text-xl xs:text-md">
+          <h2 className="text-white whitespace-nowrap font-raleway font-bold text-xl xs:text-md">
             <span className="text-rose-500">queer cinema</span>{" "}
             <span className="text-rose-500 font-light"> database</span>
           </h2>
@@ -114,6 +114,12 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                 {/* mobile navigation links */}
                 <ul className="bg-red-100 flex text-rose-500 flex-col items-center justify-between gap-5 h-full mt-6">
                   <div className="flex flex-col items-center justify-center gap-5">
+                    <Link
+                      href="/about"
+                      className="link link-hover hover:underline hover:underline-offset-8"
+                    >
+                      À propos
+                    </Link>
                     <li
                       className={
                         pathname === "/movies"
@@ -176,7 +182,13 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
 
             {/* desktop menu */}
             <div className="text-rose-500">
-              <ul className="DESKTOP-MENU hidden space-x-12 lg:flex  items-center">
+              <ul className="DESKTOP-MENU hidden whitespace-nowrap space-x-12 lg:flex  items-center">
+                <Link
+                  href="/about"
+                  className="link link-hover hover:underline hover:underline-offset-8"
+                >
+                  À propos
+                </Link>
                 <li
                   className={
                     pathname === "/movies" ? activeLinkClass : normalLinkClass

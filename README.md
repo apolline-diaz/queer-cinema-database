@@ -1,6 +1,6 @@
-# Movie Diary
+# Queer Cinema Database
 
-**Movie Diary** is a web platform for cataloging LGBT films from the 90s and 2000s, developed to provide a community-driven database. Users can search for films using advanced filters, view detailed movie pages, create accounts, and contribute by adding films or creating their own private movie lists.
+**Queer Cinema Database** is a web platform for cataloging LGBT films from the 90s and 2000s, developed to provide a community-driven database. Users can search for films using advanced filters, view detailed movie pages, create accounts, and contribute by adding films or creating their own private movie lists.
 
 ## 🚀 Main Features
 

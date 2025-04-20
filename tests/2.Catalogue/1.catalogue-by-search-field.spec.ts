@@ -4,7 +4,7 @@ test("catalogue by searchfield", async ({ page }) => {
   await page.goto("/");
 
   // expect a title "to contain" a substring.
-  await expect(page).toHaveTitle("Movie Diary");
+  await expect(page).toHaveTitle("Queer Cinema Database");
 
   await page.getByRole("link", { name: "Catalogue", exact: true }).click();
   await page.getByRole("button", { name: "Recherche simple" }).click();
