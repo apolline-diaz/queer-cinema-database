@@ -2,9 +2,9 @@ import { getCanonicalUrl } from "@/utils";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Movie Diary - Ajout",
+  title: "Queer Cinema Database - Ajout",
   description:
-    "Ajoutez et référencez vos films facilement en utilisant Movie Diary",
+    "Ajoutez et référencez vos films facilement en utilisant Queer Cinema Database",
   alternates: {
     canonical: `/movies/create`,
   },

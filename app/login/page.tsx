@@ -26,8 +26,14 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="justify-center items-center p-10 flex flex-col">
-      <div className="w-full md:w-[500px] text-left border border-pink-200 p-10 rounded-xl">
+    <div
+      className="w-screen min-h-screen flex items-center text-rose-500 justify-center bg-cover bg-center"
+      style={{
+        backgroundImage:
+          "url('https://xcwrhyjbfgzsaslstssc.supabase.co/storage/v1/object/public/storage//watermelon-woman-background.webp')",
+      }}
+    >
+      <div className="bg-red-100 border border-rose-500 bg-opacity-90 backdrop-blur-md rounded-2xl shadow-xl p-10 m-10 max-w-md w-full">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-3 mb-10">
             {/* Mail */}
@@ -40,7 +46,7 @@ export default function LoginPage() {
                   message: "Adresse e-mail invalide",
                 },
               })}
-              className="appearance-none text-sm font-light border-white block w-full bg-neutral-950 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:text-white"
+              className="appearance-none text-sm font-light border-rose-500 block w-full  border rounded py-3 px-4 leading-tight focus:outline-none focus:text-black"
               id="email"
               type="email"
               placeholder="Tapez votre adresse e-mail"
@@ -57,7 +63,7 @@ export default function LoginPage() {
               {...register("password", {
                 required: "Le mot de passe est requis",
               })}
-              className="appearance-none text-sm font-light border-white block w-full bg-neutral-950 text-gray-700 border rounded py-3 px-4 leading-tight focus:outline-none focus:text-white"
+              className="appearance-none text-sm font-light border-rose-500 block w-full text-rose-500 border rounded py-3 px-4 leading-tight focus:outline-none focus:text-black"
               id="password"
               type="password"
               placeholder="Tapez votre mot de passe"
@@ -68,7 +74,7 @@ export default function LoginPage() {
               </span>
             )}
           </div>
-          <div className="w-full justify-center flex flex-wrap gap-4">
+          <div className="w-full justify-center items-center flex flex-col sm:flex-row gap-4">
             <SubmitButton
               defaultText="Se connecter"
               loadingText="Connexion..."
