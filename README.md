@@ -62,17 +62,33 @@
 ## 📂 Project Structure
 
 ```plaintext
-├── lists/               # Lists pages (content view, creation, edit)
-├── movies/              # Movies pages (content view, edit, contribute)
-├── profile/             # Profile user's page
-├── components/          #
-├── server-actions/      # Movies (add), lists (add)
-├── pages/               # Next.js pages
-├── utils/               # Utility functions
-├── prisma/              # Prisma database
-├── public/              # Public files (images, icons, etc.)
-├── docker-compose.yml   # Docker configuration
-└── README.md            # Documentation
+/root
+├── /app                      # App router
+│   ├── /about                # About page
+│   ├── /api/contact          # Api for contact sending
+│   ├── /auth/confirm
+│   ├── /components           # Reusable Components
+│   ├── /contact              # Contact Form page
+│   ├── /error                # Error message page
+│   ├── /lists                # Lists pages (list view, create and edit list pages)
+│   ├── /login                # Login page and action
+│   ├── /logout               # Logout action
+│   ├── /movies               # Movies pages (catalogue, movie view, create and edit pages)
+│   ├── /note                 # Note page
+│   ├── /profile              # Profile user page
+│   ├── /server-actions       # Get, add, edit, delete actions (movies and lists data)
+│   ├── /signup               # Signup page and action
+│   ├── /stats                # Statistics page
+│   └── /types                # Types
+├── /lib                      # prisma and supabase
+├── /prisma                   # Prisma schema
+├── /public                   # Public files (assets, etc.)
+├── /supabase                 # Config for Docker
+├── /tests                    # Playwright Tests
+├── /utils                    # Utility functions
+│   └── supabase              # Supabase (middleware, client, server)
+├── docker-compose.yml        # Docker configuration
+└── README.md                 # Documentation
 ```
 
 ## 🗃️ Database
