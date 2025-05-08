@@ -27,7 +27,9 @@ export async function updateMovie(formData: FormData) {
       : null;
     const image_url = formData.get("image_url") as string;
     const image = formData.get("image") as File | null;
-    const director_id = formData.get("director_id") as string;
+    const director_ids = JSON.parse(
+      formData.get("director_ids") as string
+    ) as string[];
     const country_id = formData.get("country_id") as string;
     const genre_ids = JSON.parse(
       formData.get("genre_ids") as string
@@ -67,9 +69,11 @@ export async function updateMovie(formData: FormData) {
 
     // Update relationships (directors, countries, genres, keywords)
     await prisma.movies_directors.deleteMany({ where: { movie_id: id } });
-    await prisma.movies_directors.create({
-      data: { movie_id: id, director_id: BigInt(director_id) },
-    });
+    for (const directorId of director_ids) {
+      await prisma.movies_directors.create({
+        data: { movie_id: id, director_id: BigInt(directorId) },
+      });
+    }
 
     await prisma.movies_countries.deleteMany({ where: { movie_id: id } });
     await prisma.movies_countries.create({

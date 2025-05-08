@@ -44,8 +44,7 @@ type FormData = {
   image_url: string;
   image: FileList | null;
   type: string | null;
-  director_id: string;
-  director: string;
+  directors: string[]; // IDs des réalisateurs sélectionnés
   country_id: string;
   country: string;
   genre_ids: string[];
@@ -72,7 +71,9 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
   >([]);
 
   // Filtered and selected states
-
+  const [selectedDirectors, setSelectedDirectors] = useState<DirectorOption[]>(
+    []
+  );
   const [selectedKeywords, setSelectedKeywords] = useState<KeywordOption[]>([]);
   const [selectedGenres, setSelectedGenres] = useState<GenreOption[]>([]);
 
@@ -99,10 +100,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
       runtime: movie.runtime || null,
       image_url: movie.image_url || "",
       image: null,
-      director_id:
-        movie.directors && movie.directors[0]
-          ? movie.directors[0].id.toString()
-          : "",
+      directors: [],
       country_id:
         movie.countries && movie.countries[0]
           ? movie.countries[0].id.toString()
@@ -155,6 +153,21 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
         }))
       );
 
+      // Set initially selected directors
+      if (movie.directors && movie.directors.length > 0) {
+        const movieDirectors = movie.directors
+          .filter((director) => director.name)
+          .map((director) => ({
+            value: director.id.toString(),
+            label: director.name || "",
+          }));
+        setSelectedDirectors(movieDirectors);
+        setValue(
+          "directors",
+          movieDirectors.map((d) => d.value)
+        );
+      }
+
       // Set initially selected genres
       if (movie.genres && movie.genres.length > 0) {
         const movieGenres = movie.genres
@@ -188,11 +201,6 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
       // Set selected country
       if (movie.countries && movie.countries.length > 0) {
         setValue("country_id", movie.countries[0].id.toString());
-      }
-
-      // Set selected director
-      if (movie.directors && movie.directors.length > 0) {
-        setValue("director_id", movie.directors[0].id.toString());
       }
     };
 
@@ -243,7 +251,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
         formDataToUpdate.append("image", data.image[0]);
       }
 
-      formDataToUpdate.append("director_id", data.director_id);
+      formDataToUpdate.append("director_ids", JSON.stringify(data.directors));
       formDataToUpdate.append("country_id", data.country_id);
       formDataToUpdate.append("genre_ids", JSON.stringify(data.genres));
       formDataToUpdate.append("keyword_ids", JSON.stringify(data.keywords));
@@ -269,6 +277,12 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
     }
   };
 
+  const currentYear = new Date().getFullYear();
+  const years = Array.from(
+    { length: currentYear - 1895 + 1 },
+    (_, i) => currentYear - i
+  );
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -284,7 +298,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
           <label className="block text-sm font-medium mb-1">Titre</label>
           <input
             {...register("title", { required: "Title is required" })}
-            className="w-full py-2 text-sm font-light border-b border-rose-500 bg-transparent"
+            className="w-full py-2 text-sm font-light border rounded-md px-2 bg-white text-black border-rose-500 bg-transparent"
           />
           {errors.title && (
             <p className="text-red-500 text-sm mt-1">{errors.title.message}</p>
@@ -294,28 +308,26 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
         {/* Director Select */}
         <div>
           <label htmlFor="director_id" className="block text-sm font-medium">
-            Réalisateur-ice
+            Réalisateur-ice(s)
           </label>
-          <select
-            id="director_id"
-            {...register("director_id")}
-            className="mt-1 block w-full text-sm font-light bg-transparent border-b border-rose-500  py-2"
-          >
-            <option value="">Select a director</option>
-            {availableDirectors.map((director) => (
-              <option
-                key={director.value}
-                value={director.value}
-                // Mark as selected if it matches the current director
-                selected={
-                  movie.directors &&
-                  movie.directors[0]?.id.toString() === director.value
-                }
-              >
-                {director.label}
-              </option>
-            ))}
-          </select>
+          <MultiSelect
+            name="directors"
+            control={control}
+            options={availableDirectors}
+            label="Réalisateur-ices"
+            placeholder="Chercher et ajouter des réalisateur-ices..."
+            onChange={(selected) => {
+              setSelectedDirectors(selected);
+              setValue(
+                "directors",
+                selected.map((d) => d.value)
+              );
+            }}
+            defaultValues={selectedDirectors}
+          />
+          <p className="text-gray-600 text-xs mt-1">
+            Vous pouvez sélectionner plusieurs réalisateur-ices et en retirer.
+          </p>
         </div>
 
         {/* Image Preview */}
@@ -346,6 +358,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
           <input
             {...register("image_url")}
             className="w-full py-2 text-sm font-light border-b bg-transparent"
+            disabled
           />
           <p className="text-gray-600 text-xs mt-1">
             Sera utilisée si aucune image n&apos;est téléchargée
@@ -375,7 +388,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
           <textarea
             {...register("description")}
             rows={4}
-            className="w-full px-3 py-2 font-light text-sm border border-rose-500 rounded-md bg-transparent"
+            className="w-full px-3 py-2 text-black font-light text-sm border bg-white border-rose-500 rounded-md bg-transparent"
           />
         </div>
 
@@ -385,10 +398,16 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
             <label className="block text-sm font-medium mb-1">
               Année de sortie
             </label>
-            <input
+            <select
               {...register("release_date")}
-              className="w-full text-sm font-light py-2 border-b border-rose-500 bg-transparent"
-            />
+              className="w-full text-sm font-light py-2 border rounded-md px-2 bg-white text-black border-rose-500"
+            >
+              {years.map((year) => (
+                <option key={year} value={year}>
+                  {year}
+                </option>
+              ))}
+            </select>
           </div>
 
           {/* Country Select */}
@@ -399,7 +418,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
             <select
               id="country_id"
               {...register("country_id")}
-              className="w-full mt-1 block text-sm font-light bg-transparent border-b border-rose-500  py-2"
+              className="w-full mt-1 block text-sm font-light bg-transparent border rounded-md px-2 bg-white text-black border-rose-500  py-2"
             >
               <option value="">Select a country</option>
               {availableCountries.map((country) => (
@@ -421,7 +440,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
           {/* Runtime */}
           <div>
             <label className="block text-sm font-medium mb-1">
-              Durée (minutes)
+              Durée (minutes/saisons)
             </label>
             <input
               type="number"
@@ -431,7 +450,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
                   message: "Must be a number",
                 },
               })}
-              className="w-full text-sm font-light border-rose-500  py-2 border-b bg-transparent"
+              className="w-full text-sm font-light border-rose-500  py-2 border rounded-md px-2 bg-white text-black bg-transparent"
             />
             {errors.runtime && (
               <p className="text-red-500 text-sm mt-1">
@@ -442,10 +461,10 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
 
           {/* Language */}
           <div>
-            <label className="block text-sm font-medium mb-1">Langue</label>
+            <label className="block text-sm font-medium mb-1">Langue(s)</label>
             <input
               {...register("language")}
-              className="w-full text-sm border-rose-500 font-light py-2 border-b bg-transparent"
+              className="w-full text-sm border-rose-500 font-light py-2 border rounded-md px-2 bg-white text-black bg-transparent"
             />
           </div>
         </div>
@@ -453,10 +472,15 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
         {/* Type */}
         <div>
           <label className="block text-sm font-medium mb-1">Type</label>
-          <input
+          <select
             {...register("type")}
-            className="w-full text-sm font-light border-rose-500 py-2 border-b bg-transparent"
-          />
+            className="w-full text-sm font-light border-rose-500 py-2 border rounded-md px-2 bg-white text-black"
+          >
+            <option value="Long-métrage">Long-métrage</option>
+            <option value="Court-métrage">Court-métrage</option>
+            <option value="Série">Série</option>
+            <option value="Emission TV">Emission TV</option>
+          </select>
         </div>
 
         {/* Genres Select */}

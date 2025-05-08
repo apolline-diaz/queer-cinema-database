@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Header() {
   return (
-    <footer className="h-full footer text-rose-500 px-10 pb-2 pt-4 border-t border-rose-500 b-0">
+    <footer className="h-full footer bg-rose-500 text-white px-10 pb-2 pt-4 border-t border-rose-500 b-0">
       <nav className="flex justify-between mb-4">
         <Link
           href="/contact"

@@ -106,7 +106,7 @@ export default function ClientMovieActions({ movieId, userIsAdmin }: Props) {
   };
 
   return (
-    <div className="z-20 absolute flex flex-row pt-20 items-center rounded-xl px-10 top-0 justify-between w-full">
+    <div className="flex flex-col gap-3 right-0 items-center rounded-xl w-full">
       <div className="relative">
         <button
           onClick={toggleMenu}
@@ -120,7 +120,10 @@ export default function ClientMovieActions({ movieId, userIsAdmin }: Props) {
         </button>
 
         {isMenuOpen && (
-          <div className="absolute top-full mt-2 w-48 rounded-lg text-rose-500 bg-red-100 ">
+          <div className="absolute bottom-full my-2 right-0 mt-2 w-48 rounded-lg text-rose-500 bg-red-100 ">
+            <p className="flex flex-row px-3 border-b border-gray-500 py-2 items-center gap-2 text-sm font-medium">
+              Ajouter à une liste
+            </p>
             {lists.length === 0 ? (
               <p className="text-sm text-gray-500 px-3 py-2">
                 {isLoading
@@ -160,9 +163,9 @@ export default function ClientMovieActions({ movieId, userIsAdmin }: Props) {
       </div>
 
       {userIsAdmin && (
-        <div className="absolute top-20 right-4">
+        <div className="">
           <Link href={`/movies/edit/${movieId}`}>
-            <button className="right-2 bg-black bg-opacity-60 p-2 mx-3 border border-rose-500 rounded-full text-rose-500 transition-all duration-300 ease-in-out opacity-100 visible hover:bg-rose-500 hover:text-white">
+            <button className="right-2 bg-black bg-opacity-60 p-2 border border-rose-500 rounded-full text-rose-500 transition-all duration-300 ease-in-out opacity-100 visible hover:bg-rose-500 hover:text-white">
               <Icon icon="lucide:edit" />
             </button>
           </Link>
