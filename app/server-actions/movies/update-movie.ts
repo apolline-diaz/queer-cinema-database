@@ -40,7 +40,7 @@ export async function updateMovie(formData: FormData) {
 
     let imageUrl = image_url;
 
-    // Upload l'image si elle est fournie
+    // Upload the image if provided
     if (image) {
       const filename = `${Date.now()}-${image.name.replace(/\s+/g, "-")}`;
       const { data, error } = await supabase.storage

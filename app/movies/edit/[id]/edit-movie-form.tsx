@@ -54,11 +54,12 @@ type FormData = {
 };
 
 export default function EditMovieForm({ movie }: { movie: Movie }) {
+  // Initialize form and states
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Options for select dropdowns
+  // Configure options for select dropdowns
   const [availableKeywords, setAvailableKeywords] = useState<KeywordOption[]>(
     []
   );
@@ -82,7 +83,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
     movie.image_url || null
   );
 
-  // Prepare initial form values from movie data
+  // Init React Hook Form : prepare initial form values from movie data
   const {
     register,
     handleSubmit,
@@ -226,15 +227,15 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
     setError(null);
 
     try {
-      // Garde l'ancienne image si aucune nouvelle image n'est uploadée
+      // Keep last iamge if any other has bee uploaded
       let imageUrl = data.image_url;
 
       if (imageFile && imageFile instanceof File) {
-        // Si une nouvelle image a été choisie, on l'upload
-        imageUrl = await uploadImage(imageFile, data.title); // Upload l'image et récupère l'URL
+        // If another image has been choosen, it uploads
+        imageUrl = await uploadImage(imageFile, data.title); // Upload image and get the URL
       }
 
-      // Préparer le FormData pour l'envoi à l'API
+      // Prepare FormData for sending to the API
       const formDataToUpdate = new FormData();
       formDataToUpdate.append("id", movie.id);
       formDataToUpdate.append("title", data.title);
@@ -245,7 +246,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
       formDataToUpdate.append("runtime", data.runtime?.toString() ?? "");
       formDataToUpdate.append("image_url", imageUrl); // Utilise l'URL d'image après upload
 
-      // Ajouter l'image si elle existe
+      // Add image if it exists
       if (data.image && data.image.length > 0) {
         // data.image[0] correspond au premier fichier dans FileList
         formDataToUpdate.append("image", data.image[0]);
@@ -258,12 +259,12 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
 
       console.log("Sending FormData:", formDataToUpdate);
 
-      // Appeler la fonction pour mettre à jour le film
+      // Call the update function
       const { success, error } = await updateMovie(formDataToUpdate);
       console.log("Response from updateMovie:", success, error);
 
       if (success) {
-        // Naviguer vers la page du film après la mise à jour
+        // Redirect to movie page after validate the form
         router.push(`/movies/${movie.id}`);
         router.refresh();
       } else {
