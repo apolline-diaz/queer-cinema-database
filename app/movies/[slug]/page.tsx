@@ -32,12 +32,6 @@ export default async function Page({ params }: Props) {
       : "min";
   return (
     <div className="w-full text-white mx-auto min-h-screen">
-      {session && (
-        <ClientMovieActions
-          movieId={movie.id.toString()}
-          userIsAdmin={userIsAdmin}
-        />
-      )}
       <div className="h-[75vh] relative">
         <Image
           className="object-cover w-full h-full"
@@ -45,17 +39,28 @@ export default async function Page({ params }: Props) {
           src={getImageUrl(movie.image_url)}
           title={movie.title}
         />
-
-        <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-30 w-full h-full text-white p-10 flex justify-between items-end">
-          <div className="flex flex-col ">
-            <h2 className="text-3xl font-bold uppercase">{movie.title}</h2>
-            <h2 className="text-lg font-light ">
-              {movie.directors?.length > 0 && (
-                <span>
-                  {movie.directors.map((director) => director.name).join(", ")}
-                </span>
+        <div className="absolute bottom-0 bg-black bg-opacity-30 w-full h-full text-white p-10 flex justify-between items-end">
+          <div className="flex flex-row justify-between items-center w-full">
+            <div className="flex flex-col">
+              <h2 className="text-3xl font-bold uppercase">{movie.title}</h2>
+              <h2 className="text-lg font-light ">
+                {movie.directors?.length > 0 && (
+                  <span>
+                    {movie.directors
+                      .map((director) => director.name)
+                      .join(", ")}
+                  </span>
+                )}
+              </h2>
+            </div>
+            <div className="">
+              {session && (
+                <ClientMovieActions
+                  movieId={movie.id.toString()}
+                  userIsAdmin={userIsAdmin}
+                />
               )}
-            </h2>
+            </div>
           </div>
         </div>
       </div>

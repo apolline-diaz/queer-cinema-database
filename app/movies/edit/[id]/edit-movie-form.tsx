@@ -277,6 +277,12 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
     }
   };
 
+  const currentYear = new Date().getFullYear();
+  const years = Array.from(
+    { length: currentYear - 1895 + 1 },
+    (_, i) => currentYear - i
+  );
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -392,10 +398,16 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
             <label className="block text-sm font-medium mb-1">
               Année de sortie
             </label>
-            <input
+            <select
               {...register("release_date")}
-              className="w-full text-sm font-light py-2 border rounded-md px-2 bg-white text-black border-rose-500 bg-transparent"
-            />
+              className="w-full text-sm font-light py-2 border rounded-md px-2 bg-white text-black border-rose-500"
+            >
+              {years.map((year) => (
+                <option key={year} value={year}>
+                  {year}
+                </option>
+              ))}
+            </select>
           </div>
 
           {/* Country Select */}
@@ -428,7 +440,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
           {/* Runtime */}
           <div>
             <label className="block text-sm font-medium mb-1">
-              Durée (minutes)
+              Durée (minutes/saisons)
             </label>
             <input
               type="number"
@@ -460,10 +472,15 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
         {/* Type */}
         <div>
           <label className="block text-sm font-medium mb-1">Type</label>
-          <input
+          <select
             {...register("type")}
-            className="w-full text-sm font-light border-rose-500 py-2 border rounded-md px-2 bg-white text-black bg-transparent"
-          />
+            className="w-full text-sm font-light border-rose-500 py-2 border rounded-md px-2 bg-white text-black"
+          >
+            <option value="Long-métrage">Long-métrage</option>
+            <option value="Court-métrage">Court-métrage</option>
+            <option value="Série">Série</option>
+            <option value="Emission TV">Emission TV</option>
+          </select>
         </div>
 
         {/* Genres Select */}
