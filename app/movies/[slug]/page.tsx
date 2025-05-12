@@ -68,7 +68,7 @@ export default async function Page({ params }: Props) {
       </div>
       <div className="p-10 gap-3 flex flex-col">
         <div className="flex flex-col font-light">
-          <span className="font-semibold  text-black">
+          <span className="font-semibold  text-rose-500">
             {[
               movie.countries?.map((country) => country.name).join(", "),
               movie.release_date,
@@ -80,21 +80,23 @@ export default async function Page({ params }: Props) {
               .join(" • ")}
           </span>
         </div>
-        <div className="font-bold">
+        <div className="font-bold mb-2 ">
           {movie?.genres?.length > 0 && (
-            <span className="font-light text-black pr-2">
+            <span className="font-light text-rose-500 pr-2">
               {movie.genres.map((genre) => genre.name).join(", ")}
             </span>
           )}
         </div>
-        <p className="py-2 font-light text-black">{movie.description}</p>
+        <p className="pt-6 pb-4 font-light text-black border-t border-black">
+          {movie.description}
+        </p>
         <div className="font-bold flex items-center flex-wrap gap-2">
           {movie.keywords?.map((keyword) => (
             <Link
               key={keyword.id}
               href={`/movies?keywordIds=${encodeURIComponent(keyword.id.toString())}&searchMode=form`}
             >
-              <span className="font-light text-sm rounded-full border border-black text-black px-2 mr-1 py-1 hover:bg-rose-500 hover:text-white hover:border-rose-500 hover:cursor-pointer">
+              <span className="font-light text-sm rounded-full border border-rose-500 text-rose-500 px-2 mr-1 py-1 hover:bg-rose-500 hover:text-white hover:border-rose-500 hover:cursor-pointer">
                 {keyword.name}
               </span>
             </Link>
