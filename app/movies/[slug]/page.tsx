@@ -42,7 +42,9 @@ export default async function Page({ params }: Props) {
         <div className="absolute bottom-0 bg-black bg-opacity-30 w-full h-full text-white p-10 flex justify-between items-end">
           <div className="flex flex-row justify-between items-center w-full">
             <div className="flex flex-col">
-              <h2 className="text-3xl font-bold uppercase">{movie.title}</h2>
+              <h2 className="text-4xl mb-2 font-bold uppercase">
+                {movie.title}
+              </h2>
               <h2 className="text-lg font-light ">
                 {movie.directors?.length > 0 && (
                   <span>
@@ -66,7 +68,7 @@ export default async function Page({ params }: Props) {
       </div>
       <div className="p-10 gap-3 flex flex-col">
         <div className="flex flex-col font-light">
-          <span className="font-semibold text-rose-500">
+          <span className="font-semibold  text-black">
             {[
               movie.countries?.map((country) => country.name).join(", "),
               movie.release_date,
@@ -80,7 +82,7 @@ export default async function Page({ params }: Props) {
         </div>
         <div className="font-bold">
           {movie?.genres?.length > 0 && (
-            <span className="font-light text-rose-500 pr-2">
+            <span className="font-light text-black pr-2">
               {movie.genres.map((genre) => genre.name).join(", ")}
             </span>
           )}
@@ -92,7 +94,7 @@ export default async function Page({ params }: Props) {
               key={keyword.id}
               href={`/movies?keywordIds=${encodeURIComponent(keyword.id.toString())}&searchMode=form`}
             >
-              <span className="font-light text-sm rounded-full border border-rose-500 text-rose-500 px-2 mr-1 py-1 hover:bg-rose-500 hover:text-white hover:cursor-pointer">
+              <span className="font-light text-sm rounded-full border border-black text-black px-2 mr-1 py-1 hover:bg-rose-500 hover:text-white hover:border-rose-500 hover:cursor-pointer">
                 {keyword.name}
               </span>
             </Link>
