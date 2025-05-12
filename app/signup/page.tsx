@@ -4,6 +4,7 @@ import Link from "next/link";
 import { signup } from "../login/actions";
 import { useForm } from "react-hook-form";
 import { SubmitButton } from "../components/submit-button";
+import { useState } from "react";
 
 interface SignUpFormInputs {
   email: string;
@@ -16,13 +17,23 @@ export default function SignUpPage() {
     formState: { errors, isSubmitting },
   } = useForm<SignUpFormInputs>();
 
+  const [confirmationMessage, setConfirmationMessage] = useState("");
+
   const onSubmit = async (data: SignUpFormInputs) => {
     const formData = new FormData();
     formData.append("email", data.email);
     formData.append("password", data.password);
 
-    await signup(formData);
+    try {
+      await signup(formData);
+      setConfirmationMessage(
+        "Un mail de confirmation a été envoyé dans votre boîte mail."
+      );
+    } catch (error) {
+      console.error("Erreur lors de l'inscription :", error);
+    }
   };
+
   return (
     <div
       className="w-screen min-h-screen flex items-center text-rose-500 justify-center bg-cover bg-center"
@@ -34,6 +45,13 @@ export default function SignUpPage() {
       <div className="bg-red-100 border border-rose-500 bg-opacity-90 backdrop-blur-md rounded-2xl shadow-xl p-10 m-10 max-w-md w-full">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-3 mb-10">
+            <h1 className="text-center font-medium text-xl">Inscription</h1>
+            {confirmationMessage && (
+              <p className="font-semibold text-sm text-rose-800 mt-2">
+                {confirmationMessage}
+              </p>
+            )}
+
             {/* Mail */}
             <label htmlFor="email">Adresse e-mail</label>
             <input
@@ -84,7 +102,7 @@ export default function SignUpPage() {
             </div>
           </div>
         </form>
-      </div>{" "}
+      </div>
     </div>
   );
 }

@@ -36,6 +36,7 @@ export default function LoginPage() {
       <div className="bg-red-100 border border-rose-500 bg-opacity-90 backdrop-blur-md rounded-2xl shadow-xl p-10 m-10 max-w-md w-full">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-3 mb-10">
+            <h1 className="text-center font-medium text-xl">Connexion</h1>
             {/* Mail */}
             <label htmlFor="email">Adresse e-mail</label>
             <input
@@ -56,7 +57,6 @@ export default function LoginPage() {
                 {errors.email.message}
               </span>
             )}
-
             {/* Password */}
             <label htmlFor="password">Mot de passe</label>
             <input
