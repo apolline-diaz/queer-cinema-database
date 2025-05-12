@@ -27,7 +27,9 @@ export default async function Home() {
         <div className="px-10 py-5">
           <div className="flex flex-col mb-5">
             <div className="flex justify-between items-center mb-2">
-              <h2 className="text-md text-rose-500">Derniers ajouts </h2>
+              <h2 className="text-lg font-semibold text-rose-500">
+                Derniers ajouts{" "}
+              </h2>
               <Link
                 href="/movies"
                 className="border rounded-xl px-2 py-1 border-rose-500 text-rose-500 hover:border-rose-500 hover:bg-rose-500 hover:text-white text-sm"

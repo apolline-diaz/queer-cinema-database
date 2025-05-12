@@ -42,8 +42,8 @@ export default function Hero({ id, title, image_url }: CardProps) {
                 <span className="text-white ">
                   Découvrez une sélection de films et d&apos;archives{" "}
                 </span>
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-yellow-300 via-green-400 via-blue-500 to-violet-500">
-                  {/* <span className="text-transparent font-bold bg-clip-text bg-gradient-to-r from-rose-500 via-red-500 via-orange-400 to-yellow-300"> */}
+                {/* <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-yellow-300 via-green-400 via-blue-500 to-violet-500"> */}
+                <span className="text-transparent font-bold bg-clip-text bg-gradient-to-r from-rose-500  via-blue-500  to-yellow-400">
                   LGBTQI+
                 </span>
               </h2>
@@ -53,8 +53,8 @@ export default function Hero({ id, title, image_url }: CardProps) {
               <div className="flex flex-row items-center bg-white justify-center border rounded-xl px-4 border-red-500">
                 <input
                   type="text"
-                  className="z-10 max-h-12  min-w-52 flex-1 py-4 bg-white placeholder-rose-500 text-rose-500 font-light focus:outline-none"
-                  placeholder="Rechercher un mot..."
+                  className="z-10 max-h-12  min-w-60 flex-1 py-4 bg-white placeholder-rose-500 text-rose-500 font-light focus:outline-none"
+                  placeholder="Rechercher un titre, mot-clé..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSearch()}
