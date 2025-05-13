@@ -28,7 +28,7 @@ export default async function Home() {
 
         {/* First movie highlight */}
         {featuredLatestMovie && (
-          <div className="w-full mb-5 relative overflow-hidden">
+          <div className="border-t border-rose-500 w-full mb-5 relative overflow-hidden">
             <Link href={`/movies/${featuredLatestMovie.id}`}>
               <div className="relative h-96 w-full">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
