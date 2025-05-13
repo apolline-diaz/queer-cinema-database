@@ -187,6 +187,7 @@ const CreateMoviePage: React.FC = () => {
           >
             <option value="">Sélectionnez un type</option>
             <option value="Long-métrage">Long-métrage</option>
+            <option value="Moyen-métrage">Moyen-métrage</option>
             <option value="Court-métrage">Court-métrage</option>
             <option value="Série">Série</option>
             <option value="Emission TV">Emission TV</option>

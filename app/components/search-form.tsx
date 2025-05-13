@@ -273,8 +273,8 @@ export default function SearchForm({
                 <Select
                   label="Type"
                   options={[
-                    { value: "", label: "Tous les types" },
                     { value: "Long-métrage", label: "Long-métrage" },
+                    { value: "Moyen-métrage", label: "Moyen-métrage" },
                     { value: "Court-métrage", label: "Court-métrage" },
                     { value: "Emission TV", label: "Emission TV" },
                     { value: "Série", label: "Série" },
