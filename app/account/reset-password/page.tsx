@@ -19,7 +19,9 @@ export default function ResetPasswordPage() {
 
   // Vérifier si l'utilisateur est authentifié avec un accès de récupération
   useEffect(() => {
-    const accessToken = new URLSearchParams(window.location.search).get("code");
+    const accessToken = new URLSearchParams(window.location.search).get(
+      "token_hash"
+    );
 
     if (accessToken) {
       supabase.auth
