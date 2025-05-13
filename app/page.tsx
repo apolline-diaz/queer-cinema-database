@@ -25,7 +25,8 @@ export default async function Home() {
             />
           ))}
         </div>
-        {/* Film en vedette (premier de la liste) */}
+
+        {/* First movie highlight */}
         {featuredLatestMovie && (
           <div className="w-full mb-5 relative overflow-hidden">
             <Link href={`/movies/${featuredLatestMovie.id}`}>
@@ -36,16 +37,16 @@ export default async function Home() {
                   alt={featuredLatestMovie.title}
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent">
-                  <div className="absolute bottom-0 left-0 p-10 text-white">
-                    <h3 className="text-xl uppercase font-bold">
+                <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/80 via-black/50 to-transparent">
+                  <div className="w-3/4 p-10 text-white">
+                    <h3 className="text-2xl uppercase font-bold">
                       {featuredLatestMovie.title}
                     </h3>
-                    <span className="py-1 rounded font-light">
-                      {featuredLatestMovie.release_date || "Date inconnue"}
+                    <span className="inline-block mb-1 font-light">
+                      {featuredLatestMovie.release_date || ""}
                     </span>
 
-                    <p className="text-sm md:text-base line-clamp-3 max-w-2xl">
+                    <p className="text-md font-light line-clamp-3">
                       {featuredLatestMovie.description ||
                         "Pas de description disponible"}
                     </p>
@@ -54,7 +55,7 @@ export default async function Home() {
               </div>
             </Link>
           </div>
-        )}{" "}
+        )}
         <div className="px-10">
           <div className="flex flex-col mb-5">
             <div className="flex justify-between items-center mb-2">
@@ -69,7 +70,7 @@ export default async function Home() {
                 <Icon icon="mdi:chevron-right" className="inline size-4" />
               </Link>
             </div>
-            <div className="flex flex-row-1 mb-5 overflow-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5">
+            <div className="flex flex-row-1 mb-5 overflow-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
               {otherLatestMovies.map((movie) => (
                 <HomeCard
                   key={`${movie.title}-${movie.id}`}
