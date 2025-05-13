@@ -47,7 +47,7 @@ export default function SignUpPage() {
           <div className="flex flex-col gap-3 mb-10">
             <h1 className="text-center font-medium text-xl">Inscription</h1>
             {confirmationMessage && (
-              <p className="font-semibold text-sm text-rose-800 mt-2">
+              <p className="font-light text-sm text-black mt-2">
                 {confirmationMessage}
               </p>
             )}
