@@ -1,8 +1,7 @@
 "use server";
 
 import { z } from "zod";
-import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
+import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
@@ -97,7 +96,7 @@ export async function addMovie(formData: FormData) {
   try {
     // image upload
     const fileName = `${Math.random()}-${title}`;
-    const supabase = createServerActionClient({ cookies });
+    const supabase = createClient();
     const { data: imageData, error: imageError } = await supabase.storage
       .from("storage")
       .upload(fileName, image_url, {
