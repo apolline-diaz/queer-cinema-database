@@ -478,6 +478,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
             className="w-full text-sm font-light border-rose-500 py-2 border rounded-md px-2 bg-white text-black"
           >
             <option value="Long-métrage">Long-métrage</option>
+            <option value="Moyen-métrage">Moyen-métrage</option>
             <option value="Court-métrage">Court-métrage</option>
             <option value="Série">Série</option>
             <option value="Emission TV">Emission TV</option>
