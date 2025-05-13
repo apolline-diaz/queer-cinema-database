@@ -44,20 +44,20 @@ export default function ListClientPage({
       {isLoading ? (
         <div>
           {/* Skeleton for the title */}
-          <div className="animate-pulse bg-gray-200 border border-gray-300 h-8 w-3/4 mb-4 rounded"></div>
+          <div className="animate-pulse bg-gray-300 border h-8 w-1/4 mb-4 rounded-md"></div>
 
           {/* Skeleton for the description */}
-          <div className="animate-pulse bg-gray-200 border border-gray-300 h-6 w-full mb-6 rounded"></div>
+          <div className="animate-pulse bg-gray-300 border h-7 w-3/4 mb-6 rounded-md"></div>
 
           {/* Skeleton button */}
-          <div className="animate-pulse bg-gray-200 border border-gray-300 h-10 w-48 mb-6 rounded-md"></div>
+          <div className="animate-pulse bg-gray-300 border h-10 w-48 mb-6 rounded-md"></div>
 
           {/* Skeleton grid for movie cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 mt-5">
             {Array.from({ length: 3 }).map((_, index) => (
               <div
                 key={index}
-                className="animate-pulse rounded-xl border bg-gray-300 h-[250px] w-full justify-end max-w-xs mx-auto group overflow-hidden flex flex-col transition-transform"
+                className="animate-pulse border bg-gray-300 h-[250px] w-full justify-end max-w-xs mx-auto group overflow-hidden flex flex-col transition-transform"
               >
                 <div className="flex flex-col p-5 space-y-2">
                   <div className="h-6 bg-gray-200 rounded w-3/4 mb-2"></div>
@@ -86,7 +86,7 @@ export default function ListClientPage({
           </button>
 
           {/* Movie grid */}
-          <div className="grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-5">
+          <div className="grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 mt-5">
             {movies.length === 0 ? (
               <p>Aucun film trouvé</p>
             ) : (

@@ -38,24 +38,28 @@ export default async function Home() {
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/80 via-black/50 to-transparent">
+                  <div className="absolute top-5 right-5 text-white">
+                    <h2 className="italic text-5xl text-white font-extrabold font-raleway">
+                      Nouveauté
+                    </h2>
+                  </div>
                   <div className="w-3/4 p-10 text-white">
                     <h3 className="text-5xl uppercase font-bold">
                       {featuredLatestMovie.title}
                     </h3>
-                    <div className="flex flex-col font-light">
-                      <span className="inline-block mb-1 text-lg">
-                        {featuredLatestMovie?.movies_directors
-                          ?.map((item) => item.directors.name)
-                          .join(", ") || "Réalisateur inconnu"}
-                      </span>
-                      <span className="inline-block mb-1 text-md">
-                        {featuredLatestMovie.release_date || ""}
-                      </span>
-                      <p className="line-clamp-5 text-md">
-                        {featuredLatestMovie.description ||
-                          "Pas de description disponible"}
-                      </p>{" "}
-                    </div>
+                    <span className="inline-block text-md font-light pr-2">
+                      {featuredLatestMovie?.movies_directors
+                        ?.map((item) => item.directors.name)
+                        .join(", ") || "Réalisateur inconnu"}
+                    </span>{" "}
+                    •{" "}
+                    <span className="inline-block mb-1 text-md font-light">
+                      {featuredLatestMovie.release_date || ""}
+                    </span>
+                    <p className="line-clamp-5 text-md font-light">
+                      {featuredLatestMovie.description ||
+                        "Pas de description disponible"}
+                    </p>
                   </div>
                 </div>
               </div>
