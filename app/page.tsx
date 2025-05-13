@@ -28,7 +28,7 @@ export default async function Home() {
 
         {/* First movie highlight */}
         {featuredLatestMovie && (
-          <div className="w-full mb-5 relative overflow-hidden">
+          <div className="w-full mb-5 relative overflow-hidden featured-latest-movie">
             <Link href={`/movies/${featuredLatestMovie.id}`}>
               <div className="relative h-[90vh] w-full">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -43,7 +43,7 @@ export default async function Home() {
                       Dernier ajout
                     </h2>
                   </div>
-                  <div className="w-3/4 p-10 text-white">
+                  <div className="sm:w-3/4 w-full p-10 text-white">
                     <h3 className="text-4xl uppercase font-bold mb-2">
                       {featuredLatestMovie.title}
                     </h3>
@@ -56,7 +56,7 @@ export default async function Home() {
                     <span className="inline-block mb-1 text-md font-light">
                       {featuredLatestMovie.release_date || ""}
                     </span>
-                    <p className="line-clamp-5 text-md font-extralight">
+                    <p className="line-clamp-6 text-md font-extralight">
                       {featuredLatestMovie.description ||
                         "Pas de description disponible"}
                     </p>
@@ -70,7 +70,7 @@ export default async function Home() {
           <div className="flex flex-col mb-5">
             <div className="flex justify-between items-center pr-10 mb-4">
               <h2 className="text-lg font-semibold  text-rose-500">
-                encore plus d&apos;archives{" "}
+                plus d&apos;archives{" "}
               </h2>
               <Link
                 href="/movies"

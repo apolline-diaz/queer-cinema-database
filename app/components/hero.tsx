@@ -26,6 +26,21 @@ export default function Hero({ id, title, image_url }: CardProps) {
     }
   };
 
+  const scrollToFeaturedMovie = () => {
+    // Sélectionner la section du premier film mis en avant
+    const featuredMovieSection = document.querySelector(
+      ".featured-latest-movie"
+    );
+
+    if (featuredMovieSection) {
+      // Défilement doux vers cette section
+      featuredMovieSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
+
   return (
     <>
       <div className="relative bg-red-100 w-full overflow-hidden">
@@ -77,6 +92,18 @@ export default function Hero({ id, title, image_url }: CardProps) {
                 <Icon icon="uis:angle-right" fontSize={25} />
               </Link>
             </div>
+          </div>
+
+          {/* Flèche de défilement vers le bas */}
+          <div
+            className="absolute bottom-10 left-1/2 transform -translate-x-1/2 cursor-pointer animate-bounce"
+            onClick={scrollToFeaturedMovie}
+          >
+            <Icon
+              icon="mdi:chevron-down"
+              className="text-rose-500 text-opacity-100 hover:text-opacity-100 transition-opacity"
+              fontSize={40}
+            />
           </div>
         </div>
       </div>
