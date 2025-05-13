@@ -30,7 +30,7 @@ export default async function Home() {
         {featuredLatestMovie && (
           <div className="w-full mb-5 relative overflow-hidden">
             <Link href={`/movies/${featuredLatestMovie.id}`}>
-              <div className="relative h-[100vh] w-full">
+              <div className="relative h-[90vh] w-full">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={getImageUrl(featuredLatestMovie.image_url || "")}
@@ -39,15 +39,15 @@ export default async function Home() {
                 />
                 <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/80 via-black/50 to-transparent">
                   <div className="absolute top-5 right-5 text-white">
-                    <h2 className="italic text-5xl text-white font-extrabold font-raleway">
+                    <h2 className="italic text-5xl p-5 text-white font-extrabold font-raleway">
                       Nouveauté
                     </h2>
                   </div>
                   <div className="w-3/4 p-10 text-white">
-                    <h3 className="text-5xl uppercase font-bold">
+                    <h3 className="text-4xl uppercase font-bold mb-2">
                       {featuredLatestMovie.title}
                     </h3>
-                    <span className="inline-block text-md font-light pr-2">
+                    <span className="inline-block text-md font-light">
                       {featuredLatestMovie?.movies_directors
                         ?.map((item) => item.directors.name)
                         .join(", ") || "Réalisateur inconnu"}
@@ -56,7 +56,7 @@ export default async function Home() {
                     <span className="inline-block mb-1 text-md font-light">
                       {featuredLatestMovie.release_date || ""}
                     </span>
-                    <p className="line-clamp-5 text-md font-light">
+                    <p className="line-clamp-5 text-md font-extralight">
                       {featuredLatestMovie.description ||
                         "Pas de description disponible"}
                     </p>
@@ -66,9 +66,9 @@ export default async function Home() {
             </Link>
           </div>
         )}
-        <div className="">
+        <div className="pl-10">
           <div className="flex flex-col mb-5">
-            <div className="flex justify-between items-center px-10 mb-4">
+            <div className="flex justify-between items-center pr-10 mb-4">
               <h2 className="text-lg font-semibold  text-rose-500">
                 Derniers ajouts{" "}
               </h2>
