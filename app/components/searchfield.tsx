@@ -138,17 +138,17 @@ export default function Searchfield({
       </div>
       <div className="text-rose-500 border-b border-rose-500 text-md font-light mb-5">
         {isLoading ? (
-          <div className="animate-pulse rounded-xl h-6 bg-gray-400 w-3/4 mb-2"></div>
+          <div className="animate-pulse rounded-md h-6 bg-gray-300 w-1/4 mb-2"></div>
         ) : (
-          `${movies.length} films trouvés`
+          `${movies.length} titres trouvés`
         )}
       </div>
-      <div className="w-full grid xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+      <div className="w-full grid xs:grid-cols-1 gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
         {isLoading ? (
-          Array.from({ length: 8 }).map((_, index) => (
+          Array.from({ length: 6 }).map((_, index) => (
             <div
               key={index}
-              className="animate-pulse rounded-xl bg-gray-300 h-48 w-full justify-end max-w-xs mx-auto group overflow-hidden flex flex-col transition-transform"
+              className="animate-pulse bg-gray-300 h-[250px] w-full justify-end max-w-xs mx-auto group overflow-hidden flex flex-col transition-transform"
             >
               <div className="flex flex-col p-5 space-y-2">
                 <div className="h-6 bg-gray-200 rounded w-3/4 mb-2"></div>
