@@ -26,7 +26,7 @@ export default function ForgotPasswordPage() {
       const { error: resetError } = await supabase.auth.resetPasswordForEmail(
         data.email,
         {
-          redirectTo: `${window.location.origin}/reset-password`,
+          redirectTo: `${window.location.origin}/account/reset-password`,
         }
       );
 
@@ -116,7 +116,7 @@ export default function ForgotPasswordPage() {
                 isSubmitting={isSubmitting}
               />
 
-              <div className="items-center rounded-full hover:underline underline-offset-8 p-2">
+              <div className="justify-center flex items-center w-full hover:underline underline-offset-8 p-2">
                 <Link href="/login">Retour à la connexion</Link>
               </div>
             </div>

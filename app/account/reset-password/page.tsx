@@ -19,16 +19,30 @@ export default function ResetPasswordPage() {
 
   // Vérifier si l'utilisateur est authentifié avec un accès de récupération
   useEffect(() => {
-    const checkSession = async () => {
-      setIsLoading(true);
-      const { data } = await supabase.auth.getSession();
+    const accessToken = new URLSearchParams(window.location.search).get(
+      "access_token"
+    );
 
-      // Si l'utilisateur n'a pas de session ou n'est pas dans un flux de récupération,
-      // on pourrait ajouter une vérification supplémentaire ici
+    if (accessToken) {
+      supabase.auth
+        .setSession({
+          access_token: accessToken,
+          refresh_token: "", // Pas nécessaire pour la récupération
+        })
+        .then(({ data, error }) => {
+          if (error) {
+            console.error(
+              "Erreur lors de la mise à jour de la session:",
+              error.message
+            );
+            setError("Le lien de réinitialisation est invalide ou a expiré.");
+          }
+          setIsLoading(false);
+        });
+    } else {
+      setError("Token de récupération manquant. Veuillez réessayer.");
       setIsLoading(false);
-    };
-
-    checkSession();
+    }
   }, []);
 
   const {
