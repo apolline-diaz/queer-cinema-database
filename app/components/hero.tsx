@@ -29,7 +29,7 @@ export default function Hero({ id, title, image_url }: CardProps) {
   return (
     <>
       <div className="relative bg-red-100 w-full overflow-hidden">
-        <div className="relative w-full overflow-hidden h-[80vh]">
+        <div className="relative w-full overflow-hidden h-[90vh]">
           <Image
             src={getImageUrl(image_url)}
             alt={title}
@@ -37,7 +37,7 @@ export default function Hero({ id, title, image_url }: CardProps) {
             title={title}
           />
           <div className="absolute inset-0 flex flex-col justify-center items-center px-10 gap-y-8">
-            <div className="relative w-full sm:text-5xl text-4xl ">
+            <div className="relative w-4/5 sm:text-5xl text-4xl ">
               <h2 className="text-center font-bold">
                 <span className="text-white ">
                   Découvrez une sélection de films et d&apos;archives{" "}
