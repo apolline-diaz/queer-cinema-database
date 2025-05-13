@@ -143,7 +143,7 @@ export default function Searchfield({
           `${movies.length} films trouvés`
         )}
       </div>
-      <div className="w-full grid xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+      <div className="w-full grid xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
         {isLoading ? (
           Array.from({ length: 8 }).map((_, index) => (
             <div
