@@ -39,8 +39,8 @@ export default async function Home() {
                 />
                 <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/80 via-black/50 to-transparent">
                   <div className="absolute top-5 right-5 text-white">
-                    <h2 className="italic text-5xl p-5 text-white font-extrabold font-raleway">
-                      Nouveauté
+                    <h2 className="text-rose-500 text-5xl p-5  font-extrabold font-raleway">
+                      Dernier ajout
                     </h2>
                   </div>
                   <div className="w-3/4 p-10 text-white">
@@ -70,7 +70,7 @@ export default async function Home() {
           <div className="flex flex-col mb-5">
             <div className="flex justify-between items-center pr-10 mb-4">
               <h2 className="text-lg font-semibold  text-rose-500">
-                Derniers ajouts{" "}
+                encore plus d&apos;archives{" "}
               </h2>
               <Link
                 href="/movies"
