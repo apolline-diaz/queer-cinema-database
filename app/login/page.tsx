@@ -73,6 +73,12 @@ export default function LoginPage() {
                 {errors.password.message}
               </span>
             )}
+            <Link
+              href="/account/forgot-password"
+              className="text-xs hover:underline"
+            >
+              Mot de passe oublié?
+            </Link>
           </div>
           <div className="w-full justify-center items-center flex flex-col sm:flex-row gap-4">
             <SubmitButton
