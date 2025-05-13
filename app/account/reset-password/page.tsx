@@ -20,7 +20,7 @@ export default function ResetPasswordPage() {
   // Vérifier si l'utilisateur est authentifié avec un accès de récupération
   useEffect(() => {
     const accessToken = new URLSearchParams(window.location.search).get(
-      "token_hash"
+      "access_token"
     );
 
     if (accessToken) {
