@@ -33,7 +33,7 @@ export default function HomeCard({
 
             <div className="bottom-0 absolute w-full p-5">
               <div className="text-md font-semibold uppercase">{title}</div>
-              <p className="text-sm ">{release_date}</p>
+              <p className="text-sm font-light">{release_date}</p>
             </div>
           </div>
         </div>

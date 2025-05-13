@@ -26,10 +26,25 @@ export default function Hero({ id, title, image_url }: CardProps) {
     }
   };
 
+  const scrollToFeaturedMovie = () => {
+    // Sélectionner la section du premier film mis en avant
+    const featuredMovieSection = document.querySelector(
+      ".featured-latest-movie"
+    );
+
+    if (featuredMovieSection) {
+      // Défilement doux vers cette section
+      featuredMovieSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
+
   return (
     <>
       <div className="relative bg-red-100 w-full overflow-hidden">
-        <div className="relative w-full overflow-hidden h-[90vh]">
+        <div className="relative w-full overflow-hidden h-[100vh]">
           <Image
             src={getImageUrl(image_url)}
             alt={title}
@@ -37,11 +52,9 @@ export default function Hero({ id, title, image_url }: CardProps) {
             title={title}
           />
           <div className="absolute inset-0 flex flex-col justify-center items-center px-10 gap-y-8">
-            <div className="relative w-4/5 sm:text-5xl text-4xl ">
+            <div className="relative w-4/5 sm:text-7xl text-5xl">
               <h2 className="text-center font-bold">
-                <span className="text-white ">
-                  Découvrez une sélection de films et d&apos;archives{" "}
-                </span>
+                <span className="text-white uppercase">Films & Archives </span>
                 {/* <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-yellow-300 via-green-400 via-blue-500 to-violet-500"> */}
                 <span className="text-transparent font-bold bg-clip-text bg-gradient-to-r from-rose-500  via-blue-500  to-yellow-400">
                   LGBTQI+
@@ -79,6 +92,18 @@ export default function Hero({ id, title, image_url }: CardProps) {
                 <Icon icon="uis:angle-right" fontSize={25} />
               </Link>
             </div>
+          </div>
+
+          {/* Flèche de défilement vers le bas */}
+          <div
+            className="absolute bottom-10 left-1/2 transform -translate-x-1/2 cursor-pointer animate-bounce"
+            onClick={scrollToFeaturedMovie}
+          >
+            <Icon
+              icon="mdi:chevron-down"
+              className="text-rose-500 text-opacity-100 hover:text-opacity-100 transition-opacity"
+              fontSize={40}
+            />
           </div>
         </div>
       </div>
