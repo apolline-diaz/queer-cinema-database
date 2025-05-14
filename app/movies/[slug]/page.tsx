@@ -53,7 +53,7 @@ export default async function Page({ params }: Props) {
         </div>
       </div>
       <div className="p-10 text-black flex flex-col font-light gap-3">
-        <h2 className="text-4xl mb-2 font-light uppercase text-rose-500">
+        <h2 className="text-4xl font-light uppercase text-rose-500">
           {movie.title}
         </h2>
         <h2 className="font-light text-lg">
@@ -97,14 +97,14 @@ export default async function Page({ params }: Props) {
             )}
           </div>
           <div>
-            <p className="mt-4 text-lg mb-2">{movie.description}</p>
-            <div className="font-bold flex items-center flex-wrap py-3">
+            <p className="mt-4 text-md mb-2">{movie.description}</p>
+            <div className="font-bold flex items-center gap-y-3 flex-wrap py-3">
               {movie.keywords?.map((keyword) => (
                 <Link
                   key={keyword.id}
                   href={`/movies?keywordIds=${encodeURIComponent(keyword.id.toString())}&searchMode=form`}
                 >
-                  <span className="font-light text-md my-2 rounded-full border border-rose-500 text-rose-500 px-2 mr-1 py-1 hover:bg-rose-500 hover:text-white hover:border-rose-500 hover:cursor-pointer">
+                  <span className="font-light text-sm rounded-full border border-rose-500 text-rose-500 px-2 mr-1 py-1 hover:bg-rose-500 hover:text-white hover:border-rose-500 hover:cursor-pointer">
                     {keyword.name}
                   </span>
                 </Link>
