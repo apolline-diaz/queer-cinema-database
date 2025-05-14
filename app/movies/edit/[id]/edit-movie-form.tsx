@@ -317,6 +317,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
             options={availableDirectors}
             label="Réalisateur-ices"
             placeholder="Chercher et ajouter des réalisateur-ices..."
+            aria-label="Ajouter ou retirer un réalisateur ou une réalisatrice"
             onChange={(selected) => {
               setSelectedDirectors(selected);
               setValue(
@@ -389,6 +390,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
           <textarea
             {...register("description")}
             rows={4}
+            aria-label="Modifier le résumé de l'oeuvre"
             className="w-full px-3 py-2 text-black font-light text-sm border bg-white border-rose-500 rounded-md bg-transparent"
           />
         </div>
@@ -402,6 +404,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
             <select
               {...register("release_date")}
               className="w-full text-sm font-light py-2 border rounded-md px-2 bg-white text-black border-rose-500"
+              aria-label="Sélectionner une année de sorte"
             >
               {years.map((year) => (
                 <option key={year} value={year}>
@@ -420,6 +423,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
               id="country_id"
               {...register("country_id")}
               className="w-full mt-1 block text-sm font-light bg-transparent border rounded-md px-2 bg-white text-black border-rose-500  py-2"
+              aria-label="Sélectionner un pays"
             >
               <option value="">Select a country</option>
               {availableCountries.map((country) => (
@@ -452,6 +456,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
                 },
               })}
               className="w-full text-sm font-light border-rose-500  py-2 border rounded-md px-2 bg-white text-black bg-transparent"
+              aria-label="Entrer une durée"
             />
             {errors.runtime && (
               <p className="text-red-500 text-sm mt-1">
@@ -466,6 +471,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
             <input
               {...register("language")}
               className="w-full text-sm border-rose-500 font-light py-2 border rounded-md px-2 bg-white text-black bg-transparent"
+              aria-label="Entrer une langue"
             />
           </div>
         </div>
@@ -476,6 +482,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
           <select
             {...register("type")}
             className="w-full text-sm font-light border-rose-500 py-2 border rounded-md px-2 bg-white text-black"
+            aria-label="Sélectionner un type de contenu"
           >
             <option value="Long-métrage">Long-métrage</option>
             <option value="Moyen-métrage">Moyen-métrage</option>
@@ -496,6 +503,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
             options={availableGenres}
             label="Genres"
             placeholder="Chercher et ajouter des genres..."
+            aria-label="Sélectionner un ou plusieurs genres"
             onChange={(selected) => {
               setSelectedGenres(selected);
               setValue(
@@ -520,7 +528,8 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
             control={control}
             options={availableKeywords}
             label="Mots-clé"
-            placeholder="Chercher et ajouter des mot-clés..."
+            placeholder="Chercher et ajouter des mots-clés..."
+            aria-label="Sélectionner un ou plusieurs mots-clés"
             onChange={(selected) => {
               setSelectedKeywords(selected);
               setValue(

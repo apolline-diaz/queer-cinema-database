@@ -219,6 +219,7 @@ export default function SearchForm({
                     options={releaseYears}
                     {...field}
                     placeholder="Année min"
+                    aria-label="Sélectionner l'année de début"
                   />
                 )}
               />
@@ -231,6 +232,7 @@ export default function SearchForm({
                     options={releaseYears}
                     {...field}
                     placeholder="Année max"
+                    aria-label="Sélectionner l'année de fin"
                   />
                 )}
               />
@@ -246,6 +248,7 @@ export default function SearchForm({
                   options={countries}
                   {...field}
                   placeholder="Tous les pays"
+                  aria-label="Sélectionner un pays"
                 />
               )}
             />
@@ -261,6 +264,7 @@ export default function SearchForm({
                   options={genres}
                   {...field}
                   placeholder="Tous les genres"
+                  aria-label="Sélectionner un genre"
                 />
               )}
             />
@@ -281,6 +285,7 @@ export default function SearchForm({
                   ]}
                   {...field}
                   placeholder="Tous les types"
+                  aria-label="Sélectionner un type de contenu"
                 />
               )}
             />
@@ -296,6 +301,7 @@ export default function SearchForm({
                   options={directors}
                   {...field}
                   placeholder="Toutes les réalisateur-ices"
+                  aria-label="Sélectionner un réalisateur ou une réalisatrice"
                 />
               )}
             />
@@ -312,6 +318,7 @@ export default function SearchForm({
                   options={keywords}
                   label="Mots-clés"
                   placeholder="Rechercher des mots-clé"
+                  aria-label="Sélectionner un ou des mots-clés"
                   onChange={field.onChange}
                 />
               )}
@@ -324,6 +331,7 @@ export default function SearchForm({
             type="submit"
             className="xs:w-full sm:w-[200px] bg-gradient-to-r from-rose-500 to-red-500 text-white px-4 py-2 rounded-md hover:from-rose-600 hover:to-red-600"
             disabled={isLoading}
+            aria-label="Lancer la recherche de films"
           >
             Rechercher
           </button>
@@ -333,6 +341,7 @@ export default function SearchForm({
             onClick={handleReset}
             className="xs:w-full sm:w-[200px] border hover:border-red-600 hover:text-red-600 text-rose-500 px-4 py-2 border-rose-500 rounded-md"
             disabled={isLoading}
+            aria-label="Réinitialiser le formulaire de recherche"
           >
             Réinitialiser
           </button>
@@ -377,6 +386,7 @@ export default function SearchForm({
         <button
           onClick={loadMore}
           className="w-full flex flex-row justify-center items-center border rounded-md border-rose-500 border-t mt-4 px-4 py-2 hover:border-red-500 text-rose-500 hover:text-red-500"
+          aria-label="Charger plus de résultats"
         >
           Voir plus <Icon icon="mdi:chevron-down" className="size-5" />
         </button>

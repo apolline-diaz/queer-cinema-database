@@ -68,6 +68,7 @@ export default function Hero({ id, title, image_url }: CardProps) {
                   type="text"
                   className="z-10 max-h-12  min-w-60 flex-1 py-4 bg-white placeholder-rose-500 text-rose-500 font-light focus:outline-none"
                   placeholder="Rechercher un titre, mot-clé..."
+                  aria-label="Rechercher un titre ou un mot-clé"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSearch()}
@@ -78,6 +79,8 @@ export default function Hero({ id, title, image_url }: CardProps) {
                   <Icon
                     icon="radix-icons:magnifying-glass"
                     fontSize={20}
+                    role="button"
+                    aria-label="Rechercher"
                     onClick={handleSearch}
                     className="text-rose-500 hover:cursor-pointer hover:text-rose-600 transition-colors"
                   />
@@ -98,11 +101,14 @@ export default function Hero({ id, title, image_url }: CardProps) {
           <div
             className="absolute bottom-10 left-1/2 transform -translate-x-1/2 cursor-pointer animate-bounce"
             onClick={scrollToFeaturedMovie}
+            aria-label="Aller au film en dessous"
           >
             <Icon
               icon="mdi:chevron-down"
               className="text-rose-500 text-opacity-100 hover:text-opacity-100 transition-opacity"
               fontSize={40}
+              role="button"
+              aria-label="Défiler vers le film en dessous"
             />
           </div>
         </div>

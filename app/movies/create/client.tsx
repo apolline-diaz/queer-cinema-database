@@ -98,7 +98,8 @@ const CreateMoviePage: React.FC = () => {
           <input
             className="w-full text-black font-light bg-transparent border-b p-2 placeholder-gray-500 border-rose-500"
             {...register("title", { required: "Le titre est obligatoire" })}
-            placeholder="Tapez le titre..."
+            placeholder="Entrer le titre..."
+            aria-label="Titre du film"
           />
           {errors.title && (
             <span className="text-red-500 text-xs">{errors.title.message}</span>
@@ -112,7 +113,8 @@ const CreateMoviePage: React.FC = () => {
             {...register("director_name", {
               required: "Le nom du réalisateur est obligatoire",
             })}
-            placeholder="Tapez le nom du/de la réalisateur-ice..."
+            placeholder="Entrer le nom du/de la réalisateur-ice..."
+            aria-label="Nom du réalisateur ou de la réalisatrice"
           />
           {errors.director_name && (
             <span className="text-red-500 text-xs">
@@ -128,6 +130,7 @@ const CreateMoviePage: React.FC = () => {
             className="w-full text-black font-light border p-2 placeholder-gray-500 rounded-md border-rose-500"
             {...register("description")}
             placeholder="Résumé de l'oeuvre..."
+            aria-label="Entrer le résumé de l'oeuvre"
           ></textarea>
         </div>
 
@@ -137,8 +140,9 @@ const CreateMoviePage: React.FC = () => {
           <select
             className="w-full text-black font-light border p-2 placeholder-gray-500 rounded-md border-rose-500"
             {...register("release_date")}
+            aria-label="Sélectionner une date"
           >
-            <option value="">Sélectionnez une année</option>
+            <option value="">Sélectionner une année</option>
             {Array.from(
               { length: 130 },
               (_, i) => new Date().getFullYear() - i
@@ -156,8 +160,9 @@ const CreateMoviePage: React.FC = () => {
           <select
             className="w-full border font-light p-2 text-black rounded-md border-rose-500"
             {...register("country_id")}
+            aria-label="Sélectionner un pays"
           >
-            <option value="">Sélectionnez un pays</option>
+            <option value="">Sélectionner un pays</option>
             {countries.map((country) => (
               <option key={country.id} value={country.id}>
                 {country.name}
@@ -174,6 +179,7 @@ const CreateMoviePage: React.FC = () => {
             className="w-full font-light border p-2 text-black rounded-md border-rose-500"
             {...register("runtime")}
             placeholder="00"
+            aria-label="Entrer une durée"
             min="0"
           />
         </div>
@@ -184,8 +190,9 @@ const CreateMoviePage: React.FC = () => {
           <select
             className="w-full font-light text-black border p-2 rounded-md border-rose-500"
             {...register("type")}
+            aria-label="Sélectionner un type de contenu"
           >
-            <option value="">Sélectionnez un type</option>
+            <option value="">Sélectionner un type</option>
             <option value="Long-métrage">Long-métrage</option>
             <option value="Moyen-métrage">Moyen-métrage</option>
             <option value="Court-métrage">Court-métrage</option>
@@ -200,8 +207,9 @@ const CreateMoviePage: React.FC = () => {
           <select
             className="w-full border font-light text-black p-2 rounded-md border-rose-500"
             {...register("genre_id")}
+            aria-label="Sélectionner un genre"
           >
-            <option value="">Sélectionnez un genre</option>
+            <option value="">Sélectionner un genre</option>
             {genres.map((genre) => (
               <option key={genre.id} value={genre.id}>
                 {genre.name}
@@ -228,6 +236,7 @@ const CreateMoviePage: React.FC = () => {
                 options={keywords}
                 label="Mots-clé"
                 placeholder="Chercher et ajouter des mot-clés..."
+                aria-label="Sélectionner les mots-clés associés au film"
                 onChange={(selected) => {
                   setSelectedKeywords(selected);
                   const keywordIds = selected.map((k) => k.value).join(",");
@@ -252,6 +261,7 @@ const CreateMoviePage: React.FC = () => {
             type="file"
             {...register("image_url")}
             accept="image/*"
+            aria-label="Télécharger une image du film"
           />
         </div>
         <div className="mt-8 flex flex-col gap-3 xs:flex-col sm:flex-row justify-between">
@@ -266,6 +276,7 @@ const CreateMoviePage: React.FC = () => {
             defaultText="Ajouter le film"
             loadingText="Chargement..."
             isSubmitting={isSubmitting}
+            aria-live="polite"
           />
         </div>
       </form>

@@ -34,7 +34,7 @@ export default async function Home() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={getImageUrl(featuredLatestMovie.image_url || "")}
-                  alt={featuredLatestMovie.title}
+                  alt={`Image du film ${featuredLatestMovie.title}`}
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/80 via-black/50 to-transparent">

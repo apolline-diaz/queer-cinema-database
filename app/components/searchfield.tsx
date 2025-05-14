@@ -114,6 +114,7 @@ export default function Searchfield({
                     {...field}
                     className="appearance-none text-md placeholder-gray-500 font-light block w-full bg-white rounded-md border  border-rose-500 text-rose-500 p-2 leading-tight focus:none focus:outline-none"
                     placeholder="Entrez un mot ou un titre..."
+                    aria-label="Champ de recherche de titres"
                   />
                 )}
               />
@@ -123,6 +124,7 @@ export default function Searchfield({
             <button
               type="submit"
               className="xs:w-full sm:w-[200px] bg-gradient-to-r from-rose-500 to-red-500 text-white px-4 py-2 rounded-md hover:from-rose-600 hover:to-red-600"
+              aria-label="Rechercher des titres"
             >
               Rechercher
             </button>
@@ -130,6 +132,7 @@ export default function Searchfield({
               type="button"
               onClick={handleReset}
               className="xs:w-full sm:w-[200px] border hover:border-red-600 hover:text-red-600 text-rose-500 px-4 py-2 border-rose-500 rounded-md"
+              aria-label="Réinitialiser le champ de recherche"
             >
               Réinitialiser
             </button>
@@ -175,6 +178,7 @@ export default function Searchfield({
         <button
           onClick={loadMore}
           className="w-full flex flex-row justify-center items-center border rounded-md border-rose-500 border-t mt-4 px-4 py-2 hover:border-red-500 text-rose-500 hover:text-red-500"
+          aria-label="Charger plus de résultats"
         >
           Voir plus <Icon icon="mdi:chevron-down" className="size-5" />
         </button>
