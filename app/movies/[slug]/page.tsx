@@ -97,14 +97,14 @@ export default async function Page({ params }: Props) {
             )}
           </div>
           <div>
-            <p className="mt-4 text-lg">{movie.description}</p>
+            <p className="mt-4 text-lg mb-2">{movie.description}</p>
             <div className="font-bold flex items-center flex-wrap py-3">
               {movie.keywords?.map((keyword) => (
                 <Link
                   key={keyword.id}
                   href={`/movies?keywordIds=${encodeURIComponent(keyword.id.toString())}&searchMode=form`}
                 >
-                  <span className="font-light text-md rounded-full border border-rose-500 text-rose-500 px-2 mr-1 py-1 hover:bg-rose-500 hover:text-white hover:border-rose-500 hover:cursor-pointer">
+                  <span className="font-light text-md my-2 rounded-full border border-rose-500 text-rose-500 px-2 mr-1 py-1 hover:bg-rose-500 hover:text-white hover:border-rose-500 hover:cursor-pointer">
                     {keyword.name}
                   </span>
                 </Link>
