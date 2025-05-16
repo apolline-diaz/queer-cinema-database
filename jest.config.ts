@@ -23,7 +23,15 @@ const config: Config = {
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
   // collectCoverageFrom: undefined,
-
+  collectCoverageFrom: [
+    "**/*.{js,jsx,ts,tsx}",
+    "!**/*.d.ts",
+    "!**/node_modules/**",
+    "!<rootDir>/out/**",
+    "!<rootDir>/.next/**",
+    "!<rootDir>/*.config.js",
+    "!<rootDir>/coverage/**",
+  ],
   // The directory where Jest should output its coverage files
   coverageDirectory: "coverage",
 
@@ -76,6 +84,7 @@ const config: Config = {
   // moduleDirectories: [
   //   "node_modules"
   // ],
+  moduleDirectories: ["node_modules", "<rootDir>"],
 
   // An array of file extensions your modules use
   moduleFileExtensions: [
@@ -92,7 +101,31 @@ const config: Config = {
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
   // moduleNameMapper: {},
   moduleNameMapper: {
-    "^@/(.*)$": "<rootDir>/src/$1", // <-- This line maps '@/...' to 'src/...'
+    // Handle CSS imports (with CSS modules)
+    // https://jestjs.io/docs/webpack#mocking-css-modules
+    "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
+
+    // Handle CSS imports (without CSS modules)
+    "^.+\\.(css|sass|scss)$": "<rootDir>/__mocks__/styleMock.js",
+
+    // Handle image imports
+    // https://jestjs.io/docs/webpack#handling-static-assets
+    "^.+\\.(png|jpg|jpeg|gif|webp|avif|ico|bmp|svg)$": `<rootDir>/__mocks__/fileMock.js`,
+
+    // Handle module aliases
+    "^@/components/(.*)$": "<rootDir>/components/$1",
+
+    // Handle @next/font
+    "@next/font/(.*)": `<rootDir>/__mocks__/nextFontMock.js`,
+    // Handle next/font
+    "next/font/(.*)": `<rootDir>/__mocks__/nextFontMock.js`,
+    // Disable server-only
+    "server-only": `<rootDir>/__mocks__/empty.js`,
+
+    "^@/app/(.*)$": "<rootDir>/app/$1",
+    "^@/lib/(.*)$": "<rootDir>/lib/$1",
+    "^@/utils/(.*)$": "<rootDir>/utils/$1",
+    "^@/(.*)$": "<rootDir>/$1",
   },
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
   // modulePathIgnorePatterns: [],
@@ -168,6 +201,7 @@ const config: Config = {
   // testPathIgnorePatterns: [
   //   "/node_modules/"
   // ],
+  testPathIgnorePatterns: ["<rootDir>/node_modules/", "<rootDir>/.next/"],
 
   // The regexp pattern or array of patterns that Jest uses to detect test files
   // testRegex: [],
@@ -181,13 +215,19 @@ const config: Config = {
   // A map from regular expressions to paths to transformers
   // transform: undefined,
   transform: {
-    "^.+\\.(ts|tsx)$": "ts-jest",
+    // Use babel-jest to transpile tests with the next/babel preset
+    // https://jestjs.io/docs/configuration#transform-objectstring-pathtotransformer--pathtotransformer-object
+    "^.+\\.(js|jsx|ts|tsx)$": ["babel-jest", { presets: ["next/babel"] }],
   },
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   // transformIgnorePatterns: [
   //   "/node_modules/",
   //   "\\.pnp\\.[^\\/]+$"
   // ],
+  transformIgnorePatterns: [
+    "/node_modules/",
+    "^.+\\.module\\.(css|sass|scss)$",
+  ],
 
   // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
   // unmockedModulePathPatterns: undefined,
