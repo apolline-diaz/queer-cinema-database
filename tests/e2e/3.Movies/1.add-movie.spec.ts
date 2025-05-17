@@ -24,7 +24,7 @@ const test = base.extend<CustomFixtures>({
   },
 });
 
-test("create movie", async ({ authenticatedPage: page }) => {
+test("add movie", async ({ authenticatedPage: page }) => {
   await page.goto("/");
 
   await page.getByRole("link", { name: "Contribuer" }).click();
