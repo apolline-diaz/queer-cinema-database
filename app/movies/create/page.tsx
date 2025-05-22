@@ -1,4 +1,3 @@
-import { auth } from "@/utils/auth"; // Adjust the import path to your auth utility
 import { redirect } from "next/navigation";
 import CreateMoviePage from "./client"; // Import the client-side form component
 import { isAdmin } from "@/utils/is-user-admin";
