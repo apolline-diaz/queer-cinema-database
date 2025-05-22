@@ -12,18 +12,14 @@ export async function ensureUserExists() {
   }
 
   try {
-    // Tente de créer l'utilisateur, ignorera silencieusement s'il existe déjà
+    // Attempts to create the user, silently ignores if it already exists
     await prisma.users.upsert({
       where: { id: data.user.id },
-      update: {}, // Ne met à jour aucun champ existant
+      update: {}, // Does not update any existing fields
       create: {
         id: data.user.id,
         email: data.user.email!,
         created_at: new Date(),
-        // Ajoutez d'autres champs par défaut si nécessaire
-        // Par exemple :
-        // name: data.user.user_metadata?.name,
-        // createdAt: new Date()
       },
     });
 
