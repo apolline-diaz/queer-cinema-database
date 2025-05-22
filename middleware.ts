@@ -38,10 +38,10 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // Synchronisation de l'utilisateur
+  // Synchronize the user
   if (user) {
     try {
-      // Vérifie si l'utilisateur existe déjà dans Prisma
+      // Check if the user already exist in Prisma
       const existingUser = await prisma.users.findUnique({
         where: { id: user.id },
       });
