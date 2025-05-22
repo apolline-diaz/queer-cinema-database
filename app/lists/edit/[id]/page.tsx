@@ -37,14 +37,7 @@ export default function EditListPage({ params }: { params: { id: string } }) {
     const fetchData = async () => {
       try {
         const list = await getList(id);
-        const moviesData = await getMovies({
-          title: "",
-          keyword: "",
-          director: "",
-          country: "",
-          genre: "",
-          year: "",
-        });
+        const moviesData = await getMovies();
 
         setValue("title", list.title);
         setValue("description", list.description || "");
@@ -52,12 +45,14 @@ export default function EditListPage({ params }: { params: { id: string } }) {
           list.lists_movies.map((item: any) => ({
             value: item.movies.id,
             label: item.movies.title,
+            release_date: item.movies.release_date,
           }))
         );
         setMovies(
           moviesData.map((movie: any) => ({
             value: movie.id,
             label: movie.title,
+            release_date: movie.release_date,
           }))
         );
 

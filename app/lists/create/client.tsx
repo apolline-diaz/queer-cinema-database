@@ -11,7 +11,7 @@ import { Controller, useForm } from "react-hook-form";
 interface Movie {
   id: string;
   title: string;
-  release_date: string;
+  release_date: string | null;
 }
 
 interface FormData {
@@ -41,14 +41,7 @@ const CreateListPage: React.FC = () => {
 
   useEffect(() => {
     const fetchMovies = async () => {
-      const moviesData = await getMovies({
-        title: "",
-        keyword: "",
-        director: "",
-        country: "",
-        genre: "",
-        year: "",
-      });
+      const moviesData = await getMovies();
       setMovies(moviesData);
     };
     fetchMovies();
@@ -74,13 +67,11 @@ const CreateListPage: React.FC = () => {
     );
   };
 
-  const filteredMovies = movies
-    .filter(
-      (movie) =>
-        movie.title.toLowerCase().includes(movieInput.toLowerCase()) &&
-        !selectedMovies.includes(movie.id)
-    )
-    .slice(0, 5);
+  const filteredMovies = movies.filter(
+    (movie) =>
+      movie.title.toLowerCase().includes(movieInput.toLowerCase()) &&
+      !selectedMovies.includes(movie.id)
+  );
 
   const onSubmit = async (data: FormData) => {
     const formData = new FormData();
@@ -152,17 +143,15 @@ const CreateListPage: React.FC = () => {
 
           {/* Suggestions de films */}
           {isSearching && filteredMovies.length > 0 && (
-            <ul className="absolute border bg-red-100 rounded-lg text-sm border-rose-500 mt-1 z-10">
+            <ul className="absolute border max-h-40 max-w-80 overflow-y-auto bg-red-100 rounded-lg text-sm border-rose-500 mt-1 z-10">
               {filteredMovies.map((movie) => (
                 <li
                   key={movie.id}
-                  className="px-4 py-2 cursor-pointer uppercase hover:bg-red-100"
+                  className="px-4 py-2 font-light hover:bg-rose-500 cursor-pointer uppercase  hover:text-white"
                   onClick={() => handleAddMovie(movie)}
                 >
                   {movie.title}{" "}
-                  <span className="text-red-600 font-semibold">
-                    {movie.release_date}
-                  </span>
+                  <span className="font-semibold ">{movie.release_date}</span>
                 </li>
               ))}
             </ul>
@@ -188,9 +177,12 @@ const CreateListPage: React.FC = () => {
             return movie ? (
               <span
                 key={movie.id}
-                className="items-center my-2 border flex justify-between border-rose-500 w-full bg-rose-100 text-rose-500 text-xs font-medium mr-2 px-3 py-1 rounded"
+                className="items-center my-2 border flex justify-between border-rose-500 w-full bg-rose-100 text-rose-500 text-sm font-light mr-2 px-3 py-1 rounded"
               >
-                {movie.title}
+                <div>
+                  {movie.title}{" "}
+                  <span className="font-semibold">{movie.release_date}</span>
+                </div>
                 <button
                   type="button"
                   onClick={() => handleRemoveMovie(movie.id)}

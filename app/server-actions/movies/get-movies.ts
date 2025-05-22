@@ -1,20 +1,23 @@
-import { supabase } from "@/lib/supabase";
+"use server";
 
-export const getMovies = async (filters: {
-  title: string;
-  keyword: string;
-  director: string;
-  country: string;
-  genre: string;
-  year: string;
-}) => {
-  const { data, error } = await supabase
-    .from("movies")
-    .select(
-      "id, title, release_date, genres(name), directors(name), countries(name), keywords(name)"
-    );
-  if (error) {
-    console.error("Erreur lors de la récupération des films :", error);
+import { prisma } from "@/lib/prisma";
+
+export const getMovies = async () => {
+  try {
+    const movies = await prisma.movies.findMany({
+      select: {
+        id: true,
+        title: true,
+        release_date: true,
+      },
+      orderBy: {
+        title: "asc",
+      },
+    });
+
+    return movies;
+  } catch (error) {
+    console.error("Error when fetching movies :", error);
+    return [];
   }
-  return data || [];
 };

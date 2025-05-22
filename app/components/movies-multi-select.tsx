@@ -6,6 +6,7 @@ import { Controller } from "react-hook-form";
 interface Option {
   value: string;
   label: string;
+  release_date?: string;
 }
 
 interface MultiSelectProps {
@@ -93,10 +94,15 @@ export default function MoviesMultiSelect({
                   {filteredOptions.map((option) => (
                     <li
                       key={option.value}
-                      className="px-4 py-2 hover:text-white cursor-pointer hover:bg-rose-500"
+                      className="px-4 py-2 font-light hover:text-white cursor-pointer hover:bg-rose-500"
                       onClick={() => handleSelectMovie(option)}
                     >
-                      {option.label}
+                      <div className="flex flex-row gap-2">
+                        {option.label}
+                        <span className="font-semibold">
+                          {option.release_date}
+                        </span>
+                      </div>
                     </li>
                   ))}
                 </ul>
@@ -107,13 +113,19 @@ export default function MoviesMultiSelect({
                 {selectedOptions.map((option) => (
                   <span
                     key={option.value}
-                    className=" uppercase flex border border-rose-500 justify-between items-center bg-rose-100 text-rose-500 text-sm font-medium px-2 py-1 rounded"
+                    className="cursor-pointer uppercase flex border border-rose-500 justify-between items-center bg-rose-100 text-rose-500 text-sm font-light px-2 py-1 rounded"
+                    onClick={() => handleRemoveMovie(option)}
                   >
-                    {option.label}
+                    <div>
+                      {option.label}
+                      <span className="ml-2 font-semibold">
+                        {option.release_date}
+                      </span>
+                    </div>
+
                     <button
                       type="button"
                       className="ml-2 text-red-500 hover:text-red-500"
-                      onClick={() => handleRemoveMovie(option)}
                     >
                       &times;
                     </button>
