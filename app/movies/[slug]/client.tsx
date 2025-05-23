@@ -120,7 +120,7 @@ export default function ClientMovieActions({ movieId, userIsAdmin }: Props) {
         </button>
 
         {isMenuOpen && (
-          <div className="absolute bottom-full my-2 right-0 mt-2 w-48 rounded-lg text-rose-500 bg-red-100 ">
+          <div className="absolute bottom-full my-2 left-0 mt-2 w-48 rounded-lg text-rose-500 bg-red-100 ">
             <p className="flex flex-row px-3 border-b border-gray-500 py-2 items-center gap-2 text-sm font-medium">
               Ajouter à une liste
             </p>
