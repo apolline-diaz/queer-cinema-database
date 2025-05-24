@@ -37,8 +37,8 @@
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/apolline-diaz/movie-diary.git
-   cd movie-diary
+   git clone https://github.com/apolline-diaz/queer-cinema-database.git
+   cd queer-cinema-database
    ```
 
 2. Install dependencies:
@@ -134,4 +134,4 @@ The database schema is managed with **Prisma ORM** and stored in **PostgreSQL**.
 
 This project is developed as part of the RNCP Application Developer certification program.
 
-![CI](https://github.com/apolline-diaz/movie-diary/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/apolline-diaz/queer-cinema-database/actions/workflows/ci.yml/badge.svg)
