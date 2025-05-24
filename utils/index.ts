@@ -1,6 +1,6 @@
 export const getCanonicalUrl = () => {
   return process.env.NODE_ENV !== "production"
-    ? "https://movie-diary-ten.vercel.app/"
+    ? "https://queercinema.fr/"
     : "http://localhost:3000";
 };
 

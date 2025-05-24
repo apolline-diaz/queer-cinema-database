@@ -19,7 +19,7 @@ jobs:
         run: pnpm exec playwright install --with-deps
       - name: Run Playwright tests
         env:
-          PLAYWRIGHT_TEST_BASE_URL: "https://movie-diary-ten.vercel.app/" # the actual URL of the deployed website in Vercel
+          PLAYWRIGHT_TEST_BASE_URL: "https://queercinema.fr/" # the actual URL of the deployed website in Vercel
           PLAYWRIGHT_USER_EMAIL: ${{ secrets.PLAYWRIGHT_USER_EMAIL }}
           PLAYWRIGHT_USER_PASSWORD: ${{ secrets.PLAYWRIGHT_USER_PASSWORD }}
         run: pnpm exec playwright test
