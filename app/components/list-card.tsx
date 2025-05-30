@@ -59,7 +59,7 @@ export const ListCard: React.FC<ListCardProps> = ({ list }) => {
   };
   return (
     <div className="gap-4 relative group">
-      <div className="group overflow-hidden flex flex-col transition-transform">
+      <div className="group overflow-hidden flex flex-col rounded-xl transition-transform">
         <div className="relative h-48 overflow-hidden">
           <Link href={`/lists/${list.id}`}>
             <Image

@@ -34,36 +34,39 @@ export default async function Home() {
                 Dernier ajout
               </h2>
             </div>
-            <Link href={`/movies/${featuredLatestMovie.id}`}>
-              <div className="relative h-[60vh] w-full">
+            <div className="flex w-full h-[350px] gap-4">
+              <Link
+                href={`/movies/${featuredLatestMovie.id}`}
+                className="w-2/3 h-full"
+              >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={getImageUrl(featuredLatestMovie.image_url || "")}
                   alt={featuredLatestMovie.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover rounded-xl"
                 />
-                <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/80 via-black/50 to-transparent">
-                  <div className="sm:w-3/4 w-full p-10 text-white">
-                    <h3 className="text-4xl uppercase font-bold mb-2">
-                      {featuredLatestMovie.title}
-                    </h3>
-                    <span className="inline-block text-md font-light">
-                      {featuredLatestMovie?.movies_directors
-                        ?.map((item) => item.directors.name)
-                        .join(", ") || "Réalisateur inconnu"}
-                    </span>{" "}
-                    •{" "}
-                    <span className="inline-block mb-1 text-md font-light">
-                      {featuredLatestMovie.release_date || ""}
-                    </span>
-                    <p className="line-clamp-6 text-md font-extralight">
-                      {featuredLatestMovie.description ||
-                        "Pas de description disponible"}
-                    </p>
-                  </div>
+              </Link>
+              <div className="w-1/3 h-full bg-rose-50 rounded-xl flex items-center">
+                <div className="p-8 text-black">
+                  <h3 className="text-2xl uppercase font-bold mb-2">
+                    {featuredLatestMovie.title}
+                  </h3>
+                  <span className="inline-block text-md font-light">
+                    {featuredLatestMovie?.movies_directors
+                      ?.map((item) => item.directors.name)
+                      .join(", ") || "Réalisateur inconnu"}
+                  </span>{" "}
+                  •{" "}
+                  <span className="inline-block mb-1 text-md font-light">
+                    {featuredLatestMovie.release_date || ""}
+                  </span>
+                  <p className="line-clamp-6 text-md font-extralight">
+                    {featuredLatestMovie.description ||
+                      "Pas de description disponible"}
+                  </p>
                 </div>
               </div>
-            </Link>
+            </div>
           </div>
         )}
         <div className="pl-10">
@@ -80,7 +83,7 @@ export default async function Home() {
                 <Icon icon="mdi:chevron-right" className="inline size-4" />
               </Link>
             </div>
-            <div className="flex flex-row-1 mb-5 gap-5 overflow-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+            <div className="flex flex-row-1 mb-5 gap-3 overflow-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
               {otherLatestMovies.map((movie) => (
                 <HomeCard
                   key={`${movie.title}-${movie.id}`}

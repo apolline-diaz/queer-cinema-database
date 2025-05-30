@@ -47,7 +47,7 @@ export default function Card({
   return (
     <div className="relative group">
       <div className=" overflow-hidden flex flex-col">
-        <div className="relative h-[250px] overflow-hidden">
+        <div className="relative h-[180px] rounded-xl overflow-hidden">
           <Link href={`/movies/${id}`}>
             <Image
               src={getImageUrl(image_url)}

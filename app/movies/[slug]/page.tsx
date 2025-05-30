@@ -64,7 +64,7 @@ export default async function Page({ params }: Props) {
           )}
         </h2>
         <div className="flex flex-col sm:flex-row gap-4 ">
-          <div className="min-w-[150px] uppercase grid sm:grid-cols-1 grid-cols-3 gap-4 font-light mt-4">
+          <div className="min-w-[150px] bg-rose-50 rounded-xl p-3 uppercase grid sm:grid-cols-1 grid-cols-3 gap-4 font-light mt-4">
             <div className="text-sm ">
               <h3 className="mb-1 text-rose-600">Pays</h3>
               <span>
