@@ -112,7 +112,7 @@ export default function Searchfield({
                 render={({ field }) => (
                   <input
                     {...field}
-                    className="appearance-none text-md placeholder-gray-500 font-light block w-full bg-white rounded-md border  border-rose-500 text-rose-500 p-2 leading-tight focus:none focus:outline-none"
+                    className="appearance-none text-md placeholder-gray-500 font-light block w-full bg-white rounded-md border  border-rose-600 text-rose-600 p-2 leading-tight focus:none focus:outline-none"
                     placeholder="Entrez un mot ou un titre..."
                   />
                 )}
@@ -129,14 +129,14 @@ export default function Searchfield({
             <button
               type="button"
               onClick={handleReset}
-              className="xs:w-full sm:w-[200px] border hover:border-red-600 hover:text-red-600 text-rose-500 px-4 py-2 border-rose-500 rounded-md"
+              className="xs:w-full sm:w-[200px] border hover:border-red-600 hover:text-red-600 text-rose-600 px-4 py-2 border-rose-600 rounded-md"
             >
               Réinitialiser
             </button>
           </div>
         </form>
       </div>
-      <div className="text-rose-500 border-b border-rose-500 text-md font-light mb-5">
+      <div className="text-rose-600 border-b border-rose-600 text-md font-light mb-5">
         {isLoading ? (
           <div className="animate-pulse rounded-md h-6 bg-gray-300 w-1/4 mb-2"></div>
         ) : (
@@ -174,7 +174,7 @@ export default function Searchfield({
       {visibleCount < movies.length && !isLoading && (
         <button
           onClick={loadMore}
-          className="w-full flex flex-row justify-center items-center border rounded-md border-rose-500 border-t mt-4 px-4 py-2 hover:border-red-500 text-rose-500 hover:text-red-500"
+          className="w-full flex flex-row justify-center items-center border rounded-md border-rose-600 border-t mt-4 px-4 py-2 hover:border-red-500 text-rose-600 hover:text-red-500"
         >
           Voir plus <Icon icon="mdi:chevron-down" className="size-5" />
         </button>

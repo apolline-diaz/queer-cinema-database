@@ -33,17 +33,17 @@ function CollapsibleSection({ title, children }: CollapsibleSectionProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className=" overflow-hidden border-b border-rose-500">
+    <div className=" overflow-hidden border-b border-rose-600">
       <button
         type="button"
         className="w-full flex justify-between items-center text-left"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <span className="font-medium text-rose-500 text-sm mb-2">{title}</span>
+        <span className="font-medium text-rose-600 text-sm mb-2">{title}</span>
         {isOpen ? (
-          <Icon icon="line-md:chevron-up" className="text-rose-500 size-5" />
+          <Icon icon="line-md:chevron-up" className="text-rose-600 size-5" />
         ) : (
-          <Icon icon="line-md:chevron-down" className="size-5 text-rose-500 " />
+          <Icon icon="line-md:chevron-down" className="size-5 text-rose-600 " />
         )}
       </button>
       {isOpen && <div className="mb-2">{children}</div>}
@@ -322,7 +322,7 @@ export default function SearchForm({
         <div className="flex flex-col sm:flex-row sm:w-full gap-4">
           <button
             type="submit"
-            className="xs:w-full sm:w-[200px] bg-gradient-to-r from-rose-500 to-red-500 text-white px-4 py-2 rounded-md hover:from-rose-600 hover:to-red-600"
+            className="xs:w-full sm:w-[200px] bg-gradient-to-r from-rose-700 to-rose-800 text-white px-4 py-2 rounded-md hover:from-rose-600 hover:to-red-600"
             disabled={isLoading}
           >
             Rechercher
@@ -331,14 +331,14 @@ export default function SearchForm({
           <button
             type="button"
             onClick={handleReset}
-            className="xs:w-full sm:w-[200px] border hover:border-red-600 hover:text-red-600 text-rose-500 px-4 py-2 border-rose-500 rounded-md"
+            className="xs:w-full sm:w-[200px] border hover:border-red-700 hover:text-red-800 text-rose-600 px-4 py-2 border-rose-600 rounded-md"
             disabled={isLoading}
           >
             Réinitialiser
           </button>
         </div>
       </form>
-      <div className="text-rose-500 border-b border-rose-500 text-md font-light mb-5">
+      <div className="text-rose-600 border-b border-rose-600 text-md font-light mb-5">
         {isLoading ? (
           <div className="animate-pulse rounded-md h-6 bg-gray-300 w-1/4 mb-2"></div>
         ) : (
@@ -376,7 +376,7 @@ export default function SearchForm({
       {visibleCount < movies.length && !isLoading && (
         <button
           onClick={loadMore}
-          className="w-full flex flex-row justify-center items-center border rounded-md border-rose-500 border-t mt-4 px-4 py-2 hover:border-red-500 text-rose-500 hover:text-red-500"
+          className="w-full flex flex-row justify-center items-center border rounded-md border-rose-600 border-t mt-4 px-4 py-2 hover:border-red-500 text-rose-600 hover:text-red-500"
         >
           Voir plus <Icon icon="mdi:chevron-down" className="size-5" />
         </button>

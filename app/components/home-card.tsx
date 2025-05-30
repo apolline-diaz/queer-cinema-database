@@ -20,7 +20,7 @@ export default function HomeCard({
   return (
     <>
       <Link href={`/movies/${id}`}>
-        <div className="group overflow-hidden h-full flex flex-col justify-between">
+        <div className="group overflow-hidden rounded-xl h-full flex flex-col justify-between">
           {/* Responsive width, full on small screens, fixed on larger ones */}
           <div className="relative w-full sm:w-[400px]  h-auto min-h-[250px] sm:min-h-0 sm:h-60 bg-center aspect-[3/4] sm:aspect-[16/9]">
             <Image

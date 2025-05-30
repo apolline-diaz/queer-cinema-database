@@ -287,7 +287,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="rounded-lg text-rose-500 justify-start mx-auto"
+      className="rounded-lg text-rose-600 justify-start mx-auto"
     >
       {error && (
         <div className="mb-4 p-4 bg-red-500 text-white rounded-md">{error}</div>
@@ -299,7 +299,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
           <label className="block text-sm font-medium mb-1">Titre</label>
           <input
             {...register("title", { required: "Title is required" })}
-            className="w-full py-2 text-sm font-light border rounded-md px-2 bg-white text-black border-rose-500 bg-transparent"
+            className="w-full py-2 text-sm font-light border rounded-md px-2 bg-white text-black border-rose-600 bg-transparent"
           />
           {errors.title && (
             <p className="text-red-500 text-sm mt-1">{errors.title.message}</p>
@@ -389,7 +389,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
           <textarea
             {...register("description")}
             rows={4}
-            className="w-full px-3 py-2 text-black font-light text-sm border bg-white border-rose-500 rounded-md bg-transparent"
+            className="w-full px-3 py-2 text-black font-light text-sm border bg-white border-rose-600 rounded-md bg-transparent"
           />
         </div>
 
@@ -401,7 +401,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
             </label>
             <select
               {...register("release_date")}
-              className="w-full text-sm font-light py-2 border rounded-md px-2 bg-white text-black border-rose-500"
+              className="w-full text-sm font-light py-2 border rounded-md px-2 bg-white text-black border-rose-600"
             >
               {years.map((year) => (
                 <option key={year} value={year}>
@@ -419,7 +419,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
             <select
               id="country_id"
               {...register("country_id")}
-              className="w-full mt-1 block text-sm font-light bg-transparent border rounded-md px-2 bg-white text-black border-rose-500  py-2"
+              className="w-full mt-1 block text-sm font-light bg-transparent border rounded-md px-2 bg-white text-black border-rose-600  py-2"
             >
               <option value="">Select a country</option>
               {availableCountries.map((country) => (
@@ -451,7 +451,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
                   message: "Must be a number",
                 },
               })}
-              className="w-full text-sm font-light border-rose-500  py-2 border rounded-md px-2 bg-white text-black bg-transparent"
+              className="w-full text-sm font-light border-rose-600  py-2 border rounded-md px-2 bg-white text-black bg-transparent"
             />
             {errors.runtime && (
               <p className="text-red-500 text-sm mt-1">
@@ -465,7 +465,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
             <label className="block text-sm font-medium mb-1">Langue(s)</label>
             <input
               {...register("language")}
-              className="w-full text-sm border-rose-500 font-light py-2 border rounded-md px-2 bg-white text-black bg-transparent"
+              className="w-full text-sm border-rose-600 font-light py-2 border rounded-md px-2 bg-white text-black bg-transparent"
             />
           </div>
         </div>
@@ -475,7 +475,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
           <label className="block text-sm font-medium mb-1">Type</label>
           <select
             {...register("type")}
-            className="w-full text-sm font-light border-rose-500 py-2 border rounded-md px-2 bg-white text-black"
+            className="w-full text-sm font-light border-rose-600 py-2 border rounded-md px-2 bg-white text-black"
           >
             <option value="Long-métrage">Long-métrage</option>
             <option value="Moyen-métrage">Moyen-métrage</option>
@@ -487,7 +487,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
 
         {/* Genres Select */}
         <div>
-          <label className="text-rose-500 block text-sm font-medium mb-1">
+          <label className="text-rose-600 block text-sm font-medium mb-1">
             Genres
           </label>
           <MultiSelect
@@ -511,7 +511,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
         </div>
         {/* Keywords - Multi-Select */}
         <div>
-          <label className="text-rose-500 block text-sm font-medium mb-1">
+          <label className="text-rose-600 block text-sm font-medium mb-1">
             Mots-clés
           </label>
 
@@ -540,7 +540,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
         <button
           type="button"
           onClick={() => router.back()}
-          className="xs:w-full sm:w-[200px] border hover:border-red-500 hover:text-red-500 text-rose-500 px-4 py-2 border-rose-500 rounded-md"
+          className="xs:w-full sm:w-[200px] border hover:border-red-500 hover:text-red-500 text-rose-600 px-4 py-2 border-rose-600 rounded-md"
         >
           Annuler
         </button>

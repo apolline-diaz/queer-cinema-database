@@ -91,11 +91,11 @@ const CreateListPage: React.FC = () => {
 
   return (
     <div className="px-10 py-20">
-      <div className="tracking-wide text-2xl text-rose-500 mb-5">
+      <div className="tracking-wide text-2xl text-rose-600 mb-5">
         Créer une liste de films
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="py-5 text-rose-500">
+      <form onSubmit={handleSubmit(onSubmit)} className="py-5 text-rose-600">
         {/* Title of the list */}
         <div className="w-full md:w-1/2 mb-6">
           <label className="block font-medium text-sm mb-2" htmlFor="title">
@@ -103,7 +103,7 @@ const CreateListPage: React.FC = () => {
           </label>
           <input
             {...register("title", { required: "Le titre est requis" })}
-            className="block w-full text-sm text-black border-rose-500 placeholder-gray-500 font-light bg-transparent border-b py-2 focus:outline-none"
+            className="block w-full text-sm text-black border-rose-600 placeholder-gray-500 font-light bg-transparent border-b py-2 focus:outline-none"
             placeholder="Entrez un titre..."
           />
           {errors.title && (
@@ -121,7 +121,7 @@ const CreateListPage: React.FC = () => {
           </label>
           <textarea
             {...register("description")}
-            className="block w-full text-sm text-black bg-white placeholder-gray-500 font-light border-rose-500 border py-3 px-4 rounded focus:outline-none"
+            className="block w-full text-sm text-black bg-white placeholder-gray-500 font-light border-rose-600 border py-3 px-4 rounded focus:outline-none"
             placeholder="Entrez une description..."
           />
         </div>
@@ -138,16 +138,16 @@ const CreateListPage: React.FC = () => {
             value={movieInput}
             onChange={handleMovieInputChange}
             placeholder="Cherchez des films..."
-            className="block w-full text-sm bg-white text-black placeholder-gray-500 font-light border-rose-500 border py-2 px-3 rounded focus:outline-none"
+            className="block w-full text-sm bg-white text-black placeholder-gray-500 font-light border-rose-600 border py-2 px-3 rounded focus:outline-none"
           />
 
           {/* Suggestions de films */}
           {isSearching && filteredMovies.length > 0 && (
-            <ul className="absolute border max-h-40 max-w-80 overflow-y-auto bg-red-100 rounded-lg text-sm border-rose-500 mt-1 z-10">
+            <ul className="absolute border max-h-40 max-w-80 overflow-y-auto bg-rose-50 rounded-lg text-sm border-rose-600 mt-1 z-10">
               {filteredMovies.map((movie) => (
                 <li
                   key={movie.id}
-                  className="px-4 py-2 font-light hover:bg-rose-500 cursor-pointer uppercase  hover:text-white"
+                  className="px-4 py-2 font-light hover:bg-rose-700 cursor-pointer uppercase  hover:text-white"
                   onClick={() => handleAddMovie(movie)}
                 >
                   {movie.title}{" "}
@@ -177,7 +177,7 @@ const CreateListPage: React.FC = () => {
             return movie ? (
               <span
                 key={movie.id}
-                className="items-center my-2 border flex justify-between border-rose-500 w-full bg-rose-100 text-rose-500 text-sm font-light mr-2 px-3 py-1 rounded"
+                className="items-center my-2 border flex justify-between border-rose-600 w-full bg-rose-50 text-rose-600 text-sm font-light mr-2 px-3 py-1 rounded"
               >
                 <div>
                   {movie.title}{" "}
@@ -186,7 +186,7 @@ const CreateListPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => handleRemoveMovie(movie.id)}
-                  className="ml-2 text-rose-500 hover:text-rose-700"
+                  className="ml-2 text-rose-600 hover:text-rose-600"
                 >
                   &times;
                 </button>

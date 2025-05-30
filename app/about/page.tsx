@@ -5,12 +5,12 @@ import Link from "next/link";
 export default function About() {
   return (
     <div className="px-10 py-20 mb-5">
-      <h2 className="text-rose-500 text-2xl mb-6">À propos</h2>
+      <h2 className="text-rose-600 text-2xl mb-6">À propos</h2>
       <div className="text-black">
         <p className="sm:w-3/4 w-full text-sm font-light  mb-4">
           Ce site est né du souhait d&apos;archiver le compte Instagram
           <a
-            className="text-rose-500 px-1 hover:underline"
+            className="text-rose-600 px-1 hover:underline"
             href="https://www.instagram.com/lawrens_shyboi/"
           >
             @lawrens_shyboi
@@ -30,7 +30,7 @@ export default function About() {
         </p>
         <Link
           href="/note"
-          className="link text-rose-500  font-light link-hover hover:underline hover:underline-offset-8"
+          className="link text-rose-600  font-light link-hover hover:underline hover:underline-offset-8"
         >
           Note d&apos;intention
         </Link>

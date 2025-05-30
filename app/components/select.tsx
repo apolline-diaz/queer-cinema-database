@@ -29,7 +29,7 @@ export default function Select({
         id={label}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="bg-white font-light border hover:cursor-pointer border-rose-500 text-gray-500 text-sm rounded-lg focus:ring-white focus:border-white block w-full p-1"
+        className="bg-white font-light border hover:cursor-pointer border-rose-600 text-gray-500 text-sm rounded-lg focus:ring-white focus:border-white block w-full p-1"
       >
         <option value="">{placeholder}</option>
         {options.map((option) => (

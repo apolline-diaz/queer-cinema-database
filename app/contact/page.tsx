@@ -55,7 +55,7 @@ export default function ContactForm() {
 
   return (
     <div className="px-10 py-20">
-      <h2 className="text-2xl text-rose-500 mb-4">Contactez-nous</h2>
+      <h2 className="text-2xl text-rose-600 mb-4">Contactez-nous</h2>
       <div className="sm:w-1/2 w-full">
         {status === "success" && (
           <div className="mb-4 py-3 text-rose-800 font-light">
@@ -64,19 +64,19 @@ export default function ContactForm() {
         )}
 
         {status === "error" && (
-          <div className="mb-4 p-3 bg-red-100 text-red-700 rounded">
+          <div className="mb-4 p-3 bg-rose-50 text-red-700 rounded">
             Une erreur est survenue. Veuillez réessayer plus tard.
           </div>
         )}
 
-        <form onSubmit={handleSubmit(onSubmit)} className="text-rose-500">
+        <form onSubmit={handleSubmit(onSubmit)} className="text-rose-600">
           <div className=" mb-4">
             <label htmlFor="name" className="block font-medium mb-2">
               Nom
             </label>
             <input
               id="name"
-              className={`w-full px-3 py-2 border font-light bg-white border-rose-500 text-black rounded-md ${
+              className={`w-full px-3 py-2 border font-light bg-white border-rose-600 text-black rounded-md ${
                 errors.name ? "border-red-500" : "border-gray-300"
               }`}
               {...register("name", { required: "Le nom est requis" })}
@@ -92,7 +92,7 @@ export default function ContactForm() {
             </label>
             <input
               id="email"
-              className={`w-full px-3 py-2 border font-light bg-white border-rose-500 text-black rounded-md ${
+              className={`w-full px-3 py-2 border font-light bg-white border-rose-600 text-black rounded-md ${
                 errors.email ? "border-red-500" : "border-gray-300"
               }`}
               {...register("email", {
@@ -116,7 +116,7 @@ export default function ContactForm() {
             </label>
             <textarea
               id="message"
-              className={`w-full px-3 text-black border-rose-500 font-light  py-2 border rounded-md ${
+              className={`w-full px-3 text-black border-rose-600 font-light  py-2 border rounded-md ${
                 errors.message ? "border-red-500" : "border-gray-300"
               }`}
               rows={4}

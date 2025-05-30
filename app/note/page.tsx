@@ -3,8 +3,8 @@
 export default function Note() {
   return (
     <div className="px-10 py-20 mb-5">
-      <h2 className="text-rose-500 text-xl mb-6">Note d'intention</h2>
-      <div className="text-rose-500 ">
+      <h2 className="text-rose-600 text-xl mb-6">Note d'intention</h2>
+      <div className="text-rose-600 ">
         <div className="grid grid-col-1 gap-5">
           <h3 className="font-bold">Le choix des films</h3>
           <p className="text-sm font-light text-black">

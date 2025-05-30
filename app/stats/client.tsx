@@ -48,8 +48,8 @@ export default function KeywordStatsClientComponent({
               onClick={() => setChartType("bar")}
               className={`w-auto text-sm font-light px-4 py-1 border rounded-full transition-colors ${
                 chartType === "bar"
-                  ? "bg-rose-500 text-white border-rose-500 "
-                  : "bg-transparent text-rose-500 border-rose-500 hover:bg-rose-600 hover:text-white"
+                  ? "bg-rose-700 text-white border-rose-600 "
+                  : "bg-transparent text-rose-600 border-rose-600 hover:bg-rose-600 hover:text-white"
               }`}
             >
               Diagramme en bâton
@@ -58,14 +58,14 @@ export default function KeywordStatsClientComponent({
               onClick={() => setChartType("pie")}
               className={`w-auto text-sm font-light px-4 py-1 border rounded-full transition-colors ${
                 chartType === "pie"
-                  ? "bg-rose-500 text-white border-rose-500 "
-                  : "bg-transparent text-rose-500 border-rose-500 hover:bg-rose-600 hover:text-white"
+                  ? "bg-rose-700 text-white border-rose-600 "
+                  : "bg-transparent text-rose-600 border-rose-600 hover:bg-rose-600 hover:text-white"
               }`}
             >
               Diagramme en camembert
             </button>
           </div>
-          <h2 className="text-rose-500 text-xl font-medium pt-4">
+          <h2 className="text-rose-600 text-xl font-medium pt-4">
             Distribution des films par mot-clé
           </h2>
         </div>
@@ -140,17 +140,17 @@ export default function KeywordStatsClientComponent({
       </div>
 
       <div className="rounded-lg ">
-        <h2 className="text-xl text-rose-500 font-semibold mb-4">
+        <h2 className="text-xl text-rose-600 font-semibold mb-4">
           Données brutes
         </h2>
         <div className="text-black overflow-x-auto">
           <table className="min-w-full ">
             <thead>
               <tr>
-                <th className="text-rose-500  py-2 border-b border-gray-200 text-left">
+                <th className="text-rose-600  py-2 border-b border-gray-200 text-left">
                   Mot-clé
                 </th>
-                <th className="py-2 border-b text-rose-500 border-gray-200 text-right">
+                <th className="py-2 border-b text-rose-600 border-gray-200 text-right">
                   Nombre de films
                 </th>
               </tr>

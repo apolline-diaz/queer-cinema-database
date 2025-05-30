@@ -78,7 +78,7 @@ export const ListCard: React.FC<ListCardProps> = ({ list }) => {
 
           <button
             onClick={handleDeleteClick}
-            className="absolute top-2 right-2 z-10 bg-black bg-opacity-60 p-2 rounded-full text-rose-500 transition-all duration-300 ease-in-out opacity-100 visible hover:bg-rose-500 hover:text-white"
+            className="absolute top-2 right-2 z-10 bg-black bg-opacity-60 p-2 rounded-full text-rose-600 transition-all duration-300 ease-in-out opacity-100 visible hover:bg-rose-700 hover:text-white"
             title="Supprimer cette liste"
           >
             <Icon icon="lucide:trash" style={{ fontSize: 15 }} />

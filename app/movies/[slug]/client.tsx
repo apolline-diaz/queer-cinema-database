@@ -111,7 +111,7 @@ export default function ClientMovieActions({ movieId, userIsAdmin }: Props) {
         <button
           onClick={toggleMenu}
           aria-label="Gérer les listes"
-          className="z-10 p-2 bg-black text-rose-500 rounded-full border bg-opacity-50 border-rose-500 transition-all duration-300 ease-in-out hover:bg-rose-500 hover:text-white"
+          className="z-10 p-2 bg-black text-rose-600 rounded-full border bg-opacity-50 border-rose-600 transition-all duration-300 ease-in-out hover:bg-rose-700 hover:text-white"
         >
           <Icon
             icon={isLoading && !isDataFetched ? "lucide:loader" : "lucide:plus"}
@@ -120,7 +120,7 @@ export default function ClientMovieActions({ movieId, userIsAdmin }: Props) {
         </button>
 
         {isMenuOpen && (
-          <div className="absolute bottom-full my-2 left-0 mt-2 w-48 rounded-lg text-rose-500 bg-red-100 ">
+          <div className="absolute bottom-full my-2 left-0 mt-2 w-48 rounded-lg text-rose-600 bg-rose-50 ">
             <p className="flex flex-row px-3 border-b border-gray-500 py-2 items-center gap-2 text-sm font-medium">
               Ajouter à une liste
             </p>
@@ -135,11 +135,11 @@ export default function ClientMovieActions({ movieId, userIsAdmin }: Props) {
                 <div
                   key={list.id}
                   onClick={(e) => toggleMovieInList(list.id, list.hasMovie, e)}
-                  className="px-3 py-2 gap-2 text-sm font-light flex justify-between items-center hover:rounded-xl hover:text-rose-500 cursor-pointer"
+                  className="px-3 py-2 gap-2 text-sm font-light flex justify-between items-center hover:rounded-xl hover:text-rose-600 cursor-pointer"
                 >
                   <span>{list.title}</span>
                   <button
-                    className="text-rose-500 hover:text-rose-700 focus:outline-none"
+                    className="text-rose-600 hover:text-rose-600 focus:outline-none"
                     aria-label={
                       list.hasMovie
                         ? "Retirer de la liste"
@@ -165,7 +165,7 @@ export default function ClientMovieActions({ movieId, userIsAdmin }: Props) {
       {userIsAdmin && (
         <div className="">
           <Link href={`/movies/edit/${movieId}`}>
-            <button className="right-2 bg-black bg-opacity-60 p-2 border border-rose-500 rounded-full text-rose-500 transition-all duration-300 ease-in-out opacity-100 visible hover:bg-rose-500 hover:text-white">
+            <button className="right-2 bg-black bg-opacity-60 p-2 border border-rose-600 rounded-full text-rose-600 transition-all duration-300 ease-in-out opacity-100 visible hover:bg-rose-700 hover:text-white">
               <Icon icon="lucide:edit" />
             </button>
           </Link>

@@ -12,11 +12,11 @@ export default async function ProfilePage() {
     <div className="flex flex-col gap-5 px-10 py-20">
       {/* Users lists */}
       <section className="">
-        <h1 className="text-2xl text-rose-500 mb-5">Mes listes</h1>
+        <h1 className="text-2xl text-rose-600 mb-5">Mes listes</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           <Link
             href="/lists/create"
-            className="flex flex-col justify-center  border border-xl text-rose-500 border-rose-500 items-center  text-center p-4 cursor-pointer hover:text-rose-600 hover:border-rose-600"
+            className="flex flex-col justify-center  border border-xl text-rose-600 border-rose-600 items-center  text-center p-4 cursor-pointer hover:text-rose-600 hover:border-rose-600"
           >
             Créer une nouvelle liste
             <svg
