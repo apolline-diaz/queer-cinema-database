@@ -87,16 +87,16 @@ const CreateMoviePage: React.FC = () => {
 
   return (
     <div className="px-10 py-20 text-sm w-full sm:w-1/2">
-      <h1 className="tracking-wide text-rose-500 text-2xl mb-5">
+      <h1 className="tracking-wide text-rose-600 text-2xl mb-5">
         Ajouter un film au catalogue
       </h1>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="py-5 text-rose-500">
+      <form onSubmit={handleSubmit(onSubmit)} className="py-5 text-rose-600">
         {/* Title */}
         <div className="mb-4">
           <label className="block font-medium mb-2">Titre</label>
           <input
-            className="w-full text-black font-light bg-transparent border-b p-2 placeholder-gray-500 border-rose-500"
+            className="w-full text-black font-light bg-transparent border-b p-2 placeholder-gray-500 border-rose-600"
             {...register("title", { required: "Le titre est obligatoire" })}
             placeholder="Tapez le titre..."
           />
@@ -108,7 +108,7 @@ const CreateMoviePage: React.FC = () => {
         <div className="mb-4">
           <label className="block font-medium mb-2">Réalisateur-ice</label>
           <input
-            className="w-full text-black font-light placeholder-gray-500 bg-transparent border-b p-2 border-rose-500"
+            className="w-full text-black font-light placeholder-gray-500 bg-transparent border-b p-2 border-rose-600"
             {...register("director_name", {
               required: "Le nom du réalisateur est obligatoire",
             })}
@@ -125,7 +125,7 @@ const CreateMoviePage: React.FC = () => {
         <div className="mb-4">
           <label className="block font-medium mb-2">Synopsis</label>
           <textarea
-            className="w-full text-black font-light border p-2 placeholder-gray-500 rounded-md border-rose-500"
+            className="w-full text-black font-light border p-2 placeholder-gray-500 rounded-md border-rose-600"
             {...register("description")}
             placeholder="Résumé de l'oeuvre..."
           ></textarea>
@@ -135,7 +135,7 @@ const CreateMoviePage: React.FC = () => {
         <div className="mb-4">
           <label className="block font-medium mb-2">Année de sortie</label>
           <select
-            className="w-full text-black font-light border p-2 placeholder-gray-500 rounded-md border-rose-500"
+            className="w-full text-black font-light border p-2 placeholder-gray-500 rounded-md border-rose-600"
             {...register("release_date")}
           >
             <option value="">Sélectionnez une année</option>
@@ -154,7 +154,7 @@ const CreateMoviePage: React.FC = () => {
         <div className="mb-4">
           <label className="block font-medium mb-2">Pays</label>
           <select
-            className="w-full border font-light p-2 text-black rounded-md border-rose-500"
+            className="w-full border font-light p-2 text-black rounded-md border-rose-600"
             {...register("country_id")}
           >
             <option value="">Sélectionnez un pays</option>
@@ -171,7 +171,7 @@ const CreateMoviePage: React.FC = () => {
           <label className="block font-medium mb-2">Durée (minutes)</label>
           <input
             type="number"
-            className="w-full font-light border p-2 text-black rounded-md border-rose-500"
+            className="w-full font-light border p-2 text-black rounded-md border-rose-600"
             {...register("runtime")}
             placeholder="00"
             min="0"
@@ -182,7 +182,7 @@ const CreateMoviePage: React.FC = () => {
         <div className="mb-4">
           <label className="block font-medium mb-2">Type</label>
           <select
-            className="w-full font-light text-black border p-2 rounded-md border-rose-500"
+            className="w-full font-light text-black border p-2 rounded-md border-rose-600"
             {...register("type")}
           >
             <option value="">Sélectionnez un type</option>
@@ -198,7 +198,7 @@ const CreateMoviePage: React.FC = () => {
         <div className="mb-4">
           <label className="block font-medium mb-2">Genre</label>
           <select
-            className="w-full border font-light text-black p-2 rounded-md border-rose-500"
+            className="w-full border font-light text-black p-2 rounded-md border-rose-600"
             {...register("genre_id")}
           >
             <option value="">Sélectionnez un genre</option>
@@ -213,7 +213,7 @@ const CreateMoviePage: React.FC = () => {
         {/* keywords */}
         <div className="w-full md:w-1/2 mt-2 mb-4">
           <label
-            className="block font-medium tracking-wide text-rose-500 mb-2"
+            className="block font-medium tracking-wide text-rose-600 mb-2"
             htmlFor="keywords"
           >
             Mots-clés
@@ -258,7 +258,7 @@ const CreateMoviePage: React.FC = () => {
           <button
             type="button"
             onClick={() => router.push("/movies")}
-            className="xs:w-full sm:w-[200px] border hover:border-red-500 hover:text-red-500 text-rose-500 px-4 py-2 border-rose-500 rounded-md"
+            className="xs:w-full sm:w-[200px] border hover:border-red-500 hover:text-red-500 text-rose-600 px-4 py-2 border-rose-600 rounded-md"
           >
             Annuler
           </button>

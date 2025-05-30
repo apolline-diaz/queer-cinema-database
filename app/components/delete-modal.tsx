@@ -52,7 +52,7 @@ export const DeleteModal: React.FC<DeleteModalProps> = ({
     <div className="fixed font-light inset-0 bg-black bg-opacity-50 text-center flex items-center justify-center z-50">
       <div
         ref={modalRef}
-        className="bg-rose-100 text-black p-6 rounded-xl max-w-md w-full border border-rose-500"
+        className="bg-rose-50 text-black p-6 rounded-xl max-w-md w-full border border-rose-600"
       >
         <p className="mb-6 ">
           Voulez-vous vraiment supprimer cet élément? <br />
@@ -64,7 +64,7 @@ export const DeleteModal: React.FC<DeleteModalProps> = ({
         >
           <button
             onClick={onClose}
-            className="xs:w-full border hover:border-red-500 hover:text-red-500 text-rose-500 px-4 py-2 border-rose-500 rounded-md"
+            className="xs:w-full border hover:border-red-500 hover:text-red-500 text-rose-600 px-4 py-2 border-rose-600 rounded-md"
           >
             Annuler
           </button>

@@ -6,7 +6,7 @@ export default async function StatisticsPage() {
 
   return (
     <div className="px-10 py-20">
-      <h1 className="text-2xl text-rose-500 mb-5">Statistiques</h1>
+      <h1 className="text-2xl text-rose-600 mb-5">Statistiques</h1>
 
       <KeywordStatsClientComponent keywordStats={keywordStats} />
     </div>

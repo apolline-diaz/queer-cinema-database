@@ -26,25 +26,10 @@ export default function Hero({ id, title, image_url }: CardProps) {
     }
   };
 
-  const scrollToFeaturedMovie = () => {
-    // Sélectionner la section du premier film mis en avant
-    const featuredMovieSection = document.querySelector(
-      ".featured-latest-movie"
-    );
-
-    if (featuredMovieSection) {
-      // Défilement doux vers cette section
-      featuredMovieSection.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
-  };
-
   return (
     <>
-      <div className="relative bg-red-100 w-full overflow-hidden">
-        <div className="relative w-full overflow-hidden h-[100vh]">
+      <div className="relative bg-rose-50 w-full overflow-hidden">
+        <div className="relative w-full overflow-hidden h-[80vh]">
           <Image
             src={getImageUrl(image_url)}
             alt={title}
@@ -66,7 +51,7 @@ export default function Hero({ id, title, image_url }: CardProps) {
               <div className="flex flex-row items-center bg-white justify-center border rounded-xl px-4 border-red-500">
                 <input
                   type="text"
-                  className="z-10 max-h-12  min-w-60 flex-1 py-4 bg-white placeholder-rose-500 text-rose-500 font-light focus:outline-none"
+                  className="z-10 max-h-12  min-w-60 flex-1 py-4 bg-white placeholder-rose-500 text-rose-600 font-light focus:outline-none"
                   placeholder="Rechercher un titre, mot-clé..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
@@ -79,7 +64,7 @@ export default function Hero({ id, title, image_url }: CardProps) {
                     icon="radix-icons:magnifying-glass"
                     fontSize={20}
                     onClick={handleSearch}
-                    className="text-rose-500 hover:cursor-pointer hover:text-rose-600 transition-colors"
+                    className="text-rose-600 hover:cursor-pointer hover:text-rose-600 transition-colors"
                   />
                 )}
               </div>
@@ -92,18 +77,6 @@ export default function Hero({ id, title, image_url }: CardProps) {
                 <Icon icon="uis:angle-right" fontSize={25} />
               </Link>
             </div>
-          </div>
-
-          {/* Flèche de défilement vers le bas */}
-          <div
-            className="absolute bottom-10 left-1/2 transform -translate-x-1/2 cursor-pointer animate-bounce"
-            onClick={scrollToFeaturedMovie}
-          >
-            <Icon
-              icon="mdi:chevron-down"
-              className="text-rose-500 text-opacity-100 hover:text-opacity-100 transition-opacity"
-              fontSize={40}
-            />
           </div>
         </div>
       </div>

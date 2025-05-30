@@ -33,17 +33,17 @@ function CollapsibleSection({ title, children }: CollapsibleSectionProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className=" overflow-hidden border-b border-rose-500">
+    <div className=" overflow-hidden border-b border-rose-600">
       <button
         type="button"
         className="w-full flex justify-between items-center text-left"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <span className="font-medium text-rose-500 text-sm mb-2">{title}</span>
+        <span className="font-medium text-rose-600 text-sm mb-2">{title}</span>
         {isOpen ? (
-          <Icon icon="line-md:chevron-up" className="text-rose-500 size-5" />
+          <Icon icon="line-md:chevron-up" className="text-rose-600 size-5" />
         ) : (
-          <Icon icon="line-md:chevron-down" className="size-5 text-rose-500 " />
+          <Icon icon="line-md:chevron-down" className="size-5 text-rose-600 " />
         )}
       </button>
       {isOpen && <div className="mb-2">{children}</div>}
@@ -331,26 +331,26 @@ export default function SearchForm({
           <button
             type="button"
             onClick={handleReset}
-            className="xs:w-full sm:w-[200px] border hover:border-red-600 hover:text-red-600 text-rose-500 px-4 py-2 border-rose-500 rounded-md"
+            className="xs:w-full sm:w-[200px] border hover:border-rose-600 hover:text-rose-600 text-rose-500 px-4 py-2 border-rose-500 rounded-md"
             disabled={isLoading}
           >
             Réinitialiser
           </button>
         </div>
       </form>
-      <div className="text-rose-500 border-b border-rose-500 text-md font-light mb-5">
+      <div className="text-rose-600 border-b border-rose-600 text-md font-light mb-5">
         {isLoading ? (
           <div className="animate-pulse rounded-md h-6 bg-gray-300 w-1/4 mb-2"></div>
         ) : (
           `${movies.length} titres trouvés`
         )}
       </div>
-      <div className="w-full grid gap-2 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+      <div className="w-full grid gap-3 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
         {isLoading ? (
           Array.from({ length: 6 }).map((_, index) => (
             <div
               key={index}
-              className="animate-pulse bg-gray-300 h-[250px] w-full justify-end max-w-xs mx-auto group overflow-hidden flex flex-col transition-transform"
+              className="animate-pulse bg-gray-300 h-[200px] w-full rounded-xl justify-end max-w-xs mx-auto group overflow-hidden flex flex-col transition-transform"
             >
               <div className="flex flex-col p-5 space-y-2">
                 <div className="h-6 bg-gray-200 rounded w-3/4 mb-2"></div>
@@ -376,7 +376,7 @@ export default function SearchForm({
       {visibleCount < movies.length && !isLoading && (
         <button
           onClick={loadMore}
-          className="w-full flex flex-row justify-center items-center border rounded-md border-rose-500 border-t mt-4 px-4 py-2 hover:border-red-500 text-rose-500 hover:text-red-500"
+          className="w-full flex flex-row justify-center items-center border rounded-md border-rose-600 border-t mt-4 px-4 py-2 hover:border-red-500 text-rose-600 hover:text-red-500"
         >
           Voir plus <Icon icon="mdi:chevron-down" className="size-5" />
         </button>

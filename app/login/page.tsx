@@ -27,13 +27,13 @@ export default function LoginPage() {
 
   return (
     <div
-      className="w-screen min-h-screen flex items-center text-rose-500 justify-center bg-cover bg-center"
+      className="w-screen min-h-screen flex items-center text-rose-600 justify-center bg-cover bg-center"
       style={{
         backgroundImage:
           "url('https://xcwrhyjbfgzsaslstssc.supabase.co/storage/v1/object/public/storage//watermelon-woman-background.webp')",
       }}
     >
-      <div className="bg-red-100 border border-rose-500 bg-opacity-90 backdrop-blur-md rounded-2xl shadow-xl p-10 m-10 max-w-md w-full">
+      <div className="bg-rose-50 border border-rose-600 bg-opacity-90 backdrop-blur-md rounded-2xl shadow-xl p-10 m-10 max-w-md w-full">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-3 mb-10">
             <h1 className="text-center font-medium text-xl">Connexion</h1>
@@ -47,7 +47,7 @@ export default function LoginPage() {
                   message: "Adresse e-mail invalide",
                 },
               })}
-              className="appearance-none text-sm font-light border-rose-500 block w-full  border rounded py-3 px-4 leading-tight focus:outline-none focus:text-black"
+              className="appearance-none text-sm font-light border-rose-600 block w-full  border rounded py-3 px-4 leading-tight focus:outline-none focus:text-black"
               id="email"
               type="email"
               placeholder="Tapez votre adresse e-mail"
@@ -63,7 +63,7 @@ export default function LoginPage() {
               {...register("password", {
                 required: "Le mot de passe est requis",
               })}
-              className="appearance-none text-sm font-light border-rose-500 block w-full text-rose-500 border rounded py-3 px-4 leading-tight focus:outline-none focus:text-black"
+              className="appearance-none text-sm font-light border-rose-600 block w-full text-rose-600 border rounded py-3 px-4 leading-tight focus:outline-none focus:text-black"
               id="password"
               type="password"
               placeholder="Tapez votre mot de passe"
