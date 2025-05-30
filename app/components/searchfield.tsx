@@ -148,7 +148,7 @@ export default function Searchfield({
           Array.from({ length: 6 }).map((_, index) => (
             <div
               key={index}
-              className="animate-pulse bg-gray-300 h-[250px] w-full justify-end max-w-xs mx-auto group overflow-hidden flex flex-col transition-transform"
+              className="animate-pulse bg-gray-300 h-[200px] rounded-xl w-full justify-end max-w-xs mx-auto group overflow-hidden flex flex-col transition-transform"
             >
               <div className="flex flex-col p-5 space-y-2">
                 <div className="h-6 bg-gray-200 rounded w-3/4 mb-2"></div>
