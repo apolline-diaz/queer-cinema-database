@@ -35,7 +35,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
     "hover:underline hover:decoration-rose-500 underline-offset-8";
 
   return (
-    <div className="text-rose-600 w-full fixed top-0 left-0 z-50 text-md transition-all duration-300 bg-white">
+    <div className="text-rose-600 w-full fixed top-0 left-0 z-50 text-md transition-all duration-300 bg-rose-50">
       <div className="flex flex-row w-full items-center justify-between gap-10  px-10 py-3">
         {/* Logo */}
         <Link href="/">
