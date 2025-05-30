@@ -74,7 +74,7 @@ export default function ClientSearchComponent({
           onClick={() => toggleSearchMode("field")}
           className={`w-full sm:w-auto text-sm font-light px-4 py-1 border rounded-full transition-colors ${
             searchMode === "field"
-              ? "bg-rose-700 text-white border-rose-600 "
+              ? "bg-rose-600 text-white border-rose-600 "
               : "bg-transparent text-rose-600 border-rose-600 hover:bg-rose-600 hover:text-white"
           }`}
         >
@@ -85,7 +85,7 @@ export default function ClientSearchComponent({
           onClick={() => toggleSearchMode("form")}
           className={`w-full sm:w-auto text-sm font-light px-4 py-1 border rounded-full transition-colors ${
             searchMode === "form"
-              ? "bg-rose-700 text-white border-rose-600 "
+              ? "bg-rose-600 text-white border-rose-600 "
               : "bg-transparent text-rose-600 border-rose-600 hover:bg-rose-600 hover:text-white"
           }`}
         >

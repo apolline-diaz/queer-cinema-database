@@ -73,7 +73,7 @@ export default async function Home() {
           <div className="flex flex-col mb-5">
             <div className="flex justify-between items-center pr-10 mb-4">
               <h2 className="text-2xl font-semibold  text-rose-600">
-                Plus d&apos;archives{" "}
+                Découvrir
               </h2>
               <Link
                 href="/movies"
