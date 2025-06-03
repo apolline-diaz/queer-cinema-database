@@ -77,7 +77,9 @@ export default async function Page({ params }: Props) {
             </div>
             <div className="text-sm">
               <h3 className=" mb-1 text-rose-600">Durée</h3>
-              <span>{movie.runtime} min</span>
+              <span>
+                {movie.runtime} {durationText}
+              </span>
             </div>
             <div className="text-sm">
               <h3 className=" mb-1 text-rose-600">Format</h3>
