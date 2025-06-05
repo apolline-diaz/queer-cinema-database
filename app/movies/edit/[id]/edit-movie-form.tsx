@@ -14,6 +14,7 @@ import { getDirectors } from "@/app/server-actions/directors/get-directors";
 import MultiSelect from "@/app/components/multi-select";
 import { SubmitButton } from "@/app/components/submit-button";
 import { uploadImage } from "@/utils/upload-image";
+import { Icon } from "@iconify/react/dist/iconify.js";
 
 type KeywordOption = {
   value: string;
@@ -285,271 +286,288 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
   );
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="rounded-lg text-rose-600 justify-start mx-auto"
-    >
-      {error && (
-        <div className="mb-4 p-4 bg-red-500 text-white rounded-md">{error}</div>
-      )}
-
-      <div className="flex flex-col gap-6">
-        {/* Title */}
-        <div className="col-span-2">
-          <label className="block text-sm font-medium mb-1">Titre</label>
-          <input
-            {...register("title", { required: "Title is required" })}
-            className="w-full py-2 text-sm font-light border rounded-md px-2 bg-white text-black border-rose-600 bg-transparent"
-          />
-          {errors.title && (
-            <p className="text-red-500 text-sm mt-1">{errors.title.message}</p>
-          )}
-        </div>
-
-        {/* Director Select */}
-        <div>
-          <label htmlFor="director_id" className="block text-sm font-medium">
-            Réalisateur-ice(s)
-          </label>
-          <MultiSelect
-            name="directors"
-            control={control}
-            options={availableDirectors}
-            label="Réalisateur-ices"
-            placeholder="Chercher et ajouter des réalisateur-ices..."
-            onChange={(selected) => {
-              setSelectedDirectors(selected);
-              setValue(
-                "directors",
-                selected.map((d) => d.value)
-              );
-            }}
-            defaultValues={selectedDirectors}
-          />
-          <p className="text-gray-600 text-xs mt-1">
-            Vous pouvez sélectionner plusieurs réalisateur-ices et en retirer.
-          </p>
-        </div>
-
-        {/* Image Preview */}
-        <div className="col-span-2">
-          <label className="block text-sm font-medium mb-3">
-            Image actuelle
-          </label>
-          <div className="relative rounded-xl h-64 bg-gray-700 overflow-hidden">
-            {imagePreview ? (
-              <Image
-                src={getImageUrl(imagePreview)}
-                alt={movie.title}
-                style={{ objectFit: "cover" }}
-                className="rounded-md  w-full h-full"
-                title={movie.title}
-              />
-            ) : (
-              <div className="h-full flex items-center justify-center text-gray-400">
-                Pas d&apos;image disponible
-              </div>
-            )}
+    <>
+      <button
+        onClick={() => router.back()}
+        className="flex items-center border border-rose-900 mb-4 text-sm text-rose-900 hover:text-white hover:bg-rose-500 hover:border-rose-500 rounded-full px-2 pr-3"
+      >
+        <Icon icon="mdi:chevron-left" className="inline size-4" />
+        Retour
+      </button>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="rounded-lg text-rose-900 justify-start mx-auto"
+      >
+        {error && (
+          <div className="mb-4 p-4 bg-red-500 text-white rounded-md">
+            {error}
           </div>
-        </div>
+        )}
 
-        {/* Image URL */}
-        <div className="col-span-2">
-          <label className="block text-sm font-medium mb-1">Image URL</label>
-          <input
-            {...register("image_url")}
-            className="w-full py-2 text-sm font-light border-b bg-transparent"
-            disabled
-          />
-          <p className="text-gray-600 text-xs mt-1">
-            Sera utilisée si aucune image n&apos;est téléchargée
-          </p>
-        </div>
-
-        {/* Image Upload */}
-        <div className="col-span-2">
-          <label className="block text-sm font-medium mb-1">
-            Télécharger une nouvelle image
-          </label>
-          <input
-            type="file"
-            accept="image/*"
-            {...register("image")}
-            className="w-full py-2 hover:cursor-pointer focus:outline-none"
-          />
-          <p className="text-gray-600 text-xs mt-1">
-            Laisser vide pour garder l&apos;image actuelle ou utiliser
-            l&apos;URL ci-dessus
-          </p>
-        </div>
-
-        {/* Description */}
-        <div className="col-span-2">
-          <label className="block text-sm font-medium mb-1">Description</label>
-          <textarea
-            {...register("description")}
-            rows={4}
-            className="w-full px-3 py-2 text-black font-light text-sm border bg-white border-rose-600 rounded-md bg-transparent"
-          />
-        </div>
-
-        <div className="grid grid-cols-2 gap-5">
-          {/* Release Date */}
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              Année de sortie
-            </label>
-            <select
-              {...register("release_date")}
-              className="w-full text-sm font-light py-2 border rounded-md px-2 bg-white text-black border-rose-600"
-            >
-              {years.map((year) => (
-                <option key={year} value={year}>
-                  {year}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Country Select */}
-          <div>
-            <label htmlFor="country_id" className="block text-sm font-medium">
-              Pays
-            </label>
-            <select
-              id="country_id"
-              {...register("country_id")}
-              className="w-full mt-1 block text-sm font-light bg-transparent border rounded-md px-2 bg-white text-black border-rose-600  py-2"
-            >
-              <option value="">Select a country</option>
-              {availableCountries.map((country) => (
-                <option
-                  key={country.value}
-                  value={country.value}
-                  // Mark as selected if it matches the current country
-                  selected={
-                    movie.countries &&
-                    movie.countries[0]?.id.toString() === country.value
-                  }
-                >
-                  {country.label}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Runtime */}
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              Durée (minutes/saisons)
-            </label>
+        <div className="flex flex-col gap-6">
+          {/* Title */}
+          <div className="col-span-2">
+            <label className="block text-sm font-medium mb-1">Titre</label>
             <input
-              type="number"
-              {...register("runtime", {
-                pattern: {
-                  value: /^\d*\.?\d*$/,
-                  message: "Must be a number",
-                },
-              })}
-              className="w-full text-sm font-light border-rose-600  py-2 border rounded-md px-2 bg-white text-black bg-transparent"
+              {...register("title", { required: "Title is required" })}
+              className="w-full py-2 text-sm font-light border rounded-md px-2 bg-white text-black border-rose-900 bg-transparent"
             />
-            {errors.runtime && (
+            {errors.title && (
               <p className="text-red-500 text-sm mt-1">
-                {errors.runtime.message}
+                {errors.title.message}
               </p>
             )}
           </div>
 
-          {/* Language */}
+          {/* Director Select */}
           <div>
-            <label className="block text-sm font-medium mb-1">Langue(s)</label>
-            <input
-              {...register("language")}
-              className="w-full text-sm border-rose-600 font-light py-2 border rounded-md px-2 bg-white text-black bg-transparent"
+            <label htmlFor="director_id" className="block text-sm font-medium">
+              Réalisateur-ice(s)
+            </label>
+            <MultiSelect
+              name="directors"
+              control={control}
+              options={availableDirectors}
+              label="Réalisateur-ices"
+              placeholder="Chercher et ajouter des réalisateur-ices..."
+              onChange={(selected) => {
+                setSelectedDirectors(selected);
+                setValue(
+                  "directors",
+                  selected.map((d) => d.value)
+                );
+              }}
+              defaultValues={selectedDirectors}
             />
+            <p className="text-gray-600 text-xs mt-1">
+              Vous pouvez sélectionner plusieurs réalisateur-ices et en retirer.
+            </p>
+          </div>
+
+          {/* Image Preview */}
+          <div className="col-span-2">
+            <label className="block text-sm font-medium mb-3">
+              Image actuelle
+            </label>
+            <div className="relative rounded-xl h-64 bg-gray-700 overflow-hidden">
+              {imagePreview ? (
+                <Image
+                  src={getImageUrl(imagePreview)}
+                  alt={movie.title}
+                  style={{ objectFit: "cover" }}
+                  className="rounded-md  w-full h-full"
+                  title={movie.title}
+                />
+              ) : (
+                <div className="h-full flex items-center justify-center text-gray-400">
+                  Pas d&apos;image disponible
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Image URL */}
+          <div className="col-span-2">
+            <label className="block text-sm font-medium mb-1">Image URL</label>
+            <input
+              {...register("image_url")}
+              className="w-full py-2 text-sm font-light border-b bg-transparent"
+              disabled
+            />
+            <p className="text-gray-600 text-xs mt-1">
+              Sera utilisée si aucune image n&apos;est téléchargée
+            </p>
+          </div>
+
+          {/* Image Upload */}
+          <div className="col-span-2">
+            <label className="block text-sm font-medium mb-1">
+              Télécharger une nouvelle image
+            </label>
+            <input
+              type="file"
+              accept="image/*"
+              {...register("image")}
+              className="w-full py-2 hover:cursor-pointer focus:outline-none"
+            />
+            <p className="text-gray-600 text-xs mt-1">
+              Laisser vide pour garder l&apos;image actuelle ou utiliser
+              l&apos;URL ci-dessus
+            </p>
+          </div>
+
+          {/* Description */}
+          <div className="col-span-2">
+            <label className="block text-sm font-medium mb-1">
+              Description
+            </label>
+            <textarea
+              {...register("description")}
+              rows={4}
+              className="w-full px-3 py-2 text-black font-light text-sm border bg-white border-rose-900 rounded-md bg-transparent"
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-5">
+            {/* Release Date */}
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Année de sortie
+              </label>
+              <select
+                {...register("release_date")}
+                className="w-full text-sm font-light py-2 border rounded-md px-2 bg-white text-black border-rose-900"
+              >
+                {years.map((year) => (
+                  <option key={year} value={year}>
+                    {year}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Country Select */}
+            <div>
+              <label htmlFor="country_id" className="block text-sm font-medium">
+                Pays
+              </label>
+              <select
+                id="country_id"
+                {...register("country_id")}
+                className="w-full mt-1 block text-sm font-light bg-transparent border rounded-md px-2 bg-white text-black border-rose-900  py-2"
+              >
+                <option value="">Select a country</option>
+                {availableCountries.map((country) => (
+                  <option
+                    key={country.value}
+                    value={country.value}
+                    // Mark as selected if it matches the current country
+                    selected={
+                      movie.countries &&
+                      movie.countries[0]?.id.toString() === country.value
+                    }
+                  >
+                    {country.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Runtime */}
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Durée (minutes/saisons)
+              </label>
+              <input
+                type="number"
+                {...register("runtime", {
+                  pattern: {
+                    value: /^\d*\.?\d*$/,
+                    message: "Must be a number",
+                  },
+                })}
+                className="w-full text-sm font-light border-rose-900  py-2 border rounded-md px-2 bg-white text-black bg-transparent"
+              />
+              {errors.runtime && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.runtime.message}
+                </p>
+              )}
+            </div>
+
+            {/* Language */}
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Langue(s)
+              </label>
+              <input
+                {...register("language")}
+                className="w-full text-sm border-rose-900 font-light py-2 border rounded-md px-2 bg-white text-black bg-transparent"
+              />
+            </div>
+          </div>
+
+          {/* Type */}
+          <div>
+            <label className="block text-sm font-medium mb-1">Type</label>
+            <select
+              {...register("type")}
+              className="w-full text-sm font-light border-rose-900 py-2 border rounded-md px-2 bg-white text-black"
+            >
+              <option value="Long-métrage">Long-métrage</option>
+              <option value="Moyen-métrage">Moyen-métrage</option>
+              <option value="Court-métrage">Court-métrage</option>
+              <option value="Série">Série</option>
+              <option value="Emission TV">Emission TV</option>
+            </select>
+          </div>
+
+          {/* Genres Select */}
+          <div>
+            <label className="text-rose-900 block text-sm font-medium mb-1">
+              Genres
+            </label>
+            <MultiSelect
+              name="genres"
+              control={control}
+              options={availableGenres}
+              label="Genres"
+              placeholder="Chercher et ajouter des genres..."
+              onChange={(selected) => {
+                setSelectedGenres(selected);
+                setValue(
+                  "genres",
+                  selected.map((g) => g.value)
+                );
+              }}
+              defaultValues={selectedGenres}
+            />
+            <p className="text-gray-600 text-xs mt-1">
+              Vous pouvez sélectionner plusieurs genres et en retirer.
+            </p>
+          </div>
+          {/* Keywords - Multi-Select */}
+          <div>
+            <label className="text-rose-900 block text-sm font-medium mb-1">
+              Mots-clés
+            </label>
+
+            <MultiSelect
+              name="keywords"
+              control={control}
+              options={availableKeywords}
+              label="Mots-clé"
+              placeholder="Chercher et ajouter des mot-clés..."
+              onChange={(selected) => {
+                setSelectedKeywords(selected);
+                setValue(
+                  "keywords",
+                  selected.map((k) => k.value)
+                );
+              }}
+              defaultValues={selectedKeywords}
+            />
+            <p className="text-gray-600 text-xs mt-1">
+              Vous pouvez sélectionner plusieurs mot-clés et en retirer.
+            </p>
           </div>
         </div>
 
-        {/* Type */}
-        <div>
-          <label className="block text-sm font-medium mb-1">Type</label>
-          <select
-            {...register("type")}
-            className="w-full text-sm font-light border-rose-600 py-2 border rounded-md px-2 bg-white text-black"
+        <div className="mt-8 font-light flex flex-col gap-3 xs:flex-col sm:flex-row justify-between">
+          <button
+            type="button"
+            onClick={() => router.back()}
+            className="xs:w-full sm:w-[200px] border hover:border-red-500 hover:text-red-500 text-rose-900 px-4 py-2 border-rose-900 rounded-md"
           >
-            <option value="Long-métrage">Long-métrage</option>
-            <option value="Moyen-métrage">Moyen-métrage</option>
-            <option value="Court-métrage">Court-métrage</option>
-            <option value="Série">Série</option>
-            <option value="Emission TV">Emission TV</option>
-          </select>
-        </div>
-
-        {/* Genres Select */}
-        <div>
-          <label className="text-rose-600 block text-sm font-medium mb-1">
-            Genres
-          </label>
-          <MultiSelect
-            name="genres"
-            control={control}
-            options={availableGenres}
-            label="Genres"
-            placeholder="Chercher et ajouter des genres..."
-            onChange={(selected) => {
-              setSelectedGenres(selected);
-              setValue(
-                "genres",
-                selected.map((g) => g.value)
-              );
-            }}
-            defaultValues={selectedGenres}
+            Annuler
+          </button>
+          <SubmitButton
+            defaultText="Enregistrer les modifications"
+            loadingText="Chargement..."
+            isSubmitting={isSubmitting}
           />
-          <p className="text-gray-600 text-xs mt-1">
-            Vous pouvez sélectionner plusieurs genres et en retirer.
-          </p>
         </div>
-        {/* Keywords - Multi-Select */}
-        <div>
-          <label className="text-rose-600 block text-sm font-medium mb-1">
-            Mots-clés
-          </label>
-
-          <MultiSelect
-            name="keywords"
-            control={control}
-            options={availableKeywords}
-            label="Mots-clé"
-            placeholder="Chercher et ajouter des mot-clés..."
-            onChange={(selected) => {
-              setSelectedKeywords(selected);
-              setValue(
-                "keywords",
-                selected.map((k) => k.value)
-              );
-            }}
-            defaultValues={selectedKeywords}
-          />
-          <p className="text-gray-600 text-xs mt-1">
-            Vous pouvez sélectionner plusieurs mot-clés et en retirer.
-          </p>
-        </div>
-      </div>
-
-      <div className="mt-8 font-light flex flex-col gap-3 xs:flex-col sm:flex-row justify-between">
-        <button
-          type="button"
-          onClick={() => router.back()}
-          className="xs:w-full sm:w-[200px] border hover:border-red-500 hover:text-red-500 text-rose-600 px-4 py-2 border-rose-600 rounded-md"
-        >
-          Annuler
-        </button>
-        <SubmitButton
-          defaultText="Enregistrer les modifications"
-          loadingText="Chargement..."
-          isSubmitting={isSubmitting}
-        />
-      </div>
-    </form>
+      </form>
+    </>
   );
 }

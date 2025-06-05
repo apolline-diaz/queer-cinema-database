@@ -29,14 +29,14 @@ export default function KeywordStatsClientComponent({
   const [chartType, setChartType] = useState<"pie" | "bar">("bar");
 
   const COLORS = [
-    "#0088FE",
-    "#00C49F",
-    "#FFBB28",
-    "#FF8042",
-    "#8884d8",
-    "#82ca9d",
-    "#ffc658",
-    "#8dd1e1",
+    "oklch(70% 0.25 10)",
+    "oklch(60% 0.22 15)",
+    "oklch(50% 0.20 20)",
+    "oklch(40% 0.18 25)",
+    "oklch(65% 0.24 355)",
+    "oklch(55% 0.21 5)",
+    "oklch(45% 0.19 0)",
+    "oklch(35% 0.16 8)",
   ];
 
   return (
@@ -48,8 +48,8 @@ export default function KeywordStatsClientComponent({
               onClick={() => setChartType("bar")}
               className={`w-auto text-sm font-light px-4 py-1 border rounded-full transition-colors ${
                 chartType === "bar"
-                  ? "bg-rose-700 text-white border-rose-600 "
-                  : "bg-transparent text-rose-600 border-rose-600 hover:bg-rose-600 hover:text-white"
+                  ? "bg-rose-950 text-white border-rose-900 "
+                  : "bg-transparent text-rose-900 border-rose-900 hover:bg-rose-900 hover:text-white"
               }`}
             >
               Diagramme en bâton
@@ -58,14 +58,14 @@ export default function KeywordStatsClientComponent({
               onClick={() => setChartType("pie")}
               className={`w-auto text-sm font-light px-4 py-1 border rounded-full transition-colors ${
                 chartType === "pie"
-                  ? "bg-rose-700 text-white border-rose-600 "
-                  : "bg-transparent text-rose-600 border-rose-600 hover:bg-rose-600 hover:text-white"
+                  ? "bg-rose-950 text-white border-rose-900 "
+                  : "bg-transparent text-rose-900 border-rose-900 hover:bg-rose-900 hover:text-white"
               }`}
             >
               Diagramme en camembert
             </button>
           </div>
-          <h2 className="text-rose-600 text-xl font-medium pt-4">
+          <h2 className="text-black text-xl pt-4">
             Distribution des films par mot-clé
           </h2>
         </div>
@@ -97,7 +97,7 @@ export default function KeywordStatsClientComponent({
                   dataKey="count"
                   name="Nombre de films"
                   isAnimationActive={true}
-                  className="text-white"
+                  className="text-black"
                 >
                   {keywordStats.map((entry, index) => (
                     <Cell
@@ -139,18 +139,18 @@ export default function KeywordStatsClientComponent({
         </div>
       </div>
 
-      <div className="rounded-lg ">
-        <h2 className="text-xl text-rose-600 font-semibold mb-4">
+      {/* <div className="rounded-lg ">
+        <h2 className="text-xl text-rose-900 font-semibold mb-4">
           Données brutes
         </h2>
         <div className="text-black overflow-x-auto">
           <table className="min-w-full ">
             <thead>
               <tr>
-                <th className="text-rose-600  py-2 border-b border-gray-200 text-left">
+                <th className="text-rose-900  py-2 border-b border-gray-200 text-left">
                   Mot-clé
                 </th>
-                <th className="py-2 border-b text-rose-600 border-gray-200 text-right">
+                <th className="py-2 border-b text-rose-900 border-gray-200 text-right">
                   Nombre de films
                 </th>
               </tr>
@@ -172,7 +172,7 @@ export default function KeywordStatsClientComponent({
             </tbody>
           </table>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }

@@ -8,6 +8,7 @@ import { getList } from "@/app/server-actions/lists/get-list";
 import { getMovies } from "@/app/server-actions/movies/get-movies";
 import MoviesMultiSelect from "@/app/components/movies-multi-select";
 import { SubmitButton } from "@/app/components/submit-button";
+import { Icon } from "@iconify/react/dist/iconify.js";
 
 export default function EditListPage({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -93,7 +94,16 @@ export default function EditListPage({ params }: { params: { id: string } }) {
 
   return (
     <div className="px-10 py-20">
-      <h1 className="text-2xl text-rose-600 mb-5">Modifier la liste</h1>
+      <button
+        onClick={() => router.back()}
+        className="flex items-center border border-rose-900 mb-4 text-sm text-rose-900 hover:text-white hover:bg-rose-500 hover:border-rose-500 rounded-full px-2 pr-3"
+      >
+        <Icon icon="mdi:chevron-left" className="inline size-4" />
+        Retour
+      </button>
+      <h1 className="text-2xl text-rose-900 font-medium mb-5">
+        Modifier la liste
+      </h1>
       {isLoading ? (
         <div className="space-y-4 w-full sm:w-1/2">
           <div className={"animate-pulse bg-neutral-300 rounded h-10 w-full"} />
@@ -104,14 +114,14 @@ export default function EditListPage({ params }: { params: { id: string } }) {
       ) : (
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="text-rose-600 py-5 w-full sm:w-1/2"
+          className="text-rose-900 py-5 w-full sm:w-1/2"
         >
           <input type="hidden" {...register("movie_id")} />
 
           <div className="mb-6">
             <label className="block text-sm font-medium mb-2">Titre</label>
             <input
-              className="w-full border-b text-sm placeholder-gray-500 text-black font-light py-2 bg-transparent border-rose-600"
+              className="w-full border-b text-sm placeholder-gray-500 text-black font-light py-2 bg-transparent border-rose-900"
               {...register("title")}
               placeholder="Mon top 2025"
             />
@@ -127,7 +137,7 @@ export default function EditListPage({ params }: { params: { id: string } }) {
               Description
             </label>
             <textarea
-              className="w-full rounded-md text-sm text-black placeholder-gray-500 font-light border py-3 px-4  bg-white border-rose-600"
+              className="w-full rounded-md text-sm text-black placeholder-gray-500 font-light border py-3 px-4  bg-white border-rose-900"
               {...register("description")}
               placeholder="Entrez une description..."
             />

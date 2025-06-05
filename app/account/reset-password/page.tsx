@@ -85,15 +85,15 @@ export default function ResetPasswordPage() {
   if (isLoading) {
     return (
       <div
-        className="w-screen min-h-screen flex items-center text-rose-600 justify-center bg-cover bg-center"
+        className="w-screen min-h-screen flex items-center text-rose-900 justify-center bg-cover bg-center"
         style={{
           backgroundImage:
             "url('https://xcwrhyjbfgzsaslstssc.supabase.co/storage/v1/object/public/storage//watermelon-woman-background.webp')",
         }}
       >
-        <div className="bg-rose-50 border border-rose-600 bg-opacity-90 backdrop-blur-md rounded-2xl shadow-xl p-10 m-10 max-w-md w-full">
+        <div className="bg-rose-50 border border-rose-900 bg-opacity-90 backdrop-blur-md rounded-2xl shadow-xl p-10 m-10 max-w-md w-full">
           <div className="flex justify-center">
-            <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-rose-600"></div>
+            <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-rose-900"></div>
           </div>
           <p className="text-center mt-4">Chargement...</p>
         </div>
@@ -103,13 +103,13 @@ export default function ResetPasswordPage() {
 
   return (
     <div
-      className="w-screen min-h-screen flex items-center text-rose-600 justify-center bg-cover bg-center"
+      className="w-screen min-h-screen flex items-center text-rose-900 justify-center bg-cover bg-center"
       style={{
         backgroundImage:
           "url('https://xcwrhyjbfgzsaslstssc.supabase.co/storage/v1/object/public/storage//watermelon-woman-background.webp')",
       }}
     >
-      <div className="bg-rose-50 border border-rose-600 bg-opacity-90 backdrop-blur-md rounded-2xl shadow-xl p-10 m-10 max-w-md w-full">
+      <div className="bg-rose-50 border border-rose-900 bg-opacity-90 backdrop-blur-md rounded-2xl shadow-xl p-10 m-10 max-w-md w-full">
         {isResetComplete ? (
           <div className="flex flex-col gap-3">
             <h1 className="text-center font-medium text-xl">
@@ -147,7 +147,7 @@ export default function ResetPasswordPage() {
                       "Le mot de passe doit contenir au moins 8 caractères",
                   },
                 })}
-                className="appearance-none text-sm font-light border-rose-600 block w-full border rounded py-3 px-4 leading-tight focus:outline-none focus:text-black"
+                className="appearance-none text-sm font-light border-rose-900 block w-full border rounded py-3 px-4 leading-tight focus:outline-none focus:text-black"
                 id="password"
                 type="password"
                 placeholder="Tapez votre nouveau mot de passe"
@@ -167,7 +167,7 @@ export default function ResetPasswordPage() {
                     value === password ||
                     "Les mots de passe ne correspondent pas",
                 })}
-                className="appearance-none text-sm font-light border-rose-600 block w-full border rounded py-3 px-4 leading-tight focus:outline-none focus:text-black"
+                className="appearance-none text-sm font-light border-rose-900 block w-full border rounded py-3 px-4 leading-tight focus:outline-none focus:text-black"
                 id="confirmPassword"
                 type="password"
                 placeholder="Confirmez votre nouveau mot de passe"
