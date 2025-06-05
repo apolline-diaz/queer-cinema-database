@@ -59,7 +59,7 @@ export default async function Home() {
                     <span className="inline-block mb-1 text-md font-light">
                       {featuredLatestMovie.release_date || ""}
                     </span>
-                    <p className="sm:line-clamp-6 line-clamp-3 text-md font-extralight">
+                    <p className="line-clamp-3 text-md font-extralight">
                       {featuredLatestMovie.description ||
                         "Pas de description disponible"}
                     </p>
