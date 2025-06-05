@@ -74,8 +74,8 @@ export default function ClientSearchComponent({
           onClick={() => toggleSearchMode("field")}
           className={`w-full sm:w-auto text-sm font-light px-4 py-1 border rounded-full transition-colors ${
             searchMode === "field"
-              ? "bg-rose-600 text-white border-rose-600 "
-              : "bg-transparent text-rose-600 border-rose-600 hover:bg-rose-600 hover:text-white"
+              ? "bg-rose-900 text-white border-rose-900 "
+              : "bg-transparent text-rose-900 border-rose-900 hover:bg-rose-900 hover:text-white"
           }`}
         >
           Recherche simple
@@ -85,8 +85,8 @@ export default function ClientSearchComponent({
           onClick={() => toggleSearchMode("form")}
           className={`w-full sm:w-auto text-sm font-light px-4 py-1 border rounded-full transition-colors ${
             searchMode === "form"
-              ? "bg-rose-600 text-white border-rose-600 "
-              : "bg-transparent text-rose-600 border-rose-600 hover:bg-rose-600 hover:text-white"
+              ? "bg-rose-900 text-white border-rose-900 "
+              : "bg-transparent text-rose-900 border-rose-900 hover:bg-rose-900 hover:text-white"
           }`}
         >
           Recherche avancée

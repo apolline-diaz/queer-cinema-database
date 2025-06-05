@@ -53,45 +53,43 @@ export default async function Page({ params }: Props) {
         </div>
       </div>
       <div className="p-10 text-black flex flex-col font-light gap-3">
-        <h2 className="text-4xl font-light uppercase text-rose-600">
-          {movie.title}
-        </h2>
-        <h2 className="font-light text-lg">
+        <h1 className="text-4xl font-medium text-rose-900">{movie.title}</h1>
+        <h2 className="font-light text-lg mb-2">
           {movie.directors?.length > 0 && (
             <span>
               {movie.directors.map((director) => director.name).join(", ")}
             </span>
           )}
         </h2>
-        <div className="flex flex-col sm:flex-row gap-4 ">
-          <div className="min-w-[150px] bg-rose-50 rounded-xl p-3 uppercase grid sm:grid-cols-1 grid-cols-3 gap-4 font-light mt-4">
+        <div className="flex flex-col sm:flex-row gap-6">
+          <div className="min-w-[150px] bg-rose-50 rounded-xl p-3 grid sm:grid-cols-1 grid-cols-3 gap-4 font-light">
             <div className="text-sm ">
-              <h3 className="mb-1 text-rose-600">Pays</h3>
+              <h3 className="mb-1 text-rose-900">Pays</h3>
               <span>
                 {movie.countries?.map((country) => country.name).join(", ")}
               </span>
             </div>
             <div className="text-sm">
-              <h3 className="mb-1 text-rose-600">Année</h3>
+              <h3 className="mb-1 text-rose-900">Année</h3>
               <span>{movie.release_date}</span>
             </div>
             <div className="text-sm">
-              <h3 className=" mb-1 text-rose-600">Durée</h3>
+              <h3 className=" mb-1 text-rose-900">Durée</h3>
               <span>
                 {movie.runtime} {durationText}
               </span>
             </div>
             <div className="text-sm">
-              <h3 className=" mb-1 text-rose-600">Format</h3>
+              <h3 className=" mb-1 text-rose-900">Format</h3>
               <span>{movie.type}</span>
             </div>
             <div className="text-sm">
-              <h3 className=" mb-1 text-rose-600">Langue(s)</h3>
+              <h3 className=" mb-1 text-rose-900">Langue(s)</h3>
               <span>{movie.language}</span>
             </div>
             {movie.genres?.length > 0 && (
               <div className="text-sm">
-                <h3 className="mb-1 text-rose-600">Genre(s)</h3>
+                <h3 className="mb-1 text-rose-900">Genre(s)</h3>
                 <span>
                   {movie.genres.map((genre) => genre.name).join(", ")}
                 </span>
@@ -99,14 +97,16 @@ export default async function Page({ params }: Props) {
             )}
           </div>
           <div>
-            <p className="mt-4 text-md mb-2">{movie.description}</p>
-            <div className="font-bold flex items-center gap-y-3 flex-wrap py-3">
+            <h3 className="font-medium text-rose-900">Synopsis</h3>
+            <p className="my-4 text-md">{movie.description}</p>
+            <h3 className="font-medium text-rose-900">Mots-clés</h3>
+            <div className="font-bold flex items-center gap-y-3 flex-wrap py-3 my-1">
               {movie.keywords?.map((keyword) => (
                 <Link
                   key={keyword.id}
                   href={`/movies?keywordIds=${encodeURIComponent(keyword.id.toString())}&searchMode=form`}
                 >
-                  <span className="font-light text-sm rounded-full border border-rose-600 text-rose-600 px-2 mr-1 py-1 hover:bg-rose-700 hover:text-white hover:border-rose-600 hover:cursor-pointer">
+                  <span className="font-light text-sm rounded-full border border-rose-900 text-rose-900 px-2 mr-1 py-1 hover:bg-rose-500 hover:text-white hover:border-rose-500 hover:cursor-pointer">
                     {keyword.name}
                   </span>
                 </Link>

@@ -112,7 +112,7 @@ export default function Searchfield({
                 render={({ field }) => (
                   <input
                     {...field}
-                    className="appearance-none text-md placeholder-gray-500 font-light block w-full bg-white rounded-md border  border-rose-600 text-rose-600 p-2 leading-tight focus:none focus:outline-none"
+                    className="appearance-none text-md placeholder-gray-500 font-light block w-full bg-white rounded-md border  border-rose-900 text-rose-900 p-2 leading-tight focus:none focus:outline-none"
                     placeholder="Entrez un mot ou un titre..."
                   />
                 )}
@@ -122,21 +122,21 @@ export default function Searchfield({
           <div className="flex flex-col sm:flex-row sm:w-full gap-4 py-2">
             <button
               type="submit"
-              className="xs:w-full sm:w-[200px] bg-gradient-to-r from-rose-500 to-red-500 text-white px-4 py-2 rounded-md hover:from-rose-600 hover:to-red-600"
+              className="xs:w-full sm:w-[200px] transition-colors duration-200 ease-in-out bg-rose-900 text-white px-4 py-2 rounded-md hover:bg-rose-500"
             >
               Rechercher
             </button>
             <button
               type="button"
               onClick={handleReset}
-              className="xs:w-full sm:w-[200px] border hover:border-rose-600 hover:text-rose-600 text-rose-500 px-4 py-2 border-rose-500 rounded-md"
+              className="xs:w-full sm:w-[200px] border transition-colors duration-200 ease-in-out hover:border-rose-500 hover:text-rose-500 text-rose-900 px-4 py-2 border-rose-900 rounded-md"
             >
               Réinitialiser
             </button>
           </div>
         </form>
       </div>
-      <div className="text-rose-600 border-b border-rose-600 text-md font-light mb-5">
+      <div className="text-rose-900 border-b border-rose-900 text-md font-light mb-5">
         {isLoading ? (
           <div className="animate-pulse rounded-md h-6 bg-gray-300 w-1/4 mb-2"></div>
         ) : (
@@ -174,7 +174,7 @@ export default function Searchfield({
       {visibleCount < movies.length && !isLoading && (
         <button
           onClick={loadMore}
-          className="w-full flex flex-row justify-center items-center border rounded-md border-rose-600 border-t mt-4 px-4 py-2 hover:border-red-500 text-rose-600 hover:text-red-500"
+          className="w-full flex flex-row justify-center items-center border rounded-md border-rose-900 border-t mt-4 px-4 py-2 hover:border-red-500 text-rose-900 hover:text-red-500"
         >
           Voir plus <Icon icon="mdi:chevron-down" className="size-5" />
         </button>

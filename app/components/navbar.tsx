@@ -30,18 +30,18 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
   };
 
   // Classe CSS for active links
-  const activeLinkClass = "underline underline-offset-8 text-rose-600";
+  const activeLinkClass = "underline underline-offset-8 text-rose-900";
   const normalLinkClass =
-    "hover:underline hover:decoration-rose-500 underline-offset-8";
+    "hover:underline hover:decoration-rose-900 underline-offset-8";
 
   return (
-    <div className="text-rose-600 w-full fixed top-0 left-0 z-50 text-md transition-all duration-300 bg-rose-50">
+    <div className="text-rose-900 w-full fixed top-0 left-0 z-50 text-md transition-all duration-300 bg-rose-50">
       <div className="flex flex-row w-full items-center justify-between gap-10  px-10 py-3">
         {/* Logo */}
         <Link href="/">
           <h2 className="text-white whitespace-nowrap font-raleway font-bold text-xl xs:text-md">
-            <span className="text-rose-600">queer cinema</span>{" "}
-            <span className="text-rose-600 font-light"> database</span>
+            <span className="text-rose-900">queer cinema</span>{" "}
+            <span className="text-rose-900 font-light"> database</span>
           </h2>
         </Link>
 
@@ -71,7 +71,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
 
               {/* mobile menu */}
               <div
-                className={`text-black absolute top-0 right-0 h-screen w-1/2 xs:w-1/2 sm:w-1/2 bg-white border-l border-rose-600 md:w-1/3 p-4 transform ${
+                className={`text-black absolute top-0 right-0 h-screen w-1/2 xs:w-1/2 sm:w-1/2 bg-white border-l border-rose-900 md:w-1/3 p-4 transform ${
                   isOpen ? "translate-x-0" : "translate-x-full"
                 } transition-transform duration-300 ease-in-out`}
               >
@@ -81,7 +81,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                   className="absolute top-O right-0 px-8"
                 >
                   <svg
-                    className="h-5 w-5 text-gray-black hover:text-rose-600"
+                    className="h-5 w-5 text-gray-black hover:text-rose-900"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -95,7 +95,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                 </button>
 
                 {/* mobile navigation links */}
-                <ul className="bg-white flex text-rose-600 flex-col items-center justify-between gap-5 h-full mt-6">
+                <ul className="bg-white flex text-rose-900 flex-col items-center justify-between gap-5 h-full mt-6">
                   <div className="flex flex-col items-center justify-center gap-5">
                     <Link
                       href="/about"
@@ -146,13 +146,13 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                     </li>
 
                     {!user ? (
-                      <li className="hover:text-rose-600 hover:bg-rose-50 hover:border-rose-600 py-1 px-3 rounded-full border border-rose-600">
+                      <li className="hover:text-rose-900 hover:bg-rose-50 hover:border-rose-900 py-1 px-3 rounded-full border border-rose-900">
                         <Link href="/login">Connexion</Link>
                       </li>
                     ) : (
                       <li>
                         <form action={logout}>
-                          <button className="hover:text-rose-600 hover:bg-rose-50 hover:border-rose-600 py-1 px-3 rounded-full border border-rose-600">
+                          <button className="hover:text-rose-900 hover:bg-rose-50 hover:border-rose-900 py-1 px-3 rounded-full border border-rose-900">
                             Se déconnecter
                           </button>
                         </form>
@@ -164,7 +164,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
             </section>
 
             {/* desktop menu */}
-            <div className="text-rose-600">
+            <div className="text-rose-900">
               <ul className="DESKTOP-MENU hidden whitespace-nowrap space-x-12 lg:flex  items-center">
                 <Link
                   href="/about"
@@ -212,7 +212,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                     <li>
                       <Link
                         href="/login"
-                        className="hover:text-rose-600 hover:bg-rose-50 hover:border-rose-600 py-1 px-3 rounded-full border border-rose-600"
+                        className="hover:text-rose-900 hover:bg-rose-50 hover:border-rose-900 py-1 px-3 rounded-full border border-rose-900"
                       >
                         Connexion
                       </Link>
@@ -220,7 +220,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                   ) : (
                     <li>
                       <form action={logout}>
-                        <button className="hover:text-rose-600 hover:bg-rose-50 hover:border-rose-600 py-1 px-3 rounded-full border border-rose-600">
+                        <button className="hover:text-rose-900 hover:bg-rose-50 hover:border-rose-900 py-1 px-3 rounded-full border border-rose-900">
                           Se déconnecter
                         </button>
                       </form>

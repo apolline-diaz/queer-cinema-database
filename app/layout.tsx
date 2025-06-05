@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(getCanonicalUrl()),
   title: "Queer Cinema Database",
   description:
-    "Le site de référence des films LGBTQIA+ : découvrez l'histoire du cinéma et des représentations queer avec Queer Cinema Database.",
+    "Parcourez un catalogue mondial de films et archives LGBTQIA+, témoignant la diversité et la richesse des cinémas queer.",
   openGraph: {
     images: [`/assets/diary.svg`],
   },

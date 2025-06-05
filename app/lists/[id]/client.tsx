@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Card from "@/app/components/card";
 import { getList } from "@/app/server-actions/lists/get-list";
+import { Icon } from "@iconify/react/dist/iconify.js";
 
 export default function ListClientPage({
   params,
@@ -41,6 +42,13 @@ export default function ListClientPage({
 
   return (
     <div className="p-10 py-20">
+      <button
+        onClick={() => router.back()}
+        className="flex items-center border border-rose-900 mb-4 text-sm text-rose-900 hover:text-white hover:bg-rose-500 hover:border-rose-500 rounded-full px-2 pr-3"
+      >
+        <Icon icon="mdi:chevron-left" className="inline size-4" />
+        Retour
+      </button>
       {isLoading ? (
         <div>
           {/* Skeleton for the title */}
@@ -70,7 +78,9 @@ export default function ListClientPage({
       ) : (
         <div>
           {/* Title and description */}
-          <h1 className="text-2xl text-rose-600 ">{listData.title}</h1>
+          <h1 className="text-2xl font-medium text-rose-900">
+            {listData.title}
+          </h1>
           <p className="text-black font-light mt-2 mb-6">
             {listData.description}
           </p>
