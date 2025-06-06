@@ -92,7 +92,6 @@ const CreateListPage: React.FC = () => {
 
   return (
     <div className="px-10 py-20">
-      {" "}
       <button
         onClick={() => router.back()}
         className="flex items-center border border-rose-900 mb-4 text-sm text-rose-900 hover:text-white hover:bg-rose-500 hover:border-rose-500 rounded-full px-2 pr-3"

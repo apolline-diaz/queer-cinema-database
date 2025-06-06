@@ -38,6 +38,7 @@ type DirectorOption = {
 
 type FormData = {
   title: string;
+  original_title: string | null;
   description: string | null;
   release_date: string | null;
   language: string | null;
@@ -95,6 +96,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
   } = useForm<FormData>({
     defaultValues: {
       title: movie.title,
+      original_title: movie.original_title || "",
       description: movie.description || "",
       release_date: movie.release_date || "",
       language: movie.language || "",
@@ -240,6 +242,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
       const formDataToUpdate = new FormData();
       formDataToUpdate.append("id", movie.id);
       formDataToUpdate.append("title", data.title);
+      formDataToUpdate.append("original_title", data.original_title ?? "");
       formDataToUpdate.append("description", data.description ?? "");
       formDataToUpdate.append("release_date", data.release_date ?? "");
       formDataToUpdate.append("language", data.language ?? "");
@@ -310,6 +313,22 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
             <label className="block text-sm font-medium mb-1">Titre</label>
             <input
               {...register("title", { required: "Title is required" })}
+              className="w-full py-2 text-sm font-light border rounded-md px-2 bg-white text-black border-rose-900 bg-transparent"
+            />
+            {errors.title && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.title.message}
+              </p>
+            )}
+          </div>
+
+          {/* Original Title */}
+          <div className="col-span-2">
+            <label className="block text-sm font-medium mb-1">
+              Titre original
+            </label>
+            <input
+              {...register("original_title")}
               className="w-full py-2 text-sm font-light border rounded-md px-2 bg-white text-black border-rose-900 bg-transparent"
             />
             {errors.title && (

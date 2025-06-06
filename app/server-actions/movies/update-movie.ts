@@ -18,6 +18,7 @@ export async function updateMovie(formData: FormData) {
   try {
     const id = formData.get("id") as string;
     const title = formData.get("title") as string;
+    const original_title = formData.get("original_title") as string;
     const description = formData.get("description") as string;
     const release_date = formData.get("release_date") as string;
     const language = formData.get("language") as string;
@@ -57,6 +58,7 @@ export async function updateMovie(formData: FormData) {
       where: { id },
       data: {
         title,
+        original_title,
         description,
         release_date,
         language,

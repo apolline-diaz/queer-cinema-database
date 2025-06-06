@@ -54,6 +54,10 @@ export default async function Page({ params }: Props) {
       </div>
       <div className="p-10 text-black flex flex-col font-light gap-3">
         <h1 className="text-4xl font-medium text-rose-900">{movie.title}</h1>
+        <h1 className="text-2xl font-medium text-rose-300">
+          {movie.original_title}
+        </h1>
+
         <h2 className="font-light text-lg mb-2">
           {movie.directors?.length > 0 && (
             <span>
