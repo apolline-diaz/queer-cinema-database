@@ -22,6 +22,7 @@ const CreateMoviePage: React.FC = () => {
   } = useForm({
     defaultValues: {
       title: "",
+      original_title: "",
       director_name: "",
       description: "",
       release_date: "",
@@ -57,6 +58,7 @@ const CreateMoviePage: React.FC = () => {
     try {
       const formData = new FormData();
       formData.append("title", data.title);
+      formData.append("original_title", data.original_title);
       formData.append("director_name", data.director_name);
       formData.append("description", data.description);
       formData.append("release_date", data.release_date);
@@ -107,6 +109,18 @@ const CreateMoviePage: React.FC = () => {
             className="w-full text-black font-light bg-transparent border-b p-2 placeholder-gray-500 border-rose-900"
             {...register("title", { required: "Le titre est obligatoire" })}
             placeholder="Tapez le titre..."
+          />
+          {errors.title && (
+            <span className="text-red-500 text-xs">{errors.title.message}</span>
+          )}
+        </div>
+        {/* Original Title */}
+        <div className="mb-4">
+          <label className="block font-medium mb-2">Titre original</label>
+          <input
+            className="w-full text-black font-light bg-transparent border-b p-2 placeholder-gray-500 border-rose-900"
+            {...register("original_title")}
+            placeholder="Tapez le titre original..."
           />
           {errors.title && (
             <span className="text-red-500 text-xs">{errors.title.message}</span>

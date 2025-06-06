@@ -32,6 +32,10 @@ export async function addMovie(formData: FormData) {
       .string()
       .min(1, "Le titre est obligatoire")
       .regex(/^[\s\S]*$/, "Le titre contient des caractères non valides"), // accepte tous les caractères
+    original_title: z
+      .string()
+      .regex(/^[\s\S]*$/, "Le titre contient des caractères non valides") // accepte tous les caractères
+      .optional(),
     director_name: z
       .string()
       .min(1, "Le prénom du réalisateur est obligatoire"),
@@ -58,6 +62,7 @@ export async function addMovie(formData: FormData) {
 
   const validatedFields = schema.safeParse({
     title: formData.get("title"),
+    original_title: formData.get("original_title"),
     director_name: formData.get("director_name"),
     description: formData.get("description"),
     release_date: formData.get("release_date"),
@@ -80,6 +85,7 @@ export async function addMovie(formData: FormData) {
 
   const {
     title,
+    original_title,
     director_name,
     description,
     country_id,
@@ -125,6 +131,7 @@ export async function addMovie(formData: FormData) {
       const movie = await prisma.movies.create({
         data: {
           title,
+          original_title,
           release_date,
           runtime,
           type,

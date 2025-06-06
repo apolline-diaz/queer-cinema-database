@@ -26,6 +26,7 @@ export async function getMovie(id: string) {
     const transformedMovie = {
       id: movie.id,
       title: movie.title,
+      original_title: movie.original_title,
       description: movie.description,
       release_date: movie.release_date,
       language: movie.language,

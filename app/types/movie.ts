@@ -6,6 +6,7 @@ import { Country } from "./country";
 export type Movie = {
   id: string;
   title: string;
+  original_title?: string | null;
   description?: string | null;
   release_date?: string | null;
   language?: string | null;

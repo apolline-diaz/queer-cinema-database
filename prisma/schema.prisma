@@ -113,6 +113,7 @@ model movies_keywords {
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model movies {
   title           String            @db.VarChar
+  original_title  String?           @db.VarChar
   description     String?
   release_date    String?
   created_at      DateTime?         @default(now()) @db.Timestamptz(6)
