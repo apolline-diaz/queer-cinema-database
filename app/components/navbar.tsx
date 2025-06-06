@@ -5,6 +5,15 @@ import { useState, useEffect } from "react";
 import { logout } from "../logout/actions";
 import { User } from "@supabase/supabase-js";
 import { usePathname } from "next/navigation";
+import { Icon } from "@iconify/react/dist/iconify.js";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface HeaderProps {
   user: User | null; // import or define User type
@@ -36,7 +45,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
 
   return (
     <div className="text-rose-900 w-full fixed top-0 left-0 z-50 text-md transition-all duration-300 bg-rose-50">
-      <div className="flex flex-row w-full items-center justify-between gap-10  px-10 py-3">
+      <div className="flex flex-row w-full items-center justify-between gap-2 px-10 py-3">
         {/* Logo */}
         <Link href="/">
           <h2 className="text-white whitespace-nowrap font-raleway font-bold text-xl xs:text-md">
@@ -49,6 +58,57 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
         <div>
           <nav className="">
             <section className="MOBILE-MENU flex lg:hidden">
+              <DropdownMenu>
+                <DropdownMenuTrigger className="px-4">
+                  <Icon icon="radix-icons:avatar" className="size-5" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  align="end"
+                  sideOffset={8}
+                  collisionPadding={16}
+                >
+                  <DropdownMenuLabel>Mon Compte</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  {user && (
+                    <span>
+                      <DropdownMenuItem>
+                        <Link
+                          href="/profile"
+                          data-testid="profile-link-desktop"
+                        >
+                          Mes Listes
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <span>
+                          {userIsAdmin && (
+                            <Link href="/movies/create">Contribuer</Link>
+                          )}
+                        </span>
+                      </DropdownMenuItem>
+                    </span>
+                  )}
+                  {/* <DropdownMenuItem>Paramètres</DropdownMenuItem> */}
+                  <DropdownMenuItem>
+                    <div className="">
+                      {!user ? (
+                        <Link
+                          href="/login"
+                          className="text-black hover:text-blue-500"
+                        >
+                          Se connecter
+                        </Link>
+                      ) : (
+                        <form action={logout}>
+                          <button className="hover:text-rose-500 text-rose-900">
+                            Se déconnecter
+                          </button>
+                        </form>
+                      )}
+                    </div>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
               <button
                 onClick={handleClick}
                 className="HAMBURGER-ICON space-y-2"
@@ -120,44 +180,6 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                     >
                       <Link href="/stats">Statistiques</Link>
                     </li>
-                    {user && (
-                      <li
-                        className={
-                          isActive("/profile")
-                            ? activeLinkClass
-                            : normalLinkClass
-                        }
-                      >
-                        <Link href="/profile" data-testid="profile-link-mobile">
-                          Profil
-                        </Link>
-                      </li>
-                    )}
-                    <li
-                      className={
-                        pathname === "/movies/create"
-                          ? activeLinkClass
-                          : normalLinkClass
-                      }
-                    >
-                      {userIsAdmin && (
-                        <Link href="/movies/create">Contribuer</Link>
-                      )}
-                    </li>
-
-                    {!user ? (
-                      <li className="hover:text-rose-900 hover:bg-rose-50 hover:border-rose-900 py-1 px-3 rounded-full border border-rose-900">
-                        <Link href="/login">Connexion</Link>
-                      </li>
-                    ) : (
-                      <li>
-                        <form action={logout}>
-                          <button className="hover:text-rose-900 hover:bg-rose-50 hover:border-rose-900 py-1 px-3 rounded-full border border-rose-900">
-                            Se déconnecter
-                          </button>
-                        </form>
-                      </li>
-                    )}
                   </div>
                 </ul>
               </div>
@@ -187,46 +209,58 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                 >
                   <Link href="/stats">Statistiques</Link>
                 </li>
-                {user && (
-                  <li
-                    className={
-                      isActive("/profile") ? activeLinkClass : normalLinkClass
-                    }
+
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <Icon icon="radix-icons:avatar" className="size-5" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent
+                    align="end"
+                    sideOffset={8}
+                    collisionPadding={16}
                   >
-                    <Link href="/profile" data-testid="profile-link-desktop">
-                      Profil
-                    </Link>
-                  </li>
-                )}
-                <li
-                  className={
-                    pathname === "/movies/create"
-                      ? activeLinkClass
-                      : normalLinkClass
-                  }
-                >
-                  {userIsAdmin && <Link href="/movies/create">Contribuer</Link>}
-                </li>
-                <div className="pl-5">
-                  {!user ? (
-                    <li>
-                      <Link
-                        href="/login"
-                        className="hover:text-rose-900 hover:bg-rose-50 hover:border-rose-900 py-1 px-3 rounded-full border border-rose-900"
-                      >
-                        Connexion
-                      </Link>
-                    </li>
-                  ) : (
-                    <li>
-                      <form action={logout}>
-                        <button className="hover:text-rose-900 hover:bg-rose-50 hover:border-rose-900 py-1 px-3 rounded-full border border-rose-900">
-                          Se déconnecter
-                        </button>
-                      </form>
-                    </li>
-                  )}
-                </div>
+                    <DropdownMenuLabel>Mon Compte</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    {user && (
+                      <span>
+                        <DropdownMenuItem>
+                          <Link
+                            href="/profile"
+                            data-testid="profile-link-desktop"
+                          >
+                            Mes Listes
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <span>
+                            {userIsAdmin && (
+                              <Link href="/movies/create">Contribuer</Link>
+                            )}
+                          </span>
+                        </DropdownMenuItem>
+                      </span>
+                    )}
+                    {/* <DropdownMenuItem>Paramètres</DropdownMenuItem> */}
+                    <DropdownMenuItem>
+                      <div className="">
+                        {!user ? (
+                          <Link
+                            href="/login"
+                            className="text-black hover:text-blue-500"
+                          >
+                            Se connecter
+                          </Link>
+                        ) : (
+                          <form action={logout}>
+                            <button className="hover:text-rose-500 text-rose-900">
+                              Se déconnecter
+                            </button>
+                          </form>
+                        )}
+                      </div>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </ul>
             </div>
           </nav>
