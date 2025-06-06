@@ -13,6 +13,8 @@ type CustomFixtures = {
 // create a custom test fixture that includes authentication
 const test = base.extend<CustomFixtures>({
   authenticatedPage: async ({ page }, use) => {
+    await page.setViewportSize({ width: 1280, height: 720 });
+
     // perform login
     await page.goto("/login");
     await page.locator("#email").fill(email);
@@ -29,35 +31,59 @@ test("create movie", async ({ authenticatedPage: page }) => {
 
   await page.getByRole("link", { name: "Contribuer" }).click();
   await expect(
-    page.getByRole("heading", { name: "Ajouter un film au catalogue" })
+    page.getByRole("heading", { name: "Ajouter un film" })
   ).toBeVisible();
 
   // fill in the form with proper selectors matching your form
-  await page.locator("#title").click();
-  await page.locator("#title").fill("Titre du film");
+  // Remplir le titre - utilise le name attribute du register
+  await page.locator('input[name="title"]').fill("Titre du film de test");
 
-  await page.locator("#director_name").click();
-  await page.locator("#director_name").fill("Réalisateur du film");
+  // Remplir le titre original - correction de la faute de frappe
+  await page
+    .locator('input[name="original_title"]')
+    .fill("Original Movie Title");
 
-  await page.locator("#description").click();
-  await page.locator("#description").fill("Description du film");
+  // Remplir le réalisateur
+  await page.locator('input[name="director_name"]').fill("Réalisateur du film");
 
-  await page.locator("#release_date").selectOption("2025");
+  // Remplir la description
+  await page
+    .locator('textarea[name="description"]')
+    .fill("Description du film de test");
 
-  await page.locator("#grid-country").selectOption("510");
+  // Sélectionner l'année de sortie
+  await page.locator('select[name="release_date"]').selectOption("2023");
 
-  await page.locator("#runtime").click();
-  await page.locator("#runtime").fill("100");
+  // Sélectionner le pays - utilise le name attribute
+  await page.locator('select[name="country_id"]').selectOption("1"); // Ajustez l'ID selon vos données
 
-  await page.locator("#grid-genre").selectOption("3");
+  // Remplir la durée
+  await page.locator('input[name="runtime"]').fill("120");
 
-  // handle keywords with proper name attribute
-  await page.locator("#keyword_input").click();
-  await page.locator("#keyword_input").fill("lg");
-  await page.getByText("lgbt").click();
+  // Sélectionner le type
+  await page.locator('select[name="type"]').selectOption("Long-métrage");
 
-  // handle file upload with proper input type
-  await page.locator("#image_url").setInputFiles("public/assets/diary.png");
+  // Sélectionner le genre
+  await page.locator('select[name="genre_id"]').selectOption("1"); // Ajustez l'ID selon vos données
 
+  // Gérer les mots-clés avec MultiSelect
+  // Vous devrez ajuster ceci selon l'implémentation de votre composant MultiSelect
+  // Si votre MultiSelect a un input spécifique, utilisez son sélecteur approprié
+  await page
+    .locator('input[placeholder="Chercher et ajouter des mot-clés..."]')
+    .click();
+  await page
+    .locator('input[placeholder="Chercher et ajouter des mot-clés..."]')
+    .fill("romance");
+  // Attendre que les options apparaissent et cliquer sur une option
+  await page.waitForSelector("text=romance", { timeout: 5000 });
+  await page.getByText("romance").first().click();
+
+  // Upload d'image - utilise le name attribute
+  await page
+    .locator('input[name="image_url"]')
+    .setInputFiles("public/assets/diary.png");
+
+  // Cliquer sur le bouton Ajouter
   await page.getByRole("button", { name: "Ajouter" }).click();
 });

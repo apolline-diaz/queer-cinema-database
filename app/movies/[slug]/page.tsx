@@ -32,9 +32,9 @@ export default async function Page({ params }: Props) {
       : "min";
   return (
     <div className="w-full text-white mx-auto min-h-screen">
-      <div className="h-[75vh] relative">
+      <div className="max-h-[75vh] min-h-[40vh] relative">
         <Image
-          className="object-cover w-full h-full"
+          className="object-cover w-full max-h-[75vh] min-h-[40vh]"
           alt={movie.title}
           src={getImageUrl(movie.image_url)}
           title={movie.title}
@@ -54,7 +54,7 @@ export default async function Page({ params }: Props) {
       </div>
       <div className="p-10 text-black flex flex-col font-light gap-3">
         <h1 className="text-4xl font-medium text-rose-900">{movie.title}</h1>
-        <h1 className="text-2xl font-medium text-rose-300">
+        <h1 className="text-xl font-light  text-gray-400">
           {movie.original_title}
         </h1>
 

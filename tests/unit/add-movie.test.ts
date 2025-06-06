@@ -132,6 +132,7 @@ describe("addMovie", () => {
     });
 
     formData.append("title", "Test Movie");
+    formData.append("original_title", "Test Original Movie");
     formData.append("director_name", "Test Director");
     formData.append("description", "Test description for the movie");
     formData.append("release_date", "2023");
@@ -177,6 +178,7 @@ describe("addMovie", () => {
     });
 
     formData.append("title", "Test Movie");
+    formData.append("original_title", "Test Original Movie");
     formData.append("director_name", "Test Director");
     formData.append("description", "Test description for the movie");
     formData.append("release_date", "2023");
@@ -225,6 +227,7 @@ describe("addMovie", () => {
     });
 
     formData.append("title", "Test Movie");
+    formData.append("original_title", "Test Original Movie");
     formData.append("director_name", "Test Director");
     formData.append("description", "Test description for the movie");
     formData.append("release_date", "2023");

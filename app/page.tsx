@@ -45,7 +45,7 @@ export default async function Home() {
                   alt={featuredLatestMovie.title}
                   className="w-full h-full object-cover rounded-xl"
                 />
-                <div className="absolute bottom-0 sm:w-1/3 left-0 m-4">
+                <div className="absolute bottom-0 sm:w-2/3 left-0 m-4">
                   <div className="p-6 ">
                     <h3 className="text-2xl font-medium">
                       {featuredLatestMovie.title}
