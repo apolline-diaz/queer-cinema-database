@@ -212,7 +212,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
 
                 <DropdownMenu>
                   <DropdownMenuTrigger>
-                    <Icon icon="radix-icons:avatar" className="size-6" />
+                    <Icon icon="radix-icons:avatar" className="size-5" />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent
                     align="end"
