@@ -12,6 +12,37 @@ type Props = {
   params: { slug: string };
 };
 
+export async function Metadata({ params }: Props) {
+  const { movie } = await getMovie(params.slug);
+
+  if (!movie) return {};
+
+  return {
+    title: movie.title,
+    description: movie.description,
+    other: {
+      "application/ld+json": JSON.stringify({
+        "@context": {
+          dc: "http://purl.org/dc/elements/1.1/",
+        },
+        "@type": "Movie",
+        "dc:title": movie.title,
+        "dc:description": movie.description,
+        "dc:creator": movie.directors.map((d) => d.name),
+        "dc:date": movie.release_date,
+        "dc:subject": [
+          ...movie.genres.map((g) => g.name),
+          ...movie.keywords.map((k) => k.name),
+        ],
+        "dc:coverage": movie.countries.map((c) => c.name),
+        "dc:language": movie.language,
+        "dc:type": "MovingImage",
+        "dc:format": movie.type,
+      }),
+    },
+  };
+}
+
 export default async function Page({ params }: Props) {
   const { movie, error } = await getMovie(params.slug);
   const userIsAdmin = await isAdmin();
