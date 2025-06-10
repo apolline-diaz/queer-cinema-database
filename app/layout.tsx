@@ -35,7 +35,7 @@ export default function RootLayout({
           color="#c42d50" // Rose foncé tirant vers le rouge
           initialPosition={0.08} // Position de départ
           crawlSpeed={200} // Vitesse de progression
-          height={4} // Épaisseur de la barre
+          height={3} // Épaisseur de la barre
           easing="ease"
           speed={500}
         />

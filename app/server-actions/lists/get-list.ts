@@ -7,19 +7,13 @@ export async function getList(id: string) {
   const supabase = createClient();
 
   // Vérifier l'utilisateur authentifié avec Supabase
-  const { data, error } = await supabase.auth.getUser();
+  const { data } = await supabase.auth.getUser();
 
-  if (error || !data?.user) {
-    // Rediriger l'utilisateur si non authentifié
-    throw new Error("User not authenticated");
-  }
-
-  const userId = data.user.id;
+  const userId = data?.user?.id || null;
   try {
     const list = await prisma.lists.findUnique({
       where: {
         id: parseInt(id),
-        user_id: userId, // Assurez-vous que l'ID est un nombre
       },
       include: {
         lists_movies: {
@@ -30,9 +24,12 @@ export async function getList(id: string) {
       },
     });
 
-    // Vérifier si la liste appartient bien à l'utilisateur connecté
-    if (list?.user_id !== userId) {
-      throw new Error("You do not have permission to view this list");
+    // Vérifier si la liste appartient bien à l'utilisateur connecté ou s'il s'agit d'une collection
+    const isOwner = list?.user_id === userId;
+    const isPublic = list?.is_collection === true;
+
+    if (!isOwner && !isPublic) {
+      throw new Error("Vous n'avez pas la permission d'accéder à cette liste.");
     }
 
     return list;

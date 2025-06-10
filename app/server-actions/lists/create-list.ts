@@ -20,6 +20,7 @@ const ListSchema = z.object({
   title: z.string().min(1, "Le titre est requis"),
   description: z.string().optional(),
   movie_id: z.string().optional(),
+  is_collection: z.string(),
 });
 
 export async function createList(formData: FormData) {
@@ -42,6 +43,7 @@ export async function createList(formData: FormData) {
     title: formData.get("title"),
     description: formData.get("description"),
     movie_id: formData.get("movie_id"),
+    is_collection: formData.get("is_collection"),
   });
 
   if (!validatedFields.success) {
@@ -52,13 +54,14 @@ export async function createList(formData: FormData) {
     };
   }
 
-  const { title, description, movie_id } = validatedFields.data;
+  const { title, description, movie_id, is_collection } = validatedFields.data;
 
   try {
     const newList = await prisma.lists.create({
       data: {
         title,
         description: description || undefined,
+        is_collection: is_collection === "true",
         user_id: userId,
         lists_movies: movie_id
           ? {

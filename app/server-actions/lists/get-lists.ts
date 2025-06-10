@@ -33,6 +33,7 @@ export const getLists = cache(async () => {
       id: list.id.toString(),
       title: list.title,
       description: list.description ?? undefined,
+      is_collection: list.is_collection,
       lists_movies: list.lists_movies.map((lm) => ({
         movie: {
           id: lm.movies?.id,

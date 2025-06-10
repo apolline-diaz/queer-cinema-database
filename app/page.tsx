@@ -2,6 +2,8 @@ import HomeCard from "@/app/components/home-card";
 import { getImageUrl } from "@/utils";
 import Hero from "./components/hero";
 import { getLatestMovies, getTopMovies } from "@/app/server-actions/movies";
+import { getCollections } from "@/app/server-actions/lists/get-collections";
+
 import Link from "next/link";
 import { Icon } from "@iconify/react";
 
@@ -11,6 +13,7 @@ export default async function Home() {
   try {
     const topMovies = await getTopMovies();
     const latestMovies = await getLatestMovies();
+    const collections = await getCollections();
 
     const [featuredLatestMovie, ...otherLatestMovies] = latestMovies;
 
@@ -73,7 +76,7 @@ export default async function Home() {
           <div className="flex flex-col mb-5">
             <div className="flex justify-between items-center pr-10 mb-4">
               <h2 className="text-2xl font-semibold  text-rose-900">
-                Découvrir
+                Catalogue
               </h2>
               <Link
                 href="/movies"
@@ -94,6 +97,52 @@ export default async function Home() {
               ))}
             </div>
           </div>
+
+          {collections.length > 0 && (
+            <div className="flex flex-col space-y-5 mb-10">
+              {collections.map((collection) => (
+                <div key={collection.id.toString()} className="flex flex-col">
+                  <div className="flex flex-row justify-between items-end pr-10 mb-4 gap-2">
+                    <div className="flex flex-col gap-3 min-w-0 flex-1">
+                      <h2 className="text-2xl font-semibold bg-gradient-to-r from-rose-900 to-rose-500 bg-clip-text text-transparent line-clamp-3">
+                        {collection.title}
+                      </h2>
+                      <span className="w-fit text-sm text-rose-500 border border-rose-500 rounded-full font-light px-1.5 py-0.5">
+                        Collection
+                      </span>
+                    </div>
+
+                    <Link
+                      href={`/lists/${collection.id}`}
+                      className="border rounded-xl px-2 py-1 border-rose-900 text-rose-900 hover:border-rose-500 hover:bg-rose-500 hover:text-white text-sm whitespace-nowrap flex-shrink-0"
+                    >
+                      Voir plus{" "}
+                      <Icon
+                        icon="mdi:chevron-right"
+                        className="inline size-4"
+                      />
+                    </Link>
+                  </div>
+
+                  {"lists_movies" in collection && collection.lists_movies && (
+                    <div className="flex flex-row-1 mb-3 gap-3 overflow-auto max-h-[200px]">
+                      {collection.lists_movies.map((listMovie) => (
+                        <HomeCard
+                          key={`${listMovie.movies.title}-${listMovie.movies.id}`}
+                          id={listMovie.movies.id}
+                          title={listMovie.movies.title}
+                          release_date={listMovie.movies.release_date || ""}
+                          image_url={getImageUrl(
+                            listMovie.movies.image_url || ""
+                          )}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </main>
     );
