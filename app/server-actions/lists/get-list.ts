@@ -30,9 +30,12 @@ export async function getList(id: string) {
       },
     });
 
-    // Vérifier si la liste appartient bien à l'utilisateur connecté
-    if (list?.user_id !== userId) {
-      throw new Error("You do not have permission to view this list");
+    // Vérifier si la liste appartient bien à l'utilisateur connecté ou s'il s'agit d'une collection
+    const isOwner = list?.user_id === userId;
+    const isPublic = list?.is_collection === true;
+
+    if (!isOwner && !isPublic) {
+      throw new Error("Vous n'avez pas la permission d'accéder à cette liste.");
     }
 
     return list;
