@@ -98,18 +98,16 @@ export default async function Home() {
             </div>
           </div>
 
-          {/* Collections - Chaque collection l'une en dessous de l'autre */}
           {collections.length > 0 && (
             <div className="flex flex-col space-y-5 mb-10">
               {collections.map((collection) => (
                 <div key={collection.id.toString()} className="flex flex-col">
-                  {/* En-tête de la collection */}
                   <div className="flex sm:flex-row flex-col sm:justify-between justify-left sm:items-center items-left pr-10 mb-4">
                     <div>
                       <h2 className="text-2xl font-semibold text-rose-900">
                         {collection.title}
                       </h2>
-                      <p className="text-sm text-white bg-rose-500 rounded-full border mt-1 line-clamp-2">
+                      <p className="text-sm text-rose-500 border-rose-500 rounded-full font-light px-2 py-1 border mt-1 line-clamp-2">
                         Collection
                       </p>
                       {/* {collection.description && (
@@ -129,8 +127,6 @@ export default async function Home() {
                       />
                     </Link>
                   </div>
-
-                  {/* Liste des films de la collection avec HomeCards */}
                   {"lists_movies" in collection && collection.lists_movies && (
                     <div className="flex flex-row-1 mb-3 gap-3 overflow-auto">
                       {collection.lists_movies.map((listMovie) => (
@@ -146,18 +142,6 @@ export default async function Home() {
                       ))}
                     </div>
                   )}
-
-                  {/* Message si la collection est vide */}
-                  {"lists_movies" in collection &&
-                    collection.lists_movies &&
-                    collection.lists_movies.length === 0 && (
-                      <div className="text-center py-4 text-gray-500">
-                        <p>
-                          Cette collection ne contient aucun film pour le
-                          moment.
-                        </p>
-                      </div>
-                    )}
                 </div>
               ))}
             </div>
