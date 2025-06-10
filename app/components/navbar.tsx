@@ -72,12 +72,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                   {user && (
                     <span>
                       <DropdownMenuItem>
-                        <Link
-                          href="/profile"
-                          data-testid="profile-link-desktop"
-                        >
-                          Mes Listes
-                        </Link>
+                        <Link href="/lists">Mes Listes</Link>
                       </DropdownMenuItem>
                       <DropdownMenuItem>
                         <span>
@@ -224,12 +219,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                     {user && (
                       <span>
                         <DropdownMenuItem>
-                          <Link
-                            href="/profile"
-                            data-testid="profile-link-desktop"
-                          >
-                            Mes Listes
-                          </Link>
+                          <Link href="/lists">Mes Listes</Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem>
                           <span>

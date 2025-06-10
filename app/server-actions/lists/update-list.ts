@@ -10,6 +10,7 @@ const ListUpdateSchema = z.object({
   title: z.string().min(1, "Le titre est requis"),
   description: z.string().optional(),
   movie_id: z.string().optional(),
+  is_collection: z.string(),
 });
 
 export async function updateList(id: string, formData: FormData) {
@@ -40,7 +41,7 @@ export async function updateList(id: string, formData: FormData) {
     };
   }
 
-  const { title, description, movie_id } = validatedFields.data;
+  const { title, description, movie_id, is_collection } = validatedFields.data;
 
   try {
     // Convert id to BigInt and ensure list belongs to user
@@ -70,6 +71,7 @@ export async function updateList(id: string, formData: FormData) {
       data: {
         title,
         description: description || undefined,
+        is_collection: is_collection === "true",
         updated_at: new Date(),
         lists_movies: movie_id
           ? {

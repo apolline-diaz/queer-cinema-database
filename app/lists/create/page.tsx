@@ -1,6 +1,7 @@
 import { auth } from "@/utils/auth"; // Adjust the import path to your auth utility
 import { redirect } from "next/navigation";
 import CreateListPage from "./client"; // Import the client-side form component
+import { isAdmin } from "@/utils/is-user-admin";
 
 export default async function Page() {
   // Check user authentication
@@ -11,6 +12,8 @@ export default async function Page() {
     redirect("/login"); // Adjust the login path as needed
   }
 
+  const adminStatus = await isAdmin();
+
   // If authenticated, render the upload form
-  return <CreateListPage />;
+  return <CreateListPage isAdmin={adminStatus} />;
 }

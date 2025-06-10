@@ -2,6 +2,8 @@ import HomeCard from "@/app/components/home-card";
 import { getImageUrl } from "@/utils";
 import Hero from "./components/hero";
 import { getLatestMovies, getTopMovies } from "@/app/server-actions/movies";
+import { getCollections } from "@/app/server-actions/lists/get-collections";
+
 import Link from "next/link";
 import { Icon } from "@iconify/react";
 
@@ -11,6 +13,7 @@ export default async function Home() {
   try {
     const topMovies = await getTopMovies();
     const latestMovies = await getLatestMovies();
+    const collections = await getCollections();
 
     const [featuredLatestMovie, ...otherLatestMovies] = latestMovies;
 
@@ -93,6 +96,67 @@ export default async function Home() {
                 />
               ))}
             </div>
+          </div>
+
+          <div className="flex flex-col mb-5">
+            <h2 className="text-xl font-semibold text-rose-900 mb-4">
+              Collections
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+              {collections.map((collection) => (
+                <div
+                  key={collection.id.toString()}
+                  className="p-4 border rounded shadow"
+                >
+                  <h3 className="text-lg font-bold mb-2">{collection.title}</h3>
+                  {collection.description && (
+                    <p className="text-sm text-gray-600 mb-3">
+                      {collection.description}
+                    </p>
+                  )}
+
+                  {/* Vérification de l'existence de lists_movies */}
+                  {"lists_movies" in collection && collection.lists_movies && (
+                    <div className="space-y-2">
+                      <p className="text-sm font-medium text-gray-700">
+                        Films ({collection.lists_movies.length}) :
+                      </p>
+                      <ul className="space-y-1 text-sm max-h-32 overflow-y-auto">
+                        {collection.lists_movies.map((listMovie) => (
+                          <li
+                            key={listMovie.movies.id}
+                            className="flex items-center gap-2"
+                          >
+                            <Link
+                              href={`/movies/${listMovie.movies.id}`}
+                              className="hover:text-rose-600 truncate"
+                            >
+                              {listMovie.movies.title}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* Bouton pour voir toute la collection */}
+                  <div className="mt-3 pt-3 border-t">
+                    <Link
+                      href={`/collections/${collection.id}`}
+                      className="text-sm text-rose-600 hover:text-rose-800 font-medium"
+                    >
+                      Voir la collection complète →
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {collections.length === 0 && (
+              <div className="text-center py-8 text-gray-500">
+                <p>Aucune collection disponible pour le moment.</p>
+              </div>
+            )}
           </div>
         </div>
       </main>

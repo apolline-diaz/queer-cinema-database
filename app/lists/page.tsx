@@ -5,7 +5,7 @@ import { isAdmin } from "@/utils/is-user-admin";
 
 export const revalidate = 0;
 
-export default async function ProfilePage() {
+export default async function ListsPage() {
   const lists = await getLists();
 
   return (

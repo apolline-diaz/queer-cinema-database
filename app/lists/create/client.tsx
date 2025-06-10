@@ -19,9 +19,14 @@ interface FormData {
   title: string;
   description?: string;
   movie_ids: string[];
+  is_collection?: boolean;
 }
 
-const CreateListPage: React.FC = () => {
+interface CreateListPageProps {
+  isAdmin: boolean;
+}
+
+const CreateListPage: React.FC<CreateListPageProps> = ({ isAdmin }) => {
   const router = useRouter();
   const {
     register,
@@ -31,7 +36,12 @@ const CreateListPage: React.FC = () => {
     watch,
     formState: { errors, isSubmitting },
   } = useForm<FormData>({
-    defaultValues: { title: "", description: "", movie_ids: [] },
+    defaultValues: {
+      title: "",
+      description: "",
+      movie_ids: [],
+      is_collection: false,
+    },
   });
 
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -83,7 +93,10 @@ const CreateListPage: React.FC = () => {
     if (data.movie_ids.length > 0) {
       formData.append("movie_id", data.movie_ids.join(","));
     }
-
+    formData.append(
+      "is_collection",
+      isAdmin ? (data.is_collection ? "true" : "false") : "false"
+    );
     const response = await createList(formData);
     if (response?.type === "success" && response.id) {
       router.push(`/lists/${response.id}`);
@@ -201,6 +214,18 @@ const CreateListPage: React.FC = () => {
             ) : null;
           })}
         </div>
+        {isAdmin && (
+          <div className="mb-6 text-black">
+            <label className="inline-flex items-center text-sm">
+              <input
+                type="checkbox"
+                {...register("is_collection")}
+                className="form-checkbox "
+              />
+              <span className="ml-2">Marquer comme collection</span>
+            </label>
+          </div>
+        )}
 
         <SubmitButton
           defaultText="Créer la liste"

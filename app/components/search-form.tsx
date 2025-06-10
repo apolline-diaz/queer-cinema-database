@@ -322,7 +322,7 @@ export default function SearchForm({
         <div className="flex flex-col sm:flex-row sm:w-full gap-4">
           <button
             type="submit"
-            className="xs:w-full sm:w-[200px] transition-colors duration-200 ease-in-out bg-rose-900 text-white px-4 py-2 rounded-md hover:bg-rose-500"
+            className="xs:w-full sm:w-[200px] transition-colors duration-200 ease-in-out bg-rose-900 text-white px-4 py-2 rounded-xl hover:bg-rose-500"
             disabled={isLoading}
           >
             Rechercher
@@ -331,7 +331,7 @@ export default function SearchForm({
           <button
             type="button"
             onClick={handleReset}
-            className="xs:w-full sm:w-[200px] border transition-colors duration-200 ease-in-out hover:border-rose-500 hover:text-rose-500 text-rose-900 px-4 py-2 border-rose-900 rounded-md"
+            className="xs:w-full sm:w-[200px] border transition-colors duration-200 ease-in-out hover:border-rose-500 hover:text-rose-500 text-rose-900 px-4 py-2 border-rose-900 rounded-xl"
             disabled={isLoading}
           >
             Réinitialiser
