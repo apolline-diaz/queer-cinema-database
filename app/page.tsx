@@ -102,7 +102,7 @@ export default async function Home() {
             <div className="flex flex-col space-y-5 mb-10">
               {collections.map((collection) => (
                 <div key={collection.id.toString()} className="flex flex-col">
-                  <div className="flex sm:flex-row flex-col justify-between sm:items-center items-start pr-10 mb-4 gap-2">
+                  <div className="flex flex-row justify-between items-center pr-10 mb-4 gap-2">
                     <div className="flex flex-col gap-3">
                       <h2 className="text-2xl font-semibold bg-gradient-to-r from-rose-900 to-rose-500 bg-clip-text text-transparent">
                         {collection.title}

@@ -7,19 +7,13 @@ export async function getList(id: string) {
   const supabase = createClient();
 
   // Vérifier l'utilisateur authentifié avec Supabase
-  const { data, error } = await supabase.auth.getUser();
+  const { data } = await supabase.auth.getUser();
 
-  if (error || !data?.user) {
-    // Rediriger l'utilisateur si non authentifié
-    throw new Error("User not authenticated");
-  }
-
-  const userId = data.user.id;
+  const userId = data?.user?.id || null;
   try {
     const list = await prisma.lists.findUnique({
       where: {
         id: parseInt(id),
-        user_id: userId, // Assurez-vous que l'ID est un nombre
       },
       include: {
         lists_movies: {
