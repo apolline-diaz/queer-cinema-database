@@ -100,15 +100,18 @@ export default async function Home() {
 
           {/* Collections - Chaque collection l'une en dessous de l'autre */}
           {collections.length > 0 && (
-            <div className="flex flex-col space-y-10 mb-10">
+            <div className="flex flex-col space-y-5 mb-10">
               {collections.map((collection) => (
                 <div key={collection.id.toString()} className="flex flex-col">
                   {/* En-tête de la collection */}
-                  <div className="flex sm:flex-row flex-col sm:justify-between justify-left items-center pr-10 mb-4">
+                  <div className="flex sm:flex-row flex-col sm:justify-between justify-left sm:items-center items-left pr-10 mb-4">
                     <div>
                       <h2 className="text-2xl font-semibold text-rose-900">
                         {collection.title}
                       </h2>
+                      <p className="text-sm text-white bg-rose-500 rounded-full border mt-1 line-clamp-2">
+                        Collection
+                      </p>
                       {/* {collection.description && (
                         <p className="text-sm text-gray-600 mt-1 line-clamp-2">
                           {collection.description}
