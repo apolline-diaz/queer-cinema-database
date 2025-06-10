@@ -107,7 +107,7 @@ export default async function Home() {
                       <h2 className="text-2xl font-semibold bg-gradient-to-r from-rose-900 to-rose-500 bg-clip-text text-transparent">
                         {collection.title}
                       </h2>
-                      <span className="inline-block text-left text-sm text-rose-500 border-rose-500 rounded-full font-light px-2 py-1 border mt-1 sm:mt-0">
+                      <span className="inline-block text-sm text-rose-500 border border-rose-500 rounded-full font-light px-1.5 py-0.5">
                         Collection
                       </span>
                     </div>

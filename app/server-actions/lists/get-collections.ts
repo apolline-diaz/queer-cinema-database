@@ -48,7 +48,12 @@ export const getCollections = async (): Promise<CollectionWithMovies[]> => {
       },
     });
 
-    return collections;
+    const limitedCollections = collections.map((collection) => ({
+      ...collection,
+      lists_movies: collection.lists_movies.slice(0, 11),
+    }));
+
+    return limitedCollections;
   } catch (err) {
     console.error("Erreur lors de la récupération des collections :", err);
     return [];
