@@ -98,66 +98,67 @@ export default async function Home() {
             </div>
           </div>
 
-          <div className="flex flex-col mb-5">
-            <h2 className="text-xl font-semibold text-rose-900 mb-4">
-              Collections
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {/* Collections - Chaque collection l'une en dessous de l'autre */}
+          {collections.length > 0 && (
+            <div className="flex flex-col space-y-10 mb-10">
               {collections.map((collection) => (
-                <div
-                  key={collection.id.toString()}
-                  className="p-4 border rounded shadow"
-                >
-                  <h3 className="text-lg font-bold mb-2">{collection.title}</h3>
-                  {collection.description && (
-                    <p className="text-sm text-gray-600 mb-3">
-                      {collection.description}
-                    </p>
-                  )}
+                <div key={collection.id.toString()} className="flex flex-col">
+                  {/* En-tête de la collection */}
+                  <div className="flex justify-between items-center pr-10 mb-4">
+                    <div>
+                      <h2 className="text-2xl font-semibold text-rose-900">
+                        {collection.title}
+                      </h2>
+                      {collection.description && (
+                        <p className="text-sm text-gray-600 mt-1 line-clamp-2">
+                          {collection.description}
+                        </p>
+                      )}
+                    </div>
+                    <Link
+                      href={`/lists/${collection.id}`}
+                      className="border rounded-xl px-2 py-1 border-rose-900 text-rose-900 hover:border-rose-500 hover:bg-rose-500 hover:text-white text-sm"
+                    >
+                      Voir tout{" "}
+                      <Icon
+                        icon="mdi:chevron-right"
+                        className="inline size-4"
+                      />
+                    </Link>
+                  </div>
 
-                  {/* Vérification de l'existence de lists_movies */}
+                  {/* Liste des films de la collection avec HomeCards */}
                   {"lists_movies" in collection && collection.lists_movies && (
-                    <div className="space-y-2">
-                      <p className="text-sm font-medium text-gray-700">
-                        Films ({collection.lists_movies.length}) :
-                      </p>
-                      <ul className="space-y-1 text-sm max-h-32 overflow-y-auto">
-                        {collection.lists_movies.map((listMovie) => (
-                          <li
-                            key={listMovie.movies.id}
-                            className="flex items-center gap-2"
-                          >
-                            <Link
-                              href={`/movies/${listMovie.movies.id}`}
-                              className="hover:text-rose-600 truncate"
-                            >
-                              {listMovie.movies.title}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
+                    <div className="flex flex-row-1 mb-5 gap-3 overflow-auto">
+                      {collection.lists_movies.map((listMovie) => (
+                        <HomeCard
+                          key={`${listMovie.movies.title}-${listMovie.movies.id}`}
+                          id={listMovie.movies.id}
+                          title={listMovie.movies.title}
+                          release_date={listMovie.movies.release_date || ""}
+                          image_url={getImageUrl(
+                            listMovie.movies.image_url || ""
+                          )}
+                        />
+                      ))}
                     </div>
                   )}
 
-                  {/* Bouton pour voir toute la collection */}
-                  <div className="mt-3 pt-3 border-t">
-                    <Link
-                      href={`/collections/${collection.id}`}
-                      className="text-sm text-rose-600 hover:text-rose-800 font-medium"
-                    >
-                      Voir la collection complète →
-                    </Link>
-                  </div>
+                  {/* Message si la collection est vide */}
+                  {"lists_movies" in collection &&
+                    collection.lists_movies &&
+                    collection.lists_movies.length === 0 && (
+                      <div className="text-center py-4 text-gray-500">
+                        <p>
+                          Cette collection ne contient aucun film pour le
+                          moment.
+                        </p>
+                      </div>
+                    )}
                 </div>
               ))}
             </div>
-
-            {collections.length === 0 && (
-              <div className="text-center py-8 text-gray-500">
-                <p>Aucune collection disponible pour le moment.</p>
-              </div>
-            )}
-          </div>
+          )}
         </div>
       </main>
     );
