@@ -102,9 +102,9 @@ export default async function Home() {
             <div className="flex flex-col space-y-5 mb-10">
               {collections.map((collection) => (
                 <div key={collection.id.toString()} className="flex flex-col">
-                  <div className="flex flex-row justify-between items-center pr-10 mb-4 gap-2">
-                    <div className="flex flex-col gap-3">
-                      <h2 className="text-2xl font-semibold bg-gradient-to-r from-rose-900 to-rose-500 bg-clip-text text-transparent">
+                  <div className="flex flex-row justify-between items-end pr-10 mb-4 gap-2">
+                    <div className="flex flex-col gap-3 min-w-0 flex-1">
+                      <h2 className="text-2xl font-semibold bg-gradient-to-r from-rose-900 to-rose-500 bg-clip-text text-transparent line-clamp-3">
                         {collection.title}
                       </h2>
                       <span className="w-fit text-sm text-rose-500 border border-rose-500 rounded-full font-light px-1.5 py-0.5">
@@ -112,14 +112,9 @@ export default async function Home() {
                       </span>
                     </div>
 
-                    {/* {collection.description && (
-                        <p className="text-sm text-gray-600 mt-1 line-clamp-2">
-                          {collection.description}
-                        </p>
-                      )} */}
                     <Link
                       href={`/lists/${collection.id}`}
-                      className="border rounded-xl px-2 py-1 border-rose-900 text-rose-900 hover:border-rose-500 hover:bg-rose-500 hover:text-white text-sm"
+                      className="border rounded-xl px-2 py-1 border-rose-900 text-rose-900 hover:border-rose-500 hover:bg-rose-500 hover:text-white text-sm whitespace-nowrap flex-shrink-0"
                     >
                       Voir plus{" "}
                       <Icon
@@ -128,6 +123,7 @@ export default async function Home() {
                       />
                     </Link>
                   </div>
+
                   {"lists_movies" in collection && collection.lists_movies && (
                     <div className="flex flex-row-1 mb-3 gap-3 overflow-auto max-h-[200px]">
                       {collection.lists_movies.map((listMovie) => (
