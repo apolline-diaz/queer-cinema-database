@@ -76,7 +76,7 @@ export default async function Home() {
           <div className="flex flex-col mb-5">
             <div className="flex justify-between items-center pr-10 mb-4">
               <h2 className="text-2xl font-semibold  text-rose-900">
-                Découvrir
+                Catalogue
               </h2>
               <Link
                 href="/movies"
@@ -104,22 +104,22 @@ export default async function Home() {
               {collections.map((collection) => (
                 <div key={collection.id.toString()} className="flex flex-col">
                   {/* En-tête de la collection */}
-                  <div className="flex justify-between items-center pr-10 mb-4">
+                  <div className="flex sm:flex-row flex-col sm:justify-between justify-left items-center pr-10 mb-4">
                     <div>
                       <h2 className="text-2xl font-semibold text-rose-900">
                         {collection.title}
                       </h2>
-                      {collection.description && (
+                      {/* {collection.description && (
                         <p className="text-sm text-gray-600 mt-1 line-clamp-2">
                           {collection.description}
                         </p>
-                      )}
+                      )} */}
                     </div>
                     <Link
                       href={`/lists/${collection.id}`}
                       className="border rounded-xl px-2 py-1 border-rose-900 text-rose-900 hover:border-rose-500 hover:bg-rose-500 hover:text-white text-sm"
                     >
-                      Voir tout{" "}
+                      Voir plus{" "}
                       <Icon
                         icon="mdi:chevron-right"
                         className="inline size-4"
@@ -129,7 +129,7 @@ export default async function Home() {
 
                   {/* Liste des films de la collection avec HomeCards */}
                   {"lists_movies" in collection && collection.lists_movies && (
-                    <div className="flex flex-row-1 mb-5 gap-3 overflow-auto">
+                    <div className="flex flex-row-1 mb-3 gap-3 overflow-auto">
                       {collection.lists_movies.map((listMovie) => (
                         <HomeCard
                           key={`${listMovie.movies.title}-${listMovie.movies.id}`}
