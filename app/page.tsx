@@ -103,11 +103,11 @@ export default async function Home() {
               {collections.map((collection) => (
                 <div key={collection.id.toString()} className="flex flex-col">
                   <div className="flex sm:flex-row flex-col justify-between sm:items-center items-start pr-10 mb-4 gap-2">
-                    <div className="flex flex-col sm:items-center gap-3">
-                      <h2 className="text-2xl font-semibold text-rose-900">
+                    <div className="flex flex-col gap-3">
+                      <h2 className="text-2xl font-semibold bg-gradient-to-r from-rose-900 to-rose-500 bg-clip-text text-transparent">
                         {collection.title}
                       </h2>
-                      <span className="inline-block text-sm text-rose-500 border-rose-500 rounded-full font-light px-2 py-1 border mt-1 sm:mt-0">
+                      <span className="inline-block text-left text-sm text-rose-500 border-rose-500 rounded-full font-light px-2 py-1 border mt-1 sm:mt-0">
                         Collection
                       </span>
                     </div>
