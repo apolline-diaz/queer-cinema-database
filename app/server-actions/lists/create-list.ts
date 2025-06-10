@@ -43,6 +43,7 @@ export async function createList(formData: FormData) {
     title: formData.get("title"),
     description: formData.get("description"),
     movie_id: formData.get("movie_id"),
+    is_collection: formData.get("is_collection"),
   });
 
   if (!validatedFields.success) {

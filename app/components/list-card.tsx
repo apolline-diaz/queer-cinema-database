@@ -13,6 +13,7 @@ interface List {
   id: string;
   title: string;
   description?: string;
+  is_collection: boolean;
   lists_movies: {
     movie: {
       id: string;

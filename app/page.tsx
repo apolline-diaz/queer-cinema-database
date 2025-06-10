@@ -102,20 +102,21 @@ export default async function Home() {
             <div className="flex flex-col space-y-5 mb-10">
               {collections.map((collection) => (
                 <div key={collection.id.toString()} className="flex flex-col">
-                  <div className="flex sm:flex-row flex-col sm:justify-between justify-left sm:items-center items-left pr-10 mb-4">
-                    <div>
+                  <div className="flex sm:flex-row flex-col justify-between sm:items-center items-start pr-10 mb-4 gap-2">
+                    <div className="flex flex-col sm:items-center gap-3">
                       <h2 className="text-2xl font-semibold text-rose-900">
                         {collection.title}
                       </h2>
-                      <p className="text-sm text-rose-500 border-rose-500 rounded-full font-light px-2 py-1 border mt-1 line-clamp-2">
+                      <span className="inline-block text-sm text-rose-500 border-rose-500 rounded-full font-light px-2 py-1 border mt-1 sm:mt-0">
                         Collection
-                      </p>
-                      {/* {collection.description && (
+                      </span>
+                    </div>
+
+                    {/* {collection.description && (
                         <p className="text-sm text-gray-600 mt-1 line-clamp-2">
                           {collection.description}
                         </p>
                       )} */}
-                    </div>
                     <Link
                       href={`/lists/${collection.id}`}
                       className="border rounded-xl px-2 py-1 border-rose-900 text-rose-900 hover:border-rose-500 hover:bg-rose-500 hover:text-white text-sm"
@@ -128,7 +129,7 @@ export default async function Home() {
                     </Link>
                   </div>
                   {"lists_movies" in collection && collection.lists_movies && (
-                    <div className="flex flex-row-1 mb-3 gap-3 overflow-auto">
+                    <div className="flex flex-row-1 mb-3 gap-3 overflow-auto max-h-[200px]">
                       {collection.lists_movies.map((listMovie) => (
                         <HomeCard
                           key={`${listMovie.movies.title}-${listMovie.movies.id}`}

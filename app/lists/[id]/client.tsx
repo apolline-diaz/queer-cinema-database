@@ -88,7 +88,7 @@ export default function ListClientPage({
           {/* Button to edit list */}
           <button
             onClick={() => router.push(`/lists/edit/${id}`)}
-            className="bg-gradient-to-r from-rose-500 to-red-500 text-white px-4 py-2 rounded-md hover:from-rose-600 hover:to-red-600"
+            className="bg-gradient-to-r from-rose-500 to-red-500 text-white px-4 py-2 rounded-xl hover:from-rose-600 hover:to-red-600"
           >
             Modifier la liste
           </button>
