@@ -94,7 +94,7 @@ export default function ListClientPage({
           </button>
 
           {/* Movie grid */}
-          <div className="grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 mt-5">
+          <div className="grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 mt-5">
             {movies.length === 0 ? (
               <p>Aucun film trouvé</p>
             ) : (
