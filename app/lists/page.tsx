@@ -1,7 +1,6 @@
 import { ListCard } from "@/app/components/list-card";
 import Link from "next/link";
 import { getLists } from "../server-actions/lists/get-lists";
-import { isAdmin } from "@/utils/is-user-admin";
 
 export const revalidate = 0;
 
