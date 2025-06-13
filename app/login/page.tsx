@@ -4,6 +4,8 @@ import Link from "next/link";
 import { login } from "./actions";
 import { useForm } from "react-hook-form";
 import { SubmitButton } from "../components/submit-button";
+import { useState } from "react";
+import { redirect } from "next/navigation";
 
 interface LoginFormInputs {
   email: string;
@@ -11,6 +13,8 @@ interface LoginFormInputs {
 }
 
 export default function LoginPage() {
+  const [authError, setAuthError] = useState<string | null>(null);
+
   const {
     register,
     handleSubmit,
@@ -18,11 +22,20 @@ export default function LoginPage() {
   } = useForm<LoginFormInputs>();
 
   const onSubmit = async (data: LoginFormInputs) => {
+    setAuthError(null);
     const formData = new FormData();
     formData.append("email", data.email);
     formData.append("password", data.password);
 
-    await login(formData);
+    const result = await login(formData);
+
+    if (result?.error) {
+      setAuthError(
+        "Mot de passe ou adresse e-mail incorrecte. Si vous n'avez pas encore validé votre inscription, veuillez vérifier votre boîte mail."
+      );
+    } else {
+      redirect("/");
+    }
   };
 
   return (
@@ -37,6 +50,11 @@ export default function LoginPage() {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-3 mb-10">
             <h1 className="text-center font-medium text-xl">Connexion</h1>
+            {authError && (
+              <div className="text-sm text-red-600 bg-red-100 border border-red-400 p-3 rounded">
+                {authError}
+              </div>
+            )}
             {/* Mail */}
             <label htmlFor="email">Adresse e-mail</label>
             <input
