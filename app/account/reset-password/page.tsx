@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { SubmitButton } from "../../components/submit-button";
 import { supabase } from "@/utils/supabase/client";
+import { useSearchParams } from "next/navigation";
 
 interface ResetPasswordFormInputs {
   password: string;
@@ -17,13 +18,16 @@ export default function ResetPasswordPage() {
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
+  const searchParams = useSearchParams();
+  const code = searchParams.get("code");
+
   // Vérifier si l'utilisateur est authentifié avec un accès de récupération
   useEffect(() => {
     const exchangeCode = async () => {
-      const code = new URLSearchParams(window.location.search).get("code");
+      const code = searchParams.get("code");
 
       if (!code) {
-        setError("Code de réinitialisation manquant.");
+        setError("Token de récupération manquant. Veuillez réessayer.");
         setIsLoading(false);
         return;
       }
@@ -39,7 +43,7 @@ export default function ResetPasswordPage() {
     };
 
     exchangeCode();
-  }, []);
+  }, [searchParams]);
 
   const {
     register,
