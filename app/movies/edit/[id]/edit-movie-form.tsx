@@ -576,7 +576,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
           <button
             type="button"
             onClick={() => router.back()}
-            className="xs:w-full sm:w-[200px] border hover:border-red-500 hover:text-red-500 text-rose-900 px-4 py-2 border-rose-900 rounded-md"
+            className="xs:w-full sm:w-[200px] border hover:border-red-500 hover:text-red-500 text-rose-900 px-4 py-2 border-rose-900 rounded-xl"
           >
             Annuler
           </button>
