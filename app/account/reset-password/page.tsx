@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { SubmitButton } from "../../components/submit-button";
 import { supabase } from "@/utils/supabase/client";
+import { useSearchParams } from "next/navigation";
 
 interface ResetPasswordFormInputs {
   password: string;
@@ -17,33 +18,32 @@ export default function ResetPasswordPage() {
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
+  const searchParams = useSearchParams();
+  const code = searchParams.get("code");
+
   // Vérifier si l'utilisateur est authentifié avec un accès de récupération
   useEffect(() => {
-    const accessToken = new URLSearchParams(window.location.search).get(
-      "access_token"
-    );
+    const exchangeCode = async () => {
+      const code = searchParams.get("code");
 
-    if (accessToken) {
-      supabase.auth
-        .setSession({
-          access_token: accessToken,
-          refresh_token: "", // Pas nécessaire pour la récupération
-        })
-        .then(({ data, error }) => {
-          if (error) {
-            console.error(
-              "Erreur lors de la mise à jour de la session:",
-              error.message
-            );
-            setError("Le lien de réinitialisation est invalide ou a expiré.");
-          }
-          setIsLoading(false);
-        });
-    } else {
-      setError("Token de récupération manquant. Veuillez réessayer.");
+      if (!code) {
+        setError("Token de récupération manquant. Veuillez réessayer.");
+        setIsLoading(false);
+        return;
+      }
+
+      const { data, error } = await supabase.auth.exchangeCodeForSession(code);
+
+      if (error) {
+        console.error("Erreur lors de l'échange du code :", error.message);
+        setError("Le lien de réinitialisation est invalide ou a expiré.");
+      }
+
       setIsLoading(false);
-    }
-  }, []);
+    };
+
+    exchangeCode();
+  }, [searchParams]);
 
   const {
     register,
