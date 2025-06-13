@@ -8,6 +8,7 @@ import { checkMovieInLists } from "@/app/server-actions/lists/check-movie-in-lis
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Icon } from "@iconify/react";
+import { cn } from "@/lib/utils";
 
 type Props = {
   movieId: string;
@@ -120,44 +121,59 @@ export default function ClientMovieActions({ movieId, userIsAdmin }: Props) {
         </button>
 
         {isMenuOpen && (
-          <div className="absolute bottom-full my-2 left-0 mt-2 w-48 rounded-lg text-rose-900 bg-rose-50 ">
-            <p className="flex flex-row px-3 border-b border-gray-500 py-2 items-center gap-2 text-sm font-medium">
+          <div className="absolute bottom-full border border-rose-500 my-2 left-0 mt-2 w-56 rounded-lg text-black bg-white">
+            <p className="text-rose-500 flex flex-row px-3 border-b border-rose-300 py-2 items-center gap-2 text-sm font-medium">
               Ajouter à une liste
-            </p>
-            {lists.length === 0 ? (
-              <p className="text-sm text-gray-500 px-3 py-2">
-                {isLoading
-                  ? "Chargement des listes..."
-                  : "Aucune liste trouvée"}
-              </p>
-            ) : (
-              lists.map((list) => (
-                <div
-                  key={list.id}
-                  onClick={(e) => toggleMovieInList(list.id, list.hasMovie, e)}
-                  className="px-3 py-2 gap-2 text-sm font-light flex justify-between items-center hover:rounded-xl hover:text-rose-500 cursor-pointer"
-                >
-                  <span>{list.title}</span>
-                  <button
-                    className="text-rose-900 hover:text-rose-500 focus:outline-none"
-                    aria-label={
-                      list.hasMovie
-                        ? "Retirer de la liste"
-                        : "Ajouter à la liste"
+            </p>{" "}
+            <div className="sm:h-40 h-20 overflow-y-auto">
+              {lists.length === 0 ? (
+                <p className="text-sm  text-gray-500 px-3 py-2">
+                  {isLoading
+                    ? "Chargement des listes..."
+                    : "Aucune liste trouvée"}
+                </p>
+              ) : (
+                lists.map((list) => (
+                  <div
+                    key={list.id}
+                    onClick={(e) =>
+                      toggleMovieInList(list.id, list.hasMovie, e)
                     }
-                  >
-                    {list.hasMovie ? (
-                      <Icon
-                        icon="tdesign:circle-filled"
-                        style={{ fontSize: 15 }}
-                      />
-                    ) : (
-                      <Icon icon="lucide:circle" style={{ fontSize: 15 }} />
+                    className={cn(
+                      "px-3 py-2 gap-2 text-sm border-b border-gray-300 font-light flex justify-between items-center cursor-pointer hover:text-rose-500",
+                      {
+                        "text-rose-500": list.hasMovie,
+                        "text-black": !list.hasMovie,
+                      }
                     )}
-                  </button>
-                </div>
-              ))
-            )}
+                  >
+                    <span>{list.title}</span>
+                    <button
+                      className=" hover:text-rose-500 focus:outline-none"
+                      aria-label={
+                        list.hasMovie
+                          ? "Retirer de la liste"
+                          : "Ajouter à la liste"
+                      }
+                    >
+                      {list.hasMovie ? (
+                        <Icon
+                          icon="tdesign:circle-filled"
+                          style={{ fontSize: 15 }}
+                          className="text-rose-500"
+                        />
+                      ) : (
+                        <Icon
+                          icon="lucide:circle"
+                          style={{ fontSize: 15 }}
+                          className=""
+                        />
+                      )}
+                    </button>
+                  </div>
+                ))
+              )}
+            </div>
           </div>
         )}
       </div>
