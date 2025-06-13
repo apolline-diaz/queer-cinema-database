@@ -81,9 +81,13 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                           )}
                         </span>
                       </DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <span>
+                          <Link href="/account/settings">Paramètres</Link>
+                        </span>
+                      </DropdownMenuItem>
                     </span>
                   )}
-                  {/* <DropdownMenuItem>Paramètres</DropdownMenuItem> */}
                   <DropdownMenuItem>
                     <div className="">
                       {!user ? (
@@ -228,9 +232,13 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                             )}
                           </span>
                         </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <span>
+                            <Link href="/account/settings">Paramètres</Link>
+                          </span>
+                        </DropdownMenuItem>
                       </span>
                     )}
-                    {/* <DropdownMenuItem>Paramètres</DropdownMenuItem> */}
                     <DropdownMenuItem>
                       <div className="">
                         {!user ? (
