@@ -54,6 +54,7 @@ model lists {
   created_at   DateTime?      @default(now()) @db.Timestamp(6)
   updated_at   DateTime?      @default(now()) @db.Timestamp(6)
   user_id      String         @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  is_collection Boolean        @default(false) 
   users        users          @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   lists_movies lists_movies[]
 }

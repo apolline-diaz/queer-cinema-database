@@ -41,7 +41,7 @@ export async function deleteList(listId: bigint) {
     });
 
     // Revalider le chemin pour mettre à jour l'UI
-    revalidatePath("/profile");
+    revalidatePath("/lists");
 
     return { success: true, message: "List deleted with success" };
   } catch (err) {
