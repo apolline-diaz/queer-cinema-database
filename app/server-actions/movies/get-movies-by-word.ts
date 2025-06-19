@@ -1,7 +1,7 @@
 "use server";
 
 import { Movie } from "@/app/types/movie";
-import { prisma } from "@/lib/prisma"; // ou le chemin où se trouve votre prisma.ts
+import { prisma } from "@/lib/prisma";
 
 export const getMoviesByWord = async (search: string): Promise<Movie[]> => {
   // Si la recherche est vide, retourner les films récents
@@ -10,8 +10,10 @@ export const getMoviesByWord = async (search: string): Promise<Movie[]> => {
       select: {
         id: true,
         title: true,
+        original_title: true,
         image_url: true,
         release_date: true,
+        language: true,
       },
       orderBy: {
         created_at: "desc",
@@ -26,7 +28,9 @@ export const getMoviesByWord = async (search: string): Promise<Movie[]> => {
     where: {
       OR: [
         { title: { contains: search, mode: "insensitive" } },
+        { original_title: { contains: search, mode: "insensitive" } },
         { description: { contains: search, mode: "insensitive" } },
+        { language: { contains: search, mode: "insensitive" } },
         {
           movies_keywords: {
             some: {
@@ -68,8 +72,10 @@ export const getMoviesByWord = async (search: string): Promise<Movie[]> => {
     select: {
       id: true,
       title: true,
+      original_title: true,
       image_url: true,
       release_date: true,
+      language: true,
     },
   });
 
