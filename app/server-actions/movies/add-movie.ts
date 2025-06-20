@@ -106,7 +106,6 @@ export async function addMovie(formData: FormData) {
       .replace(/[^\w\-]/g, "")
       .toLowerCase();
     const fileName = `${Math.random().toString(36).substring(2, 10)}-${safeTitle}`;
-
     const supabase = createClient();
     const { data: imageData, error: imageError } = await supabase.storage
       .from("storage")
@@ -116,8 +115,6 @@ export async function addMovie(formData: FormData) {
       });
 
     if (imageError) {
-      console.error("Supabase upload error:", imageError);
-
       return {
         type: "error",
         message:
