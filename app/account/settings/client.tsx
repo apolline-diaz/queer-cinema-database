@@ -23,8 +23,20 @@ export default function SettingsPage({ user }: { user: User }) {
 
   const [isUpdatingName, startNameTransition] = useTransition();
   const [isUpdatingPassword, startPasswordTransition] = useTransition();
+  const [nameError, setNameError] = useState<string | null>(null);
+  const [passwordError, setPasswordError] = useState<string | null>(null);
 
   const handleNameUpdate = async (formData: FormData) => {
+    const fullName = (formData.get("full_name") as string) || "";
+
+    // Validation côté client
+    if (fullName.trim().length < 5) {
+      setNameError("Le nom doit contenir au moins 5 caractères.");
+      return; // on arrête ici sans envoyer la requête
+    } else {
+      setNameError(null);
+    }
+
     startNameTransition(async () => {
       const result = await updateUserName(formData);
       if (result.error) {
@@ -36,13 +48,24 @@ export default function SettingsPage({ user }: { user: User }) {
   };
 
   const handlePasswordUpdate = async (formData: FormData) => {
+    const newPassword = (formData.get("new_password") as string) || "";
+    const confirmPassword = (formData.get("confirm_password") as string) || "";
+
+    // Validation côté client pour vérifier si les mots de passe correspondent
+    if (newPassword !== confirmPassword) {
+      setPasswordError("Les mots de passe ne correspondent pas.");
+      return; // stop la soumission
+    } else {
+      setPasswordError(null);
+    }
+
     startPasswordTransition(async () => {
       const result = await updatePassword(formData);
       if (result.error) {
         setMessage({ type: "error", text: result.error });
       } else if (result.success) {
         setMessage({ type: "success", text: result.success });
-        // Réinitialiser le formulaire
+        // reset formulaire
         const form = document.getElementById(
           "password-form"
         ) as HTMLFormElement;
@@ -74,11 +97,15 @@ export default function SettingsPage({ user }: { user: User }) {
         <div className="mb-4">
           <label className="block font-medium mb-2">Nom complet</label>
           <input
-            className="w-full text-black font-light bg-transparent border rounded-md p-2 placeholder-gray-500 border-rose-900"
+            className={`w-full text-black font-light bg-transparent border rounded-md p-2 placeholder-gray-500 border-rose-900 ${
+              nameError ? "border-red-500" : ""
+            }`}
             name="full_name"
-            placeholder="Votre nom complet"
-            defaultValue="Entrez votre nom ou pseudo"
+            placeholder="Votre nom ou pseudo"
           />
+          {nameError && (
+            <p className="text-rose-500 text-sm my-2">{nameError}</p>
+          )}
         </div>
         <SubmitButton
           defaultText="Mettre à jour"
@@ -114,7 +141,11 @@ export default function SettingsPage({ user }: { user: User }) {
             name="confirm_password"
             label="Confirmer le mot de passe"
             placeholder="Confirmer le mot de passe"
+            className={passwordError ? "border-red-500" : ""}
           />
+          {passwordError && (
+            <p className="text-rose-500 text-sm my-2">{passwordError}</p>
+          )}
         </div>
         <SubmitButton
           defaultText="Changer le mot de passe"

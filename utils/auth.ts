@@ -1,4 +1,5 @@
 import { createClient } from "@/utils/supabase/server";
+import { cookies } from "next/headers";
 
 // check is the user have a session, if he is connected
 export async function auth() {

@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/utils/supabase/server";
+import { prisma } from "@/lib/prisma";
 
 // Server action to Update user name
 
@@ -36,16 +37,15 @@ export async function updateUserName(formData: FormData) {
       return { error: "Error updating name." };
     }
 
-    // If you have a users table in your database
-    // You can also update it there.
-    const { error: accountError } = await supabase
-      .from("users")
-      .update({ full_name: fullName.trim() })
-      .eq("id", session.user.id);
-
-    if (accountError) {
-      console.warn("Account update error:", accountError);
-      // Do not return error because auth is updated
+    // Mise à jour dans la DB avec Prisma
+    try {
+      await prisma.users.update({
+        where: { id: session.user.id },
+        data: { full_name: fullName.trim() },
+      });
+    } catch (e) {
+      console.warn("Prisma update error:", e);
+      // On peut décider de ne pas retourner d’erreur ici
     }
 
     revalidatePath("/account/settings");
