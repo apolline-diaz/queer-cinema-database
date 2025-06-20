@@ -4,7 +4,6 @@ import { redirect } from "next/navigation";
 
 import { createClient } from "@/utils/supabase/server";
 
-// Nouvelle action de réinitialisation de mot de passe
 export async function resetPassword(formData: FormData) {
   const supabase = createClient();
 
@@ -18,6 +17,5 @@ export async function resetPassword(formData: FormData) {
     redirect("/forgot-password?error=" + encodeURIComponent(error.message));
   }
 
-  // Redirigez vers une page de confirmation
   redirect("/forgot-password/confirmation");
 }

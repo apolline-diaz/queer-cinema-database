@@ -8,7 +8,7 @@
 - **Homepage**: General overview of the site with thematic movies list.
 - **Catalogue with Advanced Search**: View of all the movies with recents adding. Filter films by various criteria (genre, year, director, keyword, etc.).
 - **Detailed Movie Pages**: Complete information (title, synopsis, director, etc.).
-- **User Profile**:
+- **User Account**:
   - Create personal movie lists (visible only to the user).
 - **Stats**: Display movies by keywords distribution.
 - **Contact**: Contact form.
@@ -89,8 +89,6 @@
 │   ├── login/               # Login page
 │   ├── logout/              # Logout logic
 │   ├── movies/              # Movie listing and details
-│   ├── note/                # Notes or movie reviews
-│   ├── profile/             # User profile page
 │   ├── server-actions/      # Server-side actions (CRUD for movies, lists, etc.)
 │   ├── signup/              # Signup page
 │   ├── stats/               # Statistics page

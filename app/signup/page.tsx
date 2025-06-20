@@ -5,15 +5,19 @@ import { signup } from "../login/actions";
 import { useForm } from "react-hook-form";
 import { SubmitButton } from "../components/submit-button";
 import { useState } from "react";
+import { PasswordInput } from "../components/password-input";
 
 interface SignUpFormInputs {
   email: string;
   password: string;
+  confirmPassword: string;
 }
+
 export default function SignUpPage() {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<SignUpFormInputs>();
 
@@ -34,6 +38,8 @@ export default function SignUpPage() {
     }
   };
 
+  const password = watch("password");
+
   return (
     <div
       className="w-screen min-h-screen flex items-center text-rose-900 justify-center bg-cover bg-center"
@@ -42,7 +48,7 @@ export default function SignUpPage() {
           "url('https://xcwrhyjbfgzsaslstssc.supabase.co/storage/v1/object/public/storage//watermelon-woman-background.webp')",
       }}
     >
-      <div className="bg-rose-50 border border-rose-900 bg-opacity-90 backdrop-blur-md rounded-2xl shadow-xl p-10 m-10 max-w-md w-full">
+      <div className="bg-white border border-rose-500 backdrop-blur-md rounded-2xl shadow-xl p-10 m-10 max-w-md w-full">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-3 mb-10">
             <h1 className="text-center font-medium text-xl">Inscription</h1>
@@ -74,21 +80,30 @@ export default function SignUpPage() {
             )}
 
             {/* Password */}
-            <label htmlFor="password">Mot de passe</label>
-            <input
+            <PasswordInput
+              label="Mot de passe"
               {...register("password", {
                 required: "Le mot de passe est requis",
+                minLength: {
+                  value: 6,
+                  message:
+                    "Le mot de passe doit contenir au moins 6 caractères",
+                },
               })}
-              className="appearance-none text-sm font-light border-rose-900 block w-full text-rose-900 border rounded py-3 px-4 leading-tight focus:outline-none focus:text-black"
-              id="password"
-              type="password"
-              placeholder="Tapez votre mot de passe"
+              error={errors.password?.message}
             />
-            {errors.password && (
-              <span className="text-red-500 text-xs">
-                {errors.password.message}
-              </span>
-            )}
+
+            {/* Confirm Password */}
+            <PasswordInput
+              label="Confirmer le mot de passe"
+              {...register("confirmPassword", {
+                required: "Veuillez confirmer votre mot de passe",
+                validate: (value) =>
+                  value === password ||
+                  "Les mots de passe ne correspondent pas",
+              })}
+              error={errors.confirmPassword?.message}
+            />
           </div>
 
           <div className="w-full justify-center items-center flex flex-col sm:flex-row gap-4">

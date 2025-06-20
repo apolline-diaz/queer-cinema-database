@@ -174,7 +174,7 @@ export default function Searchfield({
       {visibleCount < movies.length && !isLoading && (
         <button
           onClick={loadMore}
-          className="w-full flex flex-row justify-center items-center border rounded-md border-rose-900 border-t mt-4 px-4 py-2 hover:border-red-500 text-rose-900 hover:text-red-500"
+          className="w-full flex flex-row justify-center items-center border rounded-md hover:bg-rose-500 hover:text-white border-rose-900 border-t mt-4 px-4 py-2 hover:border-rose-500 text-rose-900"
         >
           Voir plus <Icon icon="mdi:chevron-down" className="size-5" />
         </button>
