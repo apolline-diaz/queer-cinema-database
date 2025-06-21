@@ -140,17 +140,10 @@ const CreateListPage: React.FC<CreateListPageProps> = ({ isAdmin }) => {
             Description
           </label>
           <textarea
-            {...register("description", {
-              required: "La description est requise",
-            })}
+            {...register("description")}
             className="block w-full text-sm text-black bg-white placeholder-gray-500 font-light border-rose-900 border py-3 px-4 rounded focus:outline-none"
             placeholder="Entrez une description..."
           />
-          {errors.description && (
-            <span className="text-rose-500 text-xs my-2">
-              {errors.description.message}
-            </span>
-          )}
         </div>
 
         {/* Movies Selection */}
@@ -187,7 +180,6 @@ const CreateListPage: React.FC<CreateListPageProps> = ({ isAdmin }) => {
           <Controller
             name="movie_ids"
             control={control}
-            rules={{ required: "Vous devez ajouter au moins un film" }}
             render={({ field }) => (
               <input
                 type="hidden"
@@ -196,11 +188,6 @@ const CreateListPage: React.FC<CreateListPageProps> = ({ isAdmin }) => {
               />
             )}
           />
-          {errors.movie_ids && (
-            <span className="text-rose-500 text-xs my-2">
-              {errors.movie_ids.message}
-            </span>
-          )}
         </div>
 
         {/* Display selected movies as tags */}
