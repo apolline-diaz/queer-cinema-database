@@ -8,12 +8,15 @@ export async function getUser() {
   const supabase = createClient();
 
   try {
+    // Get session
     const {
-      data: { user },
-      error: userError,
-    } = await supabase.auth.getUser();
-    if (userError || !user) {
-      return { user: null, error: "User non authenticated" };
+      data: { session },
+      error: sessionError,
+    } = await supabase.auth.getSession();
+    const user = session?.user;
+
+    if (sessionError || !user) {
+      return { user: null, error: "Not authenticated", session: null };
     }
 
     // Ensure user exists in the DB
