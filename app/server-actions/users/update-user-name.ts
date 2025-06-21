@@ -3,10 +3,17 @@
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/utils/supabase/server";
 import { prisma } from "@/lib/prisma";
+import { ensureUserExists } from "@/utils/ensure-user-exist";
 
 // Server action to Update user name
 
 export async function updateUserName(formData: FormData) {
+  const userSync = await ensureUserExists();
+
+  if (!userSync.success) {
+    return { type: "error", message: userSync.message, errors: null };
+  }
+
   const supabase = createClient();
 
   try {

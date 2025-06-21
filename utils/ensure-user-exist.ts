@@ -26,6 +26,6 @@ export async function ensureUserExists() {
     return { success: true, message: "User synchronized" };
   } catch (err) {
     console.error("Errror when user synchronization:", err);
-    return { success: false, message: "Erreur of synchronzsation" };
+    return { success: false, message: "Error of synchronzation" };
   }
 }
