@@ -40,5 +40,5 @@ export async function signup(formData: FormData) {
   }
 
   revalidatePath("/", "layout");
-  redirect("/");
+  return { success: true, message: "Confirmation email sent" };
 }
