@@ -1,6 +1,6 @@
-import { auth } from "@/utils/auth"; // Adjust the import path to your auth utility
+import { auth } from "@/utils/auth";
 import { redirect } from "next/navigation";
-import CreateListPage from "./client"; // Import the client-side form component
+import CreateListPage from "./client";
 import { isAdmin } from "@/utils/is-user-admin";
 
 export default async function Page() {

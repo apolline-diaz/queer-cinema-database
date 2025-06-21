@@ -142,9 +142,9 @@ export default function ResetPasswordPage() {
                 {...register("password", {
                   required: "Le mot de passe est requis",
                   minLength: {
-                    value: 8,
+                    value: 6,
                     message:
-                      "Le mot de passe doit contenir au moins 8 caractères",
+                      "Le mot de passe doit contenir au moins 6 caractères",
                   },
                 })}
                 className="appearance-none text-sm font-light border-rose-900 block w-full border rounded py-3 px-4 leading-tight focus:outline-none focus:text-black"

@@ -31,7 +31,7 @@ export default function Header() {
         </nav>
       </div>
       <p className="font-light text-xs text-center mb-2">
-        © 2024 Queer Cinema Database. Tous droits réservés.
+        © 2025 Queer Cinema Database. Tous droits réservés.
       </p>
     </footer>
   );

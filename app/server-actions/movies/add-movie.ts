@@ -47,7 +47,7 @@ export async function addMovie(formData: FormData) {
     country_id: z.string().min(1, "Le pays est obligatoire"),
     genre_id: z.string().min(1, "Le genre est obligatoire"),
     type: z.string().min(1, "Le type est obligatoire"),
-    keyword_id: z.string().min(1, "Un mot-clé est obligatoire").optional(),
+    keyword_id: z.string().min(1, "Un mot-clé est obligatoire"),
     image_url: z
       .any()
       .refine(
@@ -101,7 +101,11 @@ export async function addMovie(formData: FormData) {
 
   try {
     // image upload
-    const fileName = `${Math.random()}-${title}`;
+    const safeTitle = title
+      .replace(/\s+/g, "-")
+      .replace(/[^\w\-]/g, "")
+      .toLowerCase();
+    const fileName = `${Math.random().toString(36).substring(2, 10)}-${safeTitle}`;
     const supabase = createClient();
     const { data: imageData, error: imageError } = await supabase.storage
       .from("storage")

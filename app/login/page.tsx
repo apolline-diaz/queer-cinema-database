@@ -5,7 +5,8 @@ import { login } from "./actions";
 import { useForm } from "react-hook-form";
 import { SubmitButton } from "../components/submit-button";
 import { useState } from "react";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
+import { PasswordInput } from "../components/password-input";
 
 interface LoginFormInputs {
   email: string;
@@ -13,6 +14,8 @@ interface LoginFormInputs {
 }
 
 export default function LoginPage() {
+  const router = useRouter();
+
   const [authError, setAuthError] = useState<string | null>(null);
 
   const {
@@ -34,7 +37,7 @@ export default function LoginPage() {
         "Mot de passe ou adresse e-mail incorrecte. Si vous n'avez pas encore validé votre inscription, veuillez vérifier votre boîte mail."
       );
     } else {
-      redirect("/");
+      router.push("/");
     }
   };
 
@@ -46,7 +49,7 @@ export default function LoginPage() {
           "url('https://xcwrhyjbfgzsaslstssc.supabase.co/storage/v1/object/public/storage//watermelon-woman-background.webp')",
       }}
     >
-      <div className="bg-rose-50 border border-rose-900 bg-opacity-90 backdrop-blur-md rounded-2xl shadow-xl p-10 m-10 max-w-md w-full">
+      <div className="bg-white border border-rose-500 backdrop-blur-md rounded-2xl shadow-xl p-10 m-10 max-w-md w-full">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-3 mb-10">
             <h1 className="text-center font-medium text-xl">Connexion</h1>
@@ -76,21 +79,14 @@ export default function LoginPage() {
               </span>
             )}
             {/* Password */}
-            <label htmlFor="password">Mot de passe</label>
-            <input
+            <PasswordInput
+              label="Mot de passe"
+              placeholder="Tapez votre mot de passe"
               {...register("password", {
                 required: "Le mot de passe est requis",
               })}
-              className="appearance-none text-sm font-light border-rose-900 block w-full text-rose-900 border rounded py-3 px-4 leading-tight focus:outline-none focus:text-black"
-              id="password"
-              type="password"
-              placeholder="Tapez votre mot de passe"
+              error={errors.password?.message}
             />
-            {errors.password && (
-              <span className="text-red-500 text-xs">
-                {errors.password.message}
-              </span>
-            )}
             <Link
               href="/account/forgot-password"
               className="text-xs hover:underline"

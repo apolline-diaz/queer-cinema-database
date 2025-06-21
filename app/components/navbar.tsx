@@ -22,6 +22,8 @@ interface HeaderProps {
 
 export default function Navbar({ user, userIsAdmin }: HeaderProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+
   const pathname = usePathname();
 
   const handleClick = () => {
@@ -59,9 +61,21 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
           <nav className="">
             <section className="MOBILE-MENU flex lg:hidden">
               <DropdownMenu>
-                <DropdownMenuTrigger className="px-4">
-                  <Icon icon="radix-icons:avatar" className="size-5" />
+                <DropdownMenuTrigger
+                  className="px-4"
+                  onMouseEnter={() => setIsHovered(true)}
+                  onMouseLeave={() => setIsHovered(false)}
+                >
+                  <Icon
+                    icon={
+                      isHovered
+                        ? "carbon:user-avatar-filled"
+                        : "carbon:user-avatar"
+                    }
+                    className="size-5 transition-all duration-150"
+                  />
                 </DropdownMenuTrigger>
+
                 <DropdownMenuContent
                   align="end"
                   sideOffset={8}
@@ -81,9 +95,13 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                           )}
                         </span>
                       </DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <span>
+                          <Link href="/account/settings">Paramètres</Link>
+                        </span>
+                      </DropdownMenuItem>
                     </span>
                   )}
-                  {/* <DropdownMenuItem>Paramètres</DropdownMenuItem> */}
                   <DropdownMenuItem>
                     <div className="">
                       {!user ? (
@@ -206,9 +224,21 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                 </li>
 
                 <DropdownMenu>
-                  <DropdownMenuTrigger>
-                    <Icon icon="radix-icons:avatar" className="size-5" />
+                  <DropdownMenuTrigger
+                    className="px-4"
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
+                  >
+                    <Icon
+                      icon={
+                        isHovered
+                          ? "carbon:user-avatar-filled"
+                          : "carbon:user-avatar"
+                      }
+                      className="size-5 transition-all duration-150"
+                    />
                   </DropdownMenuTrigger>
+
                   <DropdownMenuContent
                     align="end"
                     sideOffset={8}
@@ -228,9 +258,13 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                             )}
                           </span>
                         </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <span>
+                            <Link href="/account/settings">Paramètres</Link>
+                          </span>
+                        </DropdownMenuItem>
                       </span>
                     )}
-                    {/* <DropdownMenuItem>Paramètres</DropdownMenuItem> */}
                     <DropdownMenuItem>
                       <div className="">
                         {!user ? (
