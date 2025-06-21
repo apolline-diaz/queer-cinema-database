@@ -3,9 +3,9 @@ import SettingsPage from "./client";
 import { redirect } from "next/navigation";
 
 export default async function Page() {
-  const { user, error } = await getUser();
+  const { user, session, error } = await getUser();
 
-  if (error || !user) {
+  if (error || !user || !session) {
     redirect("/login");
   }
 
