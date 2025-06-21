@@ -35,7 +35,6 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
             variant="ghost"
             onClick={() => setVisible(!visible)}
             className="absolute right-2 top-1/2 -translate-y-1/2 hover:bg-transparent text-rose-900"
-            tabIndex={-1}
           >
             {visible ? (
               <EyeOff className="w-4 h-4" />
