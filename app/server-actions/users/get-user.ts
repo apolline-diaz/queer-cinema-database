@@ -13,11 +13,12 @@ export async function getUser() {
       data: { session },
       error: sessionError,
     } = await supabase.auth.getSession();
-    const user = session?.user;
 
-    if (sessionError || !user) {
-      return { user: null, error: "Not authenticated", session: null };
+    if (sessionError || !session || !session.user) {
+      return { user: null, error: "Not authenticated" };
     }
+
+    const user = session.user;
 
     // Ensure user exists in the DB
     const userSync = await ensureUserExists();
