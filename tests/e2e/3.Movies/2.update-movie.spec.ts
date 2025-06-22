@@ -33,7 +33,10 @@ const test = base.extend<CustomFixtures>({
 test("edit a movie", async ({ authenticatedPage: page }) => {
   await page.goto("/");
 
-  await page.getByRole("link", { name: "Catalogue", exact: true }).click();
+  await page
+    .getByRole("link", { name: "Catalogue", exact: true })
+    .first()
+    .click();
 
   await page.getByRole("link", { name: "Movie Title" }).click();
 
@@ -49,7 +52,8 @@ test("edit a movie", async ({ authenticatedPage: page }) => {
   // Director
   await page
     .getByRole("textbox", { name: "Chercher et ajouter des ré" })
-    .click();
+    .fill("a");
+
   await page.getByText("Karen Duthie").click();
 
   await page.locator('textarea[name="description"]').fill("Update description");
