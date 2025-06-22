@@ -59,7 +59,7 @@ test("add a movie", async ({ authenticatedPage: page }) => {
   await page.locator('select[name="release_date"]').selectOption("2025");
 
   // Country of production
-  await page.locator('select[name="country_id"]').selectOption("444");
+  await page.locator('select[name="country_id"]').selectOption("666");
 
   // Runtime
   await page.getByPlaceholder("00").fill("12");
@@ -68,7 +68,7 @@ test("add a movie", async ({ authenticatedPage: page }) => {
   await page.locator('select[name="type"]').selectOption("Moyen-métrage");
 
   // Genre
-  await page.locator('select[name="genre_id"]').selectOption("13");
+  await page.locator('select[name="genre_id"]').selectOption("6");
 
   // Keywords
   await page

@@ -56,13 +56,13 @@ test("edit a movie", async ({ authenticatedPage: page }) => {
 
   await page.getByText("Karen Duthie").click();
 
-  await page.locator('textarea[name="description"]').fill("Update description");
+  await page.locator('textarea[name="description"]').fill("Description Update");
 
   // Year
   await page.locator('select[name="release_date"]').selectOption("2011");
 
   // Country
-  await page.getByLabel("Pays").selectOption("628");
+  await page.getByLabel("Pays").selectOption("498");
 
   // Language
   await page.locator('input[name="language"]').fill("Anglais");

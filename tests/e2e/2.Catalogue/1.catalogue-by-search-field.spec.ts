@@ -15,5 +15,5 @@ test("catalogue by searchfield", async ({ page }) => {
     .fill("gay");
   await page.getByRole("button", { name: "Rechercher" }).click();
 
-  await expect(page.getByText("BABY JANE")).toBeVisible();
+  await expect(page.getByText("INSIDE THE CHINESE CLOSET")).toBeVisible();
 });
