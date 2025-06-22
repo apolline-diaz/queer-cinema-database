@@ -13,15 +13,19 @@ type CustomFixtures = {
 // create a custom test fixture that includes authentication
 const test = base.extend<CustomFixtures>({
   authenticatedPage: async ({ page }, use) => {
+    await page.goto("/login");
     await page.setViewportSize({ width: 1280, height: 720 });
 
-    // perform login
-    await page.goto("/login");
-    await page.locator("#email").fill(email);
-    await page.locator("#password").fill(password);
-    await page.getByRole("button", { name: "Se connecter" }).click();
-    await expect(page.getByTestId("profile-link-desktop")).toBeVisible();
+    await page.getByPlaceholder("Tapez votre adresse e-mail").fill(email);
+    await page.getByPlaceholder("Tapez votre mot de passe").fill(password);
 
+    await page.getByRole("button", { name: "Se connecter" }).click();
+
+    await page.locator('[id="radix-\\:Riicq\\:"]').click();
+
+    await expect(
+      page.getByRole("menuitem", { name: "Mes Listes" })
+    ).toBeVisible();
     // pass the authenticated page to the test
     await use(page);
   },
@@ -30,18 +34,28 @@ const test = base.extend<CustomFixtures>({
 test("create list", async ({ authenticatedPage: page }) => {
   await page.goto("/");
 
-  await page.getByTestId("profile-link-desktop").click();
+  await page.locator('[id="radix-\\:Riicq\\:"]').click();
+  await page.getByRole("link", { name: "Mes Listes" }).click();
+  await page.locator("html").click();
   await page.getByRole("link", { name: "Créer une nouvelle liste" }).click();
-  await page.getByRole("textbox", { name: "Titre de la liste" }).click();
+
   await page
-    .getByRole("textbox", { name: "Titre de la liste" })
-    .fill("Ma nouvelle liste");
-  await page.getByRole("textbox", { name: "Description" }).click();
+    .getByRole("textbox", { name: "Entrez un titre..." })
+    .fill("New List");
   await page
-    .getByRole("textbox", { name: "Description" })
-    .fill("Liste de mes derniers films vus");
-  await page.getByRole("textbox", { name: "Films" }).click();
-  await page.getByRole("textbox", { name: "Films" }).fill("Jennifer");
-  await page.getByText("Jennifer's Body2009").click();
-  await page.getByRole("button", { name: "Ajouter" }).click();
+    .getByRole("textbox", { name: "Entrez une description..." })
+    .click();
+  await page
+    .getByRole("textbox", { name: "Entrez une description..." })
+    .fill("Description list");
+  await page.getByRole("textbox", { name: "Cherchez des films..." }).click();
+  await page.getByRole("textbox", { name: "Cherchez des films..." }).fill("a");
+  await page
+    .getByRole("listitem")
+    .filter({ hasText: "% Woman 2004" })
+    .locator("span")
+    .click();
+  await page.getByRole("button", { name: "Créer la liste" }).click();
+
+  await expect(page.getByRole("heading", { name: "New List" })).toBeVisible();
 });

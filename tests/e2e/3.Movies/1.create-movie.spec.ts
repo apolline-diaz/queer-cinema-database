@@ -13,71 +13,71 @@ type CustomFixtures = {
 // create a custom test fixture that includes authentication
 const test = base.extend<CustomFixtures>({
   authenticatedPage: async ({ page }, use) => {
+    await page.goto("/login");
     await page.setViewportSize({ width: 1280, height: 720 });
 
-    // perform login
-    await page.goto("/login");
-    await page.locator("#email").fill(email);
-    await page.locator("#password").fill(password);
+    await page.getByPlaceholder("Tapez votre adresse e-mail").fill(email);
+    await page.getByPlaceholder("Tapez votre mot de passe").fill(password);
+
     await page.getByRole("button", { name: "Se connecter" }).click();
-    await expect(page.getByTestId("profile-link-desktop")).toBeVisible();
+
+    await page.locator('[id="radix-\\:Riicq\\:"]').click();
+
+    await expect(
+      page.getByRole("menuitem", { name: "Mes Listes" })
+    ).toBeVisible();
     // pass the authenticated page to the test
     await use(page);
   },
 });
 
-test("create movie", async ({ authenticatedPage: page }) => {
+test("add a movie", async ({ authenticatedPage: page }) => {
   await page.goto("/");
 
+  await page.locator('[id="radix-\\:Riicq\\:"]').click();
+
   await page.getByRole("link", { name: "Contribuer" }).click();
-  await expect(
-    page.getByRole("heading", { name: "Ajouter un film" })
-  ).toBeVisible();
 
-  // fill in the form with proper selectors matching your form
-  // Remplir le titre - utilise le name attribute du register
-  await page.locator('input[name="title"]').fill("Titre du film de test");
+  await page.locator("html").click();
 
-  // Remplir le titre original - correction de la faute de frappe
+  // Title field
   await page
-    .locator('input[name="original_title"]')
-    .fill("Original Movie Title");
+    .getByRole("textbox", { name: "Tapez le titre..." })
+    .fill("Movie Title");
 
-  // Remplir le réalisateur
-  await page.locator('input[name="director_name"]').fill("Réalisateur du film");
-
-  // Remplir la description
+  // Director field
   await page
-    .locator('textarea[name="description"]')
-    .fill("Description du film de test");
+    .getByRole("textbox", { name: "Tapez le nom du/de la ré" })
+    .fill("Director");
 
-  // Sélectionner l'année de sortie
-  await page.locator('select[name="release_date"]').selectOption("2023");
-
-  // Sélectionner le pays - utilise le name attribute
-  await page.locator('select[name="country_id"]').selectOption("1"); // Ajustez l'ID selon vos données
-
-  // Remplir la durée
-  await page.locator('input[name="runtime"]').fill("120");
-
-  // Sélectionner le type
-  await page.locator('select[name="type"]').selectOption("Long-métrage");
-
-  // Sélectionner le genre
-  await page.locator('select[name="genre_id"]').selectOption("1"); // Ajustez l'ID selon vos données
-
-  // Gérer les mots-clés avec MultiSelect
-  // Vous devrez ajuster ceci selon l'implémentation de votre composant MultiSelect
-  // Si votre MultiSelect a un input spécifique, utilisez son sélecteur approprié
+  // Description field
   await page
-    .locator('input[placeholder="Chercher et ajouter des mot-clés..."]')
+    .getByRole("textbox", { name: "Résumé de l'oeuvre..." })
+    .fill("Description");
+
+  // Year release
+  await page.locator('select[name="release_date"]').selectOption("2025");
+
+  // Country of production
+  await page.locator('select[name="country_id"]').selectOption("444");
+
+  // Runtime
+  await page.getByPlaceholder("00").fill("12");
+
+  // Type
+  await page.locator('select[name="type"]').selectOption("Moyen-métrage");
+
+  // Genre
+  await page.locator('select[name="genre_id"]').selectOption("13");
+
+  // Keywords
+  await page
+    .getByRole("textbox", { name: "Chercher et ajouter des mot-" })
     .click();
   await page
-    .locator('input[placeholder="Chercher et ajouter des mot-clés..."]')
-    .fill("romance");
-  // Attendre que les options apparaissent et cliquer sur une option
-  await page.waitForSelector("text=romance", { timeout: 5000 });
-  await page.getByText("romance").first().click();
+    .getByRole("textbox", { name: "Chercher et ajouter des mot-" })
+    .fill("a");
+  await page.getByText("Afrique", { exact: true }).click();
 
   // Upload d'image - utilise le name attribute
   await page

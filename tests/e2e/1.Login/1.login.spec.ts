@@ -13,9 +13,6 @@ test("login", async ({ page }) => {
   await page.getByPlaceholder("Tapez votre adresse e-mail").fill(email);
   await page.getByPlaceholder("Tapez votre mot de passe").fill(password);
 
-  console.log("Email:", email);
-  console.log("Password:", password);
-
   await page.getByRole("button", { name: "Se connecter" }).click();
 
   await page.locator('[id="radix-\\:Riicq\\:"]').click();
