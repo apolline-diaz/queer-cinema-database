@@ -10,9 +10,17 @@ test("login", async ({ page }) => {
   await page.goto("/login");
   await page.setViewportSize({ width: 1280, height: 720 });
 
-  await page.locator("#email").fill(email);
-  await page.locator("#password").fill(password);
+  await page.getByPlaceholder("Tapez votre adresse e-mail").fill(email);
+  await page.getByPlaceholder("Tapez votre mot de passe").fill(password);
+
+  console.log("Email:", email);
+  console.log("Password:", password);
+
   await page.getByRole("button", { name: "Se connecter" }).click();
-  await expect(page.getByTestId("profile-link-desktop")).toBeVisible();
-  await page.getByTestId("profile-link-desktop").click();
+
+  await page.locator('[id="radix-\\:Riicq\\:"]').click();
+
+  await expect(
+    page.getByRole("menuitem", { name: "Mes Listes" })
+  ).toBeVisible();
 });
