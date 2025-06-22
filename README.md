@@ -80,7 +80,7 @@ To avoid incompatibility between mac and docker, use Orbstack (https://orbstack.
    Install dependencies :
 
    ```bash
-   pnpm install
+   npm install
    ```
 
    Copy environment file :
@@ -131,6 +131,20 @@ To avoid incompatibility between mac and docker, use Orbstack (https://orbstack.
    supabase db push
    ```
 
+7. Get data from production to Local
+
+   Dump data from production :
+
+   ```bash
+   supabase db dump --data-only -f data.sql
+   ```
+
+   Apply data on local base :
+
+   ```bash
+   psql "postgresql://postgres:postgres@localhost:54322/postgres" < data.sql
+   ```
+
 ### Prisma Setup
 
 1. Generate Prisma client
@@ -156,12 +170,6 @@ To avoid incompatibility between mac and docker, use Orbstack (https://orbstack.
 ### Access the site:
 
 The project will be available at [http://localhost:3000](http://localhost:3000).
-
-6. Run the project with Docker:
-
-   ```bash
-   docker-compose up
-   ```
 
 ### Migrations with Prisma
 
