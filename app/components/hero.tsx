@@ -23,12 +23,12 @@ export default function Hero() {
     <>
       <div className="relative w-full h-[70vh] overflow-hidden bg-rose-50">
         <Image
-          src="https://xcwrhyjbfgzsaslstssc.supabase.co/storage/v1/object/public/storage//1749767151774-chocolate_babies.webp"
+          src="/assets/1749767151774-chocolate_babies.webp"
           alt="Hero background"
           fill
-          style={{ objectFit: "cover" }}
           priority
-          quality={70}
+          sizes="100vw"
+          className="w-full h-auto object-cover"
         />
         <div className="absolute inset-0 flex flex-col justify-center items-center px-10 gap-y-8">
           <div className="relative w-4/5 sm:text-7xl text-5xl">

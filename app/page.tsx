@@ -1,6 +1,7 @@
 import HomeCard from "@/app/components/home-card";
 import { getImageUrl } from "@/utils";
 import Hero from "./components/hero";
+import { Metadata } from "next";
 import { getLatestMovies } from "@/app/server-actions/movies";
 import { getCollections } from "@/app/server-actions/lists/get-collections";
 
@@ -8,6 +9,12 @@ import Link from "next/link";
 import { Icon } from "@iconify/react";
 
 export const revalidate = 0;
+
+export const metadata: Metadata = {
+  other: {
+    preload: "/assets/1749767151774-chocolate_babies.webp",
+  },
+};
 
 export default async function Home() {
   try {
@@ -37,11 +44,11 @@ export default async function Home() {
                   alt={featuredLatestMovie.title}
                   className="w-full h-full object-cover rounded-xl"
                 />
-                <div className="flex items-between">
+                <div className="flex items-between ">
                   <span className="absolute top-0 right-0 m-5 text-white bg-rose-500 border-rose-500 text-sm rounded-full border px-2 py-1 mb-4">
                     Nouveauté
                   </span>
-                  <div className="absolute bottom-0 left-0">
+                  <div className="absolute bottom-0 left-0 w-full">
                     <div className="absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-black/80 to-transparent rounded-b-xl z-0"></div>
                     <div className="p-6 relative sm:w-2/3 z-10">
                       <h3 className="text-2xl font-medium">
