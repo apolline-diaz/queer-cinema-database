@@ -7,13 +7,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
-interface CardProps {
-  id: string;
-  title: string;
-  image_url?: string | null;
-}
-
-export default function Hero({ id, title, image_url }: CardProps) {
+export default function Hero() {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
@@ -29,13 +23,13 @@ export default function Hero({ id, title, image_url }: CardProps) {
   return (
     <>
       <div className="relative bg-rose-50 w-full overflow-hidden">
-        <div className="relative w-full overflow-hidden h-[80vh]">
-          <Image
-            src={getImageUrl(image_url)}
-            alt={title}
-            className="object-cover h-full w-full"
-            title={title}
-          />
+        <div
+          className="relative w-full overflow-hidden h-[70vh] bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage:
+              "url('https://xcwrhyjbfgzsaslstssc.supabase.co/storage/v1/object/public/storage//1749767151774-chocolate_babies.webp')",
+          }}
+        >
           <div className="absolute inset-0 flex flex-col justify-center items-center px-10 gap-y-8">
             <div className="relative w-4/5 sm:text-7xl text-5xl">
               <h2 className="text-center font-bold">

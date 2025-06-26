@@ -1,7 +1,7 @@
 import HomeCard from "@/app/components/home-card";
 import { getImageUrl } from "@/utils";
 import Hero from "./components/hero";
-import { getLatestMovies, getTopMovies } from "@/app/server-actions/movies";
+import { getLatestMovies } from "@/app/server-actions/movies";
 import { getCollections } from "@/app/server-actions/lists/get-collections";
 
 import Link from "next/link";
@@ -11,7 +11,6 @@ export const revalidate = 0;
 
 export default async function Home() {
   try {
-    const topMovies = await getTopMovies();
     const latestMovies = await getLatestMovies();
     const collections = await getCollections();
 
@@ -20,13 +19,7 @@ export default async function Home() {
     return (
       <main className="w-full bg-white">
         <div className="w-full ">
-          {topMovies.map((movie) => (
-            <Hero
-              key={`${movie.title}-${movie.id}`}
-              {...movie}
-              image_url={getImageUrl(movie.image_url)}
-            />
-          ))}
+          <Hero />
         </div>
 
         {/* First movie highlight */}
