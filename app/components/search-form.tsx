@@ -29,8 +29,12 @@ interface CollapsibleSectionProps {
 const MOVIES_PER_PAGE = 50;
 
 // component for folding sections
-function CollapsibleSection({ title, children }: CollapsibleSectionProps) {
-  const [isOpen, setIsOpen] = useState(false);
+function CollapsibleSection({
+  title,
+  children,
+  defaultOpen = false,
+}: CollapsibleSectionProps & { defaultOpen?: boolean }) {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
 
   return (
     <div className=" overflow-hidden border-b border-rose-900">
@@ -265,7 +269,7 @@ export default function SearchForm({
               )}
             />
           </CollapsibleSection>
-          <CollapsibleSection title="Type">
+          <CollapsibleSection title="Format">
             <Controller
               name="type"
               control={control}
@@ -280,7 +284,7 @@ export default function SearchForm({
                     { value: "Série", label: "Série" },
                   ]}
                   {...field}
-                  placeholder="Tous les types"
+                  placeholder="Tous les formats"
                 />
               )}
             />
@@ -301,7 +305,10 @@ export default function SearchForm({
             />
           </CollapsibleSection>
 
-          <CollapsibleSection title="Mots-clés">
+          <CollapsibleSection
+            title="Mots-clés"
+            defaultOpen={urlKeywordIds.length > 0}
+          >
             <Controller
               name="keywordIds"
               control={control}
