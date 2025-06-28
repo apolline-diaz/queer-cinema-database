@@ -5,6 +5,7 @@ import Link from "next/link";
 import { isAdmin } from "@/utils/is-user-admin";
 import ClientMovieActions from "./client";
 import { auth } from "@/utils/auth";
+import BackButton from "@/app/components/back-button";
 
 export const revalidate = 0;
 
@@ -39,7 +40,7 @@ export default async function Page({ params }: Props) {
           src={getImageUrl(movie.image_url)}
           title={movie.title}
         />
-        <div className="absolute bottom-0 bg-black bg-opacity-30 w-full h-full text-white p-10 flex justify-between items-end">
+        <div className="absolute bottom-0 w-full h-full text-white p-10 flex justify-between items-end">
           <div className="flex flex-row justify-between items-center w-full">
             <div className="">
               {session && (
@@ -52,7 +53,11 @@ export default async function Page({ params }: Props) {
           </div>
         </div>
       </div>
-      <div className="p-10 text-black flex flex-col font-light gap-3">
+      <div className="px-10 pt-5">
+        <BackButton />
+      </div>
+
+      <div className="px-10 pb-5 text-black flex flex-col font-light gap-3">
         <h1 className="text-4xl font-medium text-rose-900">{movie.title}</h1>
         <h1 className="text-xl font-light  text-gray-400">
           {movie.original_title}

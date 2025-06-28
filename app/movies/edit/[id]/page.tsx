@@ -3,6 +3,7 @@ import EditMovieForm from "./edit-movie-form";
 import { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import { auth } from "@/utils/auth";
+import BackButton from "@/app/components/back-button";
 
 export const metadata: Metadata = {
   title: "Edit Movie",
@@ -26,6 +27,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     <div className="px-10 py-20 flex justify-start">
       <div className="w-full max-w-3xl">
         <h1 className="text-2xl font-medium text-rose-900 mb-5">
+          <BackButton />
           Modifier le film
         </h1>
         <EditMovieForm movie={movie} />

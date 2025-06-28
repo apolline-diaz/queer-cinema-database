@@ -12,6 +12,7 @@ import {
   Legend,
   Cell,
   ResponsiveContainer,
+  Label,
 } from "recharts";
 
 interface KeywordStat {
@@ -27,16 +28,20 @@ export default function KeywordStatsClientComponent({
   keywordStats,
 }: KeywordStatsClientProps) {
   const [chartType, setChartType] = useState<"pie" | "bar">("bar");
+  const totalMovies = keywordStats.reduce(
+    (sum, keyword) => sum + keyword.count,
+    0
+  );
 
   const COLORS = [
-    "oklch(70% 0.25 10)",
-    "oklch(60% 0.22 15)",
-    "oklch(50% 0.20 20)",
-    "oklch(40% 0.18 25)",
-    "oklch(65% 0.24 355)",
-    "oklch(55% 0.21 5)",
-    "oklch(45% 0.19 0)",
-    "oklch(35% 0.16 8)",
+    "oklch(85% 0.08 10)", // beige pâle
+    "oklch(80% 0.07 40)", // pêche clair
+    "oklch(78% 0.07 120)", // vert amande
+    "oklch(82% 0.06 200)", // bleu ciel doux
+    "oklch(87% 0.06 300)", // lavande pâle
+    "oklch(84% 0.05 25)", // rose poudré
+    "oklch(88% 0.05 85)", // jaune pastel
+    "oklch(90% 0.04 180)", // bleu très pâle
   ];
 
   return (
@@ -65,14 +70,13 @@ export default function KeywordStatsClientComponent({
               Diagramme en camembert
             </button>
           </div>
-          <h2 className="text-black text-xl pt-4">
-            Distribution des films par mot-clé
+          <h2 className="text-black text-md pt-4">
+            Répartition des films par les 10 mots-clés les plus fréquents
           </h2>
         </div>
       </div>
 
       <div className="rounded-lg my-6">
-        {/* Distribution des films par mot-clé ({totalMovies} films au total) */}
         <div className="h-96">
           {chartType === "bar" ? (
             <ResponsiveContainer width="100%" height="100%">
@@ -84,15 +88,15 @@ export default function KeywordStatsClientComponent({
                   dataKey="name"
                   angle={-45}
                   textAnchor="end"
-                  height={70}
-                />
+                  height={90}
+                ></XAxis>
                 <YAxis />
                 <Tooltip
                   formatter={(value) => [`${value} films`]}
                   labelFormatter={(label) => `${label}`}
                   contentStyle={{ color: "black", background: "white" }}
                 />
-                <Legend />
+
                 <Bar
                   dataKey="count"
                   name="Nombre de films"
@@ -138,41 +142,6 @@ export default function KeywordStatsClientComponent({
           )}
         </div>
       </div>
-
-      {/* <div className="rounded-lg ">
-        <h2 className="text-xl text-rose-900 font-semibold mb-4">
-          Données brutes
-        </h2>
-        <div className="text-black overflow-x-auto">
-          <table className="min-w-full ">
-            <thead>
-              <tr>
-                <th className="text-rose-900  py-2 border-b border-gray-200 text-left">
-                  Mot-clé
-                </th>
-                <th className="py-2 border-b text-rose-900 border-gray-200 text-right">
-                  Nombre de films
-                </th>
-              </tr>
-            </thead>
-            <tbody className="text-sm font-light">
-              {keywordStats.map((stat, index) => (
-                <tr
-                  key={index}
-                  className={index % 2 === 0 ? "bg-rose-200" : "bg-red-200"}
-                >
-                  <td className="py-2 px-4 border-b border-gray-200">
-                    {stat.name}
-                  </td>
-                  <td className="py-2 px-4 border-b border-gray-200 text-right">
-                    {stat.count}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div> */}
     </>
   );
 }

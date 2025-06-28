@@ -290,13 +290,6 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
 
   return (
     <>
-      <button
-        onClick={() => router.back()}
-        className="flex items-center border border-rose-900 mb-4 text-sm text-rose-900 hover:text-white hover:bg-rose-500 hover:border-rose-500 rounded-full px-2 pr-3"
-      >
-        <Icon icon="mdi:chevron-left" className="inline size-4" />
-        Retour
-      </button>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="rounded-lg text-rose-900 justify-start mx-auto"

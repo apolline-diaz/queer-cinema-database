@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Card from "@/app/components/card";
 import { getList } from "@/app/server-actions/lists/get-list";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import BackButton from "@/app/components/back-button";
 
 export default function ListClientPage({
   params,
@@ -42,13 +43,7 @@ export default function ListClientPage({
 
   return (
     <div className="p-10 py-20">
-      <button
-        onClick={() => router.back()}
-        className="flex items-center border border-rose-900 mb-4 text-sm text-rose-900 hover:text-white hover:bg-rose-500 hover:border-rose-500 rounded-full px-2 pr-3"
-      >
-        <Icon icon="mdi:chevron-left" className="inline size-4" />
-        Retour
-      </button>
+      <BackButton />
       {isLoading ? (
         <div>
           {/* Skeleton for the title */}
