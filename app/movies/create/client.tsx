@@ -299,7 +299,6 @@ const CreateMoviePage: React.FC = () => {
                   const keywordIds = selected.map((k) => k.value).join(",");
                   setValue("keyword_id", keywordIds);
                 }}
-                defaultValues={selectedKeywords}
               />
             )}
           />
