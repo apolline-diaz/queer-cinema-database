@@ -349,7 +349,6 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
                   selected.map((d) => d.value)
                 );
               }}
-              defaultValues={selectedDirectors}
             />
             <p className="text-gray-600 text-xs mt-1">
               Vous pouvez sélectionner plusieurs réalisateur-ices et en retirer.
@@ -532,7 +531,6 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
                   selected.map((g) => g.value)
                 );
               }}
-              defaultValues={selectedGenres}
             />
             <p className="text-gray-600 text-xs mt-1">
               Vous pouvez sélectionner plusieurs genres et en retirer.
@@ -557,7 +555,6 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
                   selected.map((k) => k.value)
                 );
               }}
-              defaultValues={selectedKeywords}
             />
             <p className="text-gray-600 text-xs mt-1">
               Vous pouvez sélectionner plusieurs mot-clés et en retirer.

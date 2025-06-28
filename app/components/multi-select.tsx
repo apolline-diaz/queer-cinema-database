@@ -13,9 +13,7 @@ interface MultiSelectProps {
   options: Option[];
   label: string;
   placeholder?: string;
-  value: { value: string; label: string }[];
   onChange: (selected: Option[]) => void;
-  defaultValues?: Option[];
 }
 
 export default function MultiSelect({
@@ -25,7 +23,6 @@ export default function MultiSelect({
   label,
   placeholder,
   onChange,
-  defaultValues = [],
 }: MultiSelectProps) {
   const [inputValue, setInputValue] = useState("");
   const [filteredOptions, setFilteredOptions] = useState<Option[]>(options);
@@ -55,27 +52,9 @@ export default function MultiSelect({
       <Controller
         name={name}
         control={control}
-        defaultValue={defaultValues}
         render={({ field }) => {
-          // Ensure field.value is always an array of Option objects
-          const safeValue = Array.isArray(field.value)
-            ? field.value.map((item) => {
-                // If item is just a string (value), try to find the corresponding Option
-                if (typeof item === "string") {
-                  const matchingOption = options.find(
-                    (opt) => opt.value === item
-                  );
-                  return matchingOption || { value: item, label: item };
-                }
-                // If it's an object but missing label, add a fallback label
-                if (typeof item === "object" && item !== null && !item.label) {
-                  const matchingOption = options.find(
-                    (opt) => opt.value === item.value
-                  );
-                  return matchingOption || { ...item, label: item.value };
-                }
-                return item;
-              })
+          const selectedValues: Option[] = Array.isArray(field.value)
+            ? field.value
             : [];
 
           return (
@@ -97,17 +76,15 @@ export default function MultiSelect({
                       key={option.value}
                       className="px-4 py-2 cursor-pointer hover:text-white hover:bg-rose-950"
                       onClick={() => {
-                        // Check if the option is already selected
-                        const isAlreadySelected = safeValue.some(
-                          (item: Option) => item.value === option.value
+                        const alreadySelected = selectedValues.some(
+                          (item) => item.value === option.value
                         );
-
-                        if (!isAlreadySelected) {
-                          const updatedSelection = [...safeValue, option];
-                          field.onChange(updatedSelection); // Update form field value
-                          onChange(updatedSelection); // Call parent onChange prop
+                        if (!alreadySelected) {
+                          const newSelection = [...selectedValues, option];
+                          field.onChange(newSelection);
+                          onChange(newSelection);
                         }
-                        setInputValue(""); // Reset input
+                        setInputValue("");
                       }}
                     >
                       {option.label}
@@ -118,7 +95,7 @@ export default function MultiSelect({
 
               {/* Selected Items */}
               <div className="mt-3 flex flex-wrap gap-2">
-                {safeValue.map((option: Option) => (
+                {selectedValues.map((option) => (
                   <span
                     key={option.value}
                     className="inline-flex items-center bg-rose-50 border border-rose-900  text-rose-900 text-sm  font-light px-2 py-1 rounded"
@@ -128,11 +105,11 @@ export default function MultiSelect({
                       type="button"
                       className="ml-2 font-light text-rose-900 hover:text-rose-500"
                       onClick={() => {
-                        const newValue = safeValue.filter(
-                          (item: Option) => item.value !== option.value
+                        const newSelection = selectedValues.filter(
+                          (item) => item.value !== option.value
                         );
-                        field.onChange(newValue);
-                        onChange(newValue);
+                        field.onChange(newSelection);
+                        onChange(newSelection);
                       }}
                     >
                       &times;
