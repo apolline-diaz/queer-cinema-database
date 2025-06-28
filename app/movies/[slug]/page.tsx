@@ -53,16 +53,13 @@ export default async function Page({ params }: Props) {
           </div>
         </div>
       </div>
-      <div className="px-10 pt-5">
-        <BackButton />
-      </div>
 
       <div className="px-10 pb-5 text-black flex flex-col font-light gap-3">
+        <BackButton />
         <h1 className="text-4xl font-medium text-rose-900">{movie.title}</h1>
         <h1 className="text-xl font-light  text-gray-400">
           {movie.original_title}
         </h1>
-
         <h2 className="font-light text-lg mb-2">
           {movie.directors?.length > 0 && (
             <span>
