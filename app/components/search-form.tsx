@@ -265,7 +265,7 @@ export default function SearchForm({
               )}
             />
           </CollapsibleSection>
-          <CollapsibleSection title="Type">
+          <CollapsibleSection title="Format">
             <Controller
               name="type"
               control={control}
@@ -280,7 +280,7 @@ export default function SearchForm({
                     { value: "Série", label: "Série" },
                   ]}
                   {...field}
-                  placeholder="Tous les types"
+                  placeholder="Tous les formats"
                 />
               )}
             />
