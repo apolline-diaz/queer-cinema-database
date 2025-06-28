@@ -55,6 +55,10 @@ export default function Card({
               className="object-cover w-full h-full transform transition-transform duration-700 ease-in-out group-hover:scale-110 group-hover:brightness-50 "
               title={title}
             />
+            <div className="absolute bottom-0 left-0 w-full p-5 ">
+              <div className="text-md font-semibold uppercase">{title}</div>
+              <p className="text-sm font-light">{release_date}</p>
+            </div>
           </Link>
 
           {userIsAdmin && (
@@ -66,10 +70,6 @@ export default function Card({
               <Icon icon="lucide:trash" style={{ fontSize: 15 }} />
             </button>
           )}
-          <div className="absolute bottom-0 left-0 w-full p-5 ">
-            <div className="text-md font-semibold uppercase">{title}</div>
-            <p className="text-sm font-light">{release_date}</p>
-          </div>
         </div>
       </div>
 
