@@ -29,12 +29,8 @@ interface CollapsibleSectionProps {
 const MOVIES_PER_PAGE = 50;
 
 // component for folding sections
-function CollapsibleSection({
-  title,
-  children,
-  defaultOpen = false,
-}: CollapsibleSectionProps & { defaultOpen?: boolean }) {
-  const [isOpen, setIsOpen] = useState(defaultOpen);
+function CollapsibleSection({ title, children }: CollapsibleSectionProps) {
+  const [isOpen, setIsOpen] = useState(true);
 
   return (
     <div className=" overflow-hidden border-b border-rose-900">
@@ -50,7 +46,7 @@ function CollapsibleSection({
           <Icon icon="line-md:chevron-down" className="size-5 text-rose-900 " />
         )}
       </button>
-      {isOpen && <div className="mb-2">{children}</div>}
+      {isOpen && <div className="py-2">{children}</div>}
     </div>
   );
 }
@@ -178,7 +174,16 @@ export default function SearchForm({
 
   // Reset form and fetch all movies
   const handleReset = async () => {
-    reset(); // Reset all form values
+    reset({
+      countryId: "",
+      genreId: "",
+      keywordIds: [],
+      directorId: "",
+      startYear: "",
+      endYear: "",
+      type: "",
+    });
+
     setIsLoading(true);
 
     // Nettoyer l'URL
@@ -305,10 +310,7 @@ export default function SearchForm({
             />
           </CollapsibleSection>
 
-          <CollapsibleSection
-            title="Mots-clés"
-            defaultOpen={urlKeywordIds.length > 0}
-          >
+          <CollapsibleSection title="Mots-clés">
             <Controller
               name="keywordIds"
               control={control}

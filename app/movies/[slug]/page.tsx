@@ -54,7 +54,7 @@ export default async function Page({ params }: Props) {
         </div>
       </div>
       <div className="px-10 pt-5">
-        <BackButton />
+        <BackButton className="w-fit" />
       </div>
 
       <div className="px-10 pb-5 text-black flex flex-col font-light gap-3">
