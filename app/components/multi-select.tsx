@@ -13,6 +13,7 @@ interface MultiSelectProps {
   options: Option[];
   label: string;
   placeholder?: string;
+  value: { value: string; label: string }[];
   onChange: (selected: Option[]) => void;
   defaultValues?: Option[];
 }

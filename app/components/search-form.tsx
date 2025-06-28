@@ -319,6 +319,7 @@ export default function SearchForm({
                   options={keywords}
                   label="Mots-clés"
                   placeholder="Rechercher des mots-clé"
+                  value={field.value}
                   onChange={field.onChange}
                 />
               )}
