@@ -10,6 +10,7 @@ import { getGenres } from "@/app/server-actions/genres/get-genres";
 import { getCountries } from "@/app/server-actions/countries/get-countries";
 import { getKeywords } from "@/app/server-actions/keywords/get-keywords";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import BackButton from "@/app/components/back-button";
 
 const CreateMoviePage: React.FC = () => {
   const {
@@ -90,13 +91,7 @@ const CreateMoviePage: React.FC = () => {
 
   return (
     <div className="px-10 py-20 text-sm w-full sm:w-1/2">
-      <button
-        onClick={() => router.back()}
-        className="flex items-center border border-rose-900 mb-4 text-sm text-rose-900 hover:text-white hover:bg-rose-500 hover:border-rose-500 rounded-full px-2 pr-3"
-      >
-        <Icon icon="mdi:chevron-left" className="inline size-4" />
-        Retour
-      </button>
+      <BackButton />
       <h1 className="tracking-wide text-rose-900 text-2xl mb-5 font-medium">
         Ajouter un film
       </h1>
