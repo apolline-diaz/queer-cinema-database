@@ -32,19 +32,18 @@ export default function ClientSearchComponent({
 
   // Vérifier tous les paramètres pertinents
   const urlSearchMode = searchParams.get("searchMode") || "";
-  // const hasSearch = searchParams.has("search") || initialSearch !== "";
+  const hasSearch = searchParams.has("search") || initialSearch !== "";
 
   // Définir le mode initial en fonction des paramètres d'URL
-  // Priorité: 1. Mode explicite dans l'URL, 2. Présence de title/keyword, 3. Mode par défaut
-  const initialMode = urlSearchMode === "form" ? "form" : "field";
-  // const initialMode =
-  //   urlSearchMode === "field"
-  //     ? "field"
-  //     : urlSearchMode === "form"
-  //       ? "form"
-  //       : hasSearch
-  //         ? "field"
-  //         : "form";
+  // const initialMode = urlSearchMode === "form" ? "form" : "field";
+  const initialMode =
+    urlSearchMode === "field"
+      ? "field"
+      : urlSearchMode === "form"
+        ? "form"
+        : hasSearch
+          ? "field"
+          : "form";
 
   const [searchMode, setSearchMode] = useState<"field" | "form">(initialMode);
 

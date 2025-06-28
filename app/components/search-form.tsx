@@ -26,7 +26,7 @@ interface CollapsibleSectionProps {
   children: React.ReactNode;
 }
 
-const MOVIES_PER_PAGE = 50;
+const MOVIES_PER_PAGE = 100;
 
 // component for folding sections
 function CollapsibleSection({ title, children }: CollapsibleSectionProps) {
@@ -46,7 +46,7 @@ function CollapsibleSection({ title, children }: CollapsibleSectionProps) {
           <Icon icon="line-md:chevron-down" className="size-5 text-rose-900 " />
         )}
       </button>
-      {isOpen && <div className="py-2">{children}</div>}
+      {isOpen && <div className="pb-2">{children}</div>}
     </div>
   );
 }
