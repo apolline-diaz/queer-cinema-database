@@ -12,6 +12,7 @@ import {
   Legend,
   Cell,
   ResponsiveContainer,
+  Label,
 } from "recharts";
 
 interface KeywordStat {
@@ -27,6 +28,10 @@ export default function KeywordStatsClientComponent({
   keywordStats,
 }: KeywordStatsClientProps) {
   const [chartType, setChartType] = useState<"pie" | "bar">("bar");
+  const totalMovies = keywordStats.reduce(
+    (sum, keyword) => sum + keyword.count,
+    0
+  );
 
   const COLORS = [
     "oklch(85% 0.08 10)", // beige pâle
@@ -83,15 +88,15 @@ export default function KeywordStatsClientComponent({
                   dataKey="name"
                   angle={-45}
                   textAnchor="end"
-                  height={70}
-                />
+                  height={90}
+                ></XAxis>
                 <YAxis />
                 <Tooltip
                   formatter={(value) => [`${value} films`]}
                   labelFormatter={(label) => `${label}`}
                   contentStyle={{ color: "black", background: "white" }}
                 />
-                <Legend />
+
                 <Bar
                   dataKey="count"
                   name="Nombre de films"
