@@ -46,7 +46,7 @@ function CollapsibleSection({ title, children }: CollapsibleSectionProps) {
           <Icon icon="line-md:chevron-down" className="size-5 text-rose-900 " />
         )}
       </button>
-      {isOpen && <div className="mb-2">{children}</div>}
+      {isOpen && <div className="py-2">{children}</div>}
     </div>
   );
 }
@@ -174,7 +174,16 @@ export default function SearchForm({
 
   // Reset form and fetch all movies
   const handleReset = async () => {
-    reset(); // Reset all form values
+    reset({
+      countryId: "",
+      genreId: "",
+      keywordIds: [],
+      directorId: "",
+      startYear: "",
+      endYear: "",
+      type: "",
+    });
+
     setIsLoading(true);
 
     // Nettoyer l'URL
