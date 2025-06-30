@@ -31,7 +31,7 @@ export default async function Home() {
 
         {/* First movie highlight */}
         {featuredLatestMovie && (
-          <div className="w-full p-10 overflow-hidden">
+          <div className="w-full p-10 overflow-hidden bg-rose-300">
             <div className="top-5 right-5 text-white"></div>
             <div className="flex sm:flex-row flex-col w-full h-full sm:h-[400px] gap-4">
               <Link
@@ -48,7 +48,7 @@ export default async function Home() {
                   <span className="absolute top-0 right-0 m-5 text-white bg-rose-500 border-rose-500 text-sm rounded-full border px-2 py-1 mb-4">
                     Nouveauté
                   </span>
-                  <div className="absolute bottom-0 left-0">
+                  <div className="absolute bottom-0 left-0 w-full">
                     <div className="absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-black/80 to-transparent rounded-b-xl z-0"></div>
                     <div className="p-6 relative sm:w-2/3 z-10">
                       <h3 className="text-2xl font-medium">
@@ -74,32 +74,29 @@ export default async function Home() {
             </div>
           </div>
         )}
-        <div className="pl-10">
-          <div className="flex flex-col mb-5">
-            <div className="flex justify-between items-center pr-10 mb-4">
-              <h2 className="text-2xl font-semibold  text-rose-900">
-                Catalogue
-              </h2>
-              <Link
-                href="/movies"
-                className="border rounded-xl px-2 py-1 border-rose-900 text-rose-900 hover:border-rose-500 hover:bg-rose-500 hover:text-white text-sm"
-              >
-                Voir plus{" "}
-                <Icon icon="mdi:chevron-right" className="inline size-4" />
-              </Link>
-            </div>
-            <div className="flex flex-row-1 mb-5 gap-3 overflow-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
-              {otherLatestMovies.map((movie) => (
-                <HomeCard
-                  key={`${movie.title}-${movie.id}`}
-                  {...movie}
-                  release_date={movie.release_date || ""}
-                  image_url={getImageUrl(movie.image_url || "")}
-                />
-              ))}
-            </div>
+        <div className="flex flex-col px-10 pb-5 mb-8 bg-rose-300">
+          <div className="flex justify-between items-center pr-10 mb-4">
+            <h2 className="text-2xl font-semibold  text-rose-900">Catalogue</h2>
+            <Link
+              href="/movies"
+              className="border rounded-xl px-2 py-1 border-rose-900 text-rose-900 hover:border-rose-500 hover:bg-rose-500 hover:text-white text-sm"
+            >
+              Voir plus{" "}
+              <Icon icon="mdi:chevron-right" className="inline size-4" />
+            </Link>
           </div>
-
+          <div className="flex flex-row-1 mb-5 gap-3 overflow-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+            {otherLatestMovies.map((movie) => (
+              <HomeCard
+                key={`${movie.title}-${movie.id}`}
+                {...movie}
+                release_date={movie.release_date || ""}
+                image_url={getImageUrl(movie.image_url || "")}
+              />
+            ))}
+          </div>
+        </div>
+        <div className="pl-10">
           {collections.length > 0 && (
             <div className="flex flex-col space-y-5 mb-10">
               {collections.map((collection) => (
