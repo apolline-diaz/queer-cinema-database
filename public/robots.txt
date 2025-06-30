@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://queercinema.fr/sitemap.xml
+
+# Optionnel : block folders
+Disallow: /account
+Disallow: /account/settings
+Disallow: /account/forgot-password
+Disallow: /account/forgot-password/confirmation
+Disallow: /account/reset-password
+Disallow: /login
+Disallow: /signup
+Disallow: /lists

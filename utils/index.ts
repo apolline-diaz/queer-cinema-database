@@ -1,5 +1,5 @@
 export const getCanonicalUrl = () => {
-  return process.env.NODE_ENV !== "production"
+  return process.env.NODE_ENV === "production"
     ? "https://queercinema.fr/"
     : "http://localhost:3000";
 };
