@@ -31,10 +31,10 @@ export default async function Home() {
 
         {/* First movie highlight */}
         {featuredLatestMovie && (
-          <div className="relative w-full h-[700px] mb-10">
+          <div className="relative w-full h-[700px] sm:h-[600px] mb-10">
             <Link
               href={`/movies/${featuredLatestMovie.id}`}
-              className="relative h-[400px] w-full overflow-hidden"
+              className="relative block h-full w-full overflow-hidden"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -43,7 +43,8 @@ export default async function Home() {
                 className="w-full h-full object-cover"
               />
               {/* Overlay sombre pour lisibilité */}
-              <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/80 to-black/95 z-10" />
+              <div className="absolute inset-0 bg-black bg-opacity-60 z-10" />
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black/80 z-10" />
 
               {/* Titre + Infos en haut à gauche */}
               <div
