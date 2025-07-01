@@ -31,7 +31,7 @@ export default async function Home() {
 
         {/* First movie highlight */}
         {featuredLatestMovie && (
-          <div className="relative w-full h-[700px] mb-10 ">
+          <div className="relative w-full h-[700px] mb-10">
             <Link
               href={`/movies/${featuredLatestMovie.id}`}
               className="relative h-[400px] w-full overflow-hidden"
@@ -46,7 +46,7 @@ export default async function Home() {
               <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/80 to-black/95 z-10" />
 
               {/* Titre + Infos en haut à gauche */}
-              <div className="absolute text-right rounded-xl border border-white top-0 right-0 z-20 m-10 p-5 sm:max-w-[60%] w-[80%]  text-white space-y-2">
+              <div className="absolute text-right rounded-xl border border-white top-0 right-0 z-20 m-10 p-5 max-w-[60%] text-white space-y-2">
                 <h3 className="text-2xl font-medium">
                   {featuredLatestMovie.title}
                 </h3>
@@ -64,14 +64,14 @@ export default async function Home() {
                 </p>
               </div>
             </Link>
-            <div className="absolute bottom-0 left-0 w-full z-20 p-10">
+            <div className="absolute bottom-0 left-0 w-full z-20 pl-10 pb-10">
               <div className="flex justify-between items-center mb-3 text-white">
                 <h2 className="text-2xl font-semibold text-rose-500">
                   Nouveautés
                 </h2>
                 <Link
                   href="/movies"
-                  className="border font-light rounded-xl px-2 py-1 border-rose-500 text-white bg-rose-500 hover:border-rose-900 hover:bg-rose-900 hover:text-white text-sm"
+                  className="border font-light rounded-xl mr-10 px-2 py-1 border-rose-500 text-white bg-rose-500 hover:border-rose-900 hover:bg-rose-900 hover:text-white text-sm"
                 >
                   Voir plus{" "}
                   <Icon icon="mdi:chevron-right" className="inline size-4" />
