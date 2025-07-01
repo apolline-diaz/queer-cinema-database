@@ -31,71 +31,67 @@ export default async function Home() {
 
         {/* First movie highlight */}
         {featuredLatestMovie && (
-          <div className="w-full p-10 overflow-hidden bg-rose-300">
-            <div className="top-5 right-5 text-white"></div>
-            <div className="flex sm:flex-row flex-col w-full h-full sm:h-[400px] gap-4">
-              <Link
-                href={`/movies/${featuredLatestMovie.id}`}
-                className="relative h-[400px] w-full overflow-hidden rounded-xl"
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={getImageUrl(featuredLatestMovie.image_url || "")}
-                  alt={featuredLatestMovie.title}
-                  className="w-full h-full object-cover rounded-xl"
-                />
-                <div className="flex items-between">
-                  <span className="absolute top-0 right-0 m-5 text-white bg-rose-500 border-rose-500 text-sm rounded-full border px-2 py-1 mb-4">
-                    Nouveauté
-                  </span>
-                  <div className="absolute bottom-0 left-0 w-full">
-                    <div className="absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-black/80 to-transparent rounded-b-xl z-0"></div>
-                    <div className="p-6 relative sm:w-2/3 z-10">
-                      <h3 className="text-2xl font-medium">
-                        {featuredLatestMovie.title}
-                      </h3>
-                      <span className="inline-block text-md font-light">
-                        {featuredLatestMovie?.movies_directors
-                          ?.map((item) => item.directors.name)
-                          .join(", ") || "Réalisateur inconnu"}
-                      </span>{" "}
-                      •{" "}
-                      <span className="inline-block mb-1 text-md font-light">
-                        {featuredLatestMovie.release_date || ""}
-                      </span>
-                      <p className="line-clamp-3 text-md font-extralight">
-                        {featuredLatestMovie.description ||
-                          "Pas de description disponible"}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </Link>
+          <div className="relative w-full h-[600px] mb-10 ">
+            <Link
+              href={`/movies/${featuredLatestMovie.id}`}
+              className="relative h-[400px] w-full overflow-hidden"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={getImageUrl(featuredLatestMovie.image_url || "")}
+                alt={featuredLatestMovie.title}
+                className="w-full h-full object-cover"
+              />
+              {/* Overlay sombre pour lisibilité */}
+              <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/80 to-black/95 rounded-xl z-10" />
+
+              {/* Titre + Infos en haut à gauche */}
+              <div className="absolute top-0 left-0 z-20 p-10 max-w-[60%] text-white space-y-2">
+                <h3 className="text-2xl font-medium">
+                  {featuredLatestMovie.title}
+                </h3>
+                <p className="inline-block text-md font-light">
+                  {featuredLatestMovie?.movies_directors
+                    ?.map((item) => item.directors.name)
+                    .join(", ") || "Réalisateur inconnu"}
+                </p>{" "}
+                •{" "}
+                <p className="inline-block mb-1 text-md font-light">
+                  {featuredLatestMovie.release_date || ""}
+                </p>
+                <p className="line-clamp-3 text-md font-extralight">
+                  {featuredLatestMovie.description ||
+                    "Pas de description disponible"}
+                </p>
+              </div>
+            </Link>
+            <div className="absolute bottom-0 left-0 w-full z-20 p-10">
+              <div className="flex justify-between items-center mb-3 text-white">
+                <h2 className="text-2xl font-semibold text-rose-500">
+                  Catalogue
+                </h2>
+                <Link
+                  href="/movies"
+                  className="border font-light rounded-xl px-2 py-1 border-rose-900 text-white bg-rose-900 hover:border-rose-500 hover:bg-rose-500 hover:text-white text-sm"
+                >
+                  Voir plus{" "}
+                  <Icon icon="mdi:chevron-right" className="inline size-4" />
+                </Link>
+              </div>
+              <div className="flex gap-3 overflow-x-auto pb-2">
+                {otherLatestMovies.map((movie) => (
+                  <HomeCard
+                    key={`${movie.title}-${movie.id}`}
+                    {...movie}
+                    release_date={movie.release_date || ""}
+                    image_url={getImageUrl(movie.image_url || "")}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         )}
-        <div className="flex flex-col px-10 pb-5 mb-8 bg-rose-300">
-          <div className="flex justify-between items-center pr-10 mb-4">
-            <h2 className="text-2xl font-semibold  text-rose-900">Catalogue</h2>
-            <Link
-              href="/movies"
-              className="border rounded-xl px-2 py-1 border-rose-900 text-rose-900 hover:border-rose-500 hover:bg-rose-500 hover:text-white text-sm"
-            >
-              Voir plus{" "}
-              <Icon icon="mdi:chevron-right" className="inline size-4" />
-            </Link>
-          </div>
-          <div className="flex flex-row-1 mb-5 gap-3 overflow-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
-            {otherLatestMovies.map((movie) => (
-              <HomeCard
-                key={`${movie.title}-${movie.id}`}
-                {...movie}
-                release_date={movie.release_date || ""}
-                image_url={getImageUrl(movie.image_url || "")}
-              />
-            ))}
-          </div>
-        </div>
+
         <div className="pl-10">
           {collections.length > 0 && (
             <div className="flex flex-col space-y-5 mb-10">
