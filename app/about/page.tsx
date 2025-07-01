@@ -8,25 +8,24 @@ export default function About() {
       <h2 className="text-rose-900 font-medium text-2xl mb-6">À propos</h2>
       <div className="text-black">
         <p className=" w-full font-light  mb-4">
-          Ce site est né du souhait d&apos;archiver le compte Instagram
-          <a
-            className="text-rose-500 px-1 hover:underline"
-            href="https://www.instagram.com/lawrens_shyboi/"
-          >
-            @lawrens_shyboi
-          </a>
-          que j&apos;ai créé en fin 2019 et que j&apos;ai géré jusqu&apos;en
-          2023. J&apos;y partageais des références de films, de séries et
-          d&apos;émissions télé qui mettaient en scène des personnes LGBTQI+ ou
-          traitaient de sujets multiples entourant ces communautés.
-          <br /> Je crois que les images ont beaucoup à nous dire de
-          l&apos;histoire qui nous précède et du présent dans lequel nous
-          vivons. Alors montrer la richesse et la diversité des films qui
-          existent et des sujets abordés semblait essentiel.
-          <br /> Afin de préserver les multiples références collectées et
-          partagées au fil du temps grâce aux communautés (LGBTQI+ et
-          d&apos;autres), j&apos;ai pensé que développer un site avec une base
-          de données propre serait la solution la plus viable et accessible.
+          Ce site a pour vocation d'archiver et de valoriser la diversité du
+          cinéma LGBTQI+, en mettant l'accent sur des œuvres sélectionnées pour
+          leur singularité artistique, leur engagement politique et leur vision
+          incarnée depuis des regards situés. L'objectif est de dénicher des
+          films, séries et archives audiovisuelles souvent méconnus du grand
+          public, en explorant les productions au-delà des circuits
+          traditionnels français et américains.
+          <br />
+          Cette démarche vise particulièrement à mettre en lumière des
+          représentations authentiques et nuancées de populations insuffisamment
+          représentées à l'écran : les femmes, les personnes trans, les
+          personnes racisées et les personnes assignées handicapées.
+          <br />
+          Les images et les récits audiovisuels portent en eux une part
+          importante de notre histoire collective et de notre compréhension du
+          monde contemporain. En rassemblant ces références dans une base de
+          données accessible, ce site souhaite contribuer à préserver et
+          diffuser cette diversité cinématographique.
         </p>
 
         <div className="text-rose-900 ">
@@ -41,10 +40,10 @@ export default function About() {
                 certain travail cinématographique, un discours, ou faisant
                 partie d&apos;une certaine histoire des communautés LGBQTI+ à
                 travers le monde.
-                <br /> Ce projet est né en France et donc le travail de
-                recherche se fait depuis cette localisation et ce point de vue.
-                <br /> Mon intérêt se porte surtout sur les oeuvres datées, avec
-                un intérêt plus fort pour les années 90 et 2000.
+                <br /> Ce projet est né en France et le travail de recherche se
+                fait depuis cette localisation.
+                <br /> Un intérêt particulier est porté à la période des années
+                90 et 2000.
                 <br /> <br />
                 <span className="italic font-light text-xs">
                   J&apos;ai exclu les films érotiques et pornographiques
@@ -89,6 +88,19 @@ export default function About() {
                 leur identité de genre, orientation ou profession car les
                 informations ne peuvent pas être vérifiées et elles peuvent
                 évoluer dans le temps.
+              </p>
+            </div>
+            <div className="bg-rose-50 rounded-xl p-5">
+              <h3 className="font-bold mb-2">Les ressources</h3>
+              <p className="font-light text-black">
+                Les informations des films sont tirés de sités et organisations
+                dédiés au cinéma tels que :
+                <br /> Plateformes communautaires : Letterboxd, Mubi,
+                SensCritique, AlloCiné
+                <br /> Bases de données : The Movie Database, IMDB, UniFrance,
+                Film documentaire
+                <br /> Distributeurs : Frameline, Women Make Movies
+                <br /> Archives nationales : BFI, UCLA, Vucavu, INA
               </p>
             </div>
           </div>

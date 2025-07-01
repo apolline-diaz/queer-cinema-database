@@ -59,20 +59,19 @@ export default async function Home() {
                 <p className="inline-block mb-1 text-md font-light">
                   {featuredLatestMovie.release_date || ""}
                 </p>
-                <p className="line-clamp-3 text-md font-extralight">
-                  {featuredLatestMovie.description ||
-                    "Pas de description disponible"}
+                <p className="line-clamp-5 overflow-hidden text-md font-extralight">
+                  {featuredLatestMovie.description || ""}
                 </p>
               </div>
             </Link>
             <div className="absolute bottom-0 left-0 w-full z-20 p-10">
               <div className="flex justify-between items-center mb-3 text-white">
                 <h2 className="text-2xl font-semibold text-rose-500">
-                  Catalogue
+                  Nouveautés
                 </h2>
                 <Link
                   href="/movies"
-                  className="border font-light rounded-xl px-2 py-1 border-rose-900 text-white bg-rose-900 hover:border-rose-500 hover:bg-rose-500 hover:text-white text-sm"
+                  className="border font-light rounded-xl px-2 py-1 border-rose-500 text-white bg-rose-500 hover:border-rose-900 hover:bg-rose-900 hover:text-white text-sm"
                 >
                   Voir plus{" "}
                   <Icon icon="mdi:chevron-right" className="inline size-4" />
