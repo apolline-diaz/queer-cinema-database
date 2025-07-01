@@ -46,7 +46,7 @@ export default async function Home() {
               <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/80 to-black/95 z-10" />
 
               {/* Titre + Infos en haut à gauche */}
-              <div className="absolute text-right rounded-xl border border-white top-0 right-0 z-20 m-10 p-5 max-w-[60%] text-white space-y-2">
+              <div className="absolute text-right rounded-xl border border-white top-0 right-0 z-20 m-10 p-5 sm:max-w-[60%] w-[80%]  text-white space-y-2">
                 <h3 className="text-2xl font-medium">
                   {featuredLatestMovie.title}
                 </h3>
