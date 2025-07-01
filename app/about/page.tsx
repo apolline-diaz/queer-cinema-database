@@ -57,12 +57,14 @@ export default function About() {
                 L&apos;indexation permet une recherche plus spécifique des
                 films. Face à la masse de productions sur les sujets LGBTQI+ qui
                 existe aujourd&apos;hui, il est difficile de trouver une oeuvre
-                qui correspond à nos envies ou à des sujets qui nous
-                intéressent. <br />
-                J&apos;ai donc choisi d&apos;indexer les films en leur associant
-                des mots-clés et en utilisant d&apos;autres informations clés
-                (le genre, l&apos;année de sortie, le pays de production, lea
-                réalisateur-ice, le type).
+                qui correspond à des critères et sujets spécifiques. <br />
+                C'est pourquoi il est essentiel d'&apos;indexer les films en
+                leur associant des mots-clés et en utilisant d&apos;autres
+                informations clés (lea réalisateur-ice, le genre, l&apos;année
+                de sortie la durée, le pays de production, le format, la
+                langue). Cela permet une meilleure compréhension du contenu des
+                oeuvres et apporte des informations plus complètes au-delà du
+                simple label "queer".
                 <br />
                 Dans la page Catalogue, vous trouverez tous les films de la base
                 de données. Ils sont classés du plus récent ajout au plus
@@ -77,23 +79,23 @@ export default function About() {
                 associés permettent à l&apos;utilisateur d&apos;avoir une vision
                 globale des sujets abordés.
                 <br />
-                J&apos;ai surtout mis en avant les thématiques (sociales,
-                économiques, politiques, culturelles), l&apos;identité de genre
-                et l&apos;orientation sexuelle/romantique des personnages, et
-                celles avec qui ils flirtent. J&apos;ai aussi intégré les
-                expériences de vie, les formats et genres cinématographiques et
-                les régions géographiques.
+                Sont mis en avant : les thématiques (sociales, économiques,
+                politiques, culturelles), l&apos;identité de genre et
+                l&apos;orientation sexuelle/romantique des personnages, et
+                celles avec qui ils flirtent.
+                <br /> Sont également intégrées : les expériences de vie, les
+                formats et genres cinématographiques et les régions
+                géographiques.
                 <br />
-                J&apos;ai choisi de ne pas identifier les réalisateur-ices sur
-                leur identité de genre, orientation ou profession car les
-                informations ne peuvent pas être vérifiées et elles peuvent
-                évoluer dans le temps.
+                L'identité de genre et l'orientation des réalisateur-ices ou
+                leur profession n'est pas spécifiée car elle ne peut pas être
+                vérifiée et peut changer.
               </p>
             </div>
             <div className="bg-rose-50 rounded-xl p-5">
               <h3 className="font-bold mb-2">Les ressources</h3>
               <p className="font-light text-black">
-                Les informations des films sont tirés de sités et organisations
+                Les informations des films sont tirées de sites et organisations
                 dédiés au cinéma tels que :
                 <br /> Plateformes communautaires : Letterboxd, Mubi,
                 SensCritique, AlloCiné
