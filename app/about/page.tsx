@@ -46,8 +46,8 @@ export default function About() {
                 90 et 2000.
                 <br /> <br />
                 <span className="italic font-light text-xs">
-                  J&apos;ai exclu les films érotiques et pornographiques
-                  mainstream.
+                  Les films érotiques et pornographiques mainstream ne sont pas
+                  traités.
                 </span>
               </p>
             </div>
@@ -58,8 +58,8 @@ export default function About() {
                 films. Face à la masse de productions sur les sujets LGBTQI+ qui
                 existe aujourd&apos;hui, il est difficile de trouver une oeuvre
                 qui correspond à des critères et sujets spécifiques. <br />
-                C'est pourquoi il est essentiel d'&apos;indexer les films en
-                leur associant des mots-clés et en utilisant d&apos;autres
+                C'est pourquoi il est essentiel d&apos;indexer les films en leur
+                associant des mots-clés et en utilisant d&apos;autres
                 informations clés (lea réalisateur-ice, le genre, l&apos;année
                 de sortie la durée, le pays de production, le format, la
                 langue). Cela permet une meilleure compréhension du contenu des
@@ -83,9 +83,8 @@ export default function About() {
                 politiques, culturelles), l&apos;identité de genre et
                 l&apos;orientation sexuelle/romantique des personnages, et
                 celles avec qui ils flirtent.
-                <br /> Sont également intégrées : les expériences de vie, les
-                formats et genres cinématographiques et les régions
-                géographiques.
+                <br /> Sont aussi intégrés : les expériences de vie, les formats
+                et genres cinématographiques et les régions géographiques.
                 <br />
                 L'identité de genre et l'orientation des réalisateur-ices ou
                 leur profession n'est pas spécifiée car elle ne peut pas être
@@ -95,14 +94,16 @@ export default function About() {
             <div className="bg-rose-50 rounded-xl p-5">
               <h3 className="font-bold mb-2">Les ressources</h3>
               <p className="font-light text-black">
-                Les informations des films sont tirées de sites et organisations
-                dédiés au cinéma tels que :
-                <br /> Plateformes communautaires : Letterboxd, Mubi,
+                Les informations des films sont tirées de sites et
+                d'organisations dédiés au cinéma tels que :
+                <br /> - Plateformes communautaires : Letterboxd, Mubi,
                 SensCritique, AlloCiné
-                <br /> Bases de données : The Movie Database, IMDB, UniFrance,
+                <br /> - Bases de données : The Movie Database, IMDB, UniFrance,
                 Film documentaire
-                <br /> Distributeurs : Frameline, Women Make Movies
-                <br /> Archives nationales : BFI, UCLA, Vucavu, INA
+                <br /> - Distributeurs : Frameline, Women Make Movies, Vucavu,
+                Video Data Bank, VTape, CFMDC
+                <br /> - Festivals : Chéries Chéris, Cineffable, Pink Screens
+                <br /> - Archives nationales : BFI, UCLA, INA
               </p>
             </div>
           </div>
