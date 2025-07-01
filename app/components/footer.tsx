@@ -6,10 +6,10 @@ export default function Header() {
       <div className="flex flex-col sm:flex-row justify-between">
         <div className="py-2">
           <div className="flex flex-row text-xl mb-2">
-            <p className="font-bold">queer cinema</p>
-            <span className="px-2 font-light">database</span>
+            <p className="font-medium">queer cinema</p>
+            <span className="px-2 font-extralight">database</span>
           </div>
-          <p className="w-3/4 font-light">
+          <p className="w-3/4 font-extralight">
             Une sélection de films et d&apos;archives LGBTQIA+ pour célébrer la
             pluralité des regards queer dans le monde.
           </p>
