@@ -46,19 +46,19 @@ export default async function Home() {
               <div className="bg-black/10 backdrop-blur-sm absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black/100 z-10" />
 
               {/* Titre + Infos en haut à gauche */}
-              <div className="absolute top-10 px-10 flex flex-col justify-center items-center text-center z-20">
+              <div className="absolute top-10 px-10 flex flex-col justify-center items-center text-center sm:text-left sm:items-start sm:justify-start z-20">
                 <h3 className="text-2xl font-medium">
                   {featuredLatestMovie.title}
                 </h3>
-                <p className="inline-block text-md font-light">
+                {/* <p className="inline-block text-md font-light">
                   {featuredLatestMovie?.movies_directors
                     ?.map((item) => item.directors.name)
                     .join(", ") || "Réalisateur inconnu"}
-                </p>
+                </p> */}
                 <p className="inline-block mb-1 text-md font-light">
                   {featuredLatestMovie.release_date || ""}
                 </p>
-                <p className="line-clamp-5 w-4/5 overflow-hidden text-md font-light">
+                <p className="line-clamp-5 sm:w-1/2 w-4/5 overflow-hidden text-md font-light">
                   {featuredLatestMovie.description || ""}
                 </p>
               </div>
