@@ -31,7 +31,7 @@ export default async function Home() {
 
         {/* First movie highlight */}
         {featuredLatestMovie && (
-          <div className="relative w-full h-[700px] sm:h-[600px] mb-10">
+          <div className="relative w-full h-[600px] mb-10">
             <Link
               href={`/movies/${featuredLatestMovie.id}`}
               className="h-full w-full overflow-hidden"
@@ -43,18 +43,10 @@ export default async function Home() {
                 className="w-full h-full object-cover"
               />
               {/* Overlay sombre pour lisibilité */}
-              <div className="absolute inset-0 bg-black bg-opacity-60 z-10" />
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black/80 z-10" />
+              <div className="bg-black/10 backdrop-blur-sm absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black/100 z-10" />
 
               {/* Titre + Infos en haut à gauche */}
-              <div
-                className="absolute top-10 left-10 sm:top-8 sm:right-8 z-20 
-                             max-w-[70%] sm:max-w-[60%] 
-                             bg-black/20 backdrop-blur-sm
-                             text-white space-y-2 
-                             rounded-xl border border-white/30 
-                             p-3 sm:p-5"
-              >
+              <div className="absolute top-10 px-10 flex flex-col justify-center items-center text-center z-20">
                 <h3 className="text-2xl font-medium">
                   {featuredLatestMovie.title}
                 </h3>
@@ -62,12 +54,11 @@ export default async function Home() {
                   {featuredLatestMovie?.movies_directors
                     ?.map((item) => item.directors.name)
                     .join(", ") || "Réalisateur inconnu"}
-                </p>{" "}
-                •{" "}
+                </p>
                 <p className="inline-block mb-1 text-md font-light">
                   {featuredLatestMovie.release_date || ""}
                 </p>
-                <p className="line-clamp-5 overflow-hidden text-md font-extralight">
+                <p className="line-clamp-4 w-3/4 overflow-hidden text-md font-light">
                   {featuredLatestMovie.description || ""}
                 </p>
               </div>
