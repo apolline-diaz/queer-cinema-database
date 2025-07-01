@@ -31,7 +31,7 @@ export default async function Home() {
 
         {/* First movie highlight */}
         {featuredLatestMovie && (
-          <div className="relative w-full h-[600px] mb-10 ">
+          <div className="relative w-full h-[700px] mb-10 ">
             <Link
               href={`/movies/${featuredLatestMovie.id}`}
               className="relative h-[400px] w-full overflow-hidden"
