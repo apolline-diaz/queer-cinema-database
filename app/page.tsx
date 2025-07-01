@@ -58,7 +58,7 @@ export default async function Home() {
                 <p className="inline-block mb-1 text-md font-light">
                   {featuredLatestMovie.release_date || ""}
                 </p>
-                <p className="line-clamp-4 w-3/4 overflow-hidden text-md font-light">
+                <p className="line-clamp-5 w-4/5 overflow-hidden text-md font-light">
                   {featuredLatestMovie.description || ""}
                 </p>
               </div>
