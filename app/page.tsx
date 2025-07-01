@@ -34,7 +34,7 @@ export default async function Home() {
           <div className="relative w-full h-[700px] sm:h-[600px] mb-10">
             <Link
               href={`/movies/${featuredLatestMovie.id}`}
-              className="relative block h-full w-full overflow-hidden"
+              className="h-full w-full overflow-hidden"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -48,8 +48,8 @@ export default async function Home() {
 
               {/* Titre + Infos en haut à gauche */}
               <div
-                className="absolute top-4 left-10 sm:top-8 sm:right-8 z-20 
-                             max-w-[85%] sm:max-w-[60%] 
+                className="absolute top-10 left-10 sm:top-8 sm:right-8 z-20 
+                             max-w-[70%] sm:max-w-[60%] 
                              bg-black/20 backdrop-blur-sm
                              text-white space-y-2 
                              rounded-xl border border-white/30 
