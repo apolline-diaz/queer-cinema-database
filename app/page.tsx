@@ -43,10 +43,10 @@ export default async function Home() {
                 className="w-full h-full object-cover"
               />
               {/* Overlay sombre pour lisibilité */}
-              <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/80 to-black/95 rounded-xl z-10" />
+              <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/80 to-black/95 z-10" />
 
               {/* Titre + Infos en haut à gauche */}
-              <div className="absolute top-0 left-0 z-20 p-10 max-w-[60%] text-white space-y-2">
+              <div className="absolute text-right rounded-xl border border-white top-0 right-0 z-20 m-10 p-5 max-w-[60%] text-white space-y-2">
                 <h3 className="text-2xl font-medium">
                   {featuredLatestMovie.title}
                 </h3>
