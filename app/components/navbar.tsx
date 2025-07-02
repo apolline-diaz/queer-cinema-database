@@ -65,6 +65,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                   className="px-4"
                   onMouseEnter={() => setIsHovered(true)}
                   onMouseLeave={() => setIsHovered(false)}
+                  aria-label="Ouvrir le menu utilisateur"
                 >
                   <Icon
                     icon={
@@ -113,7 +114,10 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                         </Link>
                       ) : (
                         <form action={logout}>
-                          <button className="hover:text-rose-500 text-rose-900">
+                          <button
+                            className="hover:text-rose-500 text-rose-900"
+                            aria-label="Se déconnecter de votre compte"
+                          >
                             Se déconnecter
                           </button>
                         </form>
@@ -125,6 +129,9 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
               <button
                 onClick={handleClick}
                 className="HAMBURGER-ICON space-y-2"
+                aria-label={
+                  isOpen ? "Fermer le menu mobile" : "Ouvrir le menu mobile"
+                }
               >
                 <svg
                   data-testid="geist-icon"
@@ -152,6 +159,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                 <button
                   onClick={handleClick}
                   className="absolute top-O right-0 px-8"
+                  aria-label="Fermer le menu"
                 >
                   <svg
                     className="h-5 w-5 text-gray-black hover:text-rose-900"
@@ -228,6 +236,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                     className="px-4"
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}
+                    aria-label="Ouvrir le menu utilisateur"
                   >
                     <Icon
                       icon={
@@ -276,7 +285,10 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                           </Link>
                         ) : (
                           <form action={logout}>
-                            <button className="hover:text-rose-500 text-rose-900">
+                            <button
+                              className="hover:text-rose-500 text-rose-900"
+                              aria-label="Se déconnecter de votre compte"
+                            >
                               Se déconnecter
                             </button>
                           </form>

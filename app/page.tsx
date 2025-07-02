@@ -7,7 +7,7 @@ import { getCollections } from "@/app/server-actions/lists/get-collections";
 import Link from "next/link";
 import { Icon } from "@iconify/react";
 
-export const revalidate = 0;
+export const revalidate = 3600; // revalidate every hour (Incremental Static Regeneration)
 
 export default async function Home() {
   try {
@@ -28,10 +28,31 @@ export default async function Home() {
             />
           ))}
         </div>
-
+        <div className="w-full py-10 pl-10">
+          <div className="flex justify-between items-center mb-3 text-white">
+            <h2 className="text-2xl font-semibold text-rose-500">Nouveautés</h2>
+            <Link
+              href="/movies"
+              className="border font-light rounded-xl mr-10 px-2 py-1 border-rose-500 text-white bg-rose-500 hover:border-rose-900 hover:bg-rose-900 hover:text-white text-sm"
+            >
+              Voir plus{" "}
+              <Icon icon="mdi:chevron-right" className="inline size-4" />
+            </Link>
+          </div>
+          <div className="flex gap-3 overflow-x-auto pb-2">
+            {otherLatestMovies.map((movie) => (
+              <HomeCard
+                key={`${movie.title}-${movie.id}`}
+                {...movie}
+                release_date={movie.release_date || ""}
+                image_url={getImageUrl(movie.image_url || "")}
+              />
+            ))}
+          </div>
+        </div>
         {/* First movie highlight */}
         {featuredLatestMovie && (
-          <div className="relative w-full h-[600px] mb-10">
+          <div className="relative w-full h-[500px] mb-10">
             <Link
               href={`/movies/${featuredLatestMovie.id}`}
               className="h-full w-full overflow-hidden"
@@ -42,51 +63,25 @@ export default async function Home() {
                 alt={featuredLatestMovie.title}
                 className="w-full h-full object-cover"
               />
-              {/* Overlay sombre pour lisibilité */}
               <div className="bg-black/10 backdrop-blur-sm absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black/100 z-10" />
-
-              {/* Titre + Infos en haut à gauche */}
-              <div className="absolute top-10 px-10 flex flex-col justify-center items-center text-center sm:text-left sm:items-start sm:justify-start z-20">
+              <div className="absolute bottom-10 px-10 flex flex-col gap-1 text-left z-20">
                 <h3 className="text-2xl font-medium">
                   {featuredLatestMovie.title}
                 </h3>
-                {/* <p className="inline-block text-md font-light">
+                <p className="text-md font-medium">
                   {featuredLatestMovie?.movies_directors
                     ?.map((item) => item.directors.name)
-                    .join(", ") || "Réalisateur inconnu"}
-                </p> */}
-                <p className="inline-block mb-1 text-md font-light">
+                    .join(", ") || ""}
+                </p>
+                <p className="text-md font-medium">
                   {featuredLatestMovie.release_date || ""}
                 </p>
-                <p className="line-clamp-5 sm:w-1/2 w-4/5 overflow-hidden text-md font-light">
+
+                <p className="line-clamp-5 w-3/4 overflow-hidden text-md font-extralight">
                   {featuredLatestMovie.description || ""}
                 </p>
               </div>
             </Link>
-            <div className="absolute bottom-0 left-0 w-full z-20 pl-10 pb-10">
-              <div className="flex justify-between items-center mb-3 text-white">
-                <h2 className="text-2xl font-semibold text-rose-500">
-                  Nouveautés
-                </h2>
-                <Link
-                  href="/movies"
-                  className="border font-light rounded-xl mr-10 px-2 py-1 border-rose-500 text-white bg-rose-500 hover:border-rose-900 hover:bg-rose-900 hover:text-white text-sm"
-                >
-                  Voir plus{" "}
-                  <Icon icon="mdi:chevron-right" className="inline size-4" />
-                </Link>
-              </div>
-              <div className="flex gap-3 overflow-x-auto pb-2">
-                {otherLatestMovies.map((movie) => (
-                  <HomeCard
-                    key={`${movie.title}-${movie.id}`}
-                    {...movie}
-                    release_date={movie.release_date || ""}
-                    image_url={getImageUrl(movie.image_url || "")}
-                  />
-                ))}
-              </div>
-            </div>
           </div>
         )}
 
