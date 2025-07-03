@@ -44,7 +44,7 @@ export async function deleteUserAccountWithoutAuth() {
     });
 
     await supabase.auth.signOut();
-    redirect("/");
+    return { success: true };
   } catch (error) {
     console.error("Erreur deleteUserAccountWithoutAuth:", error);
     return {
