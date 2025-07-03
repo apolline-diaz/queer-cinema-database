@@ -12,7 +12,7 @@ type FormValues = {
   search: string;
 };
 
-const MOVIES_PER_PAGE = 50;
+const MOVIES_PER_PAGE = 100;
 
 export default function Searchfield({
   initialMovies,

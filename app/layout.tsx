@@ -10,11 +10,43 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL(getCanonicalUrl()),
-  title: "Queer Cinema Database",
+  title: "Queer Cinema Database | Films et Archives LGBTQI+",
   description:
-    "Parcourez un catalogue mondial de films et archives LGBTQIA+, témoignant la diversité et la richesse des cinémas queer.",
+    "QueerCinema.fr : base de données mondiale dédiée aux films et archives LGBTQI+. Explorez la diversité et la richesse des cinémas queer.",
+  keywords: [
+    "cinéma queer",
+    "films LGBTQI+",
+    "archives LGBTQI+",
+    "queer cinema",
+    "cinéma LGBT",
+    "film LGBT",
+    "queer",
+    "LGBT",
+    "base de données cinéma",
+  ],
+  authors: [{ name: "QueerCinema" }],
+  creator: "QueerCinema",
+  publisher: "QueerCinema",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   openGraph: {
-    images: [`/assets/diary.svg`],
+    title: "Queer Cinema Database",
+    description:
+      "Base de données mondiale dédiée aux films et archives LGBTQI+. Explorez la diversité et la richesse des cinémas queer.",
+    url: getCanonicalUrl(),
+    siteName: "Queer Cinema",
+    images: ["/assets/diary.svg"],
+    locale: "fr_FR",
+    type: "website",
   },
   alternates: {
     canonical: "/",
@@ -27,7 +59,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="fr">
       <body
         className={`${inter.className} bg-white min-h-screen text-white flex flex-col`}
       >

@@ -5,19 +5,20 @@ import { Controller, useForm } from "react-hook-form";
 import { addMovie } from "@/app/server-actions/movies/add-movie";
 import { SubmitButton } from "@/app/components/submit-button";
 import { useRouter } from "next/navigation";
-import MultiSelect from "@/app/components/multi-select"; // Importez le composant MultiSelect
+import MultiSelect from "@/app/components/multi-select";
 import { getGenres } from "@/app/server-actions/genres/get-genres";
 import { getCountries } from "@/app/server-actions/countries/get-countries";
 import { getKeywords } from "@/app/server-actions/keywords/get-keywords";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import BackButton from "@/app/components/back-button";
 
-const CreateMoviePage: React.FC = () => {
+const CreateMovieForm: React.FC = () => {
+  // Initialize react-hook-form with default values
   const {
     register,
     control,
     handleSubmit,
     setValue,
-    watch,
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
@@ -35,11 +36,14 @@ const CreateMoviePage: React.FC = () => {
     },
   });
   const router = useRouter();
+
+  // State to store data fetched
   const [countries, setCountries] = useState<any[]>([]);
   const [genres, setGenres] = useState<any[]>([]);
   const [keywords, setKeywords] = useState<any[]>([]);
   const [selectedKeywords, setSelectedKeywords] = useState<any[]>([]);
 
+  // Fetch countries, genres, and keywords from server on mount
   useEffect(() => {
     const fetchData = async () => {
       const [genresData, countriesData, keywordsData] = await Promise.all([
@@ -54,8 +58,10 @@ const CreateMoviePage: React.FC = () => {
     fetchData();
   }, []);
 
+  // Handle form submission
   const onSubmit = async (data: any) => {
     try {
+      // Append form fields to FormData
       const formData = new FormData();
       formData.append("title", data.title);
       formData.append("original_title", data.original_title);
@@ -66,18 +72,23 @@ const CreateMoviePage: React.FC = () => {
       formData.append("runtime", data.runtime);
       formData.append("genre_id", data.genre_id);
       formData.append("type", data.type);
+
+      // Append selected keywords as comma-separated string
       if (selectedKeywords && selectedKeywords.length > 0) {
         const keywordIds = selectedKeywords.map((k) => k.value).join(",");
         formData.append("keyword_id", keywordIds);
       } else {
-        formData.append("keyword_id", ""); // Valeur par défaut vide
+        formData.append("keyword_id", "");
       }
+      // Append image file if provided
       if (data.image_url[0]) {
         formData.append("image_url", data.image_url[0]);
       }
 
+      // Submit the movie to server
       const result = await addMovie(formData);
 
+      // Redirect if successful
       if (result.type === "success") {
         router.push("/movies");
       } else {
@@ -90,19 +101,14 @@ const CreateMoviePage: React.FC = () => {
 
   return (
     <div className="px-10 py-20 text-sm w-full sm:w-1/2">
-      <button
-        onClick={() => router.back()}
-        className="flex items-center border border-rose-900 mb-4 text-sm text-rose-900 hover:text-white hover:bg-rose-500 hover:border-rose-500 rounded-full px-2 pr-3"
-      >
-        <Icon icon="mdi:chevron-left" className="inline size-4" />
-        Retour
-      </button>
+      <BackButton />
       <h1 className="tracking-wide text-rose-900 text-2xl mb-5 font-medium">
         Ajouter un film
       </h1>
 
+      {/* Movie creation form */}
       <form onSubmit={handleSubmit(onSubmit)} className="py-5 text-rose-900">
-        {/* Title */}
+        {/* Title input */}
         <div className="mb-4">
           <label className="block font-medium mb-2">Titre</label>
           <input
@@ -136,7 +142,7 @@ const CreateMoviePage: React.FC = () => {
             </span>
           )}
         </div>
-        {/* Director */}
+        {/* Director name */}
         <div className="mb-4">
           <label className="block font-medium mb-2">Réalisateur-ice</label>
           <input
@@ -153,7 +159,7 @@ const CreateMoviePage: React.FC = () => {
           )}
         </div>
 
-        {/* Synopsis */}
+        {/* Description/Synopsis */}
         <div className="mb-4">
           <label className="block font-medium mb-2">Synopsis</label>
           <textarea
@@ -174,7 +180,7 @@ const CreateMoviePage: React.FC = () => {
           )}
         </div>
 
-        {/* Release date */}
+        {/* Release year */}
         <div className="mb-4">
           <label className="block font-medium mb-2">Année de sortie</label>
           <select
@@ -223,13 +229,13 @@ const CreateMoviePage: React.FC = () => {
           <label className="block font-medium mb-2">Durée (minutes)</label>
           <input
             type="number"
+            placeholder="00"
             className="w-full font-light border p-2 text-black rounded-md border-rose-900"
             {...register("runtime", {
               required: "La durée est obligatoire.",
+              valueAsNumber: true,
               min: { value: 1, message: "La durée doit être supérieure à 0." },
             })}
-            placeholder="00"
-            min="0"
           />
           {errors.runtime && (
             <span className="text-rose-500 text-xs my-2">
@@ -238,14 +244,14 @@ const CreateMoviePage: React.FC = () => {
           )}
         </div>
 
-        {/* Type */}
+        {/* Format */}
         <div className="mb-4">
-          <label className="block font-medium mb-2">Type</label>
+          <label className="block font-medium mb-2">Format</label>
           <select
             className="w-full font-light text-black border p-2 rounded-md border-rose-900"
-            {...register("type", { required: "Le type est obligatoire." })}
+            {...register("type", { required: "Le format est obligatoire." })}
           >
-            <option value="">Sélectionnez un type</option>
+            <option value="">Sélectionnez un format</option>
             <option value="Long-métrage">Long-métrage</option>
             <option value="Moyen-métrage">Moyen-métrage</option>
             <option value="Court-métrage">Court-métrage</option>
@@ -315,7 +321,7 @@ const CreateMoviePage: React.FC = () => {
           )}
         </div>
 
-        {/* Image */}
+        {/* Image file upload */}
         <div className="mb-8">
           <label className="block font-medium mb-2">Image</label>
           <input
@@ -349,4 +355,4 @@ const CreateMoviePage: React.FC = () => {
   );
 };
 
-export default CreateMoviePage;
+export default CreateMovieForm;

@@ -7,6 +7,7 @@ import { getMovies } from "@/app/server-actions/movies/get-movies";
 import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import BackButton from "@/app/components/back-button";
 
 // Updated Types to match your actual data
 interface Movie {
@@ -22,11 +23,11 @@ interface FormData {
   is_collection?: boolean;
 }
 
-interface CreateListPageProps {
+interface CreateListFormProps {
   isAdmin: boolean;
 }
 
-const CreateListPage: React.FC<CreateListPageProps> = ({ isAdmin }) => {
+const CreateListForm: React.FC<CreateListFormProps> = ({ isAdmin }) => {
   const router = useRouter();
   const {
     register,
@@ -105,13 +106,7 @@ const CreateListPage: React.FC<CreateListPageProps> = ({ isAdmin }) => {
 
   return (
     <div className="px-10 py-20">
-      <button
-        onClick={() => router.back()}
-        className="flex items-center border border-rose-900 mb-4 text-sm text-rose-900 hover:text-white hover:bg-rose-500 hover:border-rose-500 rounded-full px-2 pr-3"
-      >
-        <Icon icon="mdi:chevron-left" className="inline size-4" />
-        Retour
-      </button>
+      <BackButton />
       <div className="tracking-wide font-medium text-2xl text-rose-900 mb-5">
         Créer une liste de films
       </div>
@@ -250,4 +245,4 @@ const CreateListPage: React.FC<CreateListPageProps> = ({ isAdmin }) => {
   );
 };
 
-export default CreateListPage;
+export default CreateListForm;

@@ -9,8 +9,9 @@ import { getMovies } from "@/app/server-actions/movies/get-movies";
 import MoviesMultiSelect from "@/app/components/movies-multi-select";
 import { SubmitButton } from "@/app/components/submit-button";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import BackButton from "@/app/components/back-button";
 
-export default function EditListPage({
+export default function EditListForm({
   params,
   isAdmin,
 }: {
@@ -106,13 +107,8 @@ export default function EditListPage({
 
   return (
     <div className="px-10 py-20">
-      <button
-        onClick={() => router.back()}
-        className="flex items-center border border-rose-900 mb-4 text-sm text-rose-900 hover:text-white hover:bg-rose-500 hover:border-rose-500 rounded-full px-2 pr-3"
-      >
-        <Icon icon="mdi:chevron-left" className="inline size-4" />
-        Retour
-      </button>
+      <BackButton />
+
       <h1 className="text-2xl text-rose-900 font-medium mb-5">
         Modifier la liste
       </h1>

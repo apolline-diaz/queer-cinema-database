@@ -31,10 +31,10 @@ export async function addMovie(formData: FormData) {
     title: z
       .string()
       .min(1, "Le titre est obligatoire")
-      .regex(/^[\s\S]*$/, "Le titre contient des caractères non valides"), // accepte tous les caractères
+      .regex(/^[\s\S]*$/, "Le titre contient des caractères non valides"),
     original_title: z
       .string()
-      .regex(/^[\s\S]*$/, "Le titre contient des caractères non valides") // accepte tous les caractères
+      .regex(/^[\s\S]*$/, "Le titre contient des caractères non valides")
       .optional(),
     director_name: z
       .string()

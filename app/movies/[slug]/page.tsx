@@ -5,6 +5,9 @@ import Link from "next/link";
 import { isAdmin } from "@/utils/is-user-admin";
 import ClientMovieActions from "./client";
 import { auth } from "@/utils/auth";
+import BackButton from "@/app/components/back-button";
+import { Metadata } from "next";
+import { getCanonicalUrl } from "@/utils/index";
 
 export const revalidate = 0;
 
@@ -12,7 +15,40 @@ type Props = {
   params: { slug: string };
 };
 
-export default async function Page({ params }: Props) {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { movie } = await getMovie(params.slug);
+
+  if (!movie) {
+    return {
+      title: "Film introuvable | Queer Cinema Database",
+      description:
+        "Le film demandé est introuvable dans notre base de données.",
+    };
+  }
+
+  return {
+    metadataBase: new URL(getCanonicalUrl()),
+    title: `${movie.title} | Queer Cinema Database`,
+    description:
+      movie.description ||
+      `Découvrez ${movie.title} sur Queer Cinema Database.`,
+    alternates: {
+      canonical: `/movies/${params.slug}`,
+    },
+    openGraph: {
+      title: movie.title,
+      description: movie.description || "",
+      images: [
+        {
+          url: movie.image_url || "",
+          alt: movie.title,
+        },
+      ],
+    },
+  };
+}
+
+export default async function MoviePage({ params }: Props) {
   const { movie, error } = await getMovie(params.slug);
   const userIsAdmin = await isAdmin();
   const session = await auth();
@@ -39,7 +75,7 @@ export default async function Page({ params }: Props) {
           src={getImageUrl(movie.image_url)}
           title={movie.title}
         />
-        <div className="absolute bottom-0 bg-black bg-opacity-30 w-full h-full text-white p-10 flex justify-between items-end">
+        <div className="absolute bottom-0 w-full h-full text-white p-10 flex justify-between items-end">
           <div className="flex flex-row justify-between items-center w-full">
             <div className="">
               {session && (
@@ -52,7 +88,11 @@ export default async function Page({ params }: Props) {
           </div>
         </div>
       </div>
-      <div className="p-10 text-black flex flex-col font-light gap-3">
+      <div className="px-10 pt-5">
+        <BackButton className="w-fit" />
+      </div>
+
+      <div className="px-10 pb-5 text-black flex flex-col font-light gap-3">
         <h1 className="text-4xl font-medium text-rose-900">{movie.title}</h1>
         <h1 className="text-xl font-light  text-gray-400">
           {movie.original_title}

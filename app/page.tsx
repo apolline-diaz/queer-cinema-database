@@ -7,9 +7,9 @@ import { getCollections } from "@/app/server-actions/lists/get-collections";
 import Link from "next/link";
 import { Icon } from "@iconify/react";
 
-export const revalidate = 0;
+export const revalidate = 3600; // revalidate every hour (Incremental Static Regeneration)
 
-export default async function Home() {
+export default async function HomePage() {
   try {
     const topMovies = await getTopMovies();
     const latestMovies = await getLatestMovies();
@@ -28,78 +28,64 @@ export default async function Home() {
             />
           ))}
         </div>
-
+        <div className="w-full py-10 pl-10">
+          <div className="flex justify-between items-center mb-3 text-white">
+            <h2 className="text-2xl font-semibold text-rose-500">Nouveautés</h2>
+            <Link
+              href="/movies"
+              className="border font-light rounded-xl mr-10 px-2 py-1 border-rose-500 text-white bg-rose-500 hover:border-rose-900 hover:bg-rose-900 hover:text-white text-sm"
+            >
+              Voir plus{" "}
+              <Icon icon="mdi:chevron-right" className="inline size-4" />
+            </Link>
+          </div>
+          <div className="flex gap-3 overflow-x-auto pb-2">
+            {otherLatestMovies.map((movie) => (
+              <HomeCard
+                key={`${movie.title}-${movie.id}`}
+                {...movie}
+                release_date={movie.release_date || ""}
+                image_url={getImageUrl(movie.image_url || "")}
+              />
+            ))}
+          </div>
+        </div>
         {/* First movie highlight */}
         {featuredLatestMovie && (
-          <div className="w-full p-10 overflow-hidden">
-            <div className="top-5 right-5 text-white"></div>
-            <div className="flex sm:flex-row flex-col w-full h-full sm:h-[400px] gap-4">
-              <Link
-                href={`/movies/${featuredLatestMovie.id}`}
-                className="relative h-[400px] w-full overflow-hidden rounded-xl"
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={getImageUrl(featuredLatestMovie.image_url || "")}
-                  alt={featuredLatestMovie.title}
-                  className="w-full h-full object-cover rounded-xl"
-                />
-                <div className="flex items-between">
-                  <span className="absolute top-0 right-0 m-5 text-white bg-rose-500 border-rose-500 text-sm rounded-full border px-2 py-1 mb-4">
-                    Nouveauté
-                  </span>
-                  <div className="absolute bottom-0 left-0">
-                    <div className="absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-black/80 to-transparent rounded-b-xl z-0"></div>
-                    <div className="p-6 relative sm:w-2/3 z-10">
-                      <h3 className="text-2xl font-medium">
-                        {featuredLatestMovie.title}
-                      </h3>
-                      <span className="inline-block text-md font-light">
-                        {featuredLatestMovie?.movies_directors
-                          ?.map((item) => item.directors.name)
-                          .join(", ") || "Réalisateur inconnu"}
-                      </span>{" "}
-                      •{" "}
-                      <span className="inline-block mb-1 text-md font-light">
-                        {featuredLatestMovie.release_date || ""}
-                      </span>
-                      <p className="line-clamp-3 text-md font-extralight">
-                        {featuredLatestMovie.description ||
-                          "Pas de description disponible"}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            </div>
+          <div className="relative w-full h-[500px] mb-10">
+            <Link
+              href={`/movies/${featuredLatestMovie.id}`}
+              className="h-full w-full overflow-hidden"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={getImageUrl(featuredLatestMovie.image_url || "")}
+                alt={featuredLatestMovie.title}
+                className="w-full h-full object-cover"
+              />
+              <div className="bg-black/10 backdrop-blur-sm absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black/100 z-10" />
+              <div className="absolute bottom-10 px-10 flex flex-col gap-1 text-left z-20">
+                <h3 className="text-2xl font-medium">
+                  {featuredLatestMovie.title}
+                </h3>
+                <p className="text-md font-medium">
+                  {featuredLatestMovie?.movies_directors
+                    ?.map((item) => item.directors.name)
+                    .join(", ") || ""}
+                </p>
+                <p className="text-md font-medium">
+                  {featuredLatestMovie.release_date || ""}
+                </p>
+
+                <p className="line-clamp-5 w-3/4 overflow-hidden text-md font-extralight">
+                  {featuredLatestMovie.description || ""}
+                </p>
+              </div>
+            </Link>
           </div>
         )}
-        <div className="pl-10">
-          <div className="flex flex-col mb-5">
-            <div className="flex justify-between items-center pr-10 mb-4">
-              <h2 className="text-2xl font-semibold  text-rose-900">
-                Catalogue
-              </h2>
-              <Link
-                href="/movies"
-                className="border rounded-xl px-2 py-1 border-rose-900 text-rose-900 hover:border-rose-500 hover:bg-rose-500 hover:text-white text-sm"
-              >
-                Voir plus{" "}
-                <Icon icon="mdi:chevron-right" className="inline size-4" />
-              </Link>
-            </div>
-            <div className="flex flex-row-1 mb-5 gap-3 overflow-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
-              {otherLatestMovies.map((movie) => (
-                <HomeCard
-                  key={`${movie.title}-${movie.id}`}
-                  {...movie}
-                  release_date={movie.release_date || ""}
-                  image_url={getImageUrl(movie.image_url || "")}
-                />
-              ))}
-            </div>
-          </div>
 
+        <div className="pl-10">
           {collections.length > 0 && (
             <div className="flex flex-col space-y-5 mb-10">
               {collections.map((collection) => (

@@ -1,32 +1,39 @@
 /* eslint-disable react/no-unescaped-entities */
+import { Metadata } from "next";
 
-import Link from "next/link";
+export const metadata: Metadata = {
+  title: "À propos | Queer Cinema Database",
+  description:
+    "En savoir plus sur Queer Cinema Database, son objectif, sa ligne éditoriale et ses ressources.",
+  alternates: {
+    canonical: "/about",
+  },
+};
 
-export default function About() {
+export default function AboutPage() {
   return (
     <div className="px-10 py-20 mb-5">
       <h2 className="text-rose-900 font-medium text-2xl mb-6">À propos</h2>
       <div className="text-black">
         <p className=" w-full font-light  mb-4">
-          Ce site est né du souhait d&apos;archiver le compte Instagram
-          <a
-            className="text-rose-500 px-1 hover:underline"
-            href="https://www.instagram.com/lawrens_shyboi/"
-          >
-            @lawrens_shyboi
-          </a>
-          que j&apos;ai créé en fin 2019 et que j&apos;ai géré jusqu&apos;en
-          2023. J&apos;y partageais des références de films, de séries et
-          d&apos;émissions télé qui mettaient en scène des personnes LGBTQI+ ou
-          traitaient de sujets multiples entourant ces communautés.
-          <br /> Je crois que les images ont beaucoup à nous dire de
-          l&apos;histoire qui nous précède et du présent dans lequel nous
-          vivons. Alors montrer la richesse et la diversité des films qui
-          existent et des sujets abordés semblait essentiel.
-          <br /> Afin de préserver les multiples références collectées et
-          partagées au fil du temps grâce aux communautés (LGBTQI+ et
-          d&apos;autres), j&apos;ai pensé que développer un site avec une base
-          de données propre serait la solution la plus viable et accessible.
+          Ce site a pour vocation d'archiver et de valoriser la diversité du
+          cinéma LGBTQI+, en mettant l'accent sur des œuvres sélectionnées pour
+          leur singularité artistique, leur engagement politique et leur vision
+          incarnée depuis des regards situés. L'objectif est de dénicher des
+          films, séries et archives audiovisuelles souvent méconnus du grand
+          public, en explorant les productions au-delà des circuits
+          traditionnels français et américains.
+          <br />
+          Cette démarche vise particulièrement à mettre en lumière des
+          représentations authentiques et nuancées de populations insuffisamment
+          représentées à l'écran : les femmes, les personnes trans, les
+          personnes racisées et les personnes assignées handicapées.
+          <br />
+          Les images et les récits audiovisuels portent en eux une part
+          importante de notre histoire collective et de notre compréhension du
+          monde contemporain. En rassemblant ces références dans une base de
+          données accessible, ce site souhaite contribuer à préserver et
+          diffuser cette diversité cinématographique.
         </p>
 
         <div className="text-rose-900 ">
@@ -41,14 +48,14 @@ export default function About() {
                 certain travail cinématographique, un discours, ou faisant
                 partie d&apos;une certaine histoire des communautés LGBQTI+ à
                 travers le monde.
-                <br /> Ce projet est né en France et donc le travail de
-                recherche se fait depuis cette localisation et ce point de vue.
-                <br /> Mon intérêt se porte surtout sur les oeuvres datées, avec
-                un intérêt plus fort pour les années 90 et 2000.
+                <br /> Ce projet est né en France et le travail de recherche se
+                fait depuis cette localisation.
+                <br /> Un intérêt particulier est porté à la période des années
+                90 et 2000.
                 <br /> <br />
                 <span className="italic font-light text-xs">
-                  J&apos;ai exclu les films érotiques et pornographiques
-                  mainstream.
+                  Les films érotiques et pornographiques mainstream ne sont pas
+                  traités.
                 </span>
               </p>
             </div>
@@ -58,12 +65,14 @@ export default function About() {
                 L&apos;indexation permet une recherche plus spécifique des
                 films. Face à la masse de productions sur les sujets LGBTQI+ qui
                 existe aujourd&apos;hui, il est difficile de trouver une oeuvre
-                qui correspond à nos envies ou à des sujets qui nous
-                intéressent. <br />
-                J&apos;ai donc choisi d&apos;indexer les films en leur associant
-                des mots-clés et en utilisant d&apos;autres informations clés
-                (le genre, l&apos;année de sortie, le pays de production, lea
-                réalisateur-ice, le type).
+                qui correspond à des critères et sujets spécifiques. <br />
+                C'est pourquoi il est essentiel d&apos;indexer les films en leur
+                associant des mots-clés et en utilisant d&apos;autres
+                informations clés (lea réalisateur-ice, le genre, l&apos;année
+                de sortie la durée, le pays de production, le format, la
+                langue). Cela permet une meilleure compréhension du contenu des
+                oeuvres et apporte des informations plus complètes au-delà du
+                simple label "queer".
                 <br />
                 Dans la page Catalogue, vous trouverez tous les films de la base
                 de données. Ils sont classés du plus récent ajout au plus
@@ -78,17 +87,33 @@ export default function About() {
                 associés permettent à l&apos;utilisateur d&apos;avoir une vision
                 globale des sujets abordés.
                 <br />
-                J&apos;ai surtout mis en avant les thématiques (sociales,
-                économiques, politiques, culturelles), l&apos;identité de genre
-                et l&apos;orientation sexuelle/romantique des personnages, et
-                celles avec qui ils flirtent. J&apos;ai aussi intégré les
-                expériences de vie, les formats et genres cinématographiques et
-                les régions géographiques.
+                Sont mis en avant : les thématiques (sociales, économiques,
+                politiques, culturelles), l&apos;identité de genre et
+                l&apos;orientation sexuelle/romantique des personnages, et
+                celles avec qui ils flirtent.
+                <br /> Sont aussi intégrés : les expériences de vie, les formats
+                et genres cinématographiques et les régions géographiques.
                 <br />
-                J&apos;ai choisi de ne pas identifier les réalisateur-ices sur
-                leur identité de genre, orientation ou profession car les
-                informations ne peuvent pas être vérifiées et elles peuvent
-                évoluer dans le temps.
+                L'identité de genre et l'orientation des réalisateur-ices ou
+                leur profession n'est pas spécifiée car elle ne peut pas être
+                vérifiée et peut changer.
+              </p>
+            </div>
+            <div className="bg-rose-50 rounded-xl p-5">
+              <h3 className="font-bold mb-2">Les ressources</h3>
+              <p className="font-light text-black">
+                Les informations des films sont tirées de sites et
+                d'organisations dédiés au cinéma tels que :
+                <br /> - Plateformes communautaires : Letterboxd, Mubi, Tënk,
+                SensCritique, AlloCiné
+                <br /> - Plateformes VOD : Mubi, Tënk
+                <br /> - Bases de données : The Movie Database, IMDB, UniFrance,
+                Film documentaire
+                <br /> - Distributeurs : Frameline, Women Make Movies, Vucavu,
+                Video Data Bank, VTape, CFMDC, Optimale, OutPlay,
+                <br /> - Festivals : Chéries Chéris, Cineffable, Pink Screens
+                <br /> - Archives nationales : BFI, UCLA, INA, Centre Simone de
+                Beauvoir
               </p>
             </div>
           </div>

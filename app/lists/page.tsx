@@ -1,6 +1,7 @@
 import { ListCard } from "@/app/components/list-card";
 import Link from "next/link";
 import { getLists } from "../server-actions/lists/get-lists";
+import BackButton from "../components/back-button";
 
 export const revalidate = 0;
 
@@ -8,8 +9,9 @@ export default async function ListsPage() {
   const lists = await getLists();
 
   return (
-    <div className="flex flex-col gap-5 px-10 py-20">
+    <div className="flex flex-col px-10 py-20">
       {/* Users lists */}
+      <BackButton className="w-fit" />
       <section className="">
         <h1 className="text-2xl text-rose-900 mb-5 font-medium">Mes listes</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">

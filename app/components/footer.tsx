@@ -6,15 +6,15 @@ export default function Header() {
       <div className="flex flex-col sm:flex-row justify-between">
         <div className="py-2">
           <div className="flex flex-row text-xl mb-2">
-            <p className="font-bold">queer cinema</p>
-            <span className="px-2 font-light">database</span>
+            <p className="font-medium">queer cinema</p>
+            <span className="px-2 font-extralight">database</span>
           </div>
-          <p className="w-3/4 font-light">
+          <p className="w-3/4 font-extralight">
             Une sélection de films et d&apos;archives LGBTQIA+ pour célébrer la
             pluralité des regards queer dans le monde.
           </p>
         </div>
-        <nav className="flex flex-col w-1/4 sm:justify-end sm:items-end gap-3 sm:m-4 my-2">
+        <nav className="flex flex-col font-light w-1/4 sm:justify-end sm:items-end gap-3 sm:m-4 my-2">
           <Link
             href="/about"
             className="link link-hover hover:underline hover:underline-offset-8"
@@ -27,6 +27,12 @@ export default function Header() {
             className="link link-hover hover:underline hover:underline-offset-8"
           >
             Contact
+          </Link>
+          <Link
+            href="/privacy-policy"
+            className="link link-hover hover:underline hover:underline-offset-8"
+          >
+            Politiques de confidentialité
           </Link>
         </nav>
       </div>

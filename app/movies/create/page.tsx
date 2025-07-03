@@ -1,16 +1,12 @@
 import { redirect } from "next/navigation";
-import CreateMoviePage from "./client"; // Import the client-side form component
+import CreateMovieForm from "./client";
 import { isAdmin } from "@/utils/is-user-admin";
 
-export default async function Page() {
-  // Check user authentication
+export default async function CreateMoviePage() {
   const userIsAdmin = await isAdmin();
 
-  // If no session exists, redirect to login page
   if (!userIsAdmin) {
-    redirect("/login"); // Adjust the login path as needed
+    redirect("/login");
   }
-
-  // If authenticated, render the upload form
-  return <CreateMoviePage />;
+  return <CreateMovieForm />;
 }
