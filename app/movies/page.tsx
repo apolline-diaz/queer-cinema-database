@@ -11,7 +11,7 @@ import { isAdmin } from "@/utils/is-user-admin";
 import { getMoviesByWord } from "../server-actions/movies/get-movies-by-word";
 import BackButton from "../components/back-button";
 
-export default async function Page({
+export default async function CataloguePage({
   searchParams,
 }: {
   searchParams?: { [key: string]: string | string[] | undefined };

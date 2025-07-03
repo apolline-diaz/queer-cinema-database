@@ -1,9 +1,9 @@
 import { auth } from "@/utils/auth";
 import { redirect } from "next/navigation";
-import CreateListPage from "./client";
+import CreateListForm from "./client";
 import { isAdmin } from "@/utils/is-user-admin";
 
-export default async function Page() {
+export default async function CreateListPage() {
   // Check user authentication
   const session = await auth();
 
@@ -15,5 +15,5 @@ export default async function Page() {
   const adminStatus = await isAdmin();
 
   // If authenticated, render the upload form
-  return <CreateListPage isAdmin={adminStatus} />;
+  return <CreateListForm isAdmin={adminStatus} />;
 }

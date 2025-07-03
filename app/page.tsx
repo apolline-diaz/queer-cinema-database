@@ -9,7 +9,7 @@ import { Icon } from "@iconify/react";
 
 export const revalidate = 3600; // revalidate every hour (Incremental Static Regeneration)
 
-export default async function Home() {
+export default async function HomePage() {
   try {
     const topMovies = await getTopMovies();
     const latestMovies = await getLatestMovies();

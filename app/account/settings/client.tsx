@@ -14,7 +14,7 @@ type User = {
   full_name: string;
 };
 
-export default function SettingsPage({ user }: { user: User }) {
+export default function SettingsClientPage({ user }: { user: User }) {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [message, setMessage] = useState<{
     type: "success" | "error";

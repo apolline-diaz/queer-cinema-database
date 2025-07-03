@@ -1,8 +1,9 @@
 import { redirect } from "next/navigation";
-import CreateMoviePage from "./client";
+import CreateMovieForm from "./client";
 import { isAdmin } from "@/utils/is-user-admin";
+import { Metadata } from "next";
 
-export default async function Page() {
+export default async function CreateMoviePage() {
   const userIsAdmin = await isAdmin(); // Auth check
 
   if (!userIsAdmin) {
@@ -10,5 +11,5 @@ export default async function Page() {
   }
 
   // Renders the movie form if authorized
-  return <CreateMoviePage />;
+  return <CreateMovieForm />;
 }

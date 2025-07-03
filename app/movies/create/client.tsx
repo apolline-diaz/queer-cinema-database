@@ -12,7 +12,7 @@ import { getKeywords } from "@/app/server-actions/keywords/get-keywords";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import BackButton from "@/app/components/back-button";
 
-const CreateMoviePage: React.FC = () => {
+const CreateMovieForm: React.FC = () => {
   // Initialize react-hook-form with default values
   const {
     register,
@@ -355,4 +355,4 @@ const CreateMoviePage: React.FC = () => {
   );
 };
 
-export default CreateMoviePage;
+export default CreateMovieForm;

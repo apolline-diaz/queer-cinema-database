@@ -11,7 +11,7 @@ import { SubmitButton } from "@/app/components/submit-button";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import BackButton from "@/app/components/back-button";
 
-export default function EditListPage({
+export default function EditListForm({
   params,
   isAdmin,
 }: {

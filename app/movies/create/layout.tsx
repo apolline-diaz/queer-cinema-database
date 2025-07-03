@@ -1,14 +1,8 @@
-import { getCanonicalUrl } from "@/utils";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(getCanonicalUrl()),
-  title: "Queer Cinema Database - Ajout",
-  description:
-    "Ajoutez et référencez vos films facilement en utilisant Queer Cinema Database",
-  alternates: {
-    canonical: `/movies/create`,
-  },
+  title: "Ajouter un film | Queer Cinema Database",
+  description: "Ajoutez un nouveau film à la base de données.",
 };
 
 export default function Layout({
