@@ -10,9 +10,9 @@ import BackButton from "@/app/components/back-button";
 export default function ListClientPage({
   params,
 }: {
-  params: { id: string; userIsAdmin: boolean };
+  params: { id: string; userIsAdmin: boolean; userIsOwner: boolean };
 }) {
-  const { id, userIsAdmin } = params;
+  const { id, userIsAdmin, userIsOwner } = params;
   const [listData, setListData] = useState<any>(null);
   const [movies, setMovies] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -80,7 +80,7 @@ export default function ListClientPage({
             {listData.description}
           </p>
           {/* Button to edit list */}{" "}
-          {userIsAdmin && (
+          {userIsOwner && (
             <button
               onClick={() => router.push(`/lists/edit/${id}`)}
               className="bg-gradient-to-r from-rose-500 to-red-500 text-white px-4 py-2 rounded-xl hover:from-rose-600 hover:to-red-600"
