@@ -6,7 +6,7 @@ import { isAdmin } from "@/utils/is-user-admin";
 import { PrismaClient } from "@prisma/client";
 import { z } from "zod";
 
-export const movieUpdateSchema = z.object({
+const movieUpdateSchema = z.object({
   id: z.string().min(1, { message: "ID manquant." }),
   title: z.string().min(1, { message: "Title is required." }),
   original_title: z.string().nullable().optional(),

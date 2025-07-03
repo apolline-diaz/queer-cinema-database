@@ -305,7 +305,9 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
           <div className="col-span-2">
             <label className="block text-sm font-medium mb-1">Titre</label>
             <input
-              {...register("title", { required: "Titre requis" })}
+              {...register("title", {
+                required: "Le titre est obligatoire. Au moins 1 caractère.",
+              })}
               className="w-full py-2 text-sm font-light border rounded-md px-2 bg-white text-black border-rose-900 bg-transparent"
             />
             {errors.title && (
@@ -324,9 +326,9 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
               {...register("original_title")}
               className="w-full py-2 text-sm font-light border rounded-md px-2 bg-white text-black border-rose-900 bg-transparent"
             />
-            {errors.title && (
+            {errors.original_title && (
               <p className="text-red-500 text-sm mt-1">
-                {errors.title.message}
+                {errors.original_title.message}
               </p>
             )}
           </div>
@@ -336,29 +338,41 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
             <label htmlFor="director_id" className="block text-sm font-medium">
               Réalisateur-ice(s)
             </label>
-            <MultiSelect
+            <Controller
               name="directors"
               control={control}
-              options={availableDirectors}
-              label="Réalisateur-ices"
-              placeholder="Chercher et ajouter des réalisateur-ices..."
-              onChange={(selected) => {
-                setSelectedDirectors(selected);
-                setValue(
-                  "directors",
-                  selected.map((d) => d.value)
-                );
+              rules={{
+                required:
+                  "Veuillez sélectionner au moins un·e réalisateur·ice.",
               }}
-              defaultValues={selectedDirectors}
+              render={() => (
+                <MultiSelect
+                  name="directors"
+                  control={control}
+                  options={availableDirectors}
+                  label="Réalisateur-ices"
+                  placeholder="Chercher et ajouter des réalisateur-ices..."
+                  onChange={(selected) => {
+                    setSelectedDirectors(selected);
+                    setValue(
+                      "directors",
+                      selected.map((d) => d.value)
+                    );
+                  }}
+                  defaultValues={selectedDirectors}
+                />
+              )}
             />
-            {errors.directors && (
-              <p className="text-red-600 text-sm mt-1">
-                {errors.directors.message}
-              </p>
-            )}
+
             <p className="text-gray-600 text-xs mt-1">
               Vous pouvez sélectionner plusieurs réalisateur-ices et en retirer.
             </p>
+
+            {errors?.directors && (
+              <span id="directors-error" className="text-rose-500 text-xs my-2">
+                {errors.directors.message}
+              </span>
+            )}
           </div>
 
           {/* Image Preview */}
@@ -415,14 +429,23 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
 
           {/* Description */}
           <div className="col-span-2">
-            <label className="block text-sm font-medium mb-1">
-              Description
-            </label>
+            <label className="block text-sm font-medium mb-1">Synopsis</label>
             <textarea
-              {...register("description")}
+              {...register("description", {
+                required: "Le synopsis est obligatoire. Au moins 3 caractères",
+                min: {
+                  value: 3,
+                  message: "Le synopsis contient au moins 3 caractères.",
+                },
+              })}
               rows={4}
               className="w-full px-3 py-2 text-black font-light text-sm border bg-white border-rose-900 rounded-md bg-transparent"
             />
+            {errors.description && (
+              <span className="text-rose-500 text-xs my-2">
+                {errors.description.message}
+              </span>
+            )}
           </div>
 
           <div className="grid grid-cols-2 gap-5">
@@ -432,7 +455,9 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
                 Année de sortie
               </label>
               <select
-                {...register("release_date")}
+                {...register("release_date", {
+                  required: "L'année de sortie est obligatoire.",
+                })}
                 className="w-full text-sm font-light py-2 border rounded-md px-2 bg-white text-black border-rose-900"
               >
                 {years.map((year) => (
@@ -450,7 +475,9 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
               </label>
               <select
                 id="country_id"
-                {...register("country_id")}
+                {...register("country_id", {
+                  required: "Le pays est obligatoire.",
+                })}
                 className="w-full mt-1 block text-sm font-light bg-transparent border rounded-md px-2 bg-white text-black border-rose-900  py-2"
               >
                 <option value="">Select a country</option>
@@ -468,6 +495,11 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
                   </option>
                 ))}
               </select>
+              {errors.country_id && (
+                <span className="text-rose-500 text-xs my-2">
+                  {errors.country_id.message}
+                </span>
+              )}
             </div>
 
             {/* Runtime */}
@@ -480,7 +512,12 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
                 {...register("runtime", {
                   pattern: {
                     value: /^\d*\.?\d*$/,
-                    message: "Must be a number",
+                    message: "Dois être un nombre",
+                  },
+                  required: "La durée est obligatoire.",
+                  min: {
+                    value: 1,
+                    message: "La durée doit être supérieure à 0.",
                   },
                 })}
                 className="w-full text-sm font-light border-rose-900  py-2 border rounded-md px-2 bg-white text-black bg-transparent"
@@ -498,9 +535,16 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
                 Langue(s)
               </label>
               <input
-                {...register("language")}
+                {...register("language", {
+                  required: "La langue est obligatoire.",
+                })}
                 className="w-full text-sm border-rose-900 font-light py-2 border rounded-md px-2 bg-white text-black bg-transparent"
               />
+              {errors.language && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.language.message}
+                </p>
+              )}
             </div>
           </div>
 
@@ -508,7 +552,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
           <div>
             <label className="block text-sm font-medium mb-1">Format</label>
             <select
-              {...register("type")}
+              {...register("type", { required: "Le format est obligatoire." })}
               className="w-full text-sm font-light border-rose-900 py-2 border rounded-md px-2 bg-white text-black"
             >
               <option value="Long-métrage">Long-métrage</option>
@@ -517,56 +561,98 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
               <option value="Série">Série</option>
               <option value="Emission TV">Emission TV</option>
             </select>
+            {errors.type && (
+              <span className="text-rose-500 text-xs my-2">
+                {errors.type.message}
+              </span>
+            )}
           </div>
 
-          {/* Genres Select */}
+          {/* Genres */}
           <div>
             <label className="text-rose-900 block text-sm font-medium mb-1">
               Genres
             </label>
-            <MultiSelect
+
+            <Controller
               name="genres"
               control={control}
-              options={availableGenres}
-              label="Genres"
-              placeholder="Chercher et ajouter des genres..."
-              onChange={(selected) => {
-                setSelectedGenres(selected);
-                setValue(
-                  "genres",
-                  selected.map((g) => g.value)
-                );
+              rules={{
+                required: "Au moins un genre est requis.",
+                validate: (value) =>
+                  Array.isArray(value) && value.length > 0
+                    ? true
+                    : "Au moins un genre est requis.",
               }}
-              defaultValues={selectedGenres}
+              render={({ field }) => (
+                <MultiSelect
+                  name="genres"
+                  control={control}
+                  options={availableGenres}
+                  label="Genres"
+                  placeholder="Chercher et ajouter des genres..."
+                  onChange={(selected) => {
+                    setSelectedGenres(selected);
+                    field.onChange(selected.map((g) => g.value));
+                  }}
+                  defaultValues={selectedGenres}
+                />
+              )}
             />
+
             <p className="text-gray-600 text-xs mt-1">
               Vous pouvez sélectionner plusieurs genres et en retirer.
             </p>
+
+            {errors?.genres && (
+              <span className="text-rose-500 text-xs my-2">
+                {errors.genres.message}
+              </span>
+            )}
           </div>
-          {/* Keywords - Multi-Select */}
+
+          {/* Keywords */}
           <div>
             <label className="text-rose-900 block text-sm font-medium mb-1">
               Mots-clés
             </label>
 
-            <MultiSelect
+            <Controller
               name="keywords"
               control={control}
-              options={availableKeywords}
-              label="Mots-clé"
-              placeholder="Chercher et ajouter des mot-clés..."
-              onChange={(selected) => {
-                setSelectedKeywords(selected);
-                setValue(
-                  "keywords",
-                  selected.map((k) => k.value)
-                );
+              rules={{
+                required: "Au moins un mot-clé est requis.",
+                validate: (value) =>
+                  Array.isArray(value) && value.length > 0
+                    ? true
+                    : "Au moins un mot-clé est requis.",
               }}
-              defaultValues={selectedKeywords}
+              render={({ field }) => (
+                <MultiSelect
+                  name="keywords"
+                  control={control}
+                  options={availableKeywords}
+                  label="Mots-clé"
+                  placeholder="Chercher et ajouter des mot-clés..."
+                  onChange={(selected) => {
+                    setSelectedKeywords(selected);
+                    const values = selected.map((k) => k.value);
+                    field.onChange(values);
+                  }}
+                  defaultValues={selectedKeywords}
+                />
+              )}
             />
+
             <p className="text-gray-600 text-xs mt-1">
               Vous pouvez sélectionner plusieurs mot-clés et en retirer.
             </p>
+
+            {errors?.keywords && (
+              <span className="text-rose-500 text-xs my-2">
+                {errors.keywords.message}
+              </span>
+            )}
           </div>
         </div>
 
