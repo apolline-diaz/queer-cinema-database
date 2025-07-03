@@ -72,6 +72,7 @@ export default function ClientSearchComponent({
       <div className="flex flex-wrap gap-2 w-full my-2">
         <button
           onClick={() => toggleSearchMode("field")}
+          data-testid="simple-search-button"
           className={`w-full sm:w-auto text-sm font-light px-4 py-1 border rounded-full transition-colors ${
             searchMode === "field"
               ? "bg-rose-900 text-white border-rose-900 "
@@ -83,6 +84,7 @@ export default function ClientSearchComponent({
 
         <button
           onClick={() => toggleSearchMode("form")}
+          data-testid="advanced-search-button"
           className={`w-full sm:w-auto text-sm font-light px-4 py-1 border rounded-full transition-colors ${
             searchMode === "form"
               ? "bg-rose-900 text-white border-rose-900 "
@@ -92,23 +94,25 @@ export default function ClientSearchComponent({
           Recherche avancée
         </button>
       </div>
-      {searchMode === "field" ? (
-        <Searchfield
-          initialMovies={initialMovies}
-          initialSearch={initialSearch}
-          userIsAdmin={userIsAdmin}
-        />
-      ) : (
-        <SearchForm
-          userIsAdmin={userIsAdmin}
-          initialMovies={initialMovies}
-          countries={countries}
-          genres={genres}
-          keywords={keywords}
-          directors={directors}
-          releaseYears={releaseYears}
-        />
-      )}
+      <div data-testid="search-content">
+        {searchMode === "field" ? (
+          <Searchfield
+            initialMovies={initialMovies}
+            initialSearch={initialSearch}
+            userIsAdmin={userIsAdmin}
+          />
+        ) : (
+          <SearchForm
+            userIsAdmin={userIsAdmin}
+            initialMovies={initialMovies}
+            countries={countries}
+            genres={genres}
+            keywords={keywords}
+            directors={directors}
+            releaseYears={releaseYears}
+          />
+        )}
+      </div>
     </div>
   );
 }

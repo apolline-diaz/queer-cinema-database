@@ -1,5 +1,6 @@
 import { test as base, expect, Page } from "@playwright/test";
 import dotenv from "dotenv";
+import path from "path";
 
 dotenv.config();
 
@@ -16,73 +17,58 @@ const test = base.extend<CustomFixtures>({
     await page.goto("/login");
     await page.setViewportSize({ width: 1280, height: 720 });
 
-    await page.getByPlaceholder("Tapez votre adresse e-mail").fill(email);
-    await page.getByPlaceholder("Tapez votre mot de passe").fill(password);
+    await page.getByTestId("email-input").fill(email);
+    await page.getByTestId("password-input").fill(password);
+    await page.getByTestId("login-submit-button").click();
 
-    await page.getByRole("button", { name: "Se connecter" }).click();
+    await page.waitForURL("/", { timeout: 10000 });
 
-    await page.locator('[id="radix-\\:Riicq\\:"]').click();
-
-    await expect(
-      page.getByRole("menuitem", { name: "Mes Listes" })
-    ).toBeVisible();
     // pass the authenticated page to the test
     await use(page);
   },
 });
 
-test("add a movie", async ({ authenticatedPage: page }) => {
+test("create movie", async ({ authenticatedPage: page }) => {
   await page.goto("/");
+  await page.setViewportSize({ width: 1280, height: 720 });
 
-  await page.locator('[id="radix-\\:Riicq\\:"]').click();
+  const mobileMenu = page.getByTestId("user-menu-trigger-mobile");
+  const desktopMenu = page.getByTestId("user-menu-trigger-desktop");
 
-  await page.getByRole("link", { name: "Contribuer" }).click();
+  if (await mobileMenu.isVisible()) {
+    await mobileMenu.click();
+    await page.waitForSelector('[data-testid="user-menu-mobile"]', {
+      state: "visible",
+    });
+    await page.getByTestId("contribute-menu-item").click({ force: true });
+  } else {
+    await desktopMenu.click();
 
-  await page.locator("html").click();
+    await page.waitForSelector('[data-testid="user-menu-desktop"]', {
+      state: "visible",
+    });
 
-  // Title field
-  await page
-    .getByRole("textbox", { name: "Tapez le titre..." })
-    .fill("Movie Title");
+    await page.getByTestId("contribute-menu-item").click({ force: true });
+  }
 
-  // Director field
-  await page
-    .getByRole("textbox", { name: "Tapez le nom du/de la ré" })
-    .fill("Director");
+  await page.getByTestId("title-input").fill("Test Movie");
+  await page.getByTestId("original-title-input").fill("Test Movie Original");
+  await page.getByTestId("director-name-input").fill("Test Director");
+  await page.getByTestId("description-textarea").fill("Un super film de test");
+  await page.getByTestId("release-date-select").selectOption("2025");
+  await page.getByTestId("country-select").selectOption("666");
+  await page.getByTestId("runtime-input").fill("90");
+  await page.getByTestId("type-select").selectOption("Long-métrage");
+  await page.getByTestId("genre-select").selectOption("6");
 
-  // Description field
-  await page
-    .getByRole("textbox", { name: "Résumé de l'oeuvre..." })
-    .fill("Description");
+  await page.getByTestId("keywords-multiselect").click();
+  await page.getByTestId("keywords-multiselect").fill("Afrique");
+  await page.getByText("Afrique").click();
 
-  // Year release
-  await page.locator('select[name="release_date"]').selectOption("2025");
+  const filePath = path.resolve(__dirname, "../public/assets/diary.png");
+  await page.getByTestId("image-upload").setInputFiles(filePath);
 
-  // Country of production
-  await page.locator('select[name="country_id"]').selectOption("666");
+  await page.getByTestId("submit-button").click();
 
-  // Runtime
-  await page.getByPlaceholder("00").fill("12");
-
-  // Type
-  await page.locator('select[name="type"]').selectOption("Moyen-métrage");
-
-  // Genre
-  await page.locator('select[name="genre_id"]').selectOption("6");
-
-  // Keywords
-  await page
-    .getByRole("textbox", { name: "Chercher et ajouter des mot-" })
-    .click();
-  await page
-    .getByRole("textbox", { name: "Chercher et ajouter des mot-" })
-    .fill("a");
-  await page.getByText("Afrique", { exact: true }).click();
-
-  // Upload d'image - utilise le name attribute
-  await page
-    .locator('input[name="image_url"]')
-    .setInputFiles("public/assets/diary.png");
-
-  await page.getByRole("button", { name: "Ajouter" }).click();
+  await expect(page).toHaveURL(/.*\/movies/);
 });

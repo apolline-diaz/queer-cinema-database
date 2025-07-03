@@ -114,6 +114,7 @@ export default function Searchfield({
                     {...field}
                     className="appearance-none text-md placeholder-gray-500 font-light block w-full bg-white rounded-xl border  border-rose-900 text-rose-900 p-2 leading-tight focus:none focus:outline-none"
                     placeholder="Entrez un mot ou un titre..."
+                    data-testid="search-input"
                   />
                 )}
               />
@@ -122,6 +123,7 @@ export default function Searchfield({
           <div className="flex flex-col sm:flex-row sm:w-full gap-4 py-2">
             <button
               type="submit"
+              data-testid="search-button"
               className="xs:w-full sm:w-[200px] transition-colors duration-200 ease-in-out bg-rose-900 text-white px-4 py-2 rounded-xl hover:bg-rose-500"
             >
               Rechercher
@@ -129,6 +131,7 @@ export default function Searchfield({
             <button
               type="button"
               onClick={handleReset}
+              data-testid="reset-button"
               className="xs:w-full sm:w-[200px] border transition-colors duration-200 ease-in-out hover:border-rose-500 hover:text-rose-500 text-rose-900 px-4 py-2 border-rose-900 rounded-xl"
             >
               Réinitialiser
@@ -140,7 +143,7 @@ export default function Searchfield({
         {isLoading ? (
           <div className="animate-pulse rounded-md h-6 bg-gray-300 w-1/4 mb-2"></div>
         ) : (
-          `${movies.length} titres trouvés`
+          <span data-testid="results-count">{`${movies.length} titres trouvés`}</span>
         )}
       </div>
       <div className="w-full grid xs:grid-cols-1 gap-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
@@ -157,7 +160,7 @@ export default function Searchfield({
             </div>
           ))
         ) : movies.length === 0 ? (
-          <p>Aucun film trouvé</p>
+          <p data-testid="no-results">Aucun film trouvé</p>
         ) : (
           movies
             .slice(0, visibleCount)
@@ -174,6 +177,7 @@ export default function Searchfield({
       {visibleCount < movies.length && !isLoading && (
         <button
           onClick={loadMore}
+          data-testid="load-more-button"
           className="w-full flex flex-row justify-center items-center border rounded-md hover:bg-rose-500 hover:text-white border-rose-900 border-t mt-4 px-4 py-2 hover:border-rose-500 text-rose-900"
         >
           Voir plus <Icon icon="mdi:chevron-down" className="size-5" />

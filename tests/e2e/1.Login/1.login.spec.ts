@@ -13,10 +13,8 @@ test("login", async ({ page }) => {
   await page.getByTestId("email-input").fill(email);
   await page.getByTestId("password-input").fill(password);
 
-  // Cliquer sur le bouton de connexion
   await page.getByTestId("login-submit-button").click();
 
-  // Attendre la redirection vers la page d'accueil
   await page.waitForURL("/", { timeout: 10000 });
 
   const mobileMenu = page.getByTestId("user-menu-trigger-mobile");
@@ -27,9 +25,7 @@ test("login", async ({ page }) => {
   } else {
     await desktopMenu.click();
   }
-  // Vérifier que "Mes Listes" est présent dans le menu
   await expect(page.getByTestId("my-lists-menu-item")).toBeVisible();
 
-  // Vérifier que le bouton de déconnexion est présent
   await expect(page.getByTestId("logout-button")).toBeVisible();
 });

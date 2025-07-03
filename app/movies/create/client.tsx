@@ -121,6 +121,7 @@ const CreateMovieForm: React.FC = () => {
               },
             })}
             placeholder="Tapez le titre..."
+            data-testid="title-input"
           />
           {errors.title && (
             <span className="text-rose-500 text-xs my-2">
@@ -135,6 +136,7 @@ const CreateMovieForm: React.FC = () => {
             className="w-full text-black font-light bg-transparent border-b p-2 placeholder-gray-500 border-rose-900"
             {...register("original_title")}
             placeholder="Tapez le titre original..."
+            data-testid="original-title-input"
           />
           {errors.original_title && (
             <span className="text-rose-500 text-xs my-2">
@@ -151,6 +153,7 @@ const CreateMovieForm: React.FC = () => {
               required: "Le nom du ou de la réalisateur-ice est obligatoire.",
             })}
             placeholder="Tapez le nom du/de la réalisateur-ice..."
+            data-testid="director-name-input"
           />
           {errors.director_name && (
             <span className="text-rose-500 text-xs my-2">
@@ -172,6 +175,7 @@ const CreateMovieForm: React.FC = () => {
               },
             })}
             placeholder="Résumé de l'oeuvre..."
+            data-testid="description-textarea"
           ></textarea>
           {errors.description && (
             <span className="text-rose-500 text-xs my-2">
@@ -188,6 +192,7 @@ const CreateMovieForm: React.FC = () => {
             {...register("release_date", {
               required: "L'année de sortie est obligatoire.",
             })}
+            data-testid="release-date-select"
           >
             <option value="">Sélectionnez une année</option>
             {Array.from(
@@ -209,6 +214,7 @@ const CreateMovieForm: React.FC = () => {
             {...register("country_id", {
               required: "Le pays est obligatoire.",
             })}
+            data-testid="country-select"
           >
             <option value="">Sélectionnez un pays</option>
             {countries.map((country) => (
@@ -236,6 +242,7 @@ const CreateMovieForm: React.FC = () => {
               valueAsNumber: true,
               min: { value: 1, message: "La durée doit être supérieure à 0." },
             })}
+            data-testid="runtime-input"
           />
           {errors.runtime && (
             <span className="text-rose-500 text-xs my-2">
@@ -250,6 +257,7 @@ const CreateMovieForm: React.FC = () => {
           <select
             className="w-full font-light text-black border p-2 rounded-md border-rose-900"
             {...register("type", { required: "Le format est obligatoire." })}
+            data-testid="type-select"
           >
             <option value="">Sélectionnez un format</option>
             <option value="Long-métrage">Long-métrage</option>
@@ -271,6 +279,7 @@ const CreateMovieForm: React.FC = () => {
           <select
             className="w-full border font-light text-black p-2 rounded-md border-rose-900"
             {...register("genre_id", { required: "Le genre est obligatoire." })}
+            data-testid="genre-select"
           >
             <option value="">Sélectionnez un genre</option>
             {genres.map((genre) => (
@@ -311,6 +320,7 @@ const CreateMovieForm: React.FC = () => {
                   setValue("keyword_id", keywordIds);
                 }}
                 defaultValues={selectedKeywords}
+                data-testid="keywords-multiselect"
               />
             )}
           />
@@ -329,6 +339,7 @@ const CreateMovieForm: React.FC = () => {
             type="file"
             {...register("image_url", { required: "L'image est obligatoire." })}
             accept="image/*"
+            data-testid="image-upload"
           />
           {errors.image_url && (
             <span className="text-red-500 text-xs">
@@ -348,6 +359,7 @@ const CreateMovieForm: React.FC = () => {
             defaultText="Ajouter"
             loadingText="Chargement..."
             isSubmitting={isSubmitting}
+            data-testid="submit-button"
           />
         </div>
       </form>

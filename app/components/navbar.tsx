@@ -86,7 +86,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                   align="end"
                   sideOffset={8}
                   collisionPadding={16}
-                  data-testid="user-menu"
+                  data-testid="user-menu-mobile"
                 >
                   <DropdownMenuLabel>Mon Compte</DropdownMenuLabel>
                   <DropdownMenuSeparator />
@@ -95,7 +95,10 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                       <DropdownMenuItem data-testid="my-lists-menu-item">
                         <Link href="/lists">Mes Listes</Link>
                       </DropdownMenuItem>
-                      <DropdownMenuItem data-testid="contribute-menu-item">
+                      <DropdownMenuItem
+                        asChild
+                        data-testid="contribute-menu-item"
+                      >
                         <span>
                           {userIsAdmin && (
                             <Link href="/movies/create">Contribuer</Link>
@@ -262,6 +265,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                     align="end"
                     sideOffset={8}
                     collisionPadding={16}
+                    data-testid="user-menu-desktop"
                   >
                     <DropdownMenuLabel>Mon Compte</DropdownMenuLabel>
                     <DropdownMenuSeparator />
@@ -270,7 +274,10 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                         <DropdownMenuItem data-testid="my-lists-menu-item">
                           <Link href="/lists">Mes Listes</Link>
                         </DropdownMenuItem>
-                        <DropdownMenuItem>
+                        <DropdownMenuItem
+                          asChild
+                          data-testid="contribute-menu-item"
+                        >
                           <span>
                             {userIsAdmin && (
                               <Link href="/movies/create">Contribuer</Link>

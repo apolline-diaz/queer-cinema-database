@@ -9,16 +9,21 @@ test("catalogue by searchfield", async ({ page }) => {
     .first()
     .click();
 
-  await expect(
-    page.locator("h1.text-2xl", { hasText: "Catalogue" })
-  ).toBeVisible();
+  await expect(page.locator("h1", { hasText: "Catalogue" })).toBeVisible();
 
-  await page.getByRole("button", { name: "Recherche simple" }).click();
+  await page.getByTestId("simple-search-button").click();
 
-  await page
-    .getByRole("textbox", { name: "Entrez un mot ou un titre..." })
-    .fill("jennifer");
-  await page.getByRole("button", { name: "Rechercher" }).click();
+  await expect(page.getByTestId("search-input")).toBeVisible();
+
+  await page.getByTestId("search-input").fill("jennifer");
+
+  await page.getByTestId("search-button").click();
+
+  await page.waitForLoadState("networkidle");
 
   await expect(page.getByText("Jennifer's Body")).toBeVisible();
+
+  await expect(page.getByTestId("results-count")).toContainText(
+    "titres trouvés"
+  );
 });
