@@ -46,7 +46,7 @@ type FormData = {
   image_url: string;
   image: FileList | null;
   type: string | null;
-  directors: string[]; // IDs des réalisateurs sélectionnés
+  directors: string[];
   country_id: string;
   country: string;
   genre_ids: string[];
@@ -305,7 +305,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
           <div className="col-span-2">
             <label className="block text-sm font-medium mb-1">Titre</label>
             <input
-              {...register("title", { required: "Title is required" })}
+              {...register("title", { required: "Titre requis" })}
               className="w-full py-2 text-sm font-light border rounded-md px-2 bg-white text-black border-rose-900 bg-transparent"
             />
             {errors.title && (
@@ -351,6 +351,11 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
               }}
               defaultValues={selectedDirectors}
             />
+            {errors.directors && (
+              <p className="text-red-600 text-sm mt-1">
+                {errors.directors.message}
+              </p>
+            )}
             <p className="text-gray-600 text-xs mt-1">
               Vous pouvez sélectionner plusieurs réalisateur-ices et en retirer.
             </p>
@@ -499,9 +504,9 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
             </div>
           </div>
 
-          {/* Type */}
+          {/* Format */}
           <div>
-            <label className="block text-sm font-medium mb-1">Type</label>
+            <label className="block text-sm font-medium mb-1">Format</label>
             <select
               {...register("type")}
               className="w-full text-sm font-light border-rose-900 py-2 border rounded-md px-2 bg-white text-black"

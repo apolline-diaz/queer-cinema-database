@@ -46,16 +46,10 @@ export default function ListClientPage({
       <BackButton />
       {isLoading ? (
         <div>
-          {/* Skeleton for the title */}
+          {/* Skeletons*/}
           <div className="animate-pulse bg-gray-300 border h-8 w-1/4 mb-4 rounded-md"></div>
-
-          {/* Skeleton for the description */}
           <div className="animate-pulse bg-gray-300 border h-7 w-3/4 mb-6 rounded-md"></div>
-
-          {/* Skeleton button */}
           <div className="animate-pulse bg-gray-300 border h-10 w-48 mb-6 rounded-md"></div>
-
-          {/* Skeleton grid for movie cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 mt-5">
             {Array.from({ length: 3 }).map((_, index) => (
               <div
@@ -72,14 +66,12 @@ export default function ListClientPage({
         </div>
       ) : (
         <div>
-          {/* Title and description */}
           <h1 className="text-2xl font-medium text-rose-900">
             {listData.title}
           </h1>
           <p className="text-black font-light mt-2 mb-6">
             {listData.description}
           </p>
-          {/* Button to edit list */}{" "}
           {userIsOwner && (
             <button
               onClick={() => router.push(`/lists/edit/${id}`)}
@@ -88,7 +80,6 @@ export default function ListClientPage({
               Modifier la liste
             </button>
           )}
-          {/* Movie grid */}
           <div className="grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 mt-5">
             {movies.length === 0 ? (
               <p>Aucun film trouvé</p>
