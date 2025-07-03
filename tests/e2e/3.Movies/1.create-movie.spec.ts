@@ -23,33 +23,22 @@ const test = base.extend<CustomFixtures>({
 
     await page.waitForURL("/", { timeout: 10000 });
 
-    // pass the authenticated page to the test
     await use(page);
   },
 });
 
 test("create movie", async ({ authenticatedPage: page }) => {
-  await page.goto("/");
-  await page.setViewportSize({ width: 1280, height: 720 });
-
   const mobileMenu = page.getByTestId("user-menu-trigger-mobile");
   const desktopMenu = page.getByTestId("user-menu-trigger-desktop");
 
   if (await mobileMenu.isVisible()) {
     await mobileMenu.click();
-    await page.waitForSelector('[data-testid="user-menu-mobile"]', {
-      state: "visible",
-    });
-    await page.getByTestId("contribute-menu-item").click({ force: true });
   } else {
     await desktopMenu.click();
-
-    await page.waitForSelector('[data-testid="user-menu-desktop"]', {
-      state: "visible",
-    });
-
-    await page.getByTestId("contribute-menu-item").click({ force: true });
   }
+  await page.getByTestId("contribute-link").click();
+
+  await page.waitForURL(/.*\/movies\/create/);
 
   await page.getByTestId("title-input").fill("Test Movie");
   await page.getByTestId("original-title-input").fill("Test Movie Original");

@@ -93,7 +93,9 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                   {user && (
                     <span>
                       <DropdownMenuItem data-testid="my-lists-menu-item">
-                        <Link href="/lists">Mes Listes</Link>
+                        <Link href="/lists" data-testid="lists-link">
+                          Mes Listes
+                        </Link>
                       </DropdownMenuItem>
                       <DropdownMenuItem
                         asChild
@@ -101,7 +103,12 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                       >
                         <span>
                           {userIsAdmin && (
-                            <Link href="/movies/create">Contribuer</Link>
+                            <Link
+                              href="/movies/create"
+                              data-testid="contribute-link"
+                            >
+                              Contribuer
+                            </Link>
                           )}
                         </span>
                       </DropdownMenuItem>
@@ -272,7 +279,9 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                     {user && (
                       <span>
                         <DropdownMenuItem data-testid="my-lists-menu-item">
-                          <Link href="/lists">Mes Listes</Link>
+                          <Link href="/lists" data-testid="lists-link">
+                            Mes Listes
+                          </Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           asChild
@@ -280,7 +289,12 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                         >
                           <span>
                             {userIsAdmin && (
-                              <Link href="/movies/create">Contribuer</Link>
+                              <Link
+                                href="/movies/create"
+                                data-testid="contribute-link"
+                              >
+                                Contribuer
+                              </Link>
                             )}
                           </span>
                         </DropdownMenuItem>

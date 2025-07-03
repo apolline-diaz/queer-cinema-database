@@ -16,46 +16,53 @@ const test = base.extend<CustomFixtures>({
     await page.goto("/login");
     await page.setViewportSize({ width: 1280, height: 720 });
 
-    await page.getByPlaceholder("Tapez votre adresse e-mail").fill(email);
-    await page.getByPlaceholder("Tapez votre mot de passe").fill(password);
+    await page.getByTestId("email-input").fill(email);
+    await page.getByTestId("password-input").fill(password);
+    await page.getByTestId("login-submit-button").click();
 
-    await page.getByRole("button", { name: "Se connecter" }).click();
+    await page.waitForURL("/", { timeout: 10000 });
 
-    await page.locator('[id="radix-\\:Riicq\\:"]').click();
-
-    await expect(
-      page.getByRole("menuitem", { name: "Mes Listes" })
-    ).toBeVisible();
-    // pass the authenticated page to the test
     await use(page);
   },
 });
 
 test("create list", async ({ authenticatedPage: page }) => {
-  await page.goto("/");
+  const mobileMenu = page.getByTestId("user-menu-trigger-mobile");
+  const desktopMenu = page.getByTestId("user-menu-trigger-desktop");
 
-  await page.locator('[id="radix-\\:Riicq\\:"]').click();
-  await page.getByRole("link", { name: "Mes Listes" }).click();
-  await page.locator("html").click();
-  await page.getByRole("link", { name: "Créer une nouvelle liste" }).click();
+  if (await mobileMenu.isVisible()) {
+    await mobileMenu.click();
+  } else {
+    await desktopMenu.click();
+  }
+
+  await page.getByTestId("lists-link").click();
+
+  await page.waitForURL(/.*\/lists/);
+
+  await page.waitForLoadState("networkidle");
+
+  await page.getByTestId("create-list-link").click();
+
+  await page.waitForURL(/.*\/lists\/create/);
+
+  await page.getByTestId("title-input").fill("New List");
+
+  await page.getByTestId("description-input").fill("Description list");
+
+  await page.getByTestId("movie-search-input").fill("a");
+
+  await page.waitForSelector('[data-testid="movie-suggestions-list"]', {
+    timeout: 5000,
+  });
 
   await page
-    .getByRole("textbox", { name: "Entrez un titre..." })
-    .fill("New List");
-  await page
-    .getByRole("textbox", { name: "Entrez une description..." })
-    .click();
-  await page
-    .getByRole("textbox", { name: "Entrez une description..." })
-    .fill("Description list");
-  await page.getByRole("textbox", { name: "Cherchez des films..." }).click();
-  await page.getByRole("textbox", { name: "Cherchez des films..." }).fill("a");
-  await page
-    .getByRole("listitem")
+    .getByTestId("movie-suggestions-list")
+    .locator("li")
     .filter({ hasText: "% Woman 2004" })
-    .locator("span")
     .click();
-  await page.getByRole("button", { name: "Créer la liste" }).click();
+
+  await page.getByTestId("create-list-submit-button").click();
 
   await expect(page.getByRole("heading", { name: "New List" })).toBeVisible();
 });

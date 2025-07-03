@@ -120,6 +120,7 @@ const CreateListForm: React.FC<CreateListFormProps> = ({ isAdmin }) => {
             {...register("title", { required: "Le titre est requis" })}
             className="block w-full text-sm text-black border-rose-900 placeholder-gray-500 font-light bg-transparent border-b py-2 focus:outline-none"
             placeholder="Entrez un titre..."
+            data-testid="title-input"
           />
           {errors.title && (
             <span className="text-red-500 text-xs">{errors.title.message}</span>
@@ -140,6 +141,7 @@ const CreateListForm: React.FC<CreateListFormProps> = ({ isAdmin }) => {
             })}
             className="block w-full text-sm text-black bg-white placeholder-gray-500 font-light border-rose-900 border py-3 px-4 rounded focus:outline-none"
             placeholder="Entrez une description..."
+            data-testid="description-input"
           />
           {errors.description && (
             <span className="text-rose-500 text-xs my-2">
@@ -161,16 +163,21 @@ const CreateListForm: React.FC<CreateListFormProps> = ({ isAdmin }) => {
             onChange={handleMovieInputChange}
             placeholder="Cherchez des films..."
             className="block w-full text-sm bg-white text-black placeholder-gray-500 font-light border-rose-900 border py-2 px-3 rounded focus:outline-none"
+            data-testid="movie-search-input"
           />
 
           {/* Suggestions de films */}
           {isSearching && filteredMovies.length > 0 && (
-            <ul className="absolute border max-h-40 max-w-80 overflow-y-auto bg-rose-50 rounded-lg text-sm border-rose-900 mt-1 z-10">
+            <ul
+              className="absolute border max-h-40 max-w-80 overflow-y-auto bg-rose-50 rounded-lg text-sm border-rose-900 mt-1 z-10"
+              data-testid="movie-suggestions-list"
+            >
               {filteredMovies.map((movie) => (
                 <li
                   key={movie.id}
                   className="px-4 py-2 font-light hover:bg-rose-950 cursor-pointer uppercase  hover:text-white"
                   onClick={() => handleAddMovie(movie)}
+                  data-testid={`movie-suggestion-${movie.id}`}
                 >
                   {movie.title}{" "}
                   <span className="font-semibold ">{movie.release_date}</span>
@@ -206,6 +213,7 @@ const CreateListForm: React.FC<CreateListFormProps> = ({ isAdmin }) => {
               <span
                 key={movie.id}
                 className="items-center my-2 border flex justify-between border-rose-900 w-full bg-rose-50 text-rose-900 text-sm font-light mr-2 px-3 py-1 rounded"
+                data-testid={`selected-movie-${movie.id}`}
               >
                 <div>
                   {movie.title}{" "}
@@ -215,6 +223,7 @@ const CreateListForm: React.FC<CreateListFormProps> = ({ isAdmin }) => {
                   type="button"
                   onClick={() => handleRemoveMovie(movie.id)}
                   className="ml-2 text-rose-900 hover:text-rose-900"
+                  data-testid={`remove-movie-${movie.id}`}
                 >
                   &times;
                 </button>
@@ -228,7 +237,8 @@ const CreateListForm: React.FC<CreateListFormProps> = ({ isAdmin }) => {
               <input
                 type="checkbox"
                 {...register("is_collection")}
-                className="form-checkbox "
+                className="form-checkbox"
+                data-testid="is-collection-checkbox"
               />
               <span className="ml-2">Marquer comme collection</span>
             </label>
@@ -239,6 +249,7 @@ const CreateListForm: React.FC<CreateListFormProps> = ({ isAdmin }) => {
           defaultText="Créer la liste"
           loadingText="Chargement..."
           isSubmitting={isSubmitting}
+          data-testid="create-list-submit-button"
         />
       </form>
     </div>
