@@ -43,6 +43,7 @@ export async function deleteUserAccountWithoutAuth() {
       where: { id: userId },
     });
 
+    await supabase.auth.signOut();
     redirect("/");
   } catch (error) {
     console.error("Erreur deleteUserAccountWithoutAuth:", error);
