@@ -10,14 +10,26 @@ test("login", async ({ page }) => {
   await page.goto("/login");
   await page.setViewportSize({ width: 1280, height: 720 });
 
-  await page.getByPlaceholder("Tapez votre adresse e-mail").fill(email);
-  await page.getByPlaceholder("Tapez votre mot de passe").fill(password);
+  await page.getByTestId("email-input").fill(email);
+  await page.getByTestId("password-input").fill(password);
 
-  await page.getByRole("button", { name: "Se connecter" }).click();
+  // Cliquer sur le bouton de connexion
+  await page.getByTestId("login-submit-button").click();
 
-  await page.locator('[id="radix-\\:Riicq\\:"]').click();
+  // Attendre la redirection vers la page d'accueil
+  await page.waitForURL("/", { timeout: 10000 });
 
-  await expect(
-    page.getByRole("menuitem", { name: "Mes Listes" })
-  ).toBeVisible();
+  const mobileMenu = page.getByTestId("user-menu-trigger-mobile");
+  const desktopMenu = page.getByTestId("user-menu-trigger-desktop");
+
+  if (await mobileMenu.isVisible()) {
+    await mobileMenu.click();
+  } else {
+    await desktopMenu.click();
+  }
+  // Vérifier que "Mes Listes" est présent dans le menu
+  await expect(page.getByTestId("my-lists-menu-item")).toBeVisible();
+
+  // Vérifier que le bouton de déconnexion est présent
+  await expect(page.getByTestId("logout-button")).toBeVisible();
 });

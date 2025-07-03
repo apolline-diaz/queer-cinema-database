@@ -69,6 +69,8 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                   onMouseEnter={() => setIsHovered(true)}
                   onMouseLeave={() => setIsHovered(false)}
                   aria-label="Ouvrir le menu utilisateur"
+                  asChild
+                  data-testid="user-menu-trigger-mobile"
                 >
                   <Icon
                     icon={
@@ -84,34 +86,36 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                   align="end"
                   sideOffset={8}
                   collisionPadding={16}
+                  data-testid="user-menu"
                 >
                   <DropdownMenuLabel>Mon Compte</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   {user && (
                     <span>
-                      <DropdownMenuItem>
+                      <DropdownMenuItem data-testid="my-lists-menu-item">
                         <Link href="/lists">Mes Listes</Link>
                       </DropdownMenuItem>
-                      <DropdownMenuItem>
+                      <DropdownMenuItem data-testid="contribute-menu-item">
                         <span>
                           {userIsAdmin && (
                             <Link href="/movies/create">Contribuer</Link>
                           )}
                         </span>
                       </DropdownMenuItem>
-                      <DropdownMenuItem>
+                      <DropdownMenuItem data-testid="settings-menu-item">
                         <span>
                           <Link href="/account/settings">Paramètres</Link>
                         </span>
                       </DropdownMenuItem>
                     </span>
                   )}
-                  <DropdownMenuItem>
+                  <DropdownMenuItem data-testid="auth-menu-item">
                     <div className="">
                       {!user ? (
                         <Link
                           href="/login"
                           className="text-black hover:text-blue-500"
+                          data-testid="login-link"
                         >
                           Se connecter
                         </Link>
@@ -120,6 +124,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                           <button
                             className="hover:text-rose-500 text-rose-900"
                             aria-label="Se déconnecter de votre compte"
+                            data-testid="logout-button"
                           >
                             Se déconnecter
                           </button>
@@ -240,6 +245,8 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}
                     aria-label="Ouvrir le menu utilisateur"
+                    asChild
+                    data-testid="user-menu-trigger-desktop"
                   >
                     <Icon
                       icon={
@@ -260,7 +267,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                     <DropdownMenuSeparator />
                     {user && (
                       <span>
-                        <DropdownMenuItem>
+                        <DropdownMenuItem data-testid="my-lists-menu-item">
                           <Link href="/lists">Mes Listes</Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem>
@@ -291,6 +298,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                             <button
                               className="hover:text-rose-500 text-rose-900"
                               aria-label="Se déconnecter de votre compte"
+                              data-testid="logout-button"
                             >
                               Se déconnecter
                             </button>
