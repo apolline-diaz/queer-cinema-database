@@ -18,7 +18,6 @@ const CreateMoviePage: React.FC = () => {
     control,
     handleSubmit,
     setValue,
-    watch,
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
@@ -71,7 +70,7 @@ const CreateMoviePage: React.FC = () => {
         const keywordIds = selectedKeywords.map((k) => k.value).join(",");
         formData.append("keyword_id", keywordIds);
       } else {
-        formData.append("keyword_id", ""); // Valeur par défaut vide
+        formData.append("keyword_id", "");
       }
       if (data.image_url[0]) {
         formData.append("image_url", data.image_url[0]);
