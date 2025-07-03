@@ -82,11 +82,11 @@ test("edit a movie", async ({ authenticatedPage: page }) => {
     .getByRole("button")
     .click();
 
-  // Enregistrer les modifications
   await page
     .getByRole("button", { name: "Enregistrer les modifications" })
     .click();
 
-  // Vérifier que le titre modifié est bien présent
-  await expect(page.getByText("Movie Title Update")).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Movie Title Update" })
+  ).toBeVisible();
 });

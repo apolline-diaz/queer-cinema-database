@@ -84,6 +84,5 @@ test("add a movie", async ({ authenticatedPage: page }) => {
     .locator('input[name="image_url"]')
     .setInputFiles("public/assets/diary.png");
 
-  // Cliquer sur le bouton Ajouter
   await page.getByRole("button", { name: "Ajouter" }).click();
 });
