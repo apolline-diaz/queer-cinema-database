@@ -7,9 +7,9 @@ import { getCollections } from "@/app/server-actions/lists/get-collections";
 import Link from "next/link";
 import { Icon } from "@iconify/react";
 
-export const revalidate = 0;
+export const revalidate = 3600; // revalidate every hour (Incremental Static Regeneration)
 
-export default async function Home() {
+export default async function HomePage() {
   try {
     const topMovies = await getTopMovies();
     const latestMovies = await getLatestMovies();
@@ -28,7 +28,6 @@ export default async function Home() {
             />
           ))}
         </div>
-
         <div className="w-full py-10 pl-10">
           <div className="flex justify-between items-center mb-3 text-white">
             <h2 className="text-2xl font-semibold text-rose-500">Nouveautés</h2>

@@ -14,7 +14,6 @@ import { getDirectors } from "@/app/server-actions/directors/get-directors";
 import MultiSelect from "@/app/components/multi-select";
 import { SubmitButton } from "@/app/components/submit-button";
 import { uploadImage } from "@/utils/upload-image";
-import { Icon } from "@iconify/react/dist/iconify.js";
 
 type KeywordOption = {
   value: string;

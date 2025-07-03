@@ -1,8 +1,16 @@
 /* eslint-disable react/no-unescaped-entities */
+import { Metadata } from "next";
 
-import Link from "next/link";
+export const metadata: Metadata = {
+  title: "À propos | Queer Cinema Database",
+  description:
+    "En savoir plus sur Queer Cinema Database, son objectif, sa ligne éditoriale et ses ressources.",
+  alternates: {
+    canonical: "/about",
+  },
+};
 
-export default function About() {
+export default function AboutPage() {
   return (
     <div className="px-10 py-20 mb-5">
       <h2 className="text-rose-900 font-medium text-2xl mb-6">À propos</h2>
@@ -96,14 +104,16 @@ export default function About() {
               <p className="font-light text-black">
                 Les informations des films sont tirées de sites et
                 d'organisations dédiés au cinéma tels que :
-                <br /> - Plateformes communautaires : Letterboxd, Mubi,
+                <br /> - Plateformes communautaires : Letterboxd, Mubi, Tënk,
                 SensCritique, AlloCiné
+                <br /> - Plateformes VOD : Mubi, Tënk
                 <br /> - Bases de données : The Movie Database, IMDB, UniFrance,
                 Film documentaire
                 <br /> - Distributeurs : Frameline, Women Make Movies, Vucavu,
-                Video Data Bank, VTape, CFMDC
+                Video Data Bank, VTape, CFMDC, Optimale, OutPlay,
                 <br /> - Festivals : Chéries Chéris, Cineffable, Pink Screens
-                <br /> - Archives nationales : BFI, UCLA, INA
+                <br /> - Archives nationales : BFI, UCLA, INA, Centre Simone de
+                Beauvoir
               </p>
             </div>
           </div>

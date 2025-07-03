@@ -57,7 +57,7 @@ export default function KeywordStatsClientComponent({
                   : "bg-transparent text-rose-900 border-rose-900 hover:bg-rose-900 hover:text-white"
               }`}
             >
-              Diagramme en bâton
+              Diagramme en barres
             </button>
             <button
               onClick={() => setChartType("pie")}
@@ -67,11 +67,11 @@ export default function KeywordStatsClientComponent({
                   : "bg-transparent text-rose-900 border-rose-900 hover:bg-rose-900 hover:text-white"
               }`}
             >
-              Diagramme en camembert
+              Diagramme circulaire
             </button>
           </div>
           <h2 className="text-black text-md pt-4">
-            Répartition des films par les 10 mots-clés les plus fréquents
+            Nombre de films par mots-clés les plus fréquents
           </h2>
         </div>
       </div>

@@ -6,11 +6,15 @@ import { auth } from "@/utils/auth";
 import BackButton from "@/app/components/back-button";
 
 export const metadata: Metadata = {
-  title: "Edit Movie",
-  description: "Edit a movie in the database",
+  title: "Modifier un film | Queer Cinema Database",
+  description: "Modifiez les informations d’un film déjà existant.",
 };
 
-export default async function Page({ params }: { params: { id: string } }) {
+export default async function EditMoviePage({
+  params,
+}: {
+  params: { id: string };
+}) {
   const { movie, error } = await getMovie(params.id);
   const session = await auth();
 

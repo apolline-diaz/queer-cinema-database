@@ -6,6 +6,8 @@ import { isAdmin } from "@/utils/is-user-admin";
 import ClientMovieActions from "./client";
 import { auth } from "@/utils/auth";
 import BackButton from "@/app/components/back-button";
+import { Metadata } from "next";
+import { getCanonicalUrl } from "@/utils/index";
 
 export const revalidate = 0;
 
@@ -13,7 +15,40 @@ type Props = {
   params: { slug: string };
 };
 
-export default async function Page({ params }: Props) {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { movie } = await getMovie(params.slug);
+
+  if (!movie) {
+    return {
+      title: "Film introuvable | Queer Cinema Database",
+      description:
+        "Le film demandé est introuvable dans notre base de données.",
+    };
+  }
+
+  return {
+    metadataBase: new URL(getCanonicalUrl()),
+    title: `${movie.title} | Queer Cinema Database`,
+    description:
+      movie.description ||
+      `Découvrez ${movie.title} sur Queer Cinema Database.`,
+    alternates: {
+      canonical: `/movies/${params.slug}`,
+    },
+    openGraph: {
+      title: movie.title,
+      description: movie.description || "",
+      images: [
+        {
+          url: movie.image_url || "",
+          alt: movie.title,
+        },
+      ],
+    },
+  };
+}
+
+export default async function MoviePage({ params }: Props) {
   const { movie, error } = await getMovie(params.slug);
   const userIsAdmin = await isAdmin();
   const session = await auth();

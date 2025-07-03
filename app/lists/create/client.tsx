@@ -23,11 +23,11 @@ interface FormData {
   is_collection?: boolean;
 }
 
-interface CreateListPageProps {
+interface CreateListFormProps {
   isAdmin: boolean;
 }
 
-const CreateListPage: React.FC<CreateListPageProps> = ({ isAdmin }) => {
+const CreateListForm: React.FC<CreateListFormProps> = ({ isAdmin }) => {
   const router = useRouter();
   const {
     register,
@@ -245,4 +245,4 @@ const CreateListPage: React.FC<CreateListPageProps> = ({ isAdmin }) => {
   );
 };
 
-export default CreateListPage;
+export default CreateListForm;
