@@ -2,8 +2,7 @@ name: Run Jest Tests
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
 
 jobs:
@@ -11,15 +10,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
+          cache: "pnpm"
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+        version: 8
 
       - name: Install dependencies
         run: pnpm install
 
-      - name: Run Jest tests
+      - name: Run tests
         run: pnpm test
