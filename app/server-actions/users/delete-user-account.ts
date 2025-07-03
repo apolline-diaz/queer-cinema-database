@@ -1,14 +1,13 @@
 "use server";
 
+import { prisma } from "@/lib/prisma";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 
-// Action pour supprimer le compte utilisateur
-export async function deleteUserAccount() {
+export async function deleteUserAccountWithoutAuth() {
   const supabase = createClient();
 
   try {
-    // Vérifier la session utilisateur
     const {
       data: { session },
       error: sessionError,
@@ -20,26 +19,34 @@ export async function deleteUserAccount() {
 
     const userId = session.user.id;
 
-    // Supprimer les données utilisateur de vos tables personnalisées
-    // (ajustez selon votre schéma de base de données)
+    // Delete movies from user lists
+    await prisma.lists_movies.deleteMany({
+      where: {
+        list_id: {
+          in: await prisma.lists
+            .findMany({
+              where: { user_id: userId },
+              select: { id: true },
+            })
+            .then((lists) => lists.map((list) => list.id)),
+        },
+      },
+    });
 
-    // Exemple : supprimer le compte utilisateur
-    await supabase.from("users").delete().eq("id", userId);
+    // Delete user lists
+    await prisma.lists.deleteMany({
+      where: { user_id: userId },
+    });
 
-    // Exemple : supprimer les listes
-    await supabase.from("lists_movies").delete().eq("user_id", userId);
+    // Delete user
+    await prisma.users.delete({
+      where: { id: userId },
+    });
 
-    // Note : La suppression du compte Auth Supabase doit être faite côté admin
-    // ou via RLS (Row Level Security) avec une fonction PostgreSQL
-    // Pour l'instant, on peut désactiver le compte
-
-    // Déconnecter l'utilisateur
     await supabase.auth.signOut();
-
-    // Rediriger vers la page d'accueil
-    redirect("/");
+    return { success: true };
   } catch (error) {
-    console.error("Erreur deleteUserAccount:", error);
+    console.error("Erreur deleteUserAccountWithoutAuth:", error);
     return {
       error: "Une erreur inattendue s'est produite lors de la suppression.",
     };
