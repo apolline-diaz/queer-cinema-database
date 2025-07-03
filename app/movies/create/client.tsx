@@ -229,13 +229,13 @@ const CreateMovieForm: React.FC = () => {
           <label className="block font-medium mb-2">Durée (minutes)</label>
           <input
             type="number"
+            placeholder="00"
             className="w-full font-light border p-2 text-black rounded-md border-rose-900"
             {...register("runtime", {
               required: "La durée est obligatoire.",
+              valueAsNumber: true,
               min: { value: 1, message: "La durée doit être supérieure à 0." },
             })}
-            placeholder="00"
-            min="0"
           />
           {errors.runtime && (
             <span className="text-rose-500 text-xs my-2">
@@ -249,7 +249,7 @@ const CreateMovieForm: React.FC = () => {
           <label className="block font-medium mb-2">Format</label>
           <select
             className="w-full font-light text-black border p-2 rounded-md border-rose-900"
-            {...register("type", { required: "Le type est obligatoire." })}
+            {...register("type", { required: "Le format est obligatoire." })}
           >
             <option value="">Sélectionnez un format</option>
             <option value="Long-métrage">Long-métrage</option>

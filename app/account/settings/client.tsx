@@ -1,10 +1,10 @@
 "use client";
 
-import { DeleteModal } from "@/app/components/delete-modal";
+import { DeleteUserModal } from "./delete-user-modal";
 import { SubmitButton } from "@/app/components/submit-button";
 import { updateUserName } from "@/app/server-actions/users/update-user-name";
 import { updatePassword } from "@/app/server-actions/users/update-password";
-import { deleteUserAccount } from "@/app/server-actions/users/delete-user-account";
+import { deleteUserAccountWithoutAuth } from "@/app/server-actions/users/delete-user-account";
 import { useState, useTransition } from "react";
 import { PasswordInput } from "@/app/components/password-input";
 
@@ -76,7 +76,7 @@ export default function SettingsClientPage({ user }: { user: User }) {
 
   const handleDeleteConfirm = async () => {
     try {
-      await deleteUserAccount();
+      await deleteUserAccountWithoutAuth();
     } catch (error) {
       setMessage({
         type: "error",
@@ -172,7 +172,7 @@ export default function SettingsClientPage({ user }: { user: User }) {
           Supprimer mon compte
         </button>
       </form>
-      <DeleteModal
+      <DeleteUserModal
         isOpen={isDeleteOpen}
         onClose={() => setIsDeleteOpen(false)}
         onConfirm={handleDeleteConfirm}

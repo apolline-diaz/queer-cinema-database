@@ -52,7 +52,10 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
         <Link href="/">
           <h2 className="text-white whitespace-nowrap font-raleway font-bold text-xl xs:text-md">
             <span className="text-rose-900">queer cinema</span>{" "}
-            <span className="text-rose-900 font-light"> database</span>
+            <span className="text-rose-900 font-light hidden sm:inline">
+              {" "}
+              database
+            </span>
           </h2>
         </Link>
 
@@ -62,7 +65,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
             <section className="MOBILE-MENU flex lg:hidden">
               <DropdownMenu>
                 <DropdownMenuTrigger
-                  className="px-4"
+                  className="px-6 focus:outline-none"
                   onMouseEnter={() => setIsHovered(true)}
                   onMouseLeave={() => setIsHovered(false)}
                   aria-label="Ouvrir le menu utilisateur"
@@ -233,7 +236,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
 
                 <DropdownMenu>
                   <DropdownMenuTrigger
-                    className="px-4"
+                    className="px-4 focus:outline-none"
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}
                     aria-label="Ouvrir le menu utilisateur"
