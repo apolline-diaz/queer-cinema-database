@@ -221,51 +221,6 @@ The project will be available at [http://localhost:3000](http://localhost:3000).
    npx playwright test --ui
    ```
 
-## 📂 Project Structure
-
-```plaintext
-├── app/                     # Application logic
-│   ├── about/               # About page
-│   ├── account/             # Account management
-│   ├── api/                 # API routes
-│   ├── auth/                # Authentication (login, signup)
-│   ├── contact/             # Contact page
-│   ├── error/               # Error pages
-│   ├── lists/               # User's custom lists
-│   ├── login/               # Login page
-│   ├── logout/              # Logout logic
-│   ├── movies/              # Movie listing and details
-│   ├── server-actions/      # Server-side actions (CRUD for movies, lists, etc.)
-│   ├── signup/              # Signup page
-│   ├── stats/               # Statistics page
-│   ├── types/               # TypeScript types
-│   └── utils/               # Utility functions
-│
-├── prisma/                  # Prisma schema and migrations
-│   └── schema.prisma        # Database schema
-│
-├── public/                  # Public assets (images, favicons, etc.)
-│
-├── tests/                   # Tests
-│   ├── e2e/                 # End-to-end tests
-│   └── unit/                # Unit tests
-│
-├── lib/                     # Library functions
-│   ├── prisma.ts            # Prisma client setup
-│   └── supabase.ts          # Supabase client setup
-│
-├── coverage/                # Test coverage reports
-│
-├── .env.local               # Local environment variables
-├── Dockerfile               # Docker configuration
-├── docker-compose.yaml      # Docker Compose configuration
-├── jest.config.ts           # Jest configuration for unit tests
-├── playwright.config.ts     # Playwright configuration for e2e tests
-├── README.md                # Documentation
-├── tsconfig.json            # TypeScript configuration
-└── next.config.mjs          # Next.js configuration
-```
-
 ### 🌟 Note
 
 This project is developed as part of the RNCP Application Developer certification program.

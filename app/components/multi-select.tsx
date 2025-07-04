@@ -15,6 +15,7 @@ interface MultiSelectProps {
   placeholder?: string;
   onChange: (selected: Option[]) => void;
   defaultValues?: Option[];
+  "data-testid"?: string;
 }
 
 export default function MultiSelect({
@@ -25,6 +26,7 @@ export default function MultiSelect({
   placeholder,
   onChange,
   defaultValues = [],
+  "data-testid": dataTestId,
 }: MultiSelectProps) {
   const [inputValue, setInputValue] = useState("");
   const [filteredOptions, setFilteredOptions] = useState<Option[]>(options);
@@ -86,6 +88,7 @@ export default function MultiSelect({
                 placeholder={placeholder || "Rechercher..."}
                 value={inputValue}
                 onChange={handleInputChange}
+                data-testid={dataTestId}
               />
 
               {/* Dropdown Suggestions */}
@@ -95,6 +98,7 @@ export default function MultiSelect({
                     <li
                       key={option.value}
                       className="px-4 py-2 cursor-pointer hover:text-white hover:bg-rose-950"
+                      data-testid={`option-${option.value.toLowerCase().replace(/\s+/g, "-")}`}
                       onClick={() => {
                         // Check if the option is already selected
                         const isAlreadySelected = safeValue.some(
