@@ -13,103 +13,159 @@ export async function searchMovies({
   startYear,
   endYear,
   type,
+  page = 1,
+  limit = 20, // Réduit pour un vrai lazy loading
 }: {
   countryId: string;
   genreId: string;
-  keywordIds: string[]; // Array of keyword IDs
+  keywordIds: string[];
   directorId: string;
-  startYear: string; // Changed from releaseYear to startYear
-  endYear: string; //
+  startYear: string;
+  endYear: string;
+  type: string;
+  page?: number;
+  limit?: number;
+}) {
+  const skip = (page - 1) * limit;
+
+  // IMPORTANT: Ne pas mettre en cache avec page/limit pour le lazy loading
+  // Ou utiliser une clé de cache différente incluant page et limit
+  const cacheKey = [
+    "search-movies",
+    countryId,
+    directorId,
+    genreId,
+    JSON.stringify(keywordIds),
+    startYear,
+    endYear,
+    type,
+    page.toString(), // Inclure la page dans la clé de cache
+    limit.toString(), // Inclure la limite dans la clé de cache
+  ];
+
+  try {
+    // Build date range condition
+    let releaseCondition = {};
+
+    if (startYear && endYear) {
+      releaseCondition = {
+        release_date: {
+          gte: `${startYear}`,
+          lte: `${endYear}-12-31`,
+        },
+      };
+    } else if (startYear) {
+      releaseCondition = {
+        release_date: {
+          gte: `${startYear}`,
+        },
+      };
+    } else if (endYear) {
+      releaseCondition = {
+        release_date: {
+          lte: `${endYear}-12-31`,
+        },
+      };
+    }
+
+    const whereClause = {
+      ...(countryId && {
+        movies_countries: {
+          some: { country_id: parseInt(countryId) },
+        },
+      }),
+      ...(genreId && {
+        movies_genres: {
+          some: { genre_id: BigInt(genreId) },
+        },
+      }),
+      ...(keywordIds.length > 0 && {
+        AND: keywordIds.map((id) => ({
+          movies_keywords: {
+            some: { keyword_id: parseInt(id) },
+          },
+        })),
+      }),
+      ...(directorId && {
+        movies_directors: {
+          some: { director_id: BigInt(directorId) },
+        },
+      }),
+      ...releaseCondition,
+      ...(type && {
+        type: type,
+      }),
+    };
+
+    // Compter le total pour la pagination
+    const totalCount = await prisma.movies.count({
+      where: whereClause,
+    });
+
+    // Récupérer les films avec pagination
+    const movies = await prisma.movies.findMany({
+      where: whereClause,
+      select: {
+        id: true,
+        title: true,
+        image_url: true,
+        release_date: true,
+      },
+      orderBy: { created_at: "desc" },
+      skip: skip, // UTILISER skip pour la pagination
+      take: limit, // UTILISER take pour limiter les résultats
+    });
+
+    const mappedMovies = movies.map((movie) => ({
+      id: movie.id,
+      title: movie.title,
+      image_url: movie.image_url || "",
+      release_date: movie.release_date || "",
+    }));
+
+    // Retourner les données avec les métadonnées de pagination
+    return {
+      movies: mappedMovies,
+      totalCount,
+      currentPage: page,
+      totalPages: Math.ceil(totalCount / limit),
+      hasMore: skip + movies.length < totalCount,
+    };
+  } catch (error) {
+    console.error("Error searching movies:", error);
+    return {
+      movies: [],
+      totalCount: 0,
+      currentPage: 1,
+      totalPages: 0,
+      hasMore: false,
+    };
+  }
+}
+
+// Fonction pour la première page (peut être mise en cache)
+export async function searchMoviesFirstPage(searchParams: {
+  countryId: string;
+  genreId: string;
+  keywordIds: string[];
+  directorId: string;
+  startYear: string;
+  endYear: string;
   type: string;
 }) {
   return cachedQuery(
     [
-      "search-movies",
-      countryId,
-      directorId,
-      genreId,
-      JSON.stringify(keywordIds),
-      startYear,
-      endYear,
-      type,
+      "search-movies-first-page",
+      searchParams.countryId,
+      searchParams.directorId,
+      searchParams.genreId,
+      JSON.stringify(searchParams.keywordIds),
+      searchParams.startYear,
+      searchParams.endYear,
+      searchParams.type,
     ],
     async () => {
-      try {
-        // Build date range condition
-        let releaseCondition = {};
-
-        if (startYear && endYear) {
-          // Both years are provided - search for range
-          releaseCondition = {
-            release_date: {
-              gte: `${startYear}`,
-              lte: `${endYear}-12-31`,
-            },
-          };
-        } else if (startYear) {
-          // Only start year provided
-          releaseCondition = {
-            release_date: {
-              gte: `${startYear}`,
-            },
-          };
-        } else if (endYear) {
-          // Only end year provided
-          releaseCondition = {
-            release_date: {
-              lte: `${endYear}-12-31`,
-            },
-          };
-        }
-        const movies = await prisma.movies.findMany({
-          where: {
-            ...(countryId && {
-              movies_countries: {
-                some: { country_id: parseInt(countryId) },
-              },
-            }),
-            ...(genreId && {
-              movies_genres: {
-                some: { genre_id: BigInt(genreId) },
-              },
-            }),
-            ...(keywordIds.length > 0 && {
-              AND: keywordIds.map((id) => ({
-                movies_keywords: {
-                  some: { keyword_id: parseInt(id) },
-                },
-              })),
-            }),
-            ...(directorId && {
-              movies_directors: {
-                some: { director_id: BigInt(directorId) },
-              },
-            }),
-            ...releaseCondition, // Use our new date range condition
-            ...(type && {
-              type: type,
-            }),
-          },
-          select: {
-            id: true,
-            title: true,
-            image_url: true,
-            release_date: true,
-          },
-          orderBy: { created_at: "desc" },
-          // take: 150,
-        });
-
-        return movies.map((movie) => ({
-          id: movie.id,
-          title: movie.title,
-          image_url: movie.image_url || "",
-          release_date: movie.release_date || "",
-        }));
-      } catch (error) {
-        console.error("Error searching movies:", error);
-        return [];
-      }
+      return searchMovies({ ...searchParams, page: 1, limit: 20 });
     },
     {
       tags: ["movies-search"],
@@ -118,15 +174,15 @@ export async function searchMovies({
   );
 }
 
+// Garder vos autres fonctions inchangées
 export async function getCountries() {
   return cachedQuery(
     ["countries-with-movies"],
     async () => {
-      // Récupérer uniquement les pays qui ont des associations avec des films
       const countries = await prisma.countries.findMany({
         where: {
           movies_countries: {
-            some: {}, // Ceci filtre pour ne garder que les pays ayant au moins une entrée dans movies_countries
+            some: {},
           },
         },
         orderBy: { name: "asc" },
@@ -138,7 +194,7 @@ export async function getCountries() {
     },
     {
       tags: ["countries-with-movies"],
-      revalidate: 86400, // 24 hours cache
+      revalidate: 86400,
     }
   );
 }
@@ -158,7 +214,7 @@ export async function getGenres() {
     },
     {
       tags: ["genres"],
-      revalidate: 86400, // 24 hours cache
+      revalidate: 86400,
     }
   );
 }
@@ -178,7 +234,7 @@ export async function getKeywords() {
     },
     {
       tags: ["keywords"],
-      revalidate: 86400, // 24 hours cache
+      revalidate: 86400,
     }
   );
 }
@@ -198,7 +254,7 @@ export async function getDirectors() {
     },
     {
       tags: ["directors"],
-      revalidate: 86400, // 24 hours cache
+      revalidate: 86400,
     }
   );
 }
@@ -210,7 +266,6 @@ export async function getReleaseYears() {
       where: { release_date: { not: null } },
     });
 
-    // Extract years from release_date strings
     const years = new Set<string>();
     movies.forEach((movie) => {
       if (movie.release_date) {
@@ -221,7 +276,6 @@ export async function getReleaseYears() {
       }
     });
 
-    // Convert to array, sort in descending order (newest first)
     const sortedYears = Array.from(years).sort(
       (a, b) => parseInt(b) - parseInt(a)
     );
