@@ -168,11 +168,7 @@ const CreateListForm: React.FC<CreateListFormProps> = ({ isAdmin }) => {
           {/* Suggestions de films */}
           {isSearching && filteredMovies.length > 0 && (
             <ul
-<<<<<<< HEAD
-              className="absolute border max-h-40 max-w-80 overflow-y-auto bg-rose-50 rounded-lg text-sm border-rose-900 mt-1 z-10"
-=======
               className="absolute border max-h-40 w-full overflow-y-auto bg-rose-50 rounded-lg text-sm border-rose-900 mt-1 z-10"
->>>>>>> main
               data-testid="movie-suggestions-list"
             >
               {filteredMovies.map((movie) => (
@@ -214,11 +210,7 @@ const CreateListForm: React.FC<CreateListFormProps> = ({ isAdmin }) => {
             return movie ? (
               <span
                 key={movie.id}
-<<<<<<< HEAD
-                className="items-center my-2 border flex justify-between border-rose-900 w-full bg-rose-50 text-rose-900 text-sm font-light mr-2 px-3 py-1 rounded"
-=======
                 className="items-center my-2 border capitalize flex justify-between border-rose-900 w-full bg-rose-50 text-rose-900 text-sm font-light mr-2 px-3 py-1 rounded"
->>>>>>> main
                 data-testid={`selected-movie-${movie.id}`}
               >
                 <div>
