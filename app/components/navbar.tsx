@@ -46,7 +46,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
     "hover:underline hover:decoration-rose-900 underline-offset-8";
 
   return (
-    <div className="text-rose-900 w-full fixed top-0 left-0 z-50 text-md transition-all duration-300 bg-rose-50">
+    <div className="text-rose-900 border-b-2 border-rose-900 w-full fixed top-0 left-0 z-50 text-md transition-all duration-300 bg-white">
       <div className="flex flex-row w-full items-center justify-between gap-2 px-10 py-3">
         {/* Logo */}
         <Link href="/">
@@ -69,7 +69,6 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                   onMouseEnter={() => setIsHovered(true)}
                   onMouseLeave={() => setIsHovered(false)}
                   aria-label="Ouvrir le menu utilisateur"
-                  asChild
                   data-testid="user-menu-trigger-mobile"
                 >
                   <Icon
@@ -255,7 +254,6 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}
                     aria-label="Ouvrir le menu utilisateur"
-                    asChild
                     data-testid="user-menu-trigger-desktop"
                   >
                     <Icon

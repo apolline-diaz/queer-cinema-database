@@ -30,10 +30,12 @@ export default async function HomePage() {
         </div>
         <div className="w-full py-10 pl-10">
           <div className="flex justify-between items-center mb-3 text-white">
-            <h2 className="text-2xl font-semibold text-rose-500">Nouveautés</h2>
+            <h2 className="text-2xl font-semibold bg-gradient-to-r leading-tight from-rose-900 to-rose-500 bg-clip-text text-transparent line-clamp-3">
+              Nouveautés
+            </h2>
             <Link
               href="/movies"
-              className="border font-light rounded-xl mr-10 px-2 py-1 border-rose-500 text-white bg-rose-500 hover:border-rose-900 hover:bg-rose-900 hover:text-white text-sm"
+              className="border rounded-xl px-2 mr-10 py-1 border-rose-900 text-rose-900 hover:border-rose-500 hover:bg-rose-500 hover:text-white text-sm whitespace-nowrap flex-shrink-0"
             >
               Voir plus{" "}
               <Icon icon="mdi:chevron-right" className="inline size-4" />
