@@ -130,7 +130,7 @@ model movies {
   movies_directors movies_directors[]
   movies_genres    movies_genres[]
   movies_keywords  movies_keywords[]  
-  watch_url       String?
+  streaming_url   String?
 }
 
 model users {
