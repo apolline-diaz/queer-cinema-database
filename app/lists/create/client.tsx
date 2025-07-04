@@ -6,7 +6,6 @@ import { SubmitButton } from "@/app/components/submit-button";
 import { getMovies } from "@/app/server-actions/movies/get-movies";
 import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
-import { Icon } from "@iconify/react/dist/iconify.js";
 import BackButton from "@/app/components/back-button";
 
 // Updated Types to match your actual data
