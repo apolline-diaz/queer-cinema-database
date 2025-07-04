@@ -150,7 +150,7 @@ const CreateListForm: React.FC<CreateListFormProps> = ({ isAdmin }) => {
         </div>
 
         {/* Movies Selection */}
-        <div className="w-full md:w-1/2 mt-3 mb-6">
+        <div className="w-full md:w-1/2 mt-3 mb-6 relative">
           <label
             className="block font-medium text-sm mb-2"
             htmlFor="movie_search"
@@ -168,18 +168,17 @@ const CreateListForm: React.FC<CreateListFormProps> = ({ isAdmin }) => {
           {/* Suggestions de films */}
           {isSearching && filteredMovies.length > 0 && (
             <ul
-              className="absolute border max-h-40 max-w-80 overflow-y-auto bg-rose-50 rounded-lg text-sm border-rose-900 mt-1 z-10"
+              className="absolute border max-h-40 w-full overflow-y-auto bg-rose-50 rounded-lg text-sm border-rose-900 mt-1 z-10"
               data-testid="movie-suggestions-list"
             >
               {filteredMovies.map((movie) => (
                 <li
                   key={movie.id}
-                  className="px-4 py-2 font-light hover:bg-rose-950 cursor-pointer uppercase  hover:text-white"
+                  className="px-4 py-2 capitalize font-light hover:bg-rose-950 cursor-pointer hover:text-white"
                   onClick={() => handleAddMovie(movie)}
                   data-testid={`movie-suggestion-${movie.id}`}
                 >
-                  {movie.title}{" "}
-                  <span className="font-semibold ">{movie.release_date}</span>
+                  {movie.title} <span className="">({movie.release_date})</span>
                 </li>
               ))}
             </ul>
@@ -211,12 +210,11 @@ const CreateListForm: React.FC<CreateListFormProps> = ({ isAdmin }) => {
             return movie ? (
               <span
                 key={movie.id}
-                className="items-center my-2 border flex justify-between border-rose-900 w-full bg-rose-50 text-rose-900 text-sm font-light mr-2 px-3 py-1 rounded"
+                className="items-center my-2 border capitalize flex justify-between border-rose-900 w-full bg-rose-50 text-rose-900 text-sm font-light mr-2 px-3 py-1 rounded"
                 data-testid={`selected-movie-${movie.id}`}
               >
                 <div>
-                  {movie.title}{" "}
-                  <span className="font-semibold">{movie.release_date}</span>
+                  {movie.title} <span>({movie.release_date})</span>
                 </div>
                 <button
                   type="button"
