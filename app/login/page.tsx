@@ -50,11 +50,14 @@ export default function LoginPage() {
       }}
     >
       <div className="bg-white border border-rose-500 backdrop-blur-md rounded-2xl shadow-xl p-10 m-10 max-w-md w-full">
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} data-testid="login-form">
           <div className="flex flex-col gap-3 mb-10">
             <h1 className="text-center font-medium text-xl">Connexion</h1>
             {authError && (
-              <div className="text-sm text-red-600 bg-red-100 border border-red-400 p-3 rounded">
+              <div
+                className="text-sm text-red-600 bg-red-100 border border-red-400 p-3 rounded"
+                data-testid="auth-error"
+              >
                 {authError}
               </div>
             )}
@@ -72,6 +75,7 @@ export default function LoginPage() {
               id="email"
               type="email"
               placeholder="Tapez votre adresse e-mail"
+              data-testid="email-input"
             />
             {errors.email && (
               <span className="text-red-500 text-xs">
@@ -86,10 +90,12 @@ export default function LoginPage() {
                 required: "Le mot de passe est requis",
               })}
               error={errors.password?.message}
+              data-testid="password-input"
             />
             <Link
               href="/account/forgot-password"
               className="text-xs hover:underline"
+              data-testid="forgot-password-link"
             >
               Mot de passe oublié?
             </Link>
@@ -99,10 +105,13 @@ export default function LoginPage() {
               defaultText="Se connecter"
               loadingText="Connexion..."
               isSubmitting={isSubmitting}
+              data-testid="login-submit-button"
             />
 
             <div className="items-center rounded-full  hover:underline underline-offset-8 p-2">
-              <Link href="/signup">Pas encore inscrit-e?</Link>
+              <Link href="/signup" data-testid="signup-link">
+                Pas encore inscrit-e?
+              </Link>
             </div>
           </div>
         </form>

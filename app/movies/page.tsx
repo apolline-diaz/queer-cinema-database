@@ -52,7 +52,6 @@ export default async function CataloguePage({
     });
   }
 
-  // Récupération des données annexes (pays, genres, etc.)
   const countries = await getCountries();
   const genres = await getGenres();
   const keywords = await getKeywords();
@@ -73,7 +72,7 @@ export default async function CataloguePage({
               keywords={keywords}
               directors={directors}
               releaseYears={releaseYears}
-              initialSearch={searchParam} // Utiliser initialSearch au lieu de initialKeyword
+              initialSearch={searchParam}
               userIsAdmin={userIsAdmin}
             />
           </div>

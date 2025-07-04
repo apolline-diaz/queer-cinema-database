@@ -10,9 +10,22 @@ test("login", async ({ page }) => {
   await page.goto("/login");
   await page.setViewportSize({ width: 1280, height: 720 });
 
-  await page.locator("#email").fill(email);
-  await page.locator("#password").fill(password);
-  await page.getByRole("button", { name: "Se connecter" }).click();
-  await expect(page.getByTestId("profile-link-desktop")).toBeVisible();
-  await page.getByTestId("profile-link-desktop").click();
+  await page.getByTestId("email-input").fill(email);
+  await page.getByTestId("password-input").fill(password);
+
+  await page.getByTestId("login-submit-button").click();
+
+  await page.waitForURL("/", { timeout: 10000 });
+
+  const mobileMenu = page.getByTestId("user-menu-trigger-mobile");
+  const desktopMenu = page.getByTestId("user-menu-trigger-desktop");
+
+  if (await mobileMenu.isVisible()) {
+    await mobileMenu.click();
+  } else {
+    await desktopMenu.click();
+  }
+  await expect(page.getByTestId("my-lists-menu-item")).toBeVisible();
+
+  await expect(page.getByTestId("logout-button")).toBeVisible();
 });

@@ -18,6 +18,7 @@ export default async function ListsPage() {
           <Link
             href="/lists/create"
             className="flex flex-col justify-center rounded-xl border border-xl text-rose-900 border-rose-900 items-center  text-center p-4 cursor-pointer hover:text-rose-500 hover:border-rose-500"
+            data-testid="create-list-link"
           >
             Créer une nouvelle liste
             <svg

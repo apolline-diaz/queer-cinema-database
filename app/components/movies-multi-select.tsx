@@ -90,7 +90,7 @@ export default function MoviesMultiSelect({
 
               {/* Liste déroulante des suggestions */}
               {inputValue && filteredOptions.length > 0 && (
-                <ul className="absolute left-0 right-0 uppercase bg-rose-50 border-rose-900 text-rose-900 text-sm rounded-md border mt-1 z-10 max-h-40 overflow-y-auto">
+                <ul className="absolute left-0 right-0 capitalize bg-rose-50 border-rose-900 text-rose-900 text-sm rounded-md border mt-1 z-10 max-h-40 overflow-y-auto">
                   {filteredOptions.map((option) => (
                     <li
                       key={option.value}
@@ -99,28 +99,23 @@ export default function MoviesMultiSelect({
                     >
                       <div className="flex flex-row gap-2">
                         {option.label}
-                        <span className="font-semibold">
-                          {option.release_date}
-                        </span>
+                        <span>({option.release_date})</span>
                       </div>
                     </li>
                   ))}
                 </ul>
               )}
 
-              {/* Films sélectionnés affichés sous l’input */}
               <div className="mt-3 flex flex-col gap-2">
                 {selectedOptions.map((option) => (
                   <span
                     key={option.value}
-                    className="cursor-pointer uppercase flex border border-rose-900 justify-between items-center bg-rose-50 text-rose-900 text-sm font-light px-2 py-1 rounded"
+                    className="cursor-pointer capitalize flex border border-rose-900 justify-between items-center bg-rose-50 text-rose-900 text-sm font-light px-2 py-1 rounded"
                     onClick={() => handleRemoveMovie(option)}
                   >
                     <div>
                       {option.label}
-                      <span className="ml-2 font-semibold">
-                        {option.release_date}
-                      </span>
+                      <span className="ml-1">({option.release_date})</span>
                     </div>
 
                     <button

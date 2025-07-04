@@ -14,7 +14,7 @@ export default function Header() {
             pluralité des regards queer dans le monde.
           </p>
         </div>
-        <nav className="flex flex-col font-light w-1/4 sm:justify-end sm:items-end gap-3 sm:m-4 my-2">
+        <nav className="flex flex-col font-light text-sm w-1/4 sm:justify-end sm:items-end sm:text-right text-left gap-3 sm:m-4 my-2">
           <Link
             href="/about"
             className="link link-hover hover:underline hover:underline-offset-8"
