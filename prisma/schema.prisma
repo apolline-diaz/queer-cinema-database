@@ -129,7 +129,8 @@ model movies {
   movies_countries movies_countries[]
   movies_directors movies_directors[]
   movies_genres    movies_genres[]
-  movies_keywords  movies_keywords[]
+  movies_keywords  movies_keywords[]  
+  streaming_url   String?
 }
 
 model users {
