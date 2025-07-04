@@ -58,6 +58,11 @@ export default async function CataloguePage({
   const directors = await getDirectors();
   const releaseYears = await getReleaseYears();
 
+  // Normalisation pour avoir un tableau de Movie à passer au client
+  const initialMoviesArray = Array.isArray(initialMovies)
+    ? initialMovies
+    : initialMovies.movies || [];
+
   return (
     <div className="h-full w-full justify-center items-center text-white">
       <div className="px-10 py-20">
@@ -66,7 +71,7 @@ export default async function CataloguePage({
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
           <div className="flex flex-col gap-5 w-full">
             <ClientSearchComponent
-              initialMovies={initialMovies}
+              initialMovies={initialMoviesArray}
               countries={countries}
               genres={genres}
               keywords={keywords}
