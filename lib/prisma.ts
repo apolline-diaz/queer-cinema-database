@@ -30,7 +30,7 @@ export const cachedQuery = async <T>(
 ): Promise<T> => {
   const cachedFunction = unstable_cache(queryFn, key, {
     tags: options?.tags,
-    revalidate: options?.revalidate || 3600, // 1 hour default
+    revalidate: options?.revalidate || 3600,
   });
 
   return cachedFunction();

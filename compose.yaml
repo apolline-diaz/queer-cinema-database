@@ -19,7 +19,7 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - db
+      - db # Mettre en paranthèses si on veut travailler avec la base de données Supabase de production
     env_file:
       - .env
     environment:
