@@ -3,7 +3,7 @@
 import { useState, forwardRef } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/cn";
 
 interface PasswordInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {

@@ -173,18 +173,16 @@ The project will be available at [http://localhost:3000](http://localhost:3000).
 
 ### Migrations with Prisma
 
-#### Modify schema.prisma file
-
-1. Create and apply migration :
+1. Create a migration after modifying schema.prisma :
 
    ```bash
-   npx prisma migrate dev --name migration_name
+   npx prisma migrate dev --name init
    ```
 
-2. For production :
+1. First migration :
 
    ```bash
-   npx prisma migrate deploy
+   npx prisma migrate dev --name added_movie_title_example
    ```
 
 #### Direct SQL changes in Supabase
@@ -199,6 +197,14 @@ The project will be available at [http://localhost:3000](http://localhost:3000).
 
    ```bash
    npx prisma generate
+   ```
+
+#### Production
+
+1. Deploy migrations :
+
+   ```bash
+   npx prisma migrate deploy
    ```
 
 ### Tests Steps

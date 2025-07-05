@@ -1,4 +1,4 @@
-import { auth } from "@/utils/auth";
+import { auth } from "@/lib/auth/auth";
 import MoviesLists from "./client";
 import { isAdmin } from "@/utils/is-user-admin";
 import { getList } from "@/app/server-actions/lists/get-list";

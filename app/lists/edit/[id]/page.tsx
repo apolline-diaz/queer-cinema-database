@@ -1,4 +1,4 @@
-import { auth } from "@/utils/auth";
+import { auth } from "@/lib/auth/auth";
 import EditListForm from "./client";
 import { isAdmin } from "@/utils/is-user-admin";
 import { redirect } from "next/navigation";

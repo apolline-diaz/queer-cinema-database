@@ -8,7 +8,7 @@ import { checkMovieInLists } from "@/app/server-actions/lists/check-movie-in-lis
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Icon } from "@iconify/react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/cn";
 
 type Props = {
   movieId: string;

@@ -7,12 +7,12 @@ export async function POST(request: Request) {
   try {
     const { name, email, message } = await request.json();
 
-    // Envoyer l'email à votre Gmail
+    // Send email to your Gmail
     await resend.emails.send({
       from: "Formulaire de Contact <onboarding@resend.dev>",
-      to: "apolline.diaz@gmail.com", // Votre Gmail ici
+      to: "apolline.diaz@gmail.com",
       subject: `Message de ${name}`,
-      replyTo: email, // Le plus important : permet de répondre directement à l'expéditeur
+      replyTo: email, // Allow to respond directly to the sender
       html: `
         <p><strong>De:</strong> ${name} (${email})</p>
         <p><strong>Message:</strong><br>${message.replace(/\n/g, "<br>")}</p>

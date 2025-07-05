@@ -2,7 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { ensureUserExists } from "@/utils/ensure-user-exist";
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/lib/supabase/server";
 
 export async function getUser() {
   const supabase = createClient();

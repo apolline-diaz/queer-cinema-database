@@ -1,6 +1,6 @@
 import { addMovie } from "@/app/server-actions/movies/add-movie";
 import { prisma } from "@/lib/prisma";
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/lib/supabase/server";
 import { isAdmin } from "@/utils/is-user-admin";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -10,7 +10,7 @@ jest.mock("@/utils/is-user-admin", () => ({
   isAdmin: jest.fn(),
 }));
 
-jest.mock("@/utils/supabase/server", () => ({
+jest.mock("@/lib/supabase/server", () => ({
   createClient: jest.fn(),
 }));
 
