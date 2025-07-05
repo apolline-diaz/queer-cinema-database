@@ -2,14 +2,6 @@ import { prisma } from "@/lib/prisma";
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-/**
- * Updates the user session and synchronizes user data between Supabase Auth and Prisma
- * This function handles:
- * 1. Session management with proper cookie handling
- * 2. User synchronization between Supabase Auth and PostgreSQL via Prisma
- * 3. Protected route access control
- */
-
 export async function updateSession(request: NextRequest) {
   // Create a response object that will be modified with updated cookies
   let supabaseResponse = NextResponse.next({
@@ -108,39 +100,3 @@ export async function updateSession(request: NextRequest) {
 
   return supabaseResponse;
 }
-
-/**
- * Main middleware function that runs on every request matching the config below
- * Delegates to updateSession for all session management logic
- */
-
-export async function middleware(request: NextRequest) {
-  return await updateSession(request);
-}
-
-/**
- * Middleware configuration - defines which routes this middleware runs on
- *
- * Current setup:
- * - Runs on ALL routes EXCEPT:
- *   - Next.js internal files (_next/static, _next/image)
- *   - Static assets (favicon.ico, images)
- *   - Public pages (signup, stats, about, movies, catalogue, contact)
- *   - Auth callback routes (auth/*)
- *
- * This means the middleware will run on protected routes like:
- * - /account, /lists, etc.
- */
-
-export const config = {
-  matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * Feel free to modify this pattern to include more paths.
-     */
-    "/((?!_next/static|_next/image|favicon.ico|public|signup|stats|about|movies|catalogue|contact|auth/.*|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
-  ],
-};

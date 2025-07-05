@@ -1,7 +1,10 @@
 import { createClient } from "@/lib/supabase/server";
 import { cookies } from "next/headers";
 
-// check is the user have a session, if he is connected
+/**
+ * Quick authentication check - returns only if user is authenticated
+ * Used if need to check if user is logged in
+ */
 export async function auth() {
   const supabase = createClient();
 
