@@ -1,12 +1,19 @@
-import { prisma } from "@/lib/prisma";
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-export async function updateSession(request: NextRequest) {
+/**
+ * Middleware focused ONLY on:
+ * 1. Session management with proper cookie handling
+ * 2. Route protection
+ *
+ * User synchronization moved to utilities for better separation of concerns
+ */
+export async function middleware(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
     request,
   });
 
+  // Create Supabase server client with proper cookie handling
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -30,79 +37,45 @@ export async function updateSession(request: NextRequest) {
     }
   );
 
-  // IMPORTANT: Avoid writing any logic between createServerClient and
-  // supabase.auth.getUser(). A simple mistake could make it very hard to debug
-  // issues with users being randomly logged out.
-
+  // Get the current authenticated user
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // Synchronize the user
-  if (user) {
-    try {
-      // Check if the user already exist in Prisma
-      const existingUser = await prisma.users.findUnique({
-        where: { id: user.id },
-      });
-
-      // S'il n'existe pas, créez-le
-      if (!existingUser) {
-        await prisma.users.create({
-          data: {
-            id: user.id,
-            email: user.email!,
-            role: "user",
-            created_at: new Date(),
-          },
-        });
-      }
-    } catch (err) {
-      console.error("Erreur de synchronisation utilisateur:", err);
-    }
-  }
-  if (
-    !user &&
-    !request.nextUrl.pathname.startsWith("/") && // Allow home page
-    !request.nextUrl.pathname.startsWith("/login") &&
-    !request.nextUrl.pathname.startsWith("/signup") &&
-    !request.nextUrl.pathname.startsWith("/auth")
-  ) {
-    // no user, potentially respond by redirecting the user to the login page
+  // Route protection - redirect unauthenticated users
+  if (!user && !isPublicRoute(request.nextUrl.pathname)) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     return NextResponse.redirect(url);
   }
 
-  // IMPORTANT: You *must* return the supabaseResponse object as it is. If you're
-  // creating a new response object with NextResponse.next() make sure to:
-  // 1. Pass the request in it, like so:
-  //    const myNewResponse = NextResponse.next({ request })
-  // 2. Copy over the cookies, like so:
-  //    myNewResponse.cookies.setAll(supabaseResponse.cookies.getAll())
-  // 3. Change the myNewResponse object to fit your needs, but avoid changing
-  //    the cookies!
-  // 4. Finally:
-  //    return myNewResponse
-  // If this is not done, you may be causing the browser and server to go out
-  // of sync and terminate the user's session prematurely!
-
   return supabaseResponse;
 }
 
-export async function middleware(request: NextRequest) {
-  return await updateSession(request);
+/**
+ * Helper function to determine if a route is public
+ * Centralized route configuration for better maintainability
+ */
+function isPublicRoute(pathname: string): boolean {
+  const publicRoutes = [
+    "/",
+    "/login",
+    "/signup",
+    "/about",
+    "/movies",
+    "/catalogue",
+    "/contact",
+    "/stats",
+  ];
+
+  return (
+    publicRoutes.some((route) => pathname.startsWith(route)) ||
+    pathname.startsWith("/auth/")
+  );
 }
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * Feel free to modify this pattern to include more paths.
-     */
-    "/((?!_next/static|_next/image|favicon.ico|public|signup|stats|about|movies|catalogue|contact|auth/.*|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    "/((?!_next/static|_next/image|favicon.ico|public|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 };

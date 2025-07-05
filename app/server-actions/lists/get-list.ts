@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma"; // Assurez-vous que vous avez bien configuré Prisma
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/lib/supabase/server";
 
 export async function getList(id: string) {
   const supabase = createClient();

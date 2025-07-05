@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/lib/supabase/server";
 import { isAdmin } from "@/utils/is-user-admin";
 import { PrismaClient } from "@prisma/client";
 import { z } from "zod";

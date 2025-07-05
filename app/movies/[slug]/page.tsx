@@ -4,7 +4,7 @@ import { getMovie } from "@/app/server-actions/movies/get-movie";
 import Link from "next/link";
 import { isAdmin } from "@/utils/is-user-admin";
 import ClientMovieActions from "./client";
-import { auth } from "@/utils/auth";
+import { auth } from "@/lib/auth/auth";
 import BackButton from "@/app/components/back-button";
 import { Metadata } from "next";
 import { getCanonicalUrl } from "@/utils/index";

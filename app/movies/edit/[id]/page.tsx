@@ -2,7 +2,7 @@ import { getMovie } from "@/app/server-actions/movies/get-movie";
 import EditMovieForm from "./edit-movie-form";
 import { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
-import { auth } from "@/utils/auth";
+import { auth } from "@/lib/auth/auth";
 import BackButton from "@/app/components/back-button";
 
 export const metadata: Metadata = {

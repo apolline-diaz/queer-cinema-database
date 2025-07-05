@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { SubmitButton } from "../../components/submit-button";
-import { supabase } from "@/utils/supabase/client";
+import { supabase } from "@/lib/supabase/client";
 import { useSearchParams } from "next/navigation";
 
 interface ResetPasswordFormInputs {
