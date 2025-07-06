@@ -35,145 +35,118 @@ The database schema is managed with **Prisma ORM** and stored in **PostgreSQL**.
 - `movies`: Film catalog.
 - `lists`: User-created personal lists.
 
-## 📦 Installation and Local Setup
+## 📦 Installation and Setup
 
-### Prerequisites
+### Quick Start with Docker
 
-- [Node.js](https://nodejs.org/)
+This is the easiest way to get the application running locally without complex setup.
+
+#### Prerequisites
+
 - [Docker](https://www.docker.com/)
-- [Supabase](https://supabase.com/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
 
-### Clone the repository:
+#### Steps
 
-1. At first :
+1. Clone the repository:
 
    ```bash
    git clone https://github.com/apolline-diaz/queer-cinema-database.git
    cd queer-cinema-database
    ```
 
-### Local Development Setup with OrbStack + Supabase
-
-To avoid incompatibility between mac and docker, use Orbstack (https://orbstack.dev).
-
-1. Install OrbStack:
-
-   ```bash
-   brew install orbstack
-   ```
-
-   Start OrbStack:
-
-   ```bash
-   orbstack
-   ```
-
-2. Clone and Setup Project:
-
-   Clone the repository :
-
-   ```bash
-   git clone [your-repo-url]
-   cd [project-name]
-   ```
-
-   Install dependencies :
-
-   ```bash
-   npm install
-   ```
-
-   Copy environment file :
+2. Create environment file:
 
    ```bash
    cp .env.example .env.local
    ```
 
-3. Install Supabase CLI:
+3. Start the application with Docker Compose:
 
    ```bash
-   npm install -g supabase
+   docker-compose up -d
    ```
 
-4. Initialize Supabase in project and start local Supabase stack
+This command will:
+
+- Start a PostgreSQL database
+- Start the Supabase local stack (Auth, API, Storage)
+- Build and run the Next.js application
+
+4. Wait for services to be ready:
+
+   ```bash
+   docker-compose ps
+   ```
+
+5. Initialize the database:
+
+   ```bash
+   docker-compose exec app npx prisma migrate dev --name init
+   ```
+
+   ```bash
+   docker-compose exec app npx prisma generate
+   ```
+
+6. Access the application:
+
+   Main App: http://localhost:3000
+
+### Local Development Setup (Advanced)
+
+For developers who want to work on the project locally without Docker.
+
+#### Prerequisites
+
+- [Node.js] (https://nodejs.org/fr)
+- [pnpm](https://pnpm.io/)
+- [Supabase CLI](https://supabase.com/docs/guides/local-development)
+
+MacOS Setup with OrbStack
+To avoid Docker compatibility issues on macOS, use OrbStack:
+
+1. Install OrbStack:
+
+   ```bash
+   brew install orbstack
+   orbstack
+   ```
+
+2. Setup Project:
+
+   ```bash
+   git clone https://github.com/apolline-diaz/queer-cinema-database.git
+   cd queer-cinema-database
+   pnpm install
+   cp .env.example .env.local
+   ```
+
+3. Initialize Supabase:
 
    ```bash
    supabase init
-   ```
-
-   ```bash
    supabase start
    ```
 
-#### Note: This will download Docker images and start PostgreSQL, API, Auth, etc.
-
-5. Configure Environment Variables
+4. Configure Environment Variables
 
    Update .env.local with local Supabase URLs (displayed after supabase start).
 
-6. Migrate Production Data to Local
-
-   Link to your production project :
-
-   ```bash
-   supabase link --project-ref [your-project-id]
-   ```
-
-   Pull schema from production :
-
-   ```bash
-   supabase db pull
-   ```
-
-   Apply schema to local database :
-
-   ```bash
-   supabase db push
-   ```
-
-7. Get data from production to Local
-
-   Dump data from production :
-
-   ```bash
-   supabase db dump --data-only -f data.sql
-   ```
-
-   Apply data on local base :
-
-   ```bash
-   psql "postgresql://postgres:postgres@localhost:54322/postgres" < data.sql
-   ```
-
-### Prisma Setup
-
-1. Generate Prisma client
+5. Setup Database:
 
    ```bash
    npx prisma generate
-   ```
-
-2. Push schema to local database
-
-   ```bash
    npx prisma db push
    ```
 
-### Start Development Server
-
-1. Start Next.js app
+6. Start Development Server:
 
    ```bash
-   npm run dev
+   pnpm dev
    ```
 
-### Access the site:
-
-The project will be available at [http://localhost:3000](http://localhost:3000).
-
-### Migrations with Prisma
-
-#### Modify schema.prisma file
+### Prisma Migrations
 
 1. Create and apply migration :
 
@@ -187,21 +160,19 @@ The project will be available at [http://localhost:3000](http://localhost:3000).
    npx prisma migrate deploy
    ```
 
-#### Direct SQL changes in Supabase
-
-1. Synchronize schema from database :
+3. Synchronize schema from database :
 
    ```bash
    npx prisma db pull
    ```
 
-2. Generate client with new schema :
+4. Generate client with new schema :
 
    ```bash
    npx prisma generate
    ```
 
-### Tests Steps
+### Testing
 
 1. Tests unitaires (Jest) :
 
@@ -211,11 +182,13 @@ The project will be available at [http://localhost:3000](http://localhost:3000).
 
 2. Tests end-to-end (Playwright) :
 
+   Local development :
+
    ```bash
    pnpm exec playwright test
    ```
 
-   To open UI mode :
+   Open UI mode :
 
    ```bash
    npx playwright test --ui
