@@ -33,7 +33,7 @@ function CollapsibleSection({ title, children }: CollapsibleSectionProps) {
   const [isOpen, setIsOpen] = useState(true);
 
   return (
-    <div className=" overflow-hidden border-b border-black">
+    <div className="overflow-hidden">
       <button
         type="button"
         className="w-full flex justify-between items-center text-left"
@@ -215,189 +215,193 @@ export default function SearchForm({
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} className="mt-4 mb-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 w-full gap-4 justify-between mb-5">
-          <CollapsibleSection title="Période">
-            <div className="grid grid-cols-2 gap-2">
-              <Controller
-                name="startYear"
-                control={control}
-                render={({ field }) => (
-                  <Select
-                    label="De l'année"
-                    options={releaseYears}
-                    {...field}
-                    placeholder="Année min"
-                  />
-                )}
-              />
-              <Controller
-                name="endYear"
-                control={control}
-                render={({ field }) => (
-                  <Select
-                    label="À l'année"
-                    options={releaseYears}
-                    {...field}
-                    placeholder="Année max"
-                  />
-                )}
-              />
-            </div>
-          </CollapsibleSection>
-          <CollapsibleSection title="Pays">
-            <Controller
-              name="countryId"
-              control={control}
-              render={({ field }) => (
-                <Select
-                  label="Pays"
-                  options={countries}
-                  {...field}
-                  placeholder="Tous les pays"
-                />
-              )}
-            />
-          </CollapsibleSection>
-
-          <CollapsibleSection title="Genre">
-            <Controller
-              name="genreId"
-              control={control}
-              render={({ field }) => (
-                <Select
-                  label="Genre"
-                  options={genres}
-                  {...field}
-                  placeholder="Tous les genres"
-                />
-              )}
-            />
-          </CollapsibleSection>
-          <CollapsibleSection title="Format">
-            <Controller
-              name="type"
-              control={control}
-              render={({ field }) => (
-                <Select
-                  label="Type"
-                  options={[
-                    { value: "Long-métrage", label: "Long-métrage" },
-                    { value: "Moyen-métrage", label: "Moyen-métrage" },
-                    { value: "Court-métrage", label: "Court-métrage" },
-                    { value: "Emission TV", label: "Emission TV" },
-                    { value: "Série", label: "Série" },
-                  ]}
-                  {...field}
-                  placeholder="Tous les formats"
-                />
-              )}
-            />
-          </CollapsibleSection>
-
-          <CollapsibleSection title="Réalisateur-ice">
-            <Controller
-              name="directorId"
-              control={control}
-              render={({ field }) => (
-                <Select
-                  label="Réalisateur-ice"
-                  options={directors}
-                  {...field}
-                  placeholder="Toutes les réalisateur-ices"
-                />
-              )}
-            />
-          </CollapsibleSection>
-
-          <CollapsibleSection title="Mots-clés">
-            <Controller
-              name="keywordIds"
-              control={control}
-              render={({ field }) => (
-                <MultiSelect
-                  name="keywordIds"
+      <div className="flex flex-col sm:flex-row">
+        <form onSubmit={handleSubmit(onSubmit)} className="mt-4 mb-4">
+          <div className="grid grid-cols-1 w-full gap-4 justify-between mb-5">
+            <CollapsibleSection title="Période">
+              <div className="grid grid-cols-2 gap-2">
+                <Controller
+                  name="startYear"
                   control={control}
-                  options={keywords}
-                  label="Mots-clés"
-                  placeholder="Rechercher des mots-clé"
-                  onChange={field.onChange}
+                  render={({ field }) => (
+                    <Select
+                      label="De l'année"
+                      options={releaseYears}
+                      {...field}
+                      placeholder="Année min"
+                    />
+                  )}
                 />
-              )}
-            />
-          </CollapsibleSection>
-        </div>
-
-        <div className="flex flex-col sm:flex-row sm:w-full gap-4">
-          <button
-            type="submit"
-            className="xs:w-full sm:w-[200px] transition-colors duration-200 ease-in-out bg-black text-white px-4 py-2 rounded-xl hover:bg-rose-500"
-            disabled={isLoading}
-          >
-            Rechercher
-          </button>
-
-          <button
-            type="button"
-            onClick={handleReset}
-            className="xs:w-full sm:w-[200px] border transition-colors duration-200 ease-in-out hover:border-rose-500 hover:text-rose-500 text-black px-4 py-2 border-black rounded-xl"
-            disabled={isLoading}
-          >
-            Réinitialiser
-          </button>
-        </div>
-      </form>
-      <div className="border-l-4  text-sm border-rose-500 pl-4 py-2 mb-6">
-        {isLoading ? (
-          <div className="animate-pulse rounded-md h-6 bg-gray-300 w-32"></div>
-        ) : (
-          <div className="text-gray-800">
-            <span
-              className="text-rose-500 font-semibold"
-              data-testid="results-count"
-            >
-              {movies.length}
-            </span>
-            <span className="text-gray-600 ml-2">titres trouvés</span>
-          </div>
-        )}
-      </div>
-      <div className="w-full grid gap-3 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
-        {isLoading ? (
-          Array.from({ length: 6 }).map((_, index) => (
-            <div
-              key={index}
-              className="animate-pulse bg-gray-300 h-[200px] w-full rounded-xl justify-end max-w-xs mx-auto group overflow-hidden flex flex-col transition-transform"
-            >
-              <div className="flex flex-col p-5 space-y-2">
-                <div className="h-6 bg-gray-200 rounded w-3/4 mb-2"></div>
-                <div className="h-4 bg-gray-200 rounded w-1/3 mb-2"></div>
+                <Controller
+                  name="endYear"
+                  control={control}
+                  render={({ field }) => (
+                    <Select
+                      label="À l'année"
+                      options={releaseYears}
+                      {...field}
+                      placeholder="Année max"
+                    />
+                  )}
+                />
               </div>
-            </div>
-          ))
-        ) : movies.length === 0 ? (
-          <p>Aucun film trouvé</p>
-        ) : (
-          movies
-            .slice(0, visibleCount)
-            .map((movie) => (
-              <Card
-                key={`${movie.title}-${movie.id}`}
-                {...movie}
-                userIsAdmin={userIsAdmin}
-                image_url={getImageUrl(movie.image_url || "")}
+            </CollapsibleSection>
+            <CollapsibleSection title="Pays">
+              <Controller
+                name="countryId"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    label="Pays"
+                    options={countries}
+                    {...field}
+                    placeholder="Tous les pays"
+                  />
+                )}
               />
-            ))
-        )}
+            </CollapsibleSection>
+
+            <CollapsibleSection title="Genre">
+              <Controller
+                name="genreId"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    label="Genre"
+                    options={genres}
+                    {...field}
+                    placeholder="Tous les genres"
+                  />
+                )}
+              />
+            </CollapsibleSection>
+            <CollapsibleSection title="Format">
+              <Controller
+                name="type"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    label="Type"
+                    options={[
+                      { value: "Long-métrage", label: "Long-métrage" },
+                      { value: "Moyen-métrage", label: "Moyen-métrage" },
+                      { value: "Court-métrage", label: "Court-métrage" },
+                      { value: "Emission TV", label: "Emission TV" },
+                      { value: "Série", label: "Série" },
+                    ]}
+                    {...field}
+                    placeholder="Tous les formats"
+                  />
+                )}
+              />
+            </CollapsibleSection>
+
+            <CollapsibleSection title="Réalisateur-ice">
+              <Controller
+                name="directorId"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    label="Réalisateur-ice"
+                    options={directors}
+                    {...field}
+                    placeholder="Toutes les réalisateur-ices"
+                  />
+                )}
+              />
+            </CollapsibleSection>
+
+            <CollapsibleSection title="Mots-clés">
+              <Controller
+                name="keywordIds"
+                control={control}
+                render={({ field }) => (
+                  <MultiSelect
+                    name="keywordIds"
+                    control={control}
+                    options={keywords}
+                    label="Mots-clés"
+                    placeholder="Rechercher des mots-clé"
+                    onChange={field.onChange}
+                  />
+                )}
+              />
+            </CollapsibleSection>
+          </div>
+
+          <div className="flex flex-col sm:flex-row sm:w-full gap-4">
+            <button
+              type="submit"
+              className="xs:w-full sm:w-[200px] transition-colors duration-200 ease-in-out bg-black text-white px-4 py-2 rounded-xl hover:bg-rose-500"
+              disabled={isLoading}
+            >
+              Rechercher
+            </button>
+
+            <button
+              type="button"
+              onClick={handleReset}
+              className="xs:w-full sm:w-[200px] border transition-colors duration-200 ease-in-out hover:border-rose-500 hover:text-rose-500 text-black px-4 py-2 border-black rounded-xl"
+              disabled={isLoading}
+            >
+              Réinitialiser
+            </button>
+          </div>
+        </form>
+        <div className="p-0 sm:pl-10">
+          <div className="border-l-4  text-sm border-rose-500 pl-4 py-2 mb-6">
+            {isLoading ? (
+              <div className="animate-pulse rounded-md h-6 bg-gray-300 w-32"></div>
+            ) : (
+              <div className="text-gray-800">
+                <span
+                  className="text-rose-500 font-semibold"
+                  data-testid="results-count"
+                >
+                  {movies.length}
+                </span>
+                <span className="text-gray-600 ml-2">titres trouvés</span>
+              </div>
+            )}
+          </div>
+          <div className="w-full grid gap-3 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+            {isLoading ? (
+              Array.from({ length: 6 }).map((_, index) => (
+                <div
+                  key={index}
+                  className="animate-pulse bg-gray-300 h-[200px] w-full rounded-xl justify-end max-w-xs mx-auto group overflow-hidden flex flex-col transition-transform"
+                >
+                  <div className="flex flex-col p-5 space-y-2">
+                    <div className="h-6 bg-gray-200 rounded w-3/4 mb-2"></div>
+                    <div className="h-4 bg-gray-200 rounded w-1/3 mb-2"></div>
+                  </div>
+                </div>
+              ))
+            ) : movies.length === 0 ? (
+              <p>Aucun film trouvé</p>
+            ) : (
+              movies
+                .slice(0, visibleCount)
+                .map((movie) => (
+                  <Card
+                    key={`${movie.title}-${movie.id}`}
+                    {...movie}
+                    userIsAdmin={userIsAdmin}
+                    image_url={getImageUrl(movie.image_url || "")}
+                  />
+                ))
+            )}
+          </div>
+          {visibleCount < movies.length && !isLoading && (
+            <button
+              onClick={loadMore}
+              className="w-full flex flex-row justify-center items-center border rounded-md hover:bg-rose-500 hover:text-white border-rose-900 border-t mt-4 px-4 py-2 hover:border-rose-500 text-rose-900"
+            >
+              Voir plus <Icon icon="mdi:chevron-down" className="size-5" />
+            </button>
+          )}
+        </div>{" "}
       </div>
-      {visibleCount < movies.length && !isLoading && (
-        <button
-          onClick={loadMore}
-          className="w-full flex flex-row justify-center items-center border rounded-md hover:bg-rose-500 hover:text-white border-rose-900 border-t mt-4 px-4 py-2 hover:border-rose-500 text-rose-900"
-        >
-          Voir plus <Icon icon="mdi:chevron-down" className="size-5" />
-        </button>
-      )}
     </>
   );
 }
