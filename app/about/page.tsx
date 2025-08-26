@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <div className="px-10 py-20 mb-5">
-      <h2 className="text-rose-900 font-medium text-2xl mb-6">À propos</h2>
+      <h2 className="text-rose-500 font-bold text-2xl mb-6">À propos</h2>
       <div className="text-black">
         <p className=" w-full font-light  mb-4">
           Ce site a pour vocation d'archiver et de valoriser la diversité du

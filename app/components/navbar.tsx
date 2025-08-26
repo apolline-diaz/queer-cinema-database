@@ -41,18 +41,18 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
   };
 
   // Classe CSS for active links
-  const activeLinkClass = "underline underline-offset-8 text-rose-900";
+  const activeLinkClass = "text-rose-500";
   const normalLinkClass =
-    "hover:underline hover:decoration-rose-900 underline-offset-8";
+    "text-black transition-colors duration-300 hover:text-rose-500";
 
   return (
-    <div className="text-rose-900 border-b-2 border-rose-900 w-full fixed top-0 left-0 z-50 text-md transition-all duration-300 bg-white">
+    <div className="text-black font-bold border-b border-gray-500 w-full fixed top-0 left-0 z-50 text-md transition-all duration-300 bg-white">
       <div className="flex flex-row w-full items-center justify-between gap-2 px-10 py-3">
         {/* Logo */}
         <Link href="/">
           <h2 className="text-white whitespace-nowrap font-raleway font-bold text-xl xs:text-md">
-            <span className="text-rose-900">queer cinema</span>{" "}
-            <span className="text-rose-900 font-light hidden sm:inline">
+            <span className="text-rose-500">queer cinema</span>{" "}
+            <span className="text-rose-500 font-light hidden sm:inline">
               {" "}
               database
             </span>
@@ -77,7 +77,9 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                         ? "carbon:user-avatar-filled"
                         : "carbon:user-avatar"
                     }
-                    className="size-5 transition-all duration-150"
+                    className={`size-5 transition-all duration-150 ${
+                      isHovered ? "text-rose-500" : "text-black"
+                    }`}
                   />
                 </DropdownMenuTrigger>
 
@@ -131,7 +133,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                       ) : (
                         <form action={logout}>
                           <button
-                            className="hover:text-rose-500 text-rose-900"
+                            className="hover:text-rose-500 transition-colors duration-300"
                             aria-label="Se déconnecter de votre compte"
                             data-testid="logout-button"
                           >
@@ -145,7 +147,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
               </DropdownMenu>
               <button
                 onClick={handleClick}
-                className="HAMBURGER-ICON space-y-2"
+                className="HAMBURGER-ICON space-y-2 hover:text-rose-500 "
                 aria-label={
                   isOpen ? "Fermer le menu mobile" : "Ouvrir le menu mobile"
                 }
@@ -168,7 +170,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
 
               {/* mobile menu */}
               <div
-                className={`text-black absolute top-0 right-0 h-screen w-1/2 xs:w-1/2 sm:w-1/2 bg-white border-l border-rose-900 md:w-1/3 p-4 transform ${
+                className={`text-black absolute top-0 right-0 h-screen bg-white border-l border-gray-500 md:w-1/3 p-4 transform ${
                   isOpen ? "translate-x-0" : "translate-x-full"
                 } transition-transform duration-300 ease-in-out`}
               >
@@ -179,7 +181,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                   aria-label="Fermer le menu"
                 >
                   <svg
-                    className="h-5 w-5 text-gray-black hover:text-rose-900"
+                    className="h-5 w-5 text-gray-black hover:text-rose-500 transition-colors duration-300"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -193,11 +195,11 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                 </button>
 
                 {/* mobile navigation links */}
-                <ul className="bg-white flex text-rose-900 flex-col items-center justify-between gap-5 h-full mt-6">
-                  <div className="flex flex-col items-center justify-center gap-5">
+                <ul className="bg-white pl-10 flex text-xl flex-col justify-between gap-5 h-full mt-6">
+                  <div className="flex flex-col items-end pr-10 pt-5 gap-5">
                     <Link
                       href="/about"
-                      className="link link-hover hover:underline hover:underline-offset-8"
+                      className="link link-hover text-black transition-colors duration-300 hover:text-rose-500"
                     >
                       À propos
                     </Link>
@@ -224,11 +226,11 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
             </section>
 
             {/* desktop menu */}
-            <div className="text-rose-900">
+            <div className="">
               <ul className="DESKTOP-MENU hidden whitespace-nowrap space-x-12 lg:flex  items-center">
                 <Link
                   href="/about"
-                  className="link link-hover hover:underline hover:underline-offset-8"
+                  className="link link-hover text-black transition-colors duration-300 hover:text-rose-500"
                 >
                   À propos
                 </Link>
@@ -262,7 +264,9 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                           ? "carbon:user-avatar-filled"
                           : "carbon:user-avatar"
                       }
-                      className="size-5 transition-all duration-150"
+                      className={`size-5 transition-all duration-150 ${
+                        isHovered ? "text-rose-500" : "text-black"
+                      }`}
                     />
                   </DropdownMenuTrigger>
 
@@ -315,7 +319,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                         ) : (
                           <form action={logout}>
                             <button
-                              className="hover:text-rose-500 text-rose-900"
+                              className="hover:text-rose-500 "
                               aria-label="Se déconnecter de votre compte"
                               data-testid="logout-button"
                             >

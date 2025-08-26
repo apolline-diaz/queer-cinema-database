@@ -51,7 +51,9 @@ export default function SignUpPage() {
       <div className="bg-white border border-rose-500 backdrop-blur-md rounded-2xl shadow-xl p-10 m-10 max-w-md w-full">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-3 mb-10">
-            <h1 className="text-center font-medium text-xl">Inscription</h1>
+            <h1 className="text-center font-bold text-red-500 text-xl">
+              Inscription
+            </h1>
             {confirmationMessage && (
               <p className="font-light text-sm text-black mt-2">
                 {confirmationMessage}

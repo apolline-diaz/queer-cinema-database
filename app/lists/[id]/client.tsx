@@ -66,9 +66,7 @@ export default function ListClientPage({
         </div>
       ) : (
         <div>
-          <h1 className="text-2xl font-medium text-rose-900">
-            {listData.title}
-          </h1>
+          <h1 className="text-2xl font-bold text-rose-500">{listData.title}</h1>
           <p className="text-black font-light mt-2 mb-6">
             {listData.description}
           </p>
