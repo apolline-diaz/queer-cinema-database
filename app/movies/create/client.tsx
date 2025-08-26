@@ -107,12 +107,12 @@ const CreateMovieForm: React.FC = () => {
       </h1>
 
       {/* Movie creation form */}
-      <form onSubmit={handleSubmit(onSubmit)} className="py-5 text-rose-900">
+      <form onSubmit={handleSubmit(onSubmit)} className="py-5 text-black">
         {/* Title input */}
         <div className="mb-4">
           <label className="block font-medium mb-2">Titre</label>
           <input
-            className="w-full text-black font-light bg-transparent border-b p-2 placeholder-gray-500 border-rose-900"
+            className="w-full text-black font-light bg-transparent border-b p-2 placeholder-gray-500 border-black"
             {...register("title", {
               required: "Le titre est obligatoire. Au moins 1 caractère.",
               pattern: {
@@ -133,7 +133,7 @@ const CreateMovieForm: React.FC = () => {
         <div className="mb-4">
           <label className="block font-medium mb-2">Titre original</label>
           <input
-            className="w-full text-black font-light bg-transparent border-b p-2 placeholder-gray-500 border-rose-900"
+            className="w-full text-black font-light bg-transparent border-b p-2 placeholder-gray-500 border-black"
             {...register("original_title")}
             placeholder="Tapez le titre original..."
             data-testid="original-title-input"
@@ -148,7 +148,7 @@ const CreateMovieForm: React.FC = () => {
         <div className="mb-4">
           <label className="block font-medium mb-2">Réalisateur-ice</label>
           <input
-            className="w-full text-black font-light placeholder-gray-500 bg-transparent border-b p-2 border-rose-900"
+            className="w-full text-black font-light placeholder-gray-500 bg-transparent border-b p-2 border-black"
             {...register("director_name", {
               required: "Le nom du ou de la réalisateur-ice est obligatoire.",
             })}
@@ -166,7 +166,7 @@ const CreateMovieForm: React.FC = () => {
         <div className="mb-4">
           <label className="block font-medium mb-2">Synopsis</label>
           <textarea
-            className="w-full text-black font-light border p-2 placeholder-gray-500 rounded-md border-rose-900"
+            className="w-full text-black font-light border p-2 placeholder-gray-500 rounded-md border-black"
             {...register("description", {
               required: "Le synopsis est obligatoire. Au moins 3 caractères",
               min: {
@@ -188,7 +188,7 @@ const CreateMovieForm: React.FC = () => {
         <div className="mb-4">
           <label className="block font-medium mb-2">Année de sortie</label>
           <select
-            className="w-full text-black font-light border p-2 placeholder-gray-500 rounded-md border-rose-900"
+            className="w-full text-black font-light border p-2 placeholder-gray-500 rounded-md border-black"
             {...register("release_date", {
               required: "L'année de sortie est obligatoire.",
             })}
@@ -210,7 +210,7 @@ const CreateMovieForm: React.FC = () => {
         <div className="mb-4">
           <label className="block font-medium mb-2">Pays</label>
           <select
-            className="w-full border font-light p-2 text-black rounded-md border-rose-900"
+            className="w-full border font-light p-2 text-black rounded-md border-black"
             {...register("country_id", {
               required: "Le pays est obligatoire.",
             })}
@@ -236,7 +236,7 @@ const CreateMovieForm: React.FC = () => {
           <input
             type="number"
             placeholder="00"
-            className="w-full font-light border p-2 text-black rounded-md border-rose-900"
+            className="w-full font-light border p-2 text-black rounded-md border-black"
             {...register("runtime", {
               required: "La durée est obligatoire.",
               valueAsNumber: true,
@@ -255,7 +255,7 @@ const CreateMovieForm: React.FC = () => {
         <div className="mb-4">
           <label className="block font-medium mb-2">Format</label>
           <select
-            className="w-full font-light text-black border p-2 rounded-md border-rose-900"
+            className="w-full font-light text-black border p-2 rounded-md border-black"
             {...register("type", { required: "Le format est obligatoire." })}
             data-testid="type-select"
           >
@@ -277,7 +277,7 @@ const CreateMovieForm: React.FC = () => {
         <div className="mb-4">
           <label className="block font-medium mb-2">Genre</label>
           <select
-            className="w-full border font-light text-black p-2 rounded-md border-rose-900"
+            className="w-full border font-light text-black p-2 rounded-md border-black"
             {...register("genre_id", { required: "Le genre est obligatoire." })}
             data-testid="genre-select"
           >
@@ -298,7 +298,7 @@ const CreateMovieForm: React.FC = () => {
         {/* keywords */}
         <div className="w-full md:w-1/2 mt-2 mb-4">
           <label
-            className="block font-medium tracking-wide text-rose-900 mb-2"
+            className="block font-medium tracking-wide text-black mb-2"
             htmlFor="keywords"
           >
             Mots-clés
@@ -351,7 +351,7 @@ const CreateMovieForm: React.FC = () => {
           <button
             type="button"
             onClick={() => router.push("/movies")}
-            className="xs:w-full sm:w-[200px] border hover:border-rose-500 hover:text-rose-500 text-rose-900 px-4 py-2 border-rose-900 rounded-xl"
+            className="xs:w-full sm:w-[200px] border hover:border-rose-500 hover:text-rose-500 text-black px-4 py-2 border-black rounded-xl"
           >
             Annuler
           </button>
