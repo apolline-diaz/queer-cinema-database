@@ -145,7 +145,7 @@ export default function EditListForm({
               Description
             </label>
             <textarea
-              className="w-full rounded-md text-sm text-black placeholder-gray-500 font-light border py-3 px-4  bg-white border-black"
+              className="w-full rounded-xl text-sm text-black placeholder-gray-500 font-light border py-3 px-4  bg-white border-black"
               {...register("description")}
               placeholder="Entrez une description..."
             />
@@ -168,7 +168,7 @@ export default function EditListForm({
                 <input
                   type="checkbox"
                   {...register("is_collection")}
-                  className="rounded border-rose-900 text-rose-900 focus:ring-rose-500"
+                  className="rounded-xl border-rose-900 text-rose-900 focus:ring-rose-500"
                 />
                 <span>Marquer comme collection</span>
               </label>

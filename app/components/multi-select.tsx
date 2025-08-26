@@ -82,7 +82,7 @@ export default function MultiSelect({
               {/* Input Field for Searching */}
               <input
                 type="text"
-                className="block appearance-none text-black placeholder-gray-500 w-full text-sm font-light p-2 border border-black  rounded-md bg-white"
+                className="block appearance-none text-black placeholder-gray-500 w-full text-sm font-light p-2 border border-black  rounded-xl bg-white"
                 placeholder={placeholder || "Rechercher..."}
                 value={inputValue}
                 onChange={handleInputChange}
@@ -90,7 +90,7 @@ export default function MultiSelect({
 
               {/* Dropdown Suggestions */}
               {inputValue && filteredOptions.length > 0 && (
-                <ul className="left-0 right-0 bg-rose-100 text-black rounded-md border border-rose-500 text-sm font-light mt-1 z-10 max-h-40 overflow-y-auto">
+                <ul className="left-0 right-0 bg-rose-100 text-black rounded-xl border border-rose-500 text-sm font-light mt-1 z-10 max-h-40 overflow-y-auto">
                   {filteredOptions.map((option) => (
                     <li
                       key={option.value}
@@ -120,7 +120,7 @@ export default function MultiSelect({
                 {safeValue.map((option: Option) => (
                   <span
                     key={option.value}
-                    className="inline-flex items-center bg-rose-50 border border-rose-500  text-rose-500 text-sm  font-light px-2 py-1 rounded"
+                    className="inline-flex items-center bg-rose-50 border border-rose-500  text-rose-500 text-sm  font-light px-2 py-1 rounded-xl"
                   >
                     {option.label}
                     <button

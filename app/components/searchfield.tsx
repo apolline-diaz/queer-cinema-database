@@ -101,8 +101,8 @@ export default function Searchfield({
   };
 
   return (
-    <div className="w-full my-4">
-      <div className=" mb-4">
+    <div className="w-full my-4 flex flex-col sm:flex-row">
+      <div className="w-full sm:w-1/4 mb-4">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="text-sm w-full xs:w-1/2 my-2 flex flex-col sm:flex-row gap-3">
             <div className="w-full">
@@ -120,11 +120,11 @@ export default function Searchfield({
               />
             </div>
           </div>
-          <div className="flex flex-col sm:flex-row sm:w-full gap-4 py-2">
+          <div className="flex flex-col sm:flex-wrap gap-4 py-2">
             <button
               type="submit"
               data-testid="search-button"
-              className="xs:w-full sm:w-[200px] transition-colors duration-200 ease-in-out bg-black text-white px-4 py-2 rounded-xl hover:bg-rose-500"
+              className="w-full transition-colors duration-200 ease-in-out bg-black text-white px-4 py-2 rounded-xl hover:bg-rose-500"
             >
               Rechercher
             </button>
@@ -132,65 +132,67 @@ export default function Searchfield({
               type="button"
               onClick={handleReset}
               data-testid="reset-button"
-              className="xs:w-full sm:w-[200px] border transition-colors duration-200 ease-in-out hover:border-rose-500 hover:text-rose-500 text-black px-4 py-2 border-black rounded-xl"
+              className="w-full border transition-colors duration-200 ease-in-out hover:border-rose-500 hover:text-rose-500 text-black px-4 py-2 border-black rounded-xl"
             >
               Réinitialiser
             </button>
           </div>
         </form>
       </div>
-      <div className="border-l-4  text-sm border-rose-500 pl-4 py-2 mb-6">
-        {isLoading ? (
-          <div className="animate-pulse rounded-md h-6 bg-gray-300 w-32"></div>
-        ) : (
-          <div className="text-gray-800">
-            <span
-              className="text-rose-500 font-semibold"
-              data-testid="results-count"
-            >
-              {movies.length}
-            </span>
-            <span className="text-gray-600 ml-2">titres trouvés</span>
-          </div>
-        )}
-      </div>
-      <div className="w-full grid xs:grid-cols-1 gap-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
-        {isLoading ? (
-          Array.from({ length: 6 }).map((_, index) => (
-            <div
-              key={index}
-              className="animate-pulse bg-gray-300 h-[200px] rounded-xl w-full justify-end max-w-xs mx-auto group overflow-hidden flex flex-col transition-transform"
-            >
-              <div className="flex flex-col p-5 space-y-2">
-                <div className="h-6 bg-gray-200 rounded w-3/4 mb-2"></div>
-                <div className="h-4 bg-gray-200 rounded w-1/3 mb-2"></div>
-              </div>
+      <div className="flex-1 p-0 sm:pl-10">
+        <div className="border-l-4  text-sm border-rose-500 pl-4 py-2 mb-6">
+          {isLoading ? (
+            <div className="animate-pulse rounded-md h-6 bg-gray-300 w-32"></div>
+          ) : (
+            <div className="text-gray-800">
+              <span
+                className="text-rose-500 font-semibold"
+                data-testid="results-count"
+              >
+                {movies.length}
+              </span>
+              <span className="text-gray-600 ml-2">titres trouvés</span>
             </div>
-          ))
-        ) : movies.length === 0 ? (
-          <p data-testid="no-results">Aucun film trouvé</p>
-        ) : (
-          movies
-            .slice(0, visibleCount)
-            .map((movie) => (
-              <Card
-                key={`${movie.title}-${movie.id}`}
-                {...movie}
-                userIsAdmin={userIsAdmin}
-                image_url={getImageUrl(movie.image_url || "")}
-              />
+          )}
+        </div>
+        <div className="w-full grid xs:grid-cols-1 gap-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
+          {isLoading ? (
+            Array.from({ length: 6 }).map((_, index) => (
+              <div
+                key={index}
+                className="animate-pulse bg-gray-300 h-[200px] rounded-xl w-full justify-end max-w-xs mx-auto group overflow-hidden flex flex-col transition-transform"
+              >
+                <div className="flex flex-col p-5 space-y-2">
+                  <div className="h-6 bg-gray-200 rounded w-3/4 mb-2"></div>
+                  <div className="h-4 bg-gray-200 rounded w-1/3 mb-2"></div>
+                </div>
+              </div>
             ))
+          ) : movies.length === 0 ? (
+            <p data-testid="no-results">Aucun film trouvé</p>
+          ) : (
+            movies
+              .slice(0, visibleCount)
+              .map((movie) => (
+                <Card
+                  key={`${movie.title}-${movie.id}`}
+                  {...movie}
+                  userIsAdmin={userIsAdmin}
+                  image_url={getImageUrl(movie.image_url || "")}
+                />
+              ))
+          )}
+        </div>
+        {visibleCount < movies.length && !isLoading && (
+          <button
+            onClick={loadMore}
+            data-testid="load-more-button"
+            className="w-full flex flex-row justify-center items-center border rounded-md hover:bg-rose-500 hover:text-white border-rose-900 border-t mt-4 px-4 py-2 hover:border-rose-500 text-rose-900"
+          >
+            Voir plus <Icon icon="mdi:chevron-down" className="size-5" />
+          </button>
         )}
       </div>
-      {visibleCount < movies.length && !isLoading && (
-        <button
-          onClick={loadMore}
-          data-testid="load-more-button"
-          className="w-full flex flex-row justify-center items-center border rounded-md hover:bg-rose-500 hover:text-white border-rose-900 border-t mt-4 px-4 py-2 hover:border-rose-500 text-rose-900"
-        >
-          Voir plus <Icon icon="mdi:chevron-down" className="size-5" />
-        </button>
-      )}
     </div>
   );
 }
