@@ -106,10 +106,10 @@ const CreateListForm: React.FC<CreateListFormProps> = ({ isAdmin }) => {
   return (
     <div className="px-10 py-20">
       <BackButton />
-      <div className="tracking-wide font-medium text-2xl text-rose-900 mb-5">
+      <div className="tracking-wide font-bold text-2xl text-rose-500 mb-5">
         Créer une liste de films
       </div>
-      <form onSubmit={handleSubmit(onSubmit)} className="py-5 text-rose-900">
+      <form onSubmit={handleSubmit(onSubmit)} className="py-5 text-black">
         {/* Title of the list */}
         <div className="w-full md:w-1/2 mb-6">
           <label className="block font-medium text-sm mb-2" htmlFor="title">
@@ -117,7 +117,7 @@ const CreateListForm: React.FC<CreateListFormProps> = ({ isAdmin }) => {
           </label>
           <input
             {...register("title", { required: "Le titre est requis" })}
-            className="block w-full text-sm text-black border-rose-900 placeholder-gray-500 font-light bg-transparent border-b py-2 focus:outline-none"
+            className="block w-full text-sm text-black border-black placeholder-gray-500 font-light bg-transparent border-b py-2 focus:outline-none"
             placeholder="Entrez un titre..."
             data-testid="title-input"
           />
@@ -138,7 +138,7 @@ const CreateListForm: React.FC<CreateListFormProps> = ({ isAdmin }) => {
             {...register("description", {
               required: "La description est requise",
             })}
-            className="block w-full text-sm text-black bg-white placeholder-gray-500 font-light border-rose-900 border py-3 px-4 rounded focus:outline-none"
+            className="block w-full text-sm text-black bg-white placeholder-gray-500 font-light border-black border py-3 px-4 rounded focus:outline-none"
             placeholder="Entrez une description..."
             data-testid="description-input"
           />
@@ -161,20 +161,20 @@ const CreateListForm: React.FC<CreateListFormProps> = ({ isAdmin }) => {
             value={movieInput}
             onChange={handleMovieInputChange}
             placeholder="Cherchez des films..."
-            className="block w-full text-sm bg-white text-black placeholder-gray-500 font-light border-rose-900 border py-2 px-3 rounded focus:outline-none"
+            className="block w-full text-sm bg-white text-black placeholder-gray-500 font-light border-black border py-2 px-3 rounded focus:outline-none"
             data-testid="movie-search-input"
           />
 
           {/* Suggestions de films */}
           {isSearching && filteredMovies.length > 0 && (
             <ul
-              className="absolute border max-h-40 w-full overflow-y-auto bg-rose-50 rounded-lg text-sm border-rose-900 mt-1 z-10"
+              className="absolute border max-h-40 w-full overflow-y-auto bg-rose-50 rounded-lg text-sm border-rose-500 mt-1 z-10"
               data-testid="movie-suggestions-list"
             >
               {filteredMovies.map((movie) => (
                 <li
                   key={movie.id}
-                  className="px-4 py-2 capitalize font-light hover:bg-rose-950 cursor-pointer hover:text-white"
+                  className="px-4 py-2 capitalize font-light hover:bg-rose-500 cursor-pointer hover:text-white"
                   onClick={() => handleAddMovie(movie)}
                   data-testid={`movie-suggestion-${movie.id}`}
                 >
@@ -210,7 +210,7 @@ const CreateListForm: React.FC<CreateListFormProps> = ({ isAdmin }) => {
             return movie ? (
               <span
                 key={movie.id}
-                className="items-center my-2 border capitalize flex justify-between border-rose-900 w-full bg-rose-50 text-rose-900 text-sm font-light mr-2 px-3 py-1 rounded"
+                className="items-center my-2 border capitalize flex justify-between border-rose-500 w-full bg-rose-50 text-black text-sm font-light mr-2 px-3 py-1 rounded"
                 data-testid={`selected-movie-${movie.id}`}
               >
                 <div>
@@ -219,7 +219,7 @@ const CreateListForm: React.FC<CreateListFormProps> = ({ isAdmin }) => {
                 <button
                   type="button"
                   onClick={() => handleRemoveMovie(movie.id)}
-                  className="ml-2 text-rose-900 hover:text-rose-900"
+                  className="ml-2 text-rose-500 hover:text-rose-500"
                   data-testid={`remove-movie-${movie.id}`}
                 >
                   &times;

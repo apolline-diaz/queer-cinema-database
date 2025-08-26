@@ -54,7 +54,12 @@ export default function ContactForm() {
 
   return (
     <div className="px-10 py-20">
-      <h2 className="text-2xl text-rose-900 mb-4">Contactez-nous</h2>
+      <h2 className="text-2xl text-rose-500 font-bold mb-4">Contact</h2>
+      <p className="text-sm text-black font-light mb-4 italic">
+        Des suggestions de films ou séries, des corrections à indiquer ou toute
+        autre question concernant le site... N&apos;hésitez pas à nous
+        contacter.
+      </p>
       <div className="sm:w-1/2 w-full">
         {status === "success" && (
           <div className="mb-4 py-3 text-rose-800 font-light">

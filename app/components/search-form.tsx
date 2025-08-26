@@ -33,17 +33,17 @@ function CollapsibleSection({ title, children }: CollapsibleSectionProps) {
   const [isOpen, setIsOpen] = useState(true);
 
   return (
-    <div className=" overflow-hidden border-b border-rose-900">
+    <div className=" overflow-hidden border-b border-black">
       <button
         type="button"
         className="w-full flex justify-between items-center text-left"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <span className="font-medium text-rose-900 text-sm mb-2">{title}</span>
+        <span className="font-medium text-black text-sm mb-2">{title}</span>
         {isOpen ? (
-          <Icon icon="line-md:chevron-up" className="text-rose-900 size-5" />
+          <Icon icon="line-md:chevron-up" className="text-black size-5" />
         ) : (
-          <Icon icon="line-md:chevron-down" className="size-5 text-rose-900 " />
+          <Icon icon="line-md:chevron-down" className="size-5 text-black " />
         )}
       </button>
       {isOpen && <div className="pb-2">{children}</div>}
@@ -331,7 +331,7 @@ export default function SearchForm({
         <div className="flex flex-col sm:flex-row sm:w-full gap-4">
           <button
             type="submit"
-            className="xs:w-full sm:w-[200px] transition-colors duration-200 ease-in-out bg-rose-900 text-white px-4 py-2 rounded-xl hover:bg-rose-500"
+            className="xs:w-full sm:w-[200px] transition-colors duration-200 ease-in-out bg-black text-white px-4 py-2 rounded-xl hover:bg-rose-500"
             disabled={isLoading}
           >
             Rechercher
@@ -340,18 +340,26 @@ export default function SearchForm({
           <button
             type="button"
             onClick={handleReset}
-            className="xs:w-full sm:w-[200px] border transition-colors duration-200 ease-in-out hover:border-rose-500 hover:text-rose-500 text-rose-900 px-4 py-2 border-rose-900 rounded-xl"
+            className="xs:w-full sm:w-[200px] border transition-colors duration-200 ease-in-out hover:border-rose-500 hover:text-rose-500 text-black px-4 py-2 border-black rounded-xl"
             disabled={isLoading}
           >
             Réinitialiser
           </button>
         </div>
       </form>
-      <div className="text-rose-900 border-b border-rose-900 text-md font-light mb-5">
+      <div className="border-l-4  text-sm border-rose-500 pl-4 py-2 mb-6">
         {isLoading ? (
-          <div className="animate-pulse rounded-md h-6 bg-gray-300 w-1/4 mb-2"></div>
+          <div className="animate-pulse rounded-md h-6 bg-gray-300 w-32"></div>
         ) : (
-          `${movies.length} titres trouvés`
+          <div className="text-gray-800">
+            <span
+              className="text-rose-500 font-semibold"
+              data-testid="results-count"
+            >
+              {movies.length}
+            </span>
+            <span className="text-gray-600 ml-2">titres trouvés</span>
+          </div>
         )}
       </div>
       <div className="w-full grid gap-3 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">

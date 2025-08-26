@@ -75,8 +75,8 @@ export default function ClientSearchComponent({
           data-testid="simple-search-button"
           className={`w-full sm:w-auto text-sm font-light px-4 py-1 border rounded-full transition-colors ${
             searchMode === "field"
-              ? "bg-rose-900 text-white border-rose-900 "
-              : "bg-transparent text-rose-900 border-rose-900 hover:bg-rose-900 hover:text-white"
+              ? "bg-rose-500 text-white border-rose-500 "
+              : "bg-transparent text-rose-500 border-rose-500 hover:bg-rose-500 hover:text-white"
           }`}
         >
           Recherche simple
@@ -87,8 +87,8 @@ export default function ClientSearchComponent({
           data-testid="advanced-search-button"
           className={`w-full sm:w-auto text-sm font-light px-4 py-1 border rounded-full transition-colors ${
             searchMode === "form"
-              ? "bg-rose-900 text-white border-rose-900 "
-              : "bg-transparent text-rose-900 border-rose-900 hover:bg-rose-900 hover:text-white"
+              ? "bg-rose-500 text-white border-rose-500 "
+              : "bg-transparent text-rose-500 border-rose-500 hover:bg-rose-500 hover:text-white"
           }`}
         >
           Recherche avancée

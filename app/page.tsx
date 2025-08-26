@@ -35,7 +35,7 @@ export default async function HomePage() {
             </h2>
             <Link
               href="/movies"
-              className="border rounded-xl px-2 mr-10 py-1 border-rose-900 text-rose-900 hover:border-rose-500 hover:bg-rose-500 hover:text-white text-sm whitespace-nowrap flex-shrink-0"
+              className="border rounded-xl px-2 mr-10 py-1 border-rose-500 text-rose-500 hover:border-rose-500 hover:bg-rose-500 hover:text-white text-sm whitespace-nowrap flex-shrink-0"
             >
               Voir plus{" "}
               <Icon icon="mdi:chevron-right" className="inline size-4" />
@@ -65,7 +65,7 @@ export default async function HomePage() {
                 alt={featuredLatestMovie.title}
                 className="w-full h-full object-cover"
               />
-              <div className="bg-black/10 backdrop-blur-sm absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black/100 z-10" />
+              <div className="bg-black/10  absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black/100 z-10" />
               <div className="absolute bottom-10 px-10 flex flex-col gap-1 text-left z-20">
                 <h3 className="text-2xl font-medium">
                   {featuredLatestMovie.title}
@@ -97,14 +97,14 @@ export default async function HomePage() {
                       <h2 className="text-2xl font-semibold bg-gradient-to-r leading-tight from-rose-900 to-rose-500 bg-clip-text text-transparent line-clamp-3">
                         {collection.title}
                       </h2>
-                      <span className="w-fit text-sm text-rose-500 border border-rose-500 rounded-full font-light px-1.5 py-0.5">
+                      <span className="w-fit text-sm text-gray-500 border border-gray-500 rounded-full font-light px-1.5 py-0.5">
                         Collection
                       </span>
                     </div>
 
                     <Link
                       href={`/lists/${collection.id}`}
-                      className="border rounded-xl px-2 py-1 border-rose-900 text-rose-900 hover:border-rose-500 hover:bg-rose-500 hover:text-white text-sm whitespace-nowrap flex-shrink-0"
+                      className="border rounded-xl px-2 py-1 border-rose-500 text-rose-500 hover:border-rose-500 hover:bg-rose-500 hover:text-white text-sm whitespace-nowrap flex-shrink-0"
                     >
                       Voir plus{" "}
                       <Icon

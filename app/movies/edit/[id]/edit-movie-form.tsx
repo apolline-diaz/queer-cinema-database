@@ -291,7 +291,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
     <>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="rounded-lg text-rose-900 justify-start mx-auto"
+        className="rounded-lg text-black justify-start mx-auto"
       >
         {error && (
           <div className="mb-4 p-4 bg-red-500 text-white rounded-md">
@@ -307,7 +307,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
               {...register("title", {
                 required: "Le titre est obligatoire. Au moins 1 caractère.",
               })}
-              className="w-full py-2 text-sm font-light border rounded-md px-2 bg-white text-black border-rose-900 bg-transparent"
+              className="w-full py-2 text-sm font-light border rounded-md px-2 bg-white text-black border-black bg-transparent"
             />
             {errors.title && (
               <p className="text-red-500 text-sm mt-1">
@@ -323,7 +323,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
             </label>
             <input
               {...register("original_title")}
-              className="w-full py-2 text-sm font-light border rounded-md px-2 bg-white text-black border-rose-900 bg-transparent"
+              className="w-full py-2 text-sm font-light border rounded-md px-2 bg-white text-black border-black bg-transparent"
             />
             {errors.original_title && (
               <p className="text-red-500 text-sm mt-1">
@@ -438,7 +438,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
                 },
               })}
               rows={4}
-              className="w-full px-3 py-2 text-black font-light text-sm border bg-white border-rose-900 rounded-md bg-transparent"
+              className="w-full px-3 py-2 text-black font-light text-sm border bg-white border-black rounded-md bg-transparent"
             />
             {errors.description && (
               <span className="text-rose-500 text-xs my-2">
@@ -457,7 +457,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
                 {...register("release_date", {
                   required: "L'année de sortie est obligatoire.",
                 })}
-                className="w-full text-sm font-light py-2 border rounded-md px-2 bg-white text-black border-rose-900"
+                className="w-full text-sm font-light py-2 border rounded-md px-2 bg-white text-black border-black"
               >
                 {years.map((year) => (
                   <option key={year} value={year}>
@@ -477,7 +477,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
                 {...register("country_id", {
                   required: "Le pays est obligatoire.",
                 })}
-                className="w-full mt-1 block text-sm font-light bg-transparent border rounded-md px-2 bg-white text-black border-rose-900  py-2"
+                className="w-full mt-1 block text-sm font-light bg-transparent border rounded-md px-2 bg-white text-black border-black  py-2"
               >
                 <option value="">Select a country</option>
                 {availableCountries.map((country) => (
@@ -519,7 +519,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
                     message: "La durée doit être supérieure à 0.",
                   },
                 })}
-                className="w-full text-sm font-light border-rose-900  py-2 border rounded-md px-2 bg-white text-black bg-transparent"
+                className="w-full text-sm font-light border-black  py-2 border rounded-md px-2 bg-white text-black bg-transparent"
               />
               {errors.runtime && (
                 <p className="text-red-500 text-sm mt-1">
@@ -537,7 +537,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
                 {...register("language", {
                   required: "La langue est obligatoire.",
                 })}
-                className="w-full text-sm border-rose-900 font-light py-2 border rounded-md px-2 bg-white text-black bg-transparent"
+                className="w-full text-sm border-black font-light py-2 border rounded-md px-2 bg-white text-black bg-transparent"
               />
               {errors.language && (
                 <p className="text-red-500 text-sm mt-1">
@@ -552,7 +552,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
             <label className="block text-sm font-medium mb-1">Format</label>
             <select
               {...register("type", { required: "Le format est obligatoire." })}
-              className="w-full text-sm font-light border-rose-900 py-2 border rounded-md px-2 bg-white text-black"
+              className="w-full text-sm font-light border-black py-2 border rounded-md px-2 bg-white text-black"
             >
               <option value="Long-métrage">Long-métrage</option>
               <option value="Moyen-métrage">Moyen-métrage</option>
@@ -569,7 +569,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
 
           {/* Genres */}
           <div>
-            <label className="text-rose-900 block text-sm font-medium mb-1">
+            <label className="text-black block text-sm font-medium mb-1">
               Genres
             </label>
 
@@ -612,7 +612,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
 
           {/* Keywords */}
           <div>
-            <label className="text-rose-900 block text-sm font-medium mb-1">
+            <label className="text-black block text-sm font-medium mb-1">
               Mots-clés
             </label>
 
@@ -659,7 +659,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
           <button
             type="button"
             onClick={() => router.back()}
-            className="xs:w-full sm:w-[200px] border hover:border-red-500 hover:text-red-500 text-rose-900 px-4 py-2 border-rose-900 rounded-xl"
+            className="xs:w-full sm:w-[200px] border hover:border-red-500 hover:text-red-500 text-black px-4 py-2 border-black rounded-xl"
           >
             Annuler
           </button>

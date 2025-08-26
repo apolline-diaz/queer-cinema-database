@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Header() {
   return (
-    <footer className="h-full footer flex flex-col gap-3 bg-rose-900 text-white px-10 pb-2 pt-4 border-t border-rose-900 b-0">
+    <footer className="h-full footer flex flex-col gap-3 bg-gray-200 text-black px-10 pb-2 pt-4 border-t border-gray-500 b-0">
       <div className="flex flex-col sm:flex-row justify-between">
         <div className="py-2">
           <div className="flex flex-row text-xl mb-2">

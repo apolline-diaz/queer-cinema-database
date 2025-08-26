@@ -48,10 +48,10 @@ export default function Hero({ id, title, image_url }: CardProps) {
             </div>
             {/* Barre de recherche qui redirige vers /movies */}
             <div className="z-10 flex flex-col sm:flex-row gap-5 justify-center items-center">
-              <div className="flex flex-row items-center bg-white justify-center border rounded-xl px-4 border-rose-900">
+              <div className="flex flex-row items-center bg-white justify-center border rounded-xl px-4 border-rose-500">
                 <input
                   type="text"
-                  className="z-10 max-h-12  min-w-60 flex-1 py-4 bg-white  placeholder-rose-900 text-rose-900 font-light focus:outline-none"
+                  className="z-10 max-h-12  min-w-60 flex-1 py-4 bg-white  placeholder-gray-500 text-black font-light focus:outline-none"
                   placeholder="Rechercher un titre, mot-clé..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
@@ -64,13 +64,13 @@ export default function Hero({ id, title, image_url }: CardProps) {
                     icon="radix-icons:magnifying-glass"
                     fontSize={20}
                     onClick={handleSearch}
-                    className="text-rose-900 hover:cursor-pointer hover:text-rose-500 transition-colors"
+                    className="text-black hover:cursor-pointer hover:text-rose-500 transition-colors"
                   />
                 )}
               </div>
               <Link
                 href="/movies"
-                className="relative flex flex-row gap-1 items-center bg-rose-900 text-white transition-colors duration-200 ease-in-out px-4 py-3 rounded-xl  hover:bg-rose-500"
+                className="relative flex flex-row gap-1 items-center  bg-rose-900 text-white transition-colors duration-200 ease-in-out px-4 py-3 rounded-xl  hover:bg-rose-500"
               >
                 Explorer le catalogue
                 <Icon icon="uis:angle-right" fontSize={25} />

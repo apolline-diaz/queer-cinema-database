@@ -86,8 +86,8 @@ export default function SettingsClientPage({ user }: { user: User }) {
   };
 
   return (
-    <div className="px-10 py-20 text-sm w-full sm:w-1/2 text-rose-900">
-      <h1 className="tracking-wide text-rose-900 text-2xl mb-5 font-medium">
+    <div className="px-10 py-20 text-sm w-full sm:w-1/2 text-black">
+      <h1 className="tracking-wide text-black text-2xl mb-5 font-medium">
         {user.full_name}
       </h1>
 
@@ -97,7 +97,7 @@ export default function SettingsClientPage({ user }: { user: User }) {
         <div className="mb-4">
           <label className="block font-medium mb-2">Nom complet</label>
           <input
-            className={`w-full text-black font-light bg-transparent border rounded-md p-2 placeholder-gray-500 border-rose-900 ${
+            className={`w-full text-black font-light bg-transparent border rounded-md p-2 placeholder-gray-500 border-black ${
               nameError ? "border-red-500" : ""
             }`}
             name="full_name"
@@ -157,8 +157,8 @@ export default function SettingsClientPage({ user }: { user: User }) {
 
       {/* Suppression du compte */}
       <form className="p-5 rounded-md bg-rose-50 border border-rose-500">
-        <h2 className="text-lg font-semibold text-rose-900 mb-4">
-          Supprimer le compte
+        <h2 className="text-lg font-semibold text-black mb-4">
+          Désactiver le compte
         </h2>
         <p className="text-sm text-gray-600 mb-4">
           Cette action est <strong>irréversible</strong>. Toutes vos données
@@ -169,14 +169,14 @@ export default function SettingsClientPage({ user }: { user: User }) {
           onClick={() => setIsDeleteOpen(true)}
           className=" text-rose-500 border-rose-500 hover:text-white border px-4 py-2 transition-colors duration-200 ease-in-out rounded-md hover:bg-rose-500 disabled:opacity-50"
         >
-          Supprimer mon compte
+          Désactiver mon compte
         </button>
       </form>
       <DeleteUserModal
         isOpen={isDeleteOpen}
         onClose={() => setIsDeleteOpen(false)}
         onConfirm={handleDeleteConfirm}
-        title="Suppression du compte"
+        title="Désactivation du compte"
       />
     </div>
   );

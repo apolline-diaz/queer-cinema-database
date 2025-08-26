@@ -8,7 +8,7 @@ export default async function StatisticsPage() {
   return (
     <div className="px-10 py-20">
       <BackButton />
-      <h1 className="text-2xl text-rose-900 mb-5 font-medium">Statistiques</h1>
+      <h1 className="text-2xl text-rose-500 mb-5 font-bold">Statistiques</h1>
       <KeywordStatsClientComponent keywordStats={keywordStats} />
     </div>
   );

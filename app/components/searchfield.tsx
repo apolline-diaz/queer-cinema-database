@@ -112,7 +112,7 @@ export default function Searchfield({
                 render={({ field }) => (
                   <input
                     {...field}
-                    className="appearance-none text-md placeholder-gray-500 font-light block w-full bg-white rounded-xl border  border-rose-900 text-rose-900 p-2 leading-tight focus:none focus:outline-none"
+                    className="appearance-none text-md placeholder-gray-500 font-light block w-full bg-white rounded-xl border  border-black text-black p-2 leading-tight focus:none focus:outline-none"
                     placeholder="Entrez un mot ou un titre..."
                     data-testid="search-input"
                   />
@@ -124,7 +124,7 @@ export default function Searchfield({
             <button
               type="submit"
               data-testid="search-button"
-              className="xs:w-full sm:w-[200px] transition-colors duration-200 ease-in-out bg-rose-900 text-white px-4 py-2 rounded-xl hover:bg-rose-500"
+              className="xs:w-full sm:w-[200px] transition-colors duration-200 ease-in-out bg-black text-white px-4 py-2 rounded-xl hover:bg-rose-500"
             >
               Rechercher
             </button>
@@ -132,18 +132,26 @@ export default function Searchfield({
               type="button"
               onClick={handleReset}
               data-testid="reset-button"
-              className="xs:w-full sm:w-[200px] border transition-colors duration-200 ease-in-out hover:border-rose-500 hover:text-rose-500 text-rose-900 px-4 py-2 border-rose-900 rounded-xl"
+              className="xs:w-full sm:w-[200px] border transition-colors duration-200 ease-in-out hover:border-rose-500 hover:text-rose-500 text-black px-4 py-2 border-black rounded-xl"
             >
               Réinitialiser
             </button>
           </div>
         </form>
       </div>
-      <div className="text-rose-900 border-b border-rose-900 text-md font-light mb-5">
+      <div className="border-l-4  text-sm border-rose-500 pl-4 py-2 mb-6">
         {isLoading ? (
-          <div className="animate-pulse rounded-md h-6 bg-gray-300 w-1/4 mb-2"></div>
+          <div className="animate-pulse rounded-md h-6 bg-gray-300 w-32"></div>
         ) : (
-          <span data-testid="results-count">{`${movies.length} titres trouvés`}</span>
+          <div className="text-gray-800">
+            <span
+              className="text-rose-500 font-semibold"
+              data-testid="results-count"
+            >
+              {movies.length}
+            </span>
+            <span className="text-gray-600 ml-2">titres trouvés</span>
+          </div>
         )}
       </div>
       <div className="w-full grid xs:grid-cols-1 gap-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
