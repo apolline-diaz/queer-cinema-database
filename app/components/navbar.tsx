@@ -98,21 +98,20 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                           Mes Listes
                         </Link>
                       </DropdownMenuItem>
-                      <DropdownMenuItem
-                        asChild
-                        data-testid="contribute-menu-item"
-                      >
-                        <span>
-                          {userIsAdmin && (
-                            <Link
-                              href="/movies/create"
-                              data-testid="contribute-link"
-                            >
-                              Contribuer
-                            </Link>
-                          )}
-                        </span>
-                      </DropdownMenuItem>
+                      {userIsAdmin && (
+                        <DropdownMenuItem
+                          asChild
+                          data-testid="contribute-menu-item"
+                        >
+                          <Link
+                            href="/movies/create"
+                            data-testid="contribute-link"
+                            className="cursor-pointer"
+                          >
+                            Contribuer
+                          </Link>
+                        </DropdownMenuItem>
+                      )}
                       <DropdownMenuItem data-testid="settings-menu-item">
                         <span>
                           <Link href="/account/settings">Paramètres</Link>

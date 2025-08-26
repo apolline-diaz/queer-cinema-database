@@ -82,7 +82,7 @@ export default function MoviesMultiSelect({
               {/* Input de recherche */}
               <input
                 type="text"
-                className="block appearance-none w-full text-sm font-light p-2 border placeholder-gray-500 rounded-md bg-white border-rose-900"
+                className="block appearance-none w-full text-sm font-light p-2 border placeholder-gray-500 rounded-md bg-white border-black"
                 placeholder={placeholder || "Rechercher..."}
                 value={inputValue}
                 onChange={handleInputChange}
@@ -90,11 +90,11 @@ export default function MoviesMultiSelect({
 
               {/* Liste déroulante des suggestions */}
               {inputValue && filteredOptions.length > 0 && (
-                <ul className="absolute left-0 right-0 capitalize bg-rose-50 border-rose-900 text-rose-900 text-sm rounded-md border mt-1 z-10 max-h-40 overflow-y-auto">
+                <ul className="absolute left-0 right-0 capitalize bg-rose-50 border-rose-500 text-black text-sm rounded-md border mt-1 z-10 max-h-40 overflow-y-auto">
                   {filteredOptions.map((option) => (
                     <li
                       key={option.value}
-                      className="px-4 py-2 font-light hover:text-white cursor-pointer hover:bg-rose-950"
+                      className="px-4 py-2 font-light hover:text-white cursor-pointer hover:bg-rose-500"
                       onClick={() => handleSelectMovie(option)}
                     >
                       <div className="flex flex-row gap-2">
@@ -110,7 +110,7 @@ export default function MoviesMultiSelect({
                 {selectedOptions.map((option) => (
                   <span
                     key={option.value}
-                    className="cursor-pointer capitalize flex border border-rose-900 justify-between items-center bg-rose-50 text-rose-900 text-sm font-light px-2 py-1 rounded"
+                    className="cursor-pointer capitalize flex border border-rose-500 justify-between items-center bg-rose-50 text-black text-sm font-light px-2 py-1 rounded"
                     onClick={() => handleRemoveMovie(option)}
                   >
                     <div>

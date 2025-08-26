@@ -109,7 +109,7 @@ export default function EditListForm({
     <div className="px-10 py-20">
       <BackButton />
 
-      <h1 className="text-2xl text-rose-900 font-medium mb-5">
+      <h1 className="text-2xl text-rose-500 font-bold mb-5">
         Modifier la liste
       </h1>
       {isLoading ? (
@@ -122,14 +122,14 @@ export default function EditListForm({
       ) : (
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="text-rose-900 py-5 w-full sm:w-1/2"
+          className="text-black py-5 w-full sm:w-1/2"
         >
           <input type="hidden" {...register("movie_id")} />
 
           <div className="mb-6">
             <label className="block text-sm font-medium mb-2">Titre</label>
             <input
-              className="w-full border-b text-sm placeholder-gray-500 text-black font-light py-2 bg-transparent border-rose-900"
+              className="w-full border-b text-sm placeholder-gray-500 text-black font-light py-2 bg-transparent border-black"
               {...register("title")}
               placeholder="Mon top 2025"
             />
@@ -145,7 +145,7 @@ export default function EditListForm({
               Description
             </label>
             <textarea
-              className="w-full rounded-md text-sm text-black placeholder-gray-500 font-light border py-3 px-4  bg-white border-rose-900"
+              className="w-full rounded-md text-sm text-black placeholder-gray-500 font-light border py-3 px-4  bg-white border-black"
               {...register("description")}
               placeholder="Entrez une description..."
             />
@@ -164,7 +164,7 @@ export default function EditListForm({
           </div>
           {isAdmin && (
             <div className="mb-6">
-              <label className="inline-flex items-center space-x-2 text-black">
+              <label className="inline-flex items-center text-sm space-x-2 text-black">
                 <input
                   type="checkbox"
                   {...register("is_collection")}

@@ -102,7 +102,7 @@ const CreateMovieForm: React.FC = () => {
   return (
     <div className="px-10 py-20 text-sm w-full sm:w-1/2">
       <BackButton />
-      <h1 className="tracking-wide text-rose-900 text-2xl mb-5 font-medium">
+      <h1 className="tracking-wide text-rose-500 text-2xl mb-5 font-bold">
         Ajouter un film
       </h1>
 

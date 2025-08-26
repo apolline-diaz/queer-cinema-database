@@ -42,13 +42,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div
-      className="w-screen min-h-screen flex items-center text-rose-900 justify-center bg-cover bg-center"
-      style={{
-        backgroundImage:
-          "url('https://xcwrhyjbfgzsaslstssc.supabase.co/storage/v1/object/public/storage//watermelon-woman-background.webp')",
-      }}
-    >
+    <div className="w-screen min-h-screen flex items-center text-black justify-center bg-cover bg-center">
       <div className="bg-white border border-rose-500 backdrop-blur-md rounded-2xl shadow-xl p-10 m-10 max-w-md w-full">
         <form onSubmit={handleSubmit(onSubmit)} data-testid="login-form">
           <div className="flex flex-col gap-3 mb-10">
@@ -73,7 +67,7 @@ export default function LoginPage() {
                   message: "Adresse e-mail invalide",
                 },
               })}
-              className="appearance-none text-sm font-light border-rose-900 block w-full  border rounded py-3 px-4 leading-tight focus:outline-none focus:text-black"
+              className="appearance-none text-sm font-light border-black block w-full  border rounded py-3 px-4 leading-tight focus:outline-none focus:text-black"
               id="email"
               type="email"
               placeholder="Tapez votre adresse e-mail"

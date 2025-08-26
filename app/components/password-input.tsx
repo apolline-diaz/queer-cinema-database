@@ -25,7 +25,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
             data-testid={dataTestId}
             ref={ref}
             className={cn(
-              "appearance-none text-sm font-light border-rose-900 block w-full border rounded py-3 px-4 leading-tight focus:outline-none focus:text-black pr-10",
+              "appearance-none text-sm font-light border-black block w-full border rounded py-3 px-4 leading-tight focus:outline-none focus:text-black pr-10",
               error && "border-red-500",
               className
             )}
@@ -36,7 +36,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
             size="icon"
             variant="ghost"
             onClick={() => setVisible(!visible)}
-            className="absolute right-2 top-1/2 -translate-y-1/2 hover:bg-transparent text-rose-900"
+            className="absolute right-2 top-1/2 -translate-y-1/2 hover:bg-transparent text-rose-500"
             data-testid={`${dataTestId}-toggle`}
           >
             {visible ? (
