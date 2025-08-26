@@ -138,7 +138,7 @@ const CreateListForm: React.FC<CreateListFormProps> = ({ isAdmin }) => {
             {...register("description", {
               required: "La description est requise",
             })}
-            className="block w-full text-sm text-black bg-white placeholder-gray-500 font-light border-black border py-3 px-4 rounded focus:outline-none"
+            className="block w-full text-sm text-black bg-white placeholder-gray-500 font-light border-black border py-3 px-4 rounded-xl focus:outline-none"
             placeholder="Entrez une description..."
             data-testid="description-input"
           />
@@ -161,24 +161,25 @@ const CreateListForm: React.FC<CreateListFormProps> = ({ isAdmin }) => {
             value={movieInput}
             onChange={handleMovieInputChange}
             placeholder="Cherchez des films..."
-            className="block w-full text-sm bg-white text-black placeholder-gray-500 font-light border-black border py-2 px-3 rounded focus:outline-none"
+            className="block w-full text-sm bg-white text-black placeholder-gray-500 font-light border-black border py-2 px-3 rounded-xl focus:outline-none"
             data-testid="movie-search-input"
           />
 
           {/* Suggestions de films */}
           {isSearching && filteredMovies.length > 0 && (
             <ul
-              className="absolute border max-h-40 w-full overflow-y-auto bg-rose-50 rounded-lg text-sm border-rose-500 mt-1 z-10"
+              className="absolute border max-h-40 w-full overflow-y-auto bg-rose-50 rounded-xl text-sm border-rose-500 mt-1 z-10"
               data-testid="movie-suggestions-list"
             >
               {filteredMovies.map((movie) => (
                 <li
                   key={movie.id}
-                  className="px-4 py-2 capitalize font-light hover:bg-rose-500 cursor-pointer hover:text-white"
+                  className="px-4 py-2 capitalize font-bold hover:bg-rose-500 cursor-pointer hover:text-white"
                   onClick={() => handleAddMovie(movie)}
                   data-testid={`movie-suggestion-${movie.id}`}
                 >
-                  {movie.title} <span className="">({movie.release_date})</span>
+                  {movie.title}{" "}
+                  <span className="font-light">({movie.release_date})</span>
                 </li>
               ))}
             </ul>
@@ -210,11 +211,12 @@ const CreateListForm: React.FC<CreateListFormProps> = ({ isAdmin }) => {
             return movie ? (
               <span
                 key={movie.id}
-                className="items-center my-2 border capitalize flex justify-between border-rose-500 w-full bg-rose-50 text-black text-sm font-light mr-2 px-3 py-1 rounded"
+                className="items-center my-2 border capitalize flex justify-between border-rose-500 w-full bg-rose-50 text-black text-sm font-light mr-2 px-3 py-1 rounded-xl"
                 data-testid={`selected-movie-${movie.id}`}
               >
-                <div>
-                  {movie.title} <span>({movie.release_date})</span>
+                <div className="font-bold">
+                  {movie.title}{" "}
+                  <span className="font-light">({movie.release_date})</span>
                 </div>
                 <button
                   type="button"

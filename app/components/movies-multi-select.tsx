@@ -82,7 +82,7 @@ export default function MoviesMultiSelect({
               {/* Input de recherche */}
               <input
                 type="text"
-                className="block appearance-none w-full text-sm font-light p-2 border placeholder-gray-500 rounded-md bg-white border-black"
+                className="block appearance-none w-full text-sm font-light p-2 border placeholder-gray-500 rounded-xl bg-white border-black"
                 placeholder={placeholder || "Rechercher..."}
                 value={inputValue}
                 onChange={handleInputChange}
@@ -90,16 +90,18 @@ export default function MoviesMultiSelect({
 
               {/* Liste déroulante des suggestions */}
               {inputValue && filteredOptions.length > 0 && (
-                <ul className="absolute left-0 right-0 capitalize bg-rose-50 border-rose-500 text-black text-sm rounded-md border mt-1 z-10 max-h-40 overflow-y-auto">
+                <ul className="absolute left-0 right-0 capitalize bg-rose-50 border-rose-500 text-black text-sm rounded-xl border mt-1 z-10 max-h-40 overflow-y-auto">
                   {filteredOptions.map((option) => (
                     <li
                       key={option.value}
                       className="px-4 py-2 font-light hover:text-white cursor-pointer hover:bg-rose-500"
                       onClick={() => handleSelectMovie(option)}
                     >
-                      <div className="flex flex-row gap-2">
+                      <div className="flex flex-row gap-2 font-bold">
                         {option.label}
-                        <span>({option.release_date})</span>
+                        <span className="font-light">
+                          ({option.release_date})
+                        </span>
                       </div>
                     </li>
                   ))}
@@ -110,12 +112,14 @@ export default function MoviesMultiSelect({
                 {selectedOptions.map((option) => (
                   <span
                     key={option.value}
-                    className="cursor-pointer capitalize flex border border-rose-500 justify-between items-center bg-rose-50 text-black text-sm font-light px-2 py-1 rounded"
+                    className="cursor-pointer capitalize flex border border-rose-500 justify-between items-center bg-rose-50 text-black text-sm font-light px-2 py-1 rounded-xl"
                     onClick={() => handleRemoveMovie(option)}
                   >
-                    <div>
+                    <div className="font-bold">
                       {option.label}
-                      <span className="ml-1">({option.release_date})</span>
+                      <span className="ml-1 font-light">
+                        ({option.release_date})
+                      </span>
                     </div>
 
                     <button
