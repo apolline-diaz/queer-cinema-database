@@ -21,7 +21,7 @@ export default function Hero({ id, title, image_url }: CardProps) {
   const handleSearch = () => {
     if (searchQuery.trim()) {
       router.push(
-        `/movies?search=${encodeURIComponent(searchQuery)}&searchMode=field`
+        `/search?search=${encodeURIComponent(searchQuery)}&searchMode=field`
       );
     }
   };
@@ -72,7 +72,7 @@ export default function Hero({ id, title, image_url }: CardProps) {
                 href="/movies"
                 className="relative flex flex-row gap-1 font-semibold items-center bg-gradient-to-r from-rose-600 to-pink-600  hover:from-rose-700 hover:to-pink-700  transition-all duration-500 ease-in-out hover:text-white px-4 py-3 rounded-xl"
               >
-                Explorer le catalogue
+                Découvrir tous les films
                 <Icon icon="uis:angle-right" fontSize={25} />
               </Link>
             </div>

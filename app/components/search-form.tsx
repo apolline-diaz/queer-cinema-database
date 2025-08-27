@@ -217,7 +217,11 @@ export default function SearchForm({
     <>
       <div className="flex flex-col sm:flex-row">
         <form onSubmit={handleSubmit(onSubmit)} className="mt-2 mb-4 sm:w-1/4">
-          <div className="grid grid-cols-1 w-full gap-4 justify-between mb-5">
+          <p className="mb-3 font-semibold flex flex-row gap-2 text-gray-500 justify-left items-center rounded-xl bg-gray-100 border border-gray-200 p-2">
+            <Icon icon="gridicons:filter" className="size-5 " />
+            <span>Recherche par filtres</span>
+          </p>
+          <div className="grid grid-cols-1 w-full gap-3 justify-between mb-5">
             <CollapsibleSection title="Période">
               <div className="grid grid-cols-2 gap-2">
                 <Controller

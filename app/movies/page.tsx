@@ -6,10 +6,10 @@ import {
   getReleaseYears,
   getDirectors,
 } from "@/app/server-actions/movies/search-movies";
-import ClientSearchComponent from "./client";
 import { isAdmin } from "@/utils/is-user-admin";
 import { getMoviesByWord } from "../server-actions/movies/get-movies-by-word";
 import BackButton from "../components/back-button";
+import SearchForm from "../components/search-form";
 
 export default async function CataloguePage({
   searchParams,
@@ -65,15 +65,14 @@ export default async function CataloguePage({
         <h1 className="text-2xl font-bold text-rose-500 mb-5">Catalogue</h1>
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
           <div className="flex flex-col gap-5 w-full">
-            <ClientSearchComponent
+            <SearchForm
+              userIsAdmin={userIsAdmin}
               initialMovies={initialMovies}
               countries={countries}
               genres={genres}
               keywords={keywords}
               directors={directors}
               releaseYears={releaseYears}
-              initialSearch={searchParam}
-              userIsAdmin={userIsAdmin}
             />
           </div>
         </div>
