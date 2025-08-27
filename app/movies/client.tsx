@@ -8,6 +8,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 interface ClientSearchComponentProps {
   initialMovies: Movie[];
+  initialTotalCount: number;
+  initialHasMore: boolean;
   countries: { value: string; label: string }[];
   genres: { value: string; label: string }[];
   keywords: { value: string; label: string }[];
@@ -19,6 +21,8 @@ interface ClientSearchComponentProps {
 
 export default function ClientSearchComponent({
   initialMovies,
+  initialTotalCount,
+  initialHasMore,
   countries,
   genres,
   keywords,
@@ -105,6 +109,8 @@ export default function ClientSearchComponent({
           <SearchForm
             userIsAdmin={userIsAdmin}
             initialMovies={initialMovies}
+            initialTotalCount={initialTotalCount}
+            initialHasMore={initialHasMore}
             countries={countries}
             genres={genres}
             keywords={keywords}
