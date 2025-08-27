@@ -70,7 +70,7 @@ export default function Hero({ id, title, image_url }: CardProps) {
               </div>
               <Link
                 href="/movies"
-                className="relative flex flex-row gap-1 items-center  bg-rose-900 text-white transition-colors duration-200 ease-in-out px-4 py-3 rounded-xl  hover:bg-rose-500"
+                className="relative flex flex-row gap-1 font-semibold items-center bg-gradient-to-r from-rose-600 to-pink-600  hover:from-rose-700 hover:to-pink-700  transition-all duration-500 ease-in-out hover:text-white px-4 py-3 rounded-xl"
               >
                 Explorer le catalogue
                 <Icon icon="uis:angle-right" fontSize={25} />
