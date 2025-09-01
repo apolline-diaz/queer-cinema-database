@@ -12,36 +12,30 @@ import {
   Legend,
   Cell,
   ResponsiveContainer,
-  Label,
 } from "recharts";
 
-interface KeywordStat {
+interface Stat {
   name: string;
   count: number;
 }
 
-interface KeywordStatsClientProps {
-  keywordStats: KeywordStat[];
+interface StatsChartProps {
+  data: Stat[];
+  title: string;
 }
 
-export default function KeywordStatsClientComponent({
-  keywordStats,
-}: KeywordStatsClientProps) {
+export default function StatsChart({ data, title }: StatsChartProps) {
   const [chartType, setChartType] = useState<"pie" | "bar">("bar");
-  const totalMovies = keywordStats.reduce(
-    (sum, keyword) => sum + keyword.count,
-    0
-  );
 
   const COLORS = [
-    "oklch(85% 0.08 10)", // beige pâle
-    "oklch(80% 0.07 40)", // pêche clair
-    "oklch(78% 0.07 120)", // vert amande
-    "oklch(82% 0.06 200)", // bleu ciel doux
-    "oklch(87% 0.06 300)", // lavande pâle
-    "oklch(84% 0.05 25)", // rose poudré
-    "oklch(88% 0.05 85)", // jaune pastel
-    "oklch(90% 0.04 180)", // bleu très pâle
+    "oklch(85% 0.08 10)",
+    "oklch(80% 0.07 40)",
+    "oklch(78% 0.07 120)",
+    "oklch(82% 0.06 200)",
+    "oklch(87% 0.06 300)",
+    "oklch(84% 0.05 25)",
+    "oklch(88% 0.05 85)",
+    "oklch(90% 0.04 180)",
   ];
 
   return (
@@ -53,7 +47,7 @@ export default function KeywordStatsClientComponent({
               onClick={() => setChartType("bar")}
               className={`w-auto text-sm font-light px-4 py-1 border rounded-full transition-colors ${
                 chartType === "bar"
-                  ? "bg-rose-500 text-white border-rose-500 "
+                  ? "bg-rose-500 text-white border-rose-500"
                   : "bg-transparent text-rose-500 border-rose-500 hover:bg-rose-500 hover:text-white"
               }`}
             >
@@ -63,16 +57,14 @@ export default function KeywordStatsClientComponent({
               onClick={() => setChartType("pie")}
               className={`w-auto text-sm font-light px-4 py-1 border rounded-full transition-colors ${
                 chartType === "pie"
-                  ? "bg-rose-500 text-white border-rose-500 "
+                  ? "bg-rose-500 text-white border-rose-500"
                   : "bg-transparent text-rose-500 border-rose-500 hover:bg-rose-500 hover:text-white"
               }`}
             >
               Diagramme circulaire
             </button>
           </div>
-          <h2 className="text-black text-md pt-4">
-            Nombre de films par mots-clés les plus fréquents
-          </h2>
+          <h2 className="text-black text-md pt-4">{title}</h2>
         </div>
       </div>
 
@@ -81,7 +73,7 @@ export default function KeywordStatsClientComponent({
           {chartType === "bar" ? (
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
-                data={keywordStats}
+                data={data}
                 margin={{ top: 20, right: 30, left: 20, bottom: 70 }}
               >
                 <XAxis
@@ -89,21 +81,15 @@ export default function KeywordStatsClientComponent({
                   angle={-45}
                   textAnchor="end"
                   height={90}
-                ></XAxis>
+                />
                 <YAxis />
                 <Tooltip
                   formatter={(value) => [`${value} films`]}
                   labelFormatter={(label) => `${label}`}
                   contentStyle={{ color: "black", background: "white" }}
                 />
-
-                <Bar
-                  dataKey="count"
-                  name="Nombre de films"
-                  isAnimationActive={true}
-                  className="text-black"
-                >
-                  {keywordStats.map((entry, index) => (
+                <Bar dataKey="count" name="Nombre de films">
+                  {data.map((entry, index) => (
                     <Cell
                       key={`cell-${index}`}
                       fill={COLORS[index % COLORS.length]}
@@ -116,19 +102,17 @@ export default function KeywordStatsClientComponent({
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
-                  data={keywordStats}
+                  data={data}
                   cx="50%"
                   cy="50%"
-                  labelLine={true}
                   outerRadius={120}
-                  fill="#8884d8"
                   dataKey="count"
                   nameKey="name"
                   label={({ name, count, percent }) =>
                     `${name}: ${count} (${(percent * 100).toFixed(0)}%)`
                   }
                 >
-                  {keywordStats.map((entry, index) => (
+                  {data.map((entry, index) => (
                     <Cell
                       key={`cell-${index}`}
                       fill={COLORS[index % COLORS.length]}
