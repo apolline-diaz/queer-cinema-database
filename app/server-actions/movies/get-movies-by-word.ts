@@ -2,10 +2,13 @@
 
 import { Movie } from "@/app/types/movie";
 import { prisma } from "@/lib/prisma";
+import { normalizeString } from "@/utils/normalize-string";
 
 export const getMoviesByWord = async (search: string): Promise<Movie[]> => {
+  const cleanSearch = normalizeString(search);
+
   // Si la recherche est vide, retourner les films récents
-  if (search.trim() === "") {
+  if (cleanSearch.trim() === "") {
     const movies = await prisma.movies.findMany({
       select: {
         id: true,
@@ -27,15 +30,15 @@ export const getMoviesByWord = async (search: string): Promise<Movie[]> => {
   const movies = await prisma.movies.findMany({
     where: {
       OR: [
-        { title: { contains: search, mode: "insensitive" } },
-        { original_title: { contains: search, mode: "insensitive" } },
-        { description: { contains: search, mode: "insensitive" } },
-        { language: { contains: search, mode: "insensitive" } },
+        { title: { contains: cleanSearch, mode: "insensitive" } },
+        { original_title: { contains: cleanSearch, mode: "insensitive" } },
+        { description: { contains: cleanSearch, mode: "insensitive" } },
+        { language: { contains: cleanSearch, mode: "insensitive" } },
         {
           movies_keywords: {
             some: {
               keywords: {
-                name: { contains: search, mode: "insensitive" },
+                name: { contains: cleanSearch, mode: "insensitive" },
               },
             },
           },
@@ -44,7 +47,7 @@ export const getMoviesByWord = async (search: string): Promise<Movie[]> => {
           movies_directors: {
             some: {
               directors: {
-                name: { contains: search, mode: "insensitive" },
+                name: { contains: cleanSearch, mode: "insensitive" },
               },
             },
           },
@@ -53,7 +56,7 @@ export const getMoviesByWord = async (search: string): Promise<Movie[]> => {
           movies_countries: {
             some: {
               countries: {
-                name: { contains: search, mode: "insensitive" },
+                name: { contains: cleanSearch, mode: "insensitive" },
               },
             },
           },
@@ -62,7 +65,7 @@ export const getMoviesByWord = async (search: string): Promise<Movie[]> => {
           movies_genres: {
             some: {
               genres: {
-                name: { contains: search, mode: "insensitive" },
+                name: { contains: cleanSearch, mode: "insensitive" },
               },
             },
           },

@@ -251,7 +251,7 @@ export default function Searchfield({
         </span>
         <button
           onClick={() => router.push("/movies")}
-          className="px-4 py-2 bg-rose-500 text-white rounded-xl text-sm hover:bg-rose-600 transition-colors"
+          className="text-rose-500 rounded-xl text-sm hover:text-rose-800 transition-colors"
         >
           Aller à la recherche avancée
         </button>

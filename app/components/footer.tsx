@@ -10,7 +10,7 @@ export default function Header() {
             <span className="px-2 font-extralight">database</span>
           </div>
           <p className="w-3/4 font-extralight">
-            Une sélection de films et d&apos;archives LGBTQIA+ pour célébrer la
+            Une sélection de films et d&apos;archives LGBTQI+ pour célébrer la
             pluralité des regards queer dans le monde.
           </p>
         </div>

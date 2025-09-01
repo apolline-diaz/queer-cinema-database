@@ -52,16 +52,17 @@ export default async function HomePage() {
                   <h3 className="text-2xl font-medium">
                     {featuredLatestMovie.title}
                   </h3>
-                  <p className="text-md font-medium">
-                    {featuredLatestMovie?.movies_directors
-                      ?.map((item) => item.directors.name)
-                      .join(", ") || ""}
+                  <p className="text-md font-medium flex flex-row gap-2">
+                    <span>
+                      {featuredLatestMovie?.movies_directors
+                        ?.map((item) => item.directors.name)
+                        .join(", ") || ""}
+                    </span>
+                    <span className="text-md font-light">
+                      {featuredLatestMovie.release_date || ""}
+                    </span>
                   </p>
-                  <p className="text-md font-medium">
-                    {featuredLatestMovie.release_date || ""}
-                  </p>
-
-                  <p className="line-clamp-5 w-3/4 overflow-hidden text-md font-extralight">
+                  <p className="sm:line-clamp-5 line-clamp-6 w-3/4 overflow-hidden text-md font-extralight">
                     {featuredLatestMovie.description || ""}
                   </p>
                 </div>
