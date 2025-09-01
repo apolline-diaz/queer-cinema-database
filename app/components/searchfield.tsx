@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import { Icon } from "@iconify/react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -20,9 +22,7 @@ export default function Searchfield({
   userIsAdmin,
 }: {
   initialMovies: Movie[];
-
   initialSearch?: string;
-
   initialKeyword?: string;
   userIsAdmin: boolean;
 }) {
@@ -75,7 +75,7 @@ export default function Searchfield({
     params.set("searchMode", "field");
 
     // Navigation avec les nouveaux paramètres
-    router.push(`/movies?${params.toString()}`);
+    router.push(`/search?${params.toString()}`);
   };
 
   useEffect(() => {
@@ -89,7 +89,7 @@ export default function Searchfield({
 
     const params = new URLSearchParams();
     params.set("searchMode", "field");
-    router.push(`/movies?${params.toString()}`);
+    router.push(`/search?${params.toString()}`);
 
     // Réinitialiser les résultats
     performSearch("");
@@ -101,45 +101,47 @@ export default function Searchfield({
   };
 
   return (
-    <div className="w-full my-4 flex flex-col sm:flex-row">
-      <div className=" mb-4">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="text-sm w-full xs:w-1/2 my-2 flex flex-col sm:flex-row gap-3">
-            <div className="w-full">
-              <Controller
-                name="search"
-                control={control}
-                render={({ field }) => (
-                  <input
-                    {...field}
-                    className="appearance-none text-md placeholder-gray-500 font-light block w-full bg-white rounded-xl border  border-black text-black p-2 leading-tight focus:none focus:outline-none"
-                    placeholder="Entrez un mot ou un titre..."
-                    data-testid="search-input"
-                  />
-                )}
-              />
-            </div>
+    <div className="w-full mb-4">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex sm:flex-row flex-col"
+      >
+        <div className="text-sm w-full xs:w-1/2 my-2 flex flex-col sm:flex-row gap-3">
+          <div className="w-full">
+            <Controller
+              name="search"
+              control={control}
+              render={({ field }) => (
+                <input
+                  {...field}
+                  className="appearance-none text-md placeholder-gray-500 font-light block w-full bg-white rounded-xl border  border-black text-black p-2 py-3 leading-tight focus:none focus:outline-none"
+                  placeholder="Rechercher un mot ou un titre..."
+                  data-testid="search-input"
+                />
+              )}
+            />
           </div>
-          <div className="flex flex-col sm:flex-row sm:w-full gap-4 py-2">
-            <button
-              type="submit"
-              data-testid="search-button"
-              className="xs:w-full sm:w-[200px] transition-colors duration-200 ease-in-out bg-black text-white px-4 py-2 rounded-xl hover:bg-rose-500"
-            >
-              Rechercher
-            </button>
-            <button
-              type="button"
-              onClick={handleReset}
-              data-testid="reset-button"
-              className="xs:w-full sm:w-[200px] border transition-colors duration-200 ease-in-out hover:border-rose-500 hover:text-rose-500 text-black px-4 py-2 border-black rounded-xl"
-            >
-              Réinitialiser
-            </button>
-          </div>
-        </form>
-      </div>
-      <div className="p-0 sm:pl-10">
+        </div>
+        <div className="flex flex-co pl-0 sm:pl-5 sm:flex-row flex-col gap-4 py-2">
+          <button
+            type="submit"
+            data-testid="search-button"
+            className="w-full transition-colors duration-200 ease-in-out bg-black text-white px-4 py-2 rounded-xl hover:bg-rose-500"
+          >
+            Rechercher
+          </button>
+          <button
+            type="button"
+            onClick={handleReset}
+            data-testid="reset-button"
+            className="w-full border transition-colors duration-200 ease-in-out hover:border-rose-500 hover:text-rose-500 text-black px-4 py-2 border-black rounded-xl"
+          >
+            Réinitialiser
+          </button>
+        </div>
+      </form>
+
+      <div className="flex-1 pt-4">
         <div className="border-l-4  text-sm border-rose-500 pl-4 py-2 mb-6">
           {isLoading ? (
             <div className="animate-pulse rounded-md h-6 bg-gray-300 w-32"></div>

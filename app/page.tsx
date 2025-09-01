@@ -37,7 +37,7 @@ export default async function HomePage() {
               href="/movies"
               className="border rounded-xl px-2 mr-10 py-1 border-pink-700 text-pink-700 hover:border-pink-700 hover:bg-pink-700 hover:text-white text-sm whitespace-nowrap flex-shrink-0"
             >
-              Voir plus{" "}
+              Tout voir{" "}
               <Icon icon="mdi:chevron-right" className="inline size-4" />
             </Link>
           </div>
@@ -106,7 +106,7 @@ export default async function HomePage() {
                       href={`/lists/${collection.id}`}
                       className="border rounded-xl px-2 py-1 border-rose-500 text-rose-500 hover:border-rose-500 hover:bg-rose-500 hover:text-white text-sm whitespace-nowrap flex-shrink-0"
                     >
-                      Voir plus{" "}
+                      Tout voir{" "}
                       <Icon
                         icon="mdi:chevron-right"
                         className="inline size-4"

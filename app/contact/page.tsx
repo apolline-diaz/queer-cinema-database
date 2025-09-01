@@ -56,9 +56,8 @@ export default function ContactForm() {
     <div className="px-10 py-20">
       <h2 className="text-2xl text-rose-500 font-bold mb-4">Contact</h2>
       <p className="text-sm text-black font-light mb-4 italic">
-        Des suggestions de films ou séries, des corrections à indiquer ou toute
-        autre question concernant le site... N&apos;hésitez pas à nous
-        contacter.
+        Pour toute suggestion de films ou séries, des corrections à indiquer ou
+        toute autre question concernant le site...
       </p>
       <div className="sm:w-1/2 w-full">
         {status === "success" && (
@@ -73,14 +72,14 @@ export default function ContactForm() {
           </div>
         )}
 
-        <form onSubmit={handleSubmit(onSubmit)} className="text-rose-900">
+        <form onSubmit={handleSubmit(onSubmit)} className="text-black">
           <div className=" mb-4">
             <label htmlFor="name" className="block font-medium mb-2">
               Nom
             </label>
             <input
               id="name"
-              className={`w-full px-3 py-2 border font-light bg-white border-rose-900 text-black rounded-md ${
+              className={`w-full px-3 py-2 border font-light bg-white border-black text-black rounded-md ${
                 errors.name ? "border-red-500" : "border-gray-300"
               }`}
               {...register("name", { required: "Le nom est requis" })}
@@ -92,11 +91,11 @@ export default function ContactForm() {
 
           <div className="mb-4">
             <label htmlFor="email" className="block font-medium mb-2">
-              Email
+              Adresse e-mail
             </label>
             <input
               id="email"
-              className={`w-full px-3 py-2 border font-light bg-white border-rose-900 text-black rounded-md ${
+              className={`w-full px-3 py-2 border font-light bg-white border-black text-black rounded-md ${
                 errors.email ? "border-red-500" : "border-gray-300"
               }`}
               {...register("email", {
@@ -120,7 +119,7 @@ export default function ContactForm() {
             </label>
             <textarea
               id="message"
-              className={`w-full px-3 text-black border-rose-900 font-light  py-2 border rounded-md ${
+              className={`w-full px-3 text-black border-black font-light  py-2 border rounded-md ${
                 errors.message ? "border-red-500" : "border-gray-300"
               }`}
               rows={4}

@@ -63,22 +63,20 @@ interface SearchFormProps {
 }
 
 export default function SearchForm({
-  initialMovies,
-  initialTotalCount,
-  initialHasMore,
-  countries,
-  genres,
-  keywords,
-  directors,
-  releaseYears,
-  userIsAdmin,
+  initialMovies = [],
+  initialTotalCount = 0,
+  initialHasMore = false,
+  countries = [],
+  genres = [],
+  keywords = [],
+  directors = [],
+  releaseYears = [],
+  userIsAdmin = false,
 }: SearchFormProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
   // Récupérer les paramètres de l'URL
-  const urlSearch = searchParams.get("search") || "";
-
   const urlCountryId = searchParams.get("countryId") || "";
   const urlGenreId = searchParams.get("genreId") || "";
   const urlDirectorId = searchParams.get("directorId") || "";
@@ -111,7 +109,7 @@ export default function SearchForm({
     }
   );
 
-  // États pour la pagination
+  // ✅ États pour la pagination infinie au lieu du simple "visibleCount"
   const [movies, setMovies] = useState<Movie[]>(initialMovies);
   const [totalCount, setTotalCount] = useState(initialTotalCount);
   const [hasMore, setHasMore] = useState(initialHasMore);
@@ -130,7 +128,7 @@ export default function SearchForm({
     }
   }, [startYear, endYear, setValue]);
 
-  // Fonction pour charger plus de films
+  // ✅ Fonction pour charger plus de films (pagination infinie)
   const loadMoreMovies = async () => {
     if (isLoadingMore || !hasMore) return;
 
@@ -150,7 +148,7 @@ export default function SearchForm({
         limit: 20,
       });
 
-      setMovies((prev) => [...prev, ...result.movies]);
+      setMovies((prev) => [...(prev || []), ...(result.movies || [])]);
       setHasMore(result.hasMore);
       setCurrentPage(result.currentPage);
     } catch (error) {
@@ -160,7 +158,7 @@ export default function SearchForm({
     }
   };
 
-  // Hook pour l'infinite scroll
+  // ✅ Hook pour l'infinite scroll (remplace le bouton "Voir plus")
   const { loadingRef } = useInfiniteScroll({
     hasMore,
     isLoading: isLoadingMore,
@@ -168,7 +166,7 @@ export default function SearchForm({
     threshold: 200,
   });
 
-  // handle form submission
+  // ✅ handle form submission avec searchMoviesPaginated
   const onSubmit = async (data: FormValues) => {
     setIsLoading(true);
 
@@ -180,7 +178,7 @@ export default function SearchForm({
     const params = new URLSearchParams();
     if (data.countryId) params.set("countryId", data.countryId);
     if (data.genreId) params.set("genreId", data.genreId);
-    if (data.keywordIds.length > 0) {
+    if (data.keywordIds && data.keywordIds.length > 0) {
       const keywordIdsString = data.keywordIds.map((k) => k.value).join(",");
       params.set("keywordIds", keywordIdsString);
     }
@@ -195,7 +193,7 @@ export default function SearchForm({
       const result = await searchMoviesPaginated({
         countryId: data.countryId,
         genreId: data.genreId,
-        keywordIds: data.keywordIds.map((keyword) => keyword.value),
+        keywordIds: data.keywordIds?.map((keyword) => keyword.value) || [],
         directorId: data.directorId,
         startYear: data.startYear,
         endYear: data.endYear,
@@ -204,9 +202,9 @@ export default function SearchForm({
         limit: 20,
       });
 
-      setMovies(result.movies);
-      setTotalCount(result.totalCount);
-      setHasMore(result.hasMore);
+      setMovies(result.movies || []);
+      setTotalCount(result.totalCount || 0);
+      setHasMore(result.hasMore || false);
       setCurrentPage(1);
     } catch (error) {
       console.error("Error searching movies:", error);
@@ -218,7 +216,7 @@ export default function SearchForm({
     }
   };
 
-  // Reset form and fetch all movies
+  // ✅ Reset form avec searchMoviesPaginated
   const handleReset = async () => {
     reset({
       countryId: "",
@@ -249,9 +247,9 @@ export default function SearchForm({
         limit: 20,
       });
 
-      setMovies(result.movies);
-      setTotalCount(result.totalCount);
-      setHasMore(result.hasMore);
+      setMovies(result.movies || []);
+      setTotalCount(result.totalCount || 0);
+      setHasMore(result.hasMore || false);
       setCurrentPage(1);
     } catch (error) {
       console.error("Error resetting search:", error);
@@ -267,7 +265,11 @@ export default function SearchForm({
     <>
       <div className="flex flex-col sm:flex-row">
         <form onSubmit={handleSubmit(onSubmit)} className="mt-2 mb-4 sm:w-1/4">
-          <div className="grid grid-cols-1 w-full gap-4 justify-between mb-5">
+          <p className="mb-3 font-semibold flex flex-row gap-2 text-gray-500 justify-left items-center rounded-xl bg-gray-100 border border-gray-200 p-2">
+            <Icon icon="gridicons:filter" className="size-5 " />
+            <span>Recherche par filtres</span>
+          </p>
+          <div className="grid grid-cols-1 w-full gap-3 justify-between mb-5">
             <CollapsibleSection title="Période">
               <div className="grid grid-cols-2 gap-2">
                 <Controller
@@ -414,7 +416,7 @@ export default function SearchForm({
                   {totalCount}
                 </span>
                 <span className="text-gray-600 ml-2">titres trouvés</span>
-                {movies.length > 0 && movies.length < totalCount && (
+                {movies && movies.length > 0 && movies.length < totalCount && (
                   <span className="text-gray-500 ml-2">
                     (affichage de {movies.length})
                   </span>
@@ -436,7 +438,7 @@ export default function SearchForm({
                   </div>
                 </div>
               ))
-            ) : movies.length === 0 ? (
+            ) : !movies || movies.length === 0 ? (
               <p>Aucun film trouvé</p>
             ) : (
               movies.map((movie, index) => (
@@ -450,7 +452,7 @@ export default function SearchForm({
             )}
           </div>
 
-          {/* Loading indicator pour l'infinite scroll */}
+          {/* ✅ Loading indicator pour l'infinite scroll (remplace le bouton "Voir plus") */}
           {hasMore && (
             <div ref={loadingRef} className="py-8 flex justify-center">
               {isLoadingMore && (
@@ -463,7 +465,7 @@ export default function SearchForm({
           )}
 
           {/* Message de fin */}
-          {!hasMore && movies.length > 0 && (
+          {!hasMore && movies && movies.length > 0 && (
             <div className="py-8 text-center text-gray-500 border-t border-gray-200 mt-8">
               <Icon icon="mdi:check-circle" className="size-5 inline mr-2" />
               Tous les films ont été chargés
