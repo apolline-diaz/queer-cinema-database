@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { Icon } from "@iconify/react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
 import { getMoviesByWord } from "@/app/server-actions/movies/get-movies-by-word";
-
+import { Icon } from "@iconify/react/dist/iconify.js";
 import Card from "./card";
 import { getImageUrl } from "@/utils";
 import { Movie } from "../types/movie";
@@ -14,44 +13,40 @@ type FormValues = {
   search: string;
 };
 
-const MOVIES_PER_PAGE = 100;
+const MOVIES_PER_PAGE = 50;
 
 export default function Searchfield({
-  initialMovies,
   initialSearch = "",
   userIsAdmin,
 }: {
-  initialMovies: Movie[];
   initialSearch?: string;
-  initialKeyword?: string;
   userIsAdmin: boolean;
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // Récupérer les valeurs depuis l'URL
   const urlSearch = searchParams.get("search") || initialSearch;
-
   const { control, handleSubmit, reset } = useForm<FormValues>({
     defaultValues: { search: urlSearch },
   });
 
-  const [movies, setMovies] = useState<Movie[]>(initialMovies);
+  const [movies, setMovies] = useState<Movie[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [visibleCount, setVisibleCount] = useState(MOVIES_PER_PAGE);
 
-  // Fonction pour effectuer la recherche
+  // Tri
+  const [sortType, setSortType] = useState<"none" | "title" | "year">("none");
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
+
   const performSearch = async (searchTerm: string) => {
     try {
       setIsLoading(true);
-      setVisibleCount(MOVIES_PER_PAGE);
-
       if (searchTerm) {
         const results = await getMoviesByWord(searchTerm);
         setMovies(results);
+        setVisibleCount(MOVIES_PER_PAGE);
       } else {
-        const results = await getMoviesByWord("");
-        setMovies(results);
+        setMovies([]);
       }
     } catch (error) {
       console.error("Erreur lors de la recherche:", error);
@@ -60,45 +55,58 @@ export default function Searchfield({
     }
   };
 
-  // Gestion de la soumission du formulaire de recherche simple
   const onSubmit = (data: FormValues) => {
     const params = new URLSearchParams(searchParams.toString());
-
-    // Mettre à jour les paramètres
     if (data.search) {
-      params.set("search", data.search);
-    } else {
-      params.delete("search");
+      params.set("word", data.search);
     }
-
-    // Toujours définir le mode de recherche sur "field" pour la recherche simple
-    params.set("searchMode", "field");
-
-    // Navigation avec les nouveaux paramètres
     router.push(`/search?${params.toString()}`);
   };
 
   useEffect(() => {
-    const term = searchParams.get("search") || "";
-    performSearch(term);
-  }, [searchParams]);
+    const term = searchParams.get("word") || "";
+    reset({ search: term });
+    if (term) {
+      performSearch(term);
+    } else {
+      setMovies([]);
+    }
+  }, [searchParams, reset]);
 
-  // Fonction pour réinitialiser la recherche
   const handleReset = () => {
     reset({ search: "" });
-
-    const params = new URLSearchParams();
-    params.set("searchMode", "field");
-    router.push(`/search?${params.toString()}`);
-
-    // Réinitialiser les résultats
-    performSearch("");
+    router.push(`/search`);
+    setMovies([]);
   };
 
-  // Fonction pour charger plus de résultats
-  const loadMore = () => {
-    setVisibleCount((prevCount) => prevCount + MOVIES_PER_PAGE);
+  // Tri
+  const sortMovies = (type: "none" | "title" | "year") => {
+    if (type === sortType) {
+      setSortDirection((prev) => (prev === "asc" ? "desc" : "asc"));
+    } else {
+      setSortType(type);
+      setSortDirection("asc");
+    }
   };
+
+  const sortedMovies = useMemo(() => {
+    if (sortType === "none") return movies;
+    const sorted = [...movies].sort((a, b) => {
+      if (sortType === "title") {
+        if (a.title < b.title) return sortDirection === "asc" ? -1 : 1;
+        if (a.title > b.title) return sortDirection === "asc" ? 1 : -1;
+        return 0;
+      } else if (sortType === "year") {
+        const yearA = a.release_date ? parseInt(a.release_date) : 0;
+        const yearB = b.release_date ? parseInt(b.release_date) : 0;
+        return sortDirection === "asc" ? yearA - yearB : yearB - yearA;
+      }
+      return 0;
+    });
+    return sorted;
+  }, [movies, sortType, sortDirection]);
+
+  const visibleMovies = sortedMovies.slice(0, visibleCount);
 
   return (
     <div className="w-full mb-4">
@@ -115,7 +123,7 @@ export default function Searchfield({
                 <input
                   {...field}
                   className="appearance-none text-md placeholder-gray-500 font-light block w-full bg-white rounded-xl border  border-black text-black p-2 py-3 leading-tight focus:none focus:outline-none"
-                  placeholder="Rechercher un mot ou un titre..."
+                  placeholder="Rechercher un titre, réalisateur-ice, mot-clé..."
                   data-testid="search-input"
                 />
               )}
@@ -140,7 +148,87 @@ export default function Searchfield({
           </button>
         </div>
       </form>
+      {/* Indication vers recherche avancée */}
+      <div className="flex-wrap gap-3 mt-4 mb-6 p-4 bg-gray-100 rounded-xl border border-gray-200 flex items-center justify-between">
+        <span className="text-gray-700 text-sm">
+          Pour une recherche plus détaillée, utilisez la page{" "}
+          <strong>Films</strong> avec filtres avancés.
+        </span>
+        <button
+          onClick={() => router.push("/movies")}
+          className="px-4 py-2 bg-rose-500 text-white rounded-xl text-sm hover:bg-rose-600 transition-colors"
+        >
+          Aller à la recherche avancée
+        </button>
+      </div>
 
+      {/* Section de tri */}
+      {visibleMovies.length > 0 && (
+        <div className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-2xl p-4 mb-8 border border-gray-200/50 ">
+          <div className="flex items-center gap-2 mb-3">
+            <Icon icon="solar:sort-outline" className="text-rose-500 text-lg" />
+            <h3 className="text-sm font-medium text-gray-800">Trier</h3>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <button
+              onClick={() => sortMovies("title")}
+              className={`group flex items-center gap-2 px-4 py-2 rounded-xl font-medium text-sm transition-all duration-200 ${
+                sortType === "title"
+                  ? "bg-rose-500 text-white"
+                  : "bg-white text-gray-700 hover:bg-rose-50 hover:text-rose-600 border border-gray-200 hover:border-rose-200"
+              }`}
+            >
+              <Icon
+                icon="solar:sort-from-top-to-bottom-outline"
+                className={`text-lg transition-colors ${sortType === "title" ? "text-white" : "text-gray-500 group-hover:text-rose-500"}`}
+              />
+              <span>Alphabétique</span>
+              {sortType === "title" && (
+                <div className="bg-white/20 px-1.5 py-0.5 rounded text-xs">
+                  {sortDirection === "asc" ? "A-Z" : "Z-A"}
+                </div>
+              )}
+            </button>
+
+            <button
+              onClick={() => sortMovies("year")}
+              className={`group flex items-center gap-2 px-4 py-2 rounded-xl font-medium text-sm transition-all duration-200 ${
+                sortType === "year"
+                  ? "bg-rose-500 text-white"
+                  : "bg-white text-gray-700 hover:bg-rose-50 hover:text-rose-600 border border-gray-200 hover:border-rose-200"
+              }`}
+            >
+              <Icon
+                icon="solar:calendar-outline"
+                className={`text-lg transition-colors ${sortType === "year" ? "text-white" : "text-gray-500 group-hover:text-rose-500"}`}
+              />
+              <span>Année</span>
+              {sortType === "year" && (
+                <div className="bg-white/20 px-1.5 py-0.5 rounded text-xs">
+                  {sortDirection === "asc" ? "1900→2025" : "2025→1900"}
+                </div>
+              )}
+            </button>
+
+            <button
+              onClick={() => sortMovies("none")}
+              className={`group flex items-center gap-2 px-4 py-2 rounded-xl font-medium text-sm transition-all duration-200 ${
+                sortType === "none"
+                  ? "bg-gray-700 text-white"
+                  : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 hover:border-gray-300"
+              }`}
+            >
+              <Icon
+                icon="solar:refresh-outline"
+                className={`text-lg transition-colors ${sortType === "none" ? "text-white" : "text-gray-500 group-hover:text-gray-600"}`}
+              />
+              <span>Par défaut</span>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Résultats */}
       <div className="flex-1 pt-4">
         <div className="border-l-4  text-sm border-rose-500 pl-4 py-2 mb-6">
           {isLoading ? (
@@ -170,29 +258,37 @@ export default function Searchfield({
                 </div>
               </div>
             ))
-          ) : movies.length === 0 ? (
-            <p data-testid="no-results">Aucun film trouvé</p>
+          ) : visibleMovies.length === 0 ? (
+            searchParams.get("word") ? (
+              <p data-testid="no-results">Aucun film trouvé</p>
+            ) : (
+              <p className="text-gray-400 font-light italic text-sm">
+                Lancez une recherche pour voir des résultats
+              </p>
+            )
           ) : (
-            movies
-              .slice(0, visibleCount)
-              .map((movie) => (
-                <Card
-                  key={`${movie.title}-${movie.id}`}
-                  {...movie}
-                  userIsAdmin={userIsAdmin}
-                  image_url={getImageUrl(movie.image_url || "")}
-                />
-              ))
+            visibleMovies.map((movie) => (
+              <Card
+                key={`${movie.title}-${movie.id}`}
+                {...movie}
+                userIsAdmin={userIsAdmin}
+                image_url={getImageUrl(movie.image_url || "")}
+              />
+            ))
           )}
         </div>
-        {visibleCount < movies.length && !isLoading && (
-          <button
-            onClick={loadMore}
-            data-testid="load-more-button"
-            className="w-full flex flex-row justify-center items-center border rounded-md hover:bg-rose-500 hover:text-white border-rose-900 border-t mt-4 px-4 py-2 hover:border-rose-500 text-rose-900"
-          >
-            Voir plus <Icon icon="mdi:chevron-down" className="size-5" />
-          </button>
+
+        {/* Bouton Voir Plus */}
+        {visibleCount < sortedMovies.length && !isLoading && (
+          <div className="flex justify-center mt-6">
+            <button
+              onClick={() => setVisibleCount((prev) => prev + MOVIES_PER_PAGE)}
+              className="px-6 py-3 bg-rose-500 hover:bg-rose-600 text-white font-medium rounded-xl transition-all duration-200 flex items-center gap-2"
+            >
+              Voir plus
+              <Icon icon="mdi:chevron-down" className="text-lg" />
+            </button>
+          </div>
         )}
       </div>
     </div>

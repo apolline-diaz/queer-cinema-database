@@ -30,22 +30,13 @@ export default async function HomePage() {
         </div>
         <div className="w-full p-10">
           <div className="flex flex-row justify-between">
-            <h2 className="text-2xl mb-5 font-semibold bg-gradient-to-r leading-tight from-pink-800 to-pink-500 bg-clip-text text-transparent line-clamp-3">
+            <h2 className="text-2xl mb-4 font-semibold text-rose-500 leading-tight line-clamp-3">
               Nouveautés
             </h2>
-            <div className="flex justify-between items-center mb-3 text-white">
-              <Link
-                href="/movies"
-                className="border rounded-xl px-2 py-1 border-pink-700 text-pink-700 hover:border-pink-700 hover:bg-pink-700 hover:text-white text-sm whitespace-nowrap flex-shrink-0"
-              >
-                Tous les films{" "}
-                <Icon icon="mdi:chevron-right" className="inline size-4" />
-              </Link>
-            </div>
           </div>
           {/* First movie highlight */}
           {featuredLatestMovie && (
-            <div className="relative w-full h-[500px] mb-5">
+            <div className="relative w-full h-[400px] mb-5">
               <Link
                 href={`/movies/${featuredLatestMovie.id}`}
                 className="h-full w-full overflow-hidden"
@@ -97,7 +88,7 @@ export default async function HomePage() {
                 <div key={collection.id.toString()} className="flex flex-col">
                   <div className="flex flex-row justify-between items-end pr-10 mb-4 gap-2">
                     <div className="flex flex-col gap-3 min-w-0 flex-1">
-                      <h2 className="text-2xl font-semibold bg-gradient-to-r leading-tight from-rose-800 to-rose-500 bg-clip-text text-transparent line-clamp-3">
+                      <h2 className="text-2xl font-semibold leading-tight text-rose-500 line-clamp-3">
                         {collection.title}
                       </h2>
                       <span className="w-fit text-sm text-rose-800 border border-rose-800 rounded-full font-light px-1.5 py-0.5">
@@ -118,7 +109,7 @@ export default async function HomePage() {
                   </div>
 
                   {"lists_movies" in collection && collection.lists_movies && (
-                    <div className="flex flex-row-1 mb-3 gap-3 overflow-auto max-h-[300px]">
+                    <div className="flex flex-row-1 mb-3 gap-3 overflow-auto max-h-[400px]">
                       {collection.lists_movies.map((listMovie) => (
                         <HomeCard
                           key={`${listMovie.movies.title}-${listMovie.movies.id}`}

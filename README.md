@@ -6,7 +6,7 @@
 
 - **About**: Presentation of the website approach.
 - **Homepage**: General overview of the site with thematic movies list.
-- **Catalogue with Advanced Search**: View of all the movies with recents adding. Filter films by various criteria (genre, year, director, keyword, etc.).
+- **Films with Advanced Search**: View of all the movies with recents adding. Filter films by various criteria (genre, year, director, keyword, etc.).
 - **Detailed Movie Pages**: Complete information (title, synopsis, director, etc.).
 - **User Account**:
   - Update password, name and create personal movie lists (visible only to the user).

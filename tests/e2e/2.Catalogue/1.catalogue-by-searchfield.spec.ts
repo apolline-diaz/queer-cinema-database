@@ -1,15 +1,12 @@
 import { test, expect } from "@playwright/test";
 
-test("catalogue by searchfield", async ({ page }) => {
+test("films by searchfield", async ({ page }) => {
   await page.goto("/");
   await page.setViewportSize({ width: 1280, height: 720 });
 
-  await page
-    .getByRole("link", { name: "Catalogue", exact: true })
-    .first()
-    .click();
+  await page.getByRole("link", { name: "Films", exact: true }).first().click();
 
-  await expect(page.locator("h1", { hasText: "Catalogue" })).toBeVisible();
+  await expect(page.locator("h1", { hasText: "Films" })).toBeVisible();
 
   await page.getByTestId("simple-search-button").click();
 
