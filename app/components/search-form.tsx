@@ -109,7 +109,7 @@ export default function SearchForm({
     }
   );
 
-  // ✅ États pour la pagination infinie au lieu du simple "visibleCount"
+  // États pour la pagination infinie au lieu du simple "visibleCount"
   const [movies, setMovies] = useState<Movie[]>(initialMovies);
   const [totalCount, setTotalCount] = useState(initialTotalCount);
   const [hasMore, setHasMore] = useState(initialHasMore);
@@ -128,7 +128,7 @@ export default function SearchForm({
     }
   }, [startYear, endYear, setValue]);
 
-  // ✅ Fonction pour charger plus de films (pagination infinie)
+  // Fonction pour charger plus de films (pagination infinie)
   const loadMoreMovies = async () => {
     if (isLoadingMore || !hasMore) return;
 
@@ -158,7 +158,7 @@ export default function SearchForm({
     }
   };
 
-  // ✅ Hook pour l'infinite scroll (remplace le bouton "Voir plus")
+  // Hook pour l'infinite scroll (remplace le bouton "Voir plus")
   const { loadingRef } = useInfiniteScroll({
     hasMore,
     isLoading: isLoadingMore,
@@ -166,7 +166,7 @@ export default function SearchForm({
     threshold: 200,
   });
 
-  // ✅ handle form submission avec searchMoviesPaginated
+  // handle form submission avec searchMoviesPaginated
   const onSubmit = async (data: FormValues) => {
     setIsLoading(true);
 
@@ -216,7 +216,7 @@ export default function SearchForm({
     }
   };
 
-  // ✅ Reset form avec searchMoviesPaginated
+  // Reset form avec searchMoviesPaginated
   const handleReset = async () => {
     reset({
       countryId: "",
@@ -452,7 +452,7 @@ export default function SearchForm({
             )}
           </div>
 
-          {/* ✅ Loading indicator pour l'infinite scroll (remplace le bouton "Voir plus") */}
+          {/* Loading indicator pour l'infinite scroll (remplace le bouton "Voir plus") */}
           {hasMore && (
             <div ref={loadingRef} className="py-8 flex justify-center">
               {isLoadingMore && (

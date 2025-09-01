@@ -31,7 +31,7 @@ export default async function CataloguePage({
   const searchParam = (searchParams?.search as string) || "";
   const searchModeParam = (searchParams?.searchMode as string) || "";
 
-  // ✅ ADAPTATION: Utiliser searchMoviesPaginated au lieu de searchMovies
+  // ADAPTATION: Utiliser searchMoviesPaginated au lieu de searchMovies
   let initialResult;
 
   if (searchModeParam === "field" || (!searchModeParam && searchParam)) {
@@ -74,7 +74,7 @@ export default async function CataloguePage({
     getReleaseYears(),
   ]);
 
-  // ✅ Transformation des données pour le format attendu par SearchForm
+  // Transformation des données pour le format attendu par SearchForm
   const countries = countriesData.map((country) => ({
     value: country.id.toString(),
     label: country.name,
