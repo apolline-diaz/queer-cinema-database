@@ -397,14 +397,16 @@ export default function SearchForm({
             )}
           </div>
           {visibleCount < movies.length && !isLoading && (
-            <button
-              onClick={loadMore}
-              className="w-full flex flex-row justify-center items-center border rounded-md hover:bg-rose-500 hover:text-white border-rose-900 border-t mt-4 px-4 py-2 hover:border-rose-500 text-rose-900"
-            >
-              Voir plus <Icon icon="mdi:chevron-down" className="size-5" />
-            </button>
+            <div className="flex justify-center mt-6">
+              <button
+                onClick={loadMore}
+                className="px-6 py-3 bg-rose-500 hover:bg-rose-600 text-white font-medium rounded-xl transition-all duration-200 flex items-center gap-2"
+              >
+                Voir plus <Icon icon="mdi:chevron-down" className="size-5" />
+              </button>
+            </div>
           )}
-        </div>{" "}
+        </div>
       </div>
     </>
   );

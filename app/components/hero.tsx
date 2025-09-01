@@ -29,7 +29,7 @@ export default function Hero({ id, title, image_url }: CardProps) {
   return (
     <>
       <div className="relative bg-rose-50 w-full overflow-hidden">
-        <div className="relative w-full overflow-hidden h-[80vh]">
+        <div className="relative w-full overflow-hidden h-[65vh]">
           <Image
             src={getImageUrl(image_url)}
             alt={title}
@@ -48,26 +48,6 @@ export default function Hero({ id, title, image_url }: CardProps) {
             </div>
             {/* Barre de recherche qui redirige vers /movies */}
             <div className="z-10 flex flex-col sm:flex-row gap-5 justify-center items-center">
-              <div className="flex flex-row items-center bg-white justify-center border rounded-xl px-4 border-rose-500">
-                <input
-                  type="text"
-                  className="z-10 max-h-12  min-w-60 flex-1 py-4 bg-white  placeholder-gray-500 text-black font-light focus:outline-none"
-                  placeholder="Rechercher un titre, mot-clé..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-                />
-                {isSearching ? (
-                  <div className="animate-spin w-5 h-5 border-2 border-white border-t-transparent rounded-full mr-1"></div>
-                ) : (
-                  <Icon
-                    icon="radix-icons:magnifying-glass"
-                    fontSize={20}
-                    onClick={handleSearch}
-                    className="text-black hover:cursor-pointer hover:text-rose-500 transition-colors"
-                  />
-                )}
-              </div>
               <Link
                 href="/movies"
                 className="relative flex flex-row gap-1 font-semibold items-center bg-gradient-to-r from-rose-600 to-pink-600  hover:from-rose-700 hover:to-pink-700  transition-all duration-500 ease-in-out hover:text-white px-4 py-3 rounded-xl"

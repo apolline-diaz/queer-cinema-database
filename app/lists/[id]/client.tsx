@@ -116,13 +116,13 @@ export default function ListClientPage({
           </p>
 
           {/* Section de tri */}
-          <div className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-2xl p-4 mb-8 border border-gray-200/50 shadow-sm">
+          <div className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-2xl p-4 mb-8 border border-gray-200/50">
             <div className="flex items-center gap-2 mb-3">
               <Icon
                 icon="solar:sort-outline"
                 className="text-rose-500 text-lg"
               />
-              <h3 className="text-sm font-medium text-gray-800">Filtres</h3>
+              <h3 className="text-sm font-medium text-gray-800">Trier</h3>
             </div>
 
             <div className="flex flex-wrap gap-3">
@@ -130,8 +130,8 @@ export default function ListClientPage({
                 onClick={() => sortMovies("title")}
                 className={`group flex items-center gap-2 px-4 py-2 rounded-xl font-medium text-sm transition-all duration-200 ${
                   sortType === "title"
-                    ? "bg-rose-500 text-white shadow-lg shadow-rose-500/25 scale-105"
-                    : "bg-white text-gray-700 hover:bg-rose-50 hover:text-rose-600 border border-gray-200 hover:border-rose-200 hover:shadow-md"
+                    ? "bg-rose-500 text-white "
+                    : "bg-white text-gray-700 hover:bg-rose-50 hover:text-rose-600 border border-gray-200 hover:border-rose-200 "
                 }`}
               >
                 <Icon
@@ -154,8 +154,8 @@ export default function ListClientPage({
                 onClick={() => sortMovies("year")}
                 className={`group flex items-center gap-2 px-4 py-2 rounded-xl font-medium text-sm transition-all duration-200 ${
                   sortType === "year"
-                    ? "bg-rose-500 text-white shadow-lg shadow-rose-500/25 scale-105"
-                    : "bg-white text-gray-700 hover:bg-rose-50 hover:text-rose-600 border border-gray-200 hover:border-rose-200 hover:shadow-md"
+                    ? "bg-rose-500 text-white"
+                    : "bg-white text-gray-700 hover:bg-rose-50 hover:text-rose-600 border border-gray-200 hover:border-rose-200"
                 }`}
               >
                 <Icon
@@ -178,8 +178,8 @@ export default function ListClientPage({
                 onClick={() => sortMovies("none")}
                 className={`group flex items-center gap-2 px-4 py-2 rounded-xl font-medium text-sm transition-all duration-200 ${
                   sortType === "none"
-                    ? "bg-gray-700 text-white shadow-lg shadow-gray-700/25"
-                    : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 hover:border-gray-300 hover:shadow-md"
+                    ? "bg-gray-700 text-white"
+                    : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 hover:border-gray-300"
                 }`}
               >
                 <Icon

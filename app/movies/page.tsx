@@ -11,7 +11,7 @@ import { getMoviesByWord } from "../server-actions/movies/get-movies-by-word";
 import BackButton from "../components/back-button";
 import SearchForm from "../components/search-form";
 
-export default async function CataloguePage({
+export default async function MoviesPage({
   searchParams,
 }: {
   searchParams?: { [key: string]: string | string[] | undefined };
@@ -62,7 +62,7 @@ export default async function CataloguePage({
     <div className="h-full w-full justify-center items-center text-white">
       <div className="px-10 py-20">
         <BackButton />
-        <h1 className="text-2xl font-bold text-rose-500 mb-5">Catalogue</h1>
+        <h1 className="text-2xl font-bold text-rose-500 mb-5">Films</h1>
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
           <div className="flex flex-col gap-5 w-full">
             <SearchForm

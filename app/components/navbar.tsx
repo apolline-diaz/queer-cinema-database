@@ -63,6 +63,16 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
         <div>
           <nav className="">
             <section className="MOBILE-MENU flex lg:hidden">
+              <Link
+                href="/search"
+                aria-label="Ouvrir la page de recherche par mot"
+                className={
+                  isActive("/search") ? activeLinkClass : normalLinkClass
+                }
+              >
+                <Icon icon="uil:search" className="size-5"></Icon>
+              </Link>
+
               <DropdownMenu>
                 <DropdownMenuTrigger
                   className="px-6 focus:outline-none"
@@ -166,7 +176,6 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                   ></path>
                 </svg>
               </button>
-
               {/* mobile menu */}
               <div
                 className={`text-black absolute top-0 right-0 h-screen bg-white border-l border-gray-500 md:w-1/3 p-4 transform ${
@@ -197,6 +206,12 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                 <ul className="bg-white pl-10 flex text-xl flex-col justify-between gap-5 h-full mt-6">
                   <div className="flex flex-col items-end pr-10 pt-5 gap-5">
                     <Link
+                      href="/"
+                      className="link link-hover text-black transition-colors duration-300 hover:text-rose-500"
+                    >
+                      Accueil
+                    </Link>
+                    <Link
                       href="/about"
                       className="link link-hover text-black transition-colors duration-300 hover:text-rose-500"
                     >
@@ -209,7 +224,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                           : normalLinkClass
                       }
                     >
-                      <Link href="/movies">Catalogue</Link>
+                      <Link href="/movies">Films</Link>
                     </li>
 
                     <li
@@ -228,6 +243,12 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
             <div className="">
               <ul className="DESKTOP-MENU hidden whitespace-nowrap space-x-12 lg:flex  items-center">
                 <Link
+                  href="/"
+                  className="link link-hover text-black transition-colors duration-300 hover:text-rose-500"
+                >
+                  Accueil
+                </Link>
+                <Link
                   href="/about"
                   className="link link-hover text-black transition-colors duration-300 hover:text-rose-500"
                 >
@@ -238,7 +259,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                     pathname === "/movies" ? activeLinkClass : normalLinkClass
                   }
                 >
-                  <Link href="/movies">Catalogue</Link>
+                  <Link href="/movies">Films</Link>
                 </li>
 
                 <li
@@ -249,9 +270,22 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                   <Link href="/stats">Statistiques</Link>
                 </li>
 
+                <li
+                  className={
+                    isActive("/search") ? activeLinkClass : normalLinkClass
+                  }
+                >
+                  <Link
+                    href="/search"
+                    aria-label="Ouvrir la page de recherche par mot"
+                  >
+                    <Icon icon="uil:search" className="size-5"></Icon>
+                  </Link>
+                </li>
+
                 <DropdownMenu>
                   <DropdownMenuTrigger
-                    className="px-4 focus:outline-none"
+                    className="pr-4 focus:outline-none"
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}
                     aria-label="Ouvrir le menu utilisateur"

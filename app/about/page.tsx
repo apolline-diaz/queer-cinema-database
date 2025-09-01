@@ -74,9 +74,8 @@ export default function AboutPage() {
                 oeuvres et apporte des informations plus complètes au-delà du
                 simple label "queer".
                 <br />
-                Dans la page Catalogue, vous trouverez tous les films de la base
-                de données. Ils sont classés du plus récent ajout au plus
-                ancien.
+                Dans la page Films, vous trouverez tous les films de la base de
+                données. Ils sont classés du plus récent ajout au plus ancien.
               </p>
               <br />
             </div>
