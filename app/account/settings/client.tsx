@@ -29,15 +29,11 @@ export default function SettingsClientPage({ user }: { user: User }) {
 
   // Fonction de validation du mot de passe
   const validatePassword = (password: string): string | null => {
-    if (password.length < 12) {
-      return "Le mot de passe doit contenir au moins 12 caractères.";
-    }
-
     const passwordRegex =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{12,}$/;
 
     if (!passwordRegex.test(password)) {
-      return "Le mot de passe doit contenir au moins 12 caractères, avec une majuscule, une minuscule, un chiffre et un symbole.";
+      return "Le mot de passe ne remplit pas tous les critères : 12 caractères, une majuscule, une minuscule, un chiffre et un symbole.";
     }
 
     return null;
