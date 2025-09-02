@@ -32,15 +32,7 @@ export function MarkdownContent({
 
       <div className="space-y-8">
         <article
-          className="text-black prose prose-lg max-w-none
-            prose-headings:text-gray-900 
-            prose-p:text-gray-700 
-            prose-a:text-blue-600 
-            prose-a:no-underline 
-            hover:prose-a:underline
-            prose-strong:text-gray-900
-            prose-ul:text-gray-700
-            prose-ol:text-gray-700"
+          className="text-black prose prose-lg max-w-non prose-headings:text-gray-900  prose-p:text-gray-700 prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline prose-strong:text-gray-900 prose-ul:text-gray-700 prose-ol:text-gray-700"
           dangerouslySetInnerHTML={{ __html: content }}
         />
       </div>
