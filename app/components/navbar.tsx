@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { logout } from "../logout/actions";
 import { User } from "@supabase/supabase-js";
 import { usePathname } from "next/navigation";
@@ -23,8 +23,26 @@ interface HeaderProps {
 export default function Navbar({ user, userIsAdmin }: HeaderProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-
+  const menuRef = useRef<HTMLDivElement | null>(null);
   const pathname = usePathname();
+
+  // Ferme le menu quand on clique en dehors
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  // Ferme le menu quand on change de route
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
 
   const handleClick = () => {
     setIsOpen(!isOpen);
@@ -155,7 +173,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                 </DropdownMenuContent>
               </DropdownMenu>
               <button
-                onClick={handleClick}
+                onClick={() => setIsOpen((prev) => !prev)}
                 className="HAMBURGER-ICON space-y-2 hover:text-rose-500 "
                 aria-label={
                   isOpen ? "Fermer le menu mobile" : "Ouvrir le menu mobile"
@@ -178,6 +196,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
               </button>
               {/* mobile menu */}
               <div
+                ref={menuRef}
                 className={`text-black absolute top-0 right-0 h-screen bg-white border-l border-gray-500 md:w-1/3 p-4 transform ${
                   isOpen ? "translate-x-0" : "translate-x-full"
                 } transition-transform duration-300 ease-in-out`}
@@ -208,12 +227,14 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                     <Link
                       href="/"
                       className="link link-hover text-black transition-colors duration-300 hover:text-rose-500"
+                      onClick={() => setIsOpen(false)}
                     >
                       Accueil
                     </Link>
                     <Link
                       href="/about"
                       className="link link-hover text-black transition-colors duration-300 hover:text-rose-500"
+                      onClick={() => setIsOpen(false)}
                     >
                       À propos
                     </Link>
@@ -224,7 +245,9 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                           : normalLinkClass
                       }
                     >
-                      <Link href="/movies">Films</Link>
+                      <Link href="/movies" onClick={() => setIsOpen(false)}>
+                        Films
+                      </Link>
                     </li>
 
                     <li
@@ -232,7 +255,9 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                         isActive("/stats") ? activeLinkClass : normalLinkClass
                       }
                     >
-                      <Link href="/stats">Statistiques</Link>
+                      <Link href="/stats" onClick={() => setIsOpen(false)}>
+                        Statistiques
+                      </Link>
                     </li>
                   </div>
                 </ul>
