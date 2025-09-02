@@ -32,6 +32,17 @@ export async function signup(formData: FormData) {
     password: formData.get("password") as string,
   };
 
+  const password = data.password;
+
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{12,}$/;
+
+  if (!passwordRegex.test(password)) {
+    throw new Error(
+      "      The password must contain at least 12 characters, including one uppercase letter, one lowercase letter, one number, and one symbol."
+    );
+  }
+
   const { error } = await supabase.auth.signUp(data);
 
   if (error) {

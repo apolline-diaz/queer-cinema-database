@@ -74,16 +74,23 @@ export default function SignUpPage() {
                 {errors.email.message}
               </span>
             )}
-
+            <p className="text-xs italic font-light border border-orange-400 text-orange-600 bg-yellow-50 p-2 rounded mb-3">
+              La fonctionnalité{" "}
+              <span className="font-medium">Mot de passe oublié</span>{" "}
+              n&apos;est pas disponible. Veuillez bien noter votre mot de passe.
+              Vous pourrez également le modifier dans vos paramètres, une fois
+              inscrit-e.
+            </p>
             {/* Password */}
             <PasswordInput
               label="Mot de passe"
               {...register("password", {
                 required: "Le mot de passe est requis",
-                minLength: {
-                  value: 6,
+                pattern: {
+                  value:
+                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{12,}$/,
                   message:
-                    "Le mot de passe doit contenir au moins 6 caractères",
+                    "Le mot de passe doit contenir au moins 12 caractères, avec une majuscule, une minuscule, un chiffre et un symbole",
                 },
               })}
               error={errors.password?.message}
