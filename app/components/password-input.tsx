@@ -18,7 +18,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
 
     return (
       <div className="w-full">
-        {label && <label className="block mb-2">{label}</label>}
+        {label && <label className="block mb-2 text-sm">{label}</label>}
         <div className="relative">
           <input
             type={visible ? "text" : "password"}

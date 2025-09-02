@@ -30,9 +30,14 @@ export async function updatePassword(formData: FormData) {
       return { error: "Les nouveaux mots de passe ne correspondent pas." };
     }
 
-    if (newPassword.length < 6) {
+    // Validation de complexité côté serveur
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{12,}$/;
+
+    if (!passwordRegex.test(newPassword)) {
       return {
-        error: "Le nouveau mot de passe doit contenir au moins 6 caractères.",
+        error:
+          "Le mot de passe doit contenir au moins 12 caractères, avec une majuscule, une minuscule, un chiffre et un symbole.",
       };
     }
 

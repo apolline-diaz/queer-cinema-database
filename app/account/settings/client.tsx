@@ -25,6 +25,19 @@ export default function SettingsClientPage({ user }: { user: User }) {
   const [isUpdatingPassword, startPasswordTransition] = useTransition();
   const [nameError, setNameError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
+  const [newPasswordError, setNewPasswordError] = useState<string | null>(null);
+
+  // Fonction de validation du mot de passe
+  const validatePassword = (password: string): string | null => {
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{12,}$/;
+
+    if (!passwordRegex.test(password)) {
+      return "Le mot de passe ne remplit pas tous les critères.";
+    }
+
+    return null;
+  };
 
   const handleNameUpdate = async (formData: FormData) => {
     const fullName = (formData.get("full_name") as string) || "";
@@ -51,6 +64,15 @@ export default function SettingsClientPage({ user }: { user: User }) {
     const newPassword = (formData.get("new_password") as string) || "";
     const confirmPassword = (formData.get("confirm_password") as string) || "";
 
+    // Validation de la complexité du nouveau mot de passe
+    const passwordValidationError = validatePassword(newPassword);
+    if (passwordValidationError) {
+      setNewPasswordError(passwordValidationError);
+      return;
+    } else {
+      setNewPasswordError(null);
+    }
+
     // Validation côté client pour vérifier si les mots de passe correspondent
     if (newPassword !== confirmPassword) {
       setPasswordError("Les mots de passe ne correspondent pas.");
@@ -70,8 +92,22 @@ export default function SettingsClientPage({ user }: { user: User }) {
           "password-form"
         ) as HTMLFormElement;
         form?.reset();
+        // Reset aussi les erreurs
+        setNewPasswordError(null);
+        setPasswordError(null);
       }
     });
+  };
+
+  // Fonction pour valider en temps réel le nouveau mot de passe
+  const handleNewPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const password = e.target.value;
+    if (password) {
+      const error = validatePassword(password);
+      setNewPasswordError(error);
+    } else {
+      setNewPasswordError(null);
+    }
   };
 
   const handleDeleteConfirm = async () => {
@@ -134,7 +170,17 @@ export default function SettingsClientPage({ user }: { user: User }) {
             name="new_password"
             label="Nouveau mot de passe"
             placeholder="Nouveau mot de passe"
+            className={newPasswordError ? "border-red-500" : ""}
+            onChange={handleNewPasswordChange}
           />
+          {newPasswordError && (
+            <p className="text-rose-500 text-sm my-2">{newPasswordError}</p>
+          )}
+          {/* Message d'aide toujours visible */}
+          <p className="text-gray-500 text-xs mt-2">
+            Le mot de passe doit contenir au moins 12 caractères, avec une
+            majuscule, une minuscule, un chiffre et un symbole.
+          </p>
         </div>
         <div className="mb-4">
           <PasswordInput
