@@ -56,7 +56,7 @@ export default function Card({
               title={title}
             />
             <div className="absolute bottom-0 left-0 w-full p-5 ">
-              <div className="text-md font-semibold uppercase">{title}</div>
+              <div className="text-md font-semibold">{title}</div>
               <p className="text-sm font-light">{release_date}</p>
             </div>
           </Link>

@@ -33,7 +33,7 @@ export async function searchMoviesPaginated({
   endYear = "",
   type = "",
   page = 1,
-  limit = 20,
+  limit = 50,
 }: SearchParams): Promise<SearchResult> {
   return cachedQuery(
     [

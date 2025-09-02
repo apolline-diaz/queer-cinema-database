@@ -4,7 +4,6 @@ import { Icon } from "@iconify/react";
 import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { searchMoviesPaginated } from "@/app/server-actions/movies/search-movies";
-import { useInfiniteScroll } from "@/app/hooks/use-infinite-scroll";
 import Card from "./card";
 import { getImageUrl } from "@/utils";
 import Select from "./select";
@@ -60,6 +59,15 @@ interface SearchFormProps {
   directors: { value: string; label: string }[];
   releaseYears: { value: string; label: string }[];
   userIsAdmin: boolean;
+  urlParams?: {
+    countryId: string;
+    genreId: string;
+    keywordIds: string[];
+    directorId: string;
+    startYear: string;
+    endYear: string;
+    type: string;
+  };
 }
 
 export default function SearchForm({
@@ -117,6 +125,27 @@ export default function SearchForm({
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
+  // DEBUG: Log initial state
+  useEffect(() => {
+    console.log("INITIAL STATE:", {
+      initialMovies: initialMovies.length,
+      initialTotalCount,
+      initialHasMore,
+      currentPage: 1,
+    });
+  }, []);
+
+  // DEBUG: Log movies state changes
+  useEffect(() => {
+    console.log("MOVIES STATE UPDATED:", {
+      moviesCount: movies.length,
+      totalCount,
+      hasMore,
+      currentPage,
+      movieTitles: movies.map((m) => m.title), // Affiche les 5 premiers titres
+    });
+  }, [movies, totalCount, hasMore, currentPage]);
+
   // Get the currently selected years to enforce validation
   const startYear = watch("startYear");
   const endYear = watch("endYear");
@@ -145,7 +174,7 @@ export default function SearchForm({
         endYear: formData.endYear,
         type: formData.type,
         page: currentPage + 1,
-        limit: 20,
+        limit: 50,
       });
 
       setMovies((prev) => [...(prev || []), ...(result.movies || [])]);
@@ -157,14 +186,6 @@ export default function SearchForm({
       setIsLoadingMore(false);
     }
   };
-
-  // Hook pour l'infinite scroll (remplace le bouton "Voir plus")
-  const { loadingRef } = useInfiniteScroll({
-    hasMore,
-    isLoading: isLoadingMore,
-    onLoadMore: loadMoreMovies,
-    threshold: 200,
-  });
 
   // handle form submission avec searchMoviesPaginated
   const onSubmit = async (data: FormValues) => {
@@ -199,7 +220,7 @@ export default function SearchForm({
         endYear: data.endYear,
         type: data.type,
         page: 1,
-        limit: 20,
+        limit: 50,
       });
 
       setMovies(result.movies || []);
@@ -244,7 +265,7 @@ export default function SearchForm({
         endYear: "",
         type: "",
         page: 1,
-        limit: 20,
+        limit: 50,
       });
 
       setMovies(result.movies || []);
@@ -451,24 +472,22 @@ export default function SearchForm({
               ))
             )}
           </div>
-
-          {/* Loading indicator pour l'infinite scroll (remplace le bouton "Voir plus") */}
-          {hasMore && (
-            <div ref={loadingRef} className="py-8 flex justify-center">
-              {isLoadingMore && (
-                <div className="flex items-center gap-2 text-gray-600">
-                  <Icon icon="mdi:loading" className="animate-spin size-5" />
-                  <span>Chargement...</span>
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* Message de fin */}
-          {!hasMore && movies && movies.length > 0 && (
-            <div className="py-8 text-center text-gray-500 border-t border-gray-200 mt-8">
-              <Icon icon="mdi:check-circle" className="size-5 inline mr-2" />
-              Tous les films ont été chargés
+          {hasMore && !isLoading && (
+            <div className="flex justify-center mt-6">
+              <button
+                onClick={loadMoreMovies}
+                disabled={isLoadingMore}
+                className="px-6 py-3 bg-rose-500 hover:bg-rose-600 text-white font-medium rounded-xl transition-all duration-200 flex items-center gap-2"
+              >
+                {isLoadingMore ? (
+                  "Chargement..."
+                ) : (
+                  <>
+                    Voir plus{" "}
+                    <Icon icon="mdi:chevron-down" className="size-5" />
+                  </>
+                )}{" "}
+              </button>
             </div>
           )}
         </div>
