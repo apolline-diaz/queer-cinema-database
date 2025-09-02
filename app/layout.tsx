@@ -5,6 +5,7 @@ import Header from "./components/header";
 import Footer from "./components/footer";
 import { getCanonicalUrl } from "@/utils/index";
 import TopLoader from "nextjs-toploader";
+import { ToastProvider } from "./components/toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -63,23 +64,24 @@ export default function RootLayout({
       <body
         className={`${inter.className} bg-white min-h-screen text-white flex flex-col`}
       >
-        <TopLoader
-          color="#f43f5e" // Rose foncé tirant vers le rouge
-          initialPosition={0.08} // Position de départ
-          crawlSpeed={200} // Vitesse de progression
-          height={3} // Épaisseur de la barre
-          easing="ease"
-          speed={500}
-          showSpinner={false}
-        />
-
-        <div className="">
-          <Header />
-        </div>
-        <main className="bg-white">{children}</main>
-        <div className="mt-auto">
-          <Footer />
-        </div>
+        <ToastProvider>
+          <TopLoader
+            color="#f43f5e" // Rose foncé tirant vers le rouge
+            initialPosition={0.08} // Position de départ
+            crawlSpeed={200} // Vitesse de progression
+            height={3} // Épaisseur de la barre
+            easing="ease"
+            speed={500}
+            showSpinner={false}
+          />
+          <div className="">
+            <Header />
+          </div>
+          <main className="bg-white">{children}</main>
+          <div className="mt-auto">
+            <Footer />
+          </div>
+        </ToastProvider>
       </body>
     </html>
   );
