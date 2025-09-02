@@ -33,7 +33,7 @@ export default function SettingsClientPage({ user }: { user: User }) {
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{12,}$/;
 
     if (!passwordRegex.test(password)) {
-      return "Le mot de passe ne remplit pas tous les critères : 12 caractères, une majuscule, une minuscule, un chiffre et un symbole.";
+      return "Le mot de passe ne remplit pas tous les critères.";
     }
 
     return null;
