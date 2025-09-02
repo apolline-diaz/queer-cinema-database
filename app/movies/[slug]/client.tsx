@@ -9,6 +9,14 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Icon } from "@iconify/react";
 import { cn } from "@/lib/utils";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuCheckboxItem,
+  DropdownMenuLabel,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
 
 type Props = {
   movieId: string;
@@ -22,7 +30,6 @@ type ListWithStatus = {
 };
 
 export default function ClientMovieActions({ movieId, userIsAdmin }: Props) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [lists, setLists] = useState<ListWithStatus[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isDataFetched, setIsDataFetched] = useState(false);
@@ -64,24 +71,7 @@ export default function ClientMovieActions({ movieId, userIsAdmin }: Props) {
     preloadData();
   }, [isDataFetched, isLoading, fetchListsWithStatus]); // Maintenant fetchListsWithStatus est inclus
 
-  const toggleMenu = () => {
-    // Simplement basculer l'état du menu sans attendre
-    setIsMenuOpen(!isMenuOpen);
-
-    // Si les données n'ont pas encore été chargées, les charger en arrière-plan
-    if (!isDataFetched && !isLoading) {
-      fetchListsWithStatus();
-    }
-  };
-
-  const toggleMovieInList = async (
-    listId: string,
-    hasMovie: boolean,
-    event: React.MouseEvent
-  ) => {
-    event.stopPropagation();
-
-    // Mettre à jour l'UI immédiatement (optimistic update)
+  const toggleMovieInList = async (listId: string, hasMovie: boolean) => {
     setLists(
       lists.map((list) =>
         list.id === listId ? { ...list, hasMovie: !hasMovie } : list
@@ -108,75 +98,75 @@ export default function ClientMovieActions({ movieId, userIsAdmin }: Props) {
 
   return (
     <div className="flex flex-col gap-3 right-0 items-center rounded-xl w-full">
-      <div className="relative">
-        <button
-          onClick={toggleMenu}
-          aria-label="Gérer les listes"
-          className="z-10 p-2 bg-black text-rose-500 rounded-full border bg-opacity-50 border-rose-500 transition-all duration-300 ease-in-out hover:bg-rose-500 hover:text-white"
-        >
-          <Icon
-            icon={isLoading && !isDataFetched ? "lucide:loader" : "lucide:plus"}
-            className={isLoading && !isDataFetched ? "animate-spin" : ""}
-          />
-        </button>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <button
+            aria-label="Gérer les listes"
+            className="z-10 p-2 bg-black text-rose-500 rounded-full border bg-opacity-50 border-rose-500 transition-all duration-300 ease-in-out hover:bg-rose-500 hover:text-white"
+          >
+            <Icon
+              icon={
+                isLoading && !isDataFetched ? "lucide:loader" : "lucide:plus"
+              }
+              className={isLoading && !isDataFetched ? "animate-spin" : ""}
+            />
+          </button>
+        </DropdownMenuTrigger>
 
-        {isMenuOpen && (
-          <div className="absolute bottom-full border border-rose-500 my-2 left-0 mt-2 w-56 rounded-lg text-black bg-white">
-            <p className="text-rose-500 flex flex-row px-3 border-b border-rose-300 py-2 items-center gap-2 text-sm font-medium">
-              Ajouter à une liste
-            </p>{" "}
-            <div className="sm:h-40 h-20 overflow-y-auto">
-              {lists.length === 0 ? (
-                <p className="text-sm  text-gray-500 px-3 py-2">
-                  {isLoading
-                    ? "Chargement des listes..."
-                    : "Aucune liste trouvée"}
-                </p>
-              ) : (
-                lists.map((list) => (
-                  <div
-                    key={list.id}
-                    onClick={(e) =>
-                      toggleMovieInList(list.id, list.hasMovie, e)
+        <DropdownMenuContent
+          className="w-56 rounded-lg border border-rose-500 bg-white"
+          align="start"
+          sideOffset={4}
+        >
+          {/* Label du menu */}
+          <DropdownMenuLabel className="text-rose-500 flex flex-row px-3 py-2 items-center gap-2 text-sm font-medium border-b border-rose-300">
+            Ajouter à une liste
+          </DropdownMenuLabel>
+
+          {/* Bouton "Créer une liste" */}
+          <DropdownMenuItem
+            asChild
+            className="px-2 py-2 text-sm font-medium rounded-none text-black hover:text-rose-500  hover:bg-rose-50 cursor-pointer flex items-center gap-2 border-b border-gray-400"
+          >
+            <Link href="/lists/create">
+              <span className="hover:text-teal-500  flex flex-row gap-2 items-center justify-between">
+                <Icon icon="mynaui:plus-solid" className="size-4" />
+                Créer une liste
+              </span>
+            </Link>
+          </DropdownMenuItem>
+
+          {/* Liste des listes */}
+          <div className="overflow-y-auto">
+            {lists.length === 0 ? (
+              <p className="text-sm  text-gray-500 px-3 py-2">
+                {isLoading
+                  ? "Chargement des listes..."
+                  : "Aucune liste trouvée"}
+              </p>
+            ) : (
+              lists.map((list) => (
+                <DropdownMenuCheckboxItem
+                  key={list.id}
+                  checked={list.hasMovie}
+                  onCheckedChange={() =>
+                    toggleMovieInList(list.id, list.hasMovie)
+                  }
+                  className={cn(
+                    "px-3 py-2 gap-2 items-center rounded-none text-sm border-b border-gray-200 font-light flex justify-between cursor-pointer hover:text-rose-500",
+                    {
+                      "text-rose-500": list.hasMovie,
+                      "text-black": !list.hasMovie,
                     }
-                    className={cn(
-                      "px-3 py-2 gap-2 text-sm border-b border-gray-300 font-light flex justify-between items-center cursor-pointer hover:text-rose-500",
-                      {
-                        "text-rose-500": list.hasMovie,
-                        "text-black": !list.hasMovie,
-                      }
-                    )}
-                  >
-                    <span>{list.title}</span>
-                    <button
-                      className=" hover:text-rose-500 focus:outline-none"
-                      aria-label={
-                        list.hasMovie
-                          ? "Retirer de la liste"
-                          : "Ajouter à la liste"
-                      }
-                    >
-                      {list.hasMovie ? (
-                        <Icon
-                          icon="tdesign:circle-filled"
-                          style={{ fontSize: 15 }}
-                          className="text-rose-500"
-                        />
-                      ) : (
-                        <Icon
-                          icon="lucide:circle"
-                          style={{ fontSize: 15 }}
-                          className=""
-                        />
-                      )}
-                    </button>
-                  </div>
-                ))
-              )}
-            </div>
+                  )}
+                >
+                  <span className="pl-5">{list.title}</span>
+                </DropdownMenuCheckboxItem>
+              ))
+            )}
           </div>
-        )}
-      </div>
+        </DropdownMenuContent>
+      </DropdownMenu>
 
       {userIsAdmin && (
         <div className="">
