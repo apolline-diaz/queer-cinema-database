@@ -114,7 +114,7 @@ export default function ClientMovieActions({ movieId, userIsAdmin }: Props) {
         </DropdownMenuTrigger>
 
         <DropdownMenuContent
-          className="max-w-[75vw] rounded-lg border border-rose-500 bg-white flex flex-col"
+          className="max-w-[75vw] max-h-[40vh] rounded-lg border border-rose-500 bg-white flex flex-col"
           align="start"
           sideOffset={4}
         >
