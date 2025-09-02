@@ -42,7 +42,7 @@ export default function SignUpPage() {
 
   return (
     <div className="w-screen min-h-screen flex items-center text-black justify-center bg-cover bg-center">
-      <div className="bg-white border border-rose-500 backdrop-blur-md rounded-2xl shadow-xl p-10 m-10 max-w-md w-full">
+      <div className="backdrop-blur-md p-10 m-10 max-w-md w-full">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-3 mb-10">
             <h1 className="text-center font-bold text-red-500 text-xl">
@@ -55,7 +55,9 @@ export default function SignUpPage() {
             )}
 
             {/* Mail */}
-            <label htmlFor="email">Adresse e-mail</label>
+            <label htmlFor="email" className="text-sm">
+              Adresse e-mail
+            </label>
             <input
               {...register("email", {
                 required: "L'email est requis",
@@ -64,7 +66,7 @@ export default function SignUpPage() {
                   message: "Adresse e-mail invalide",
                 },
               })}
-              className="appearance-none text-sm font-light border-black block w-full  border rounded py-3 px-4 leading-tight focus:outline-none focus:text-black"
+              className="appearance-none text-sm font-light border-black block w-full  border rounded py-3 px-2 leading-tight focus:outline-none focus:text-black"
               id="email"
               type="email"
               placeholder="Tapez votre adresse e-mail"
@@ -74,12 +76,12 @@ export default function SignUpPage() {
                 {errors.email.message}
               </span>
             )}
-            <p className="text-xs italic font-light border border-orange-400 text-orange-600 bg-yellow-50 p-2 rounded mb-3">
+            <p className="text-xs italic font-light border border-gray-400 text-gray-600 bg-gray-50 p-2 rounded mb-3">
               La fonctionnalité{" "}
               <span className="font-medium">Mot de passe oublié</span>{" "}
-              n&apos;est pas disponible. Veuillez bien noter votre mot de passe.
-              Vous pourrez également le modifier dans vos paramètres, une fois
-              inscrit-e.
+              n&apos;est pas disponible. Veillez à bien noter votre mot de
+              passe. Vous pourrez le modifier après votre inscription dans la
+              section Paramètres.
             </p>
             {/* Password */}
             <PasswordInput
