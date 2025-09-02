@@ -114,7 +114,7 @@ export default function ClientMovieActions({ movieId, userIsAdmin }: Props) {
         </DropdownMenuTrigger>
 
         <DropdownMenuContent
-          className="w-56 rounded-lg border border-rose-500 bg-white"
+          className="max-w-[75vw] max-h-[75vh] rounded-lg border border-rose-500 bg-white"
           align="start"
           sideOffset={4}
         >
@@ -126,10 +126,10 @@ export default function ClientMovieActions({ movieId, userIsAdmin }: Props) {
           {/* Bouton "Créer une liste" */}
           <DropdownMenuItem
             asChild
-            className="px-2 py-2 text-sm font-medium rounded-none text-black hover:text-rose-500  hover:bg-rose-50 cursor-pointer flex items-center gap-2 border-b border-gray-400"
+            className="px-2 py-2 text-sm font-medium rounded-none text-black hover:text-rose-500 hover:bg-rose-50 cursor-pointer flex items-center gap-2 border-b border-gray-400"
           >
             <Link href="/lists/create">
-              <span className="hover:text-teal-500  flex flex-row gap-2 items-center justify-between">
+              <span className="flex flex-row gap-2 items-center justify-between">
                 <Icon icon="mynaui:plus-solid" className="size-4" />
                 Créer une liste
               </span>
@@ -137,7 +137,7 @@ export default function ClientMovieActions({ movieId, userIsAdmin }: Props) {
           </DropdownMenuItem>
 
           {/* Liste des listes */}
-          <div className="overflow-y-auto">
+          <div className="overflow-y-auto max-h-[50vh]">
             {lists.length === 0 ? (
               <p className="text-sm  text-gray-500 px-3 py-2">
                 {isLoading
