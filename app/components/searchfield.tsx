@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
 import { getMoviesByWord } from "@/app/server-actions/movies/get-movies-by-word";
@@ -33,110 +33,129 @@ export default function Searchfield({
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const performSearch = async (
-    searchTerm: string,
-    preservePage: boolean = false
-  ) => {
-    try {
-      setIsLoading(true);
-      if (searchTerm) {
-        const results = await getMoviesByWord(searchTerm);
-        setMovies(results);
-        // Ne reset la page que si ce n'est pas une restauration d'état
-        if (!preservePage) {
-          setCurrentPage(1);
-        }
-      } else {
-        setMovies([]);
-      }
-    } catch (error) {
-      console.error("Erreur lors de la recherche:", error);
-      setMovies([]);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  // Extraire les valeurs des searchParams pour éviter les expressions complexes
+  const searchWord = searchParams.get("word") || "";
+  const searchPage = searchParams.get("page") || "1";
 
-  const onSubmit = (data: FormValues) => {
-    const params = new URLSearchParams();
-    if (data.search) {
-      params.set("word", data.search);
-      params.set("page", "1"); // Reset à la page 1 lors d'une nouvelle recherche
-    }
-    router.push(`/search?${params.toString()}`);
-  };
+  const performSearch = useCallback(
+    async (searchTerm: string, preservePage: boolean = false) => {
+      try {
+        setIsLoading(true);
+        if (searchTerm) {
+          const results = await getMoviesByWord(searchTerm);
+          setMovies(results);
+          // Ne reset la page que si ce n'est pas une restauration d'état
+          if (!preservePage) {
+            setCurrentPage(1);
+          }
+        } else {
+          setMovies([]);
+        }
+      } catch (error) {
+        console.error("Erreur lors de la recherche:", error);
+        setMovies([]);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    []
+  );
+
+  const onSubmit = useCallback(
+    (data: FormValues) => {
+      const params = new URLSearchParams();
+      if (data.search) {
+        params.set("word", data.search);
+        params.set("page", "1"); // Reset à la page 1 lors d'une nouvelle recherche
+      }
+      router.push(`/search?${params.toString()}`);
+    },
+    [router]
+  );
 
   // useEffect pour gérer les changements de terme de recherche
   useEffect(() => {
-    const term = searchParams.get("word") || "";
-    const page = parseInt(searchParams.get("page") || "1", 10);
+    const page = parseInt(searchPage, 10);
 
     // D'abord on set la page depuis l'URL
     setCurrentPage(page);
-    reset({ search: term });
+    reset({ search: searchWord });
 
-    if (term) {
+    if (searchWord) {
       // On préserve la page si elle existe dans l'URL
-      performSearch(term, page > 1);
+      performSearch(searchWord, page > 1);
     } else {
       setMovies([]);
     }
-  }, [searchParams.get("word"), reset]);
+  }, [searchWord, searchPage, reset, performSearch]);
 
   // useEffect séparé pour gérer les changements de page seulement
   useEffect(() => {
-    const page = parseInt(searchParams.get("page") || "1", 10);
-    const currentWord = searchParams.get("word") || "";
+    const page = parseInt(searchPage, 10);
 
     // Ne mettre à jour currentPage que si on a déjà des résultats
     // ou si on est sur la même recherche
-    if (movies.length > 0 || !currentWord) {
+    if (movies.length > 0 || !searchWord) {
       setCurrentPage(page);
     }
-  }, [searchParams.get("page")]);
+  }, [searchPage, movies.length, searchWord]);
 
-  const handleReset = () => {
+  const handleReset = useCallback(() => {
     reset({ search: "" });
     router.push(`/search`);
     setMovies([]);
     setCurrentPage(1);
-  };
+  }, [reset, router]);
 
   // Fonction pour changer de page
-  const changePage = (newPage: number) => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("page", newPage.toString());
-    router.push(`/search?${params.toString()}`, { scroll: false });
+  const changePage = useCallback(
+    (newPage: number) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("page", newPage.toString());
+      router.push(`/search?${params.toString()}`, { scroll: false });
 
-    // Scroll vers le début des résultats après un court délai
-    setTimeout(() => {
-      const resultsSection = document.querySelector(
-        '[data-testid="results-section"]'
-      );
-      if (resultsSection) {
-        const offset = 100; // Décalage pour éviter que ce soit collé en haut
-        const elementPosition = resultsSection.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - offset;
+      // Scroll vers le début des résultats après un court délai
+      setTimeout(() => {
+        const resultsSection = document.querySelector(
+          '[data-testid="results-section"]'
+        );
+        if (resultsSection) {
+          const offset = 100; // Décalage pour éviter que ce soit collé en haut
+          const elementPosition = resultsSection.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - offset;
 
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "smooth",
-        });
-      }
-    }, 150);
-  };
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth",
+          });
+        }
+      }, 150);
+    },
+    [searchParams, router]
+  );
 
   // Calculs pour la pagination
-  const totalMovies = movies.length;
-  const totalPages = Math.ceil(totalMovies / MOVIES_PER_PAGE);
-  const startIndex = (currentPage - 1) * MOVIES_PER_PAGE;
-  const endIndex = startIndex + MOVIES_PER_PAGE;
-  const currentMovies = movies.slice(startIndex, endIndex);
+  const paginationData = useMemo(() => {
+    const totalMovies = movies.length;
+    const totalPages = Math.ceil(totalMovies / MOVIES_PER_PAGE);
+    const startIndex = (currentPage - 1) * MOVIES_PER_PAGE;
+    const endIndex = startIndex + MOVIES_PER_PAGE;
+    const currentMovies = movies.slice(startIndex, endIndex);
+
+    return {
+      totalMovies,
+      totalPages,
+      startIndex,
+      endIndex,
+      currentMovies,
+    };
+  }, [movies, currentPage]);
 
   // Génération des numéros de pages à afficher
-  const getPageNumbers = () => {
+  const getPageNumbers = useCallback(() => {
     const pages: (number | string)[] = [];
     const maxVisiblePages = 5;
+    const { totalPages } = paginationData;
 
     if (totalPages <= maxVisiblePages) {
       for (let i = 1; i <= totalPages; i++) {
@@ -168,7 +187,7 @@ export default function Searchfield({
     }
 
     return pages;
-  };
+  }, [currentPage, paginationData]);
 
   return (
     <div className="w-full mb-4">
@@ -196,9 +215,10 @@ export default function Searchfield({
         <div className="flex flex-co pl-0 sm:pl-5 sm:flex-row flex-col gap-4 py-2">
           <button
             type="submit"
+            disabled={isLoading}
             className="w-full bg-black text-white px-4 py-2 rounded-xl hover:bg-rose-500"
           >
-            Rechercher
+            {isLoading ? "Recherche..." : "Rechercher"}
           </button>
           <button
             type="button"
@@ -236,13 +256,17 @@ export default function Searchfield({
                 className="text-rose-500 font-semibold"
                 data-testid="results-count"
               >
-                {totalMovies}
+                {paginationData.totalMovies}
               </span>
               <span className="text-gray-600 ml-2">titres trouvés</span>
-              {totalMovies > 0 && (
+              {paginationData.totalMovies > 0 && (
                 <span className="text-gray-500 ml-4 text-xs">
-                  Page {currentPage} sur {totalPages} • Affichage de{" "}
-                  {startIndex + 1} à {Math.min(endIndex, totalMovies)}
+                  Page {currentPage} sur {paginationData.totalPages} • Affichage
+                  de {paginationData.startIndex + 1} à{" "}
+                  {Math.min(
+                    paginationData.endIndex,
+                    paginationData.totalMovies
+                  )}
                 </span>
               )}
             </div>
@@ -258,7 +282,7 @@ export default function Searchfield({
                 className="animate-pulse bg-gray-300 h-[200px] rounded-xl w-full justify-end max-w-xs mx-auto"
               />
             ))
-          ) : currentMovies.length === 0 ? (
+          ) : paginationData.currentMovies.length === 0 ? (
             searchParams.get("word") ? (
               <p data-testid="no-results">Aucun film trouvé</p>
             ) : (
@@ -267,7 +291,7 @@ export default function Searchfield({
               </p>
             )
           ) : (
-            currentMovies.map((movie) => (
+            paginationData.currentMovies.map((movie) => (
               <Card
                 key={`${movie.title}-${movie.id}`}
                 {...movie}
@@ -279,7 +303,7 @@ export default function Searchfield({
         </div>
 
         {/* Pagination */}
-        {totalPages > 1 && !isLoading && (
+        {paginationData.totalPages > 1 && !isLoading && (
           <div className="mt-8 flex flex-col items-center space-y-4">
             {/* Navigation avec flèches */}
             <div className="flex items-center space-x-2">
@@ -319,9 +343,9 @@ export default function Searchfield({
 
               <button
                 onClick={() => changePage(currentPage + 1)}
-                disabled={currentPage === totalPages}
+                disabled={currentPage === paginationData.totalPages}
                 className={`flex items-center p-2 rounded-lg text-sm font-medium transition-all ${
-                  currentPage === totalPages
+                  currentPage === paginationData.totalPages
                     ? "bg-gray-100 text-gray-400 cursor-not-allowed"
                     : "bg-white text-gray-700 hover:bg-rose-50 hover:text-rose-600 border border-gray-200 hover:border-rose-200"
                 }`}
@@ -332,7 +356,8 @@ export default function Searchfield({
 
             {/* Info pagination compacte */}
             <p className="text-xs text-gray-500">
-              {currentMovies.length} films affichés sur cette page
+              {paginationData.currentMovies.length} films affichés sur cette
+              page
             </p>
           </div>
         )}

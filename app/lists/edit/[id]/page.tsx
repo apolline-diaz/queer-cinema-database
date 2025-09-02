@@ -6,12 +6,13 @@ import { redirect } from "next/navigation";
 export default async function EditListPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const { id } = await params;
   const session = await auth();
   if (!session) redirect("/login");
 
   const admin = await isAdmin();
 
-  return <EditListForm params={params} isAdmin={admin} />;
+  return <EditListForm params={{ id }} isAdmin={admin} />;
 }

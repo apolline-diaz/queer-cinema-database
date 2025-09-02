@@ -10,12 +10,17 @@ import BackButton from "@/app/components/back-button";
 type SortType = "title" | "year" | "none";
 type SortDirection = "asc" | "desc";
 
+interface ListClientPageProps {
+  id: string;
+  userIsAdmin: boolean;
+  userIsOwner: boolean;
+}
+
 export default function ListClientPage({
-  params,
-}: {
-  params: { id: string; userIsAdmin: boolean; userIsOwner: boolean };
-}) {
-  const { id, userIsAdmin, userIsOwner } = params;
+  id,
+  userIsAdmin,
+  userIsOwner,
+}: ListClientPageProps) {
   const [listData, setListData] = useState<any>(null);
   const [movies, setMovies] = useState<any[]>([]);
   const [sortedMovies, setSortedMovies] = useState<any[]>([]);
