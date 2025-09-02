@@ -4,9 +4,10 @@ import Link from "next/link";
 import { login } from "./actions";
 import { useForm } from "react-hook-form";
 import { SubmitButton } from "../components/submit-button";
-import { useState } from "react";
-import { redirect, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { redirect, useRouter, useSearchParams } from "next/navigation";
 import { PasswordInput } from "../components/password-input";
+import { useToast, useAuthToasts } from "@/app/components/toast";
 
 interface LoginFormInputs {
   email: string;
@@ -15,14 +16,44 @@ interface LoginFormInputs {
 
 export default function LoginPage() {
   const router = useRouter();
-
+  const searchParams = useSearchParams();
   const [authError, setAuthError] = useState<string | null>(null);
+
+  // Hooks pour les toasts
+  const { loginSuccess, emailConfirmed, loginError } = useAuthToasts();
+  const { error: showErrorToast } = useToast();
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<LoginFormInputs>();
+
+  // Gérer les paramètres URL pour les confirmations d'email
+  useEffect(() => {
+    const confirmed = searchParams.get("confirmed");
+    const error = searchParams.get("error");
+    const message = searchParams.get("message");
+
+    if (confirmed === "true") {
+      emailConfirmed();
+      // Nettoyer l'URL après avoir affiché le toast
+      const url = new URL(window.location.href);
+      url.searchParams.delete("confirmed");
+      window.history.replaceState({}, "", url.toString());
+    }
+
+    if (error) {
+      const errorMessage =
+        message || "Erreur lors de la confirmation de l'email";
+      showErrorToast(errorMessage, "Erreur");
+      // Nettoyer l'URL
+      const url = new URL(window.location.href);
+      url.searchParams.delete("error");
+      url.searchParams.delete("message");
+      window.history.replaceState({}, "", url.toString());
+    }
+  }, [searchParams, emailConfirmed, showErrorToast]);
 
   const onSubmit = async (data: LoginFormInputs) => {
     setAuthError(null);
@@ -37,7 +68,11 @@ export default function LoginPage() {
         "Mot de passe ou adresse e-mail incorrecte. Si vous n'avez pas encore validé votre inscription, veuillez vérifier votre boîte mail."
       );
     } else {
-      router.push("/");
+      loginSuccess();
+      // Petite pause pour laisser le toast s'afficher avant la redirection
+      setTimeout(() => {
+        router.push("/");
+      }, 500);
     }
   };
 
