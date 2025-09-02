@@ -55,7 +55,7 @@ export default async function MoviesPage({
       endYear,
       type,
       page: 1,
-      limit: 20,
+      limit: 100,
     });
   }
 

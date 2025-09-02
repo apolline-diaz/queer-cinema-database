@@ -52,7 +52,6 @@ export async function searchMoviesPaginated({
       try {
         const skip = (page - 1) * limit;
 
-        // Build date range condition (votre logique existante)
         let releaseCondition = {};
 
         if (startYear && endYear) {
@@ -76,7 +75,6 @@ export async function searchMoviesPaginated({
           };
         }
 
-        // Construction des conditions WHERE (votre logique existante)
         const whereCondition = {
           ...(countryId && {
             movies_countries: {

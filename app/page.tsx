@@ -52,13 +52,13 @@ export default async function HomePage() {
                   <h3 className="text-2xl font-medium">
                     {featuredLatestMovie.title}
                   </h3>
-                  <p className="text-md font-medium">
+                  <p className="text-md font-medium flex flex-wrap gap-2">
                     {featuredLatestMovie?.movies_directors
                       ?.map((item) => item.directors.name)
                       .join(", ") || ""}
-                  </p>
-                  <p className="text-md font-medium">
-                    {featuredLatestMovie.release_date || ""}
+                    <span className="text-md font-light">
+                      {featuredLatestMovie.release_date || ""}
+                    </span>{" "}
                   </p>
 
                   <p className="line-clamp-6 sm:line-clamp-5 w-3/4 overflow-hidden text-md font-extralight">

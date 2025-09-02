@@ -10,7 +10,7 @@ export default function Footer() {
           <h1 className="text-lg font-semibold">queer cinema database</h1>
           <p className="mt-2 max-w-xs">
             Une sélection de films et d&apos;archives LGBTQI+ pour mettre en
-            lumière la diversité des films et archives queer.
+            lumière la diversité des regards et récits queer.
           </p>
         </div>
 

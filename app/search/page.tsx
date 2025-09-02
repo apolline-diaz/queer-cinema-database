@@ -8,8 +8,6 @@ export default async function SearchPage({
   searchParams?: { [key: string]: string | string[] | undefined };
 }) {
   const userIsAdmin = await isAdmin();
-
-  // Récupérer le terme de recherche depuis l'URL (q pour query)
   const searchQuery = (searchParams?.q as string) || "";
 
   return (

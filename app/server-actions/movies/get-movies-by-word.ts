@@ -6,6 +6,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export const getMoviesByWord = async (search: string): Promise<Movie[]> => {
+  // Recherche unifiée avec une seule requête utilisant des jointures
   const movies = await prisma.movies.findMany({
     where: {
       OR: [
