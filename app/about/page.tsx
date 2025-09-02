@@ -36,7 +36,7 @@ export default function AboutPage() {
           diffuser cette diversité cinématographique.
         </p>
 
-        <div className="text-rose-900 ">
+        <div className="">
           <div className="grid grid-col-1 gap-5">
             <div className="bg-rose-50 rounded-xl p-5">
               <h3 className="font-bold mb-2">Le choix des films</h3>
@@ -88,8 +88,8 @@ export default function AboutPage() {
                 <br />
                 Sont mis en avant : les thématiques (sociales, économiques,
                 politiques, culturelles), l&apos;identité de genre et
-                l&apos;orientation sexuelle/romantique des personnages, et
-                celles avec qui ils flirtent.
+                l&apos;orientation relationnelle des personnages, et celles avec
+                qui ils flirtent.
                 <br /> Sont aussi intégrés : les expériences de vie, les formats
                 et genres cinématographiques et les régions géographiques.
                 <br />
@@ -109,7 +109,7 @@ export default function AboutPage() {
                 <br /> - Bases de données : The Movie Database, IMDB, UniFrance,
                 Film documentaire
                 <br /> - Distributeurs : Frameline, Women Make Movies, Vucavu,
-                Video Data Bank, VTape, CFMDC, Optimale, OutPlay,
+                Video Data Bank, VTape, CFMDC, Optimale, OutPlay
                 <br /> - Festivals : Chéries Chéris, Cineffable, Pink Screens
                 <br /> - Archives nationales : BFI, UCLA, INA, Centre Simone de
                 Beauvoir

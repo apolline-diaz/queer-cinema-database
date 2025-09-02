@@ -1,44 +1,44 @@
+import { Icon } from "@iconify/react/dist/iconify.js";
 import Link from "next/link";
 
-export default function Header() {
+export default function Footer() {
   return (
-    <footer className="h-full footer flex flex-col gap-3 bg-gray-200 text-black px-10 pb-2 pt-4 border-t border-gray-500 b-0">
-      <div className="flex flex-col sm:flex-row justify-between">
-        <div className="py-2">
-          <div className="flex flex-row text-xl mb-2">
-            <p className="font-medium">queer cinema</p>
-            <span className="px-2 font-extralight">database</span>
-          </div>
-          <p className="w-3/4 font-extralight">
-            Une sélection de films et d&apos;archives LGBTQIA+ pour célébrer la
-            pluralité des regards queer dans le monde.
+    <footer className="bg-rose-50 border border-t-rose-500 text-black py-8">
+      <div className="max-w-7xl mx-auto px-10 flex flex-col md:flex-row justify-between items-center">
+        {/* Logo et description */}
+        <div className="mb-6 md:mb-0 text-center md:text-left">
+          <h1 className="text-lg font-semibold">queer cinema database</h1>
+          <p className="mt-2 max-w-xs">
+            Une sélection de films et d&apos;archives LGBTQI+ pour mettre en
+            lumière la diversité des regards et récits queer.
           </p>
         </div>
-        <nav className="flex flex-col font-light text-sm w-1/4 sm:justify-end sm:items-end sm:text-right text-left gap-3 sm:m-4 my-2">
-          <Link
-            href="/about"
-            className="link link-hover hover:underline hover:underline-offset-8"
-          >
+
+        {/* Liens */}
+        <div className="flex flex-col md:items-end md:text-right gap-4 items-center">
+          <Link href="/about" className="hover:text-pink-500 transition">
             À propos
           </Link>
-
-          <Link
-            href="/contact"
-            className="link link-hover hover:underline hover:underline-offset-8"
-          >
+          <Link href="/contact" className="hover:text-pink-500 transition">
             Contact
           </Link>
-          <Link
-            href="/privacy-policy"
-            className="link link-hover hover:underline hover:underline-offset-8"
-          >
+          <Link href="/privacy" className="hover:text-pink-500 transition">
             Politiques de confidentialité
           </Link>
-        </nav>
+          <Link
+            href="https://www.instagram.com/queercinema.db/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-pink-500 transition"
+          >
+            <Icon icon="lucide:instagram" className="size-5" />
+          </Link>
+        </div>
       </div>
-      <p className="font-light text-xs text-center mb-2">
+
+      <div className="mt-6 text-center font-light text-gray-700 text-sm">
         © 2025 Queer Cinema Database. Tous droits réservés.
-      </p>
+      </div>
     </footer>
   );
 }

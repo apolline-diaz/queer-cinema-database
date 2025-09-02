@@ -13,7 +13,7 @@ type FormValues = {
   search: string;
 };
 
-const MOVIES_PER_PAGE = 50;
+const MOVIES_PER_PAGE = 20;
 
 export default function Searchfield({
   initialSearch = "",
@@ -33,10 +33,6 @@ export default function Searchfield({
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Tri
-  const [sortType, setSortType] = useState<"none" | "title" | "year">("none");
-  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
-
   const performSearch = async (
     searchTerm: string,
     preservePage: boolean = false
@@ -55,6 +51,7 @@ export default function Searchfield({
       }
     } catch (error) {
       console.error("Erreur lors de la recherche:", error);
+      setMovies([]);
     } finally {
       setIsLoading(false);
     }
@@ -129,41 +126,12 @@ export default function Searchfield({
     }, 150);
   };
 
-  // Tri
-  const sortMovies = (type: "none" | "title" | "year") => {
-    if (type === sortType) {
-      setSortDirection((prev) => (prev === "asc" ? "desc" : "asc"));
-    } else {
-      setSortType(type);
-      setSortDirection("asc");
-    }
-    // Reset à la page 1 lors d'un changement de tri
-    changePage(1);
-  };
-
-  const sortedMovies = useMemo(() => {
-    if (sortType === "none") return movies;
-    const sorted = [...movies].sort((a, b) => {
-      if (sortType === "title") {
-        if (a.title < b.title) return sortDirection === "asc" ? -1 : 1;
-        if (a.title > b.title) return sortDirection === "asc" ? 1 : -1;
-        return 0;
-      } else if (sortType === "year") {
-        const yearA = a.release_date ? parseInt(a.release_date) : 0;
-        const yearB = b.release_date ? parseInt(b.release_date) : 0;
-        return sortDirection === "asc" ? yearA - yearB : yearB - yearA;
-      }
-      return 0;
-    });
-    return sorted;
-  }, [movies, sortType, sortDirection]);
-
   // Calculs pour la pagination
-  const totalMovies = sortedMovies.length;
+  const totalMovies = movies.length;
   const totalPages = Math.ceil(totalMovies / MOVIES_PER_PAGE);
   const startIndex = (currentPage - 1) * MOVIES_PER_PAGE;
   const endIndex = startIndex + MOVIES_PER_PAGE;
-  const currentMovies = sortedMovies.slice(startIndex, endIndex);
+  const currentMovies = movies.slice(startIndex, endIndex);
 
   // Génération des numéros de pages à afficher
   const getPageNumbers = () => {
@@ -204,6 +172,7 @@ export default function Searchfield({
 
   return (
     <div className="w-full mb-4">
+      {/* Formulaire */}
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex sm:flex-row flex-col"
@@ -227,16 +196,14 @@ export default function Searchfield({
         <div className="flex flex-co pl-0 sm:pl-5 sm:flex-row flex-col gap-4 py-2">
           <button
             type="submit"
-            data-testid="search-button"
-            className="w-full transition-colors duration-200 ease-in-out bg-black text-white px-4 py-2 rounded-xl hover:bg-rose-500"
+            className="w-full bg-black text-white px-4 py-2 rounded-xl hover:bg-rose-500"
           >
             Rechercher
           </button>
           <button
             type="button"
             onClick={handleReset}
-            data-testid="reset-button"
-            className="w-full border transition-colors duration-200 ease-in-out hover:border-rose-500 hover:text-rose-500 text-black px-4 py-2 border-black rounded-xl"
+            className="w-full border hover:border-rose-500 hover:text-rose-500 text-black px-4 py-2 border-black rounded-xl"
           >
             Réinitialiser
           </button>
@@ -244,84 +211,18 @@ export default function Searchfield({
       </form>
 
       {/* Indication vers recherche avancée */}
-      <div className="flex-wrap gap-3 mt-4 mb-6 p-4 bg-gray-100 rounded-xl border border-gray-200 flex items-center justify-between">
+      <div className="flex-wrap gap-3 mt-4 mb-6 p-4 bg-gray-100 rounded-xl border border-gray-200 flex">
         <span className="text-gray-700 text-sm">
           Pour une recherche plus détaillée, utilisez la page{" "}
           <strong>Films</strong> avec filtres avancés.
         </span>
         <button
           onClick={() => router.push("/movies")}
-          className="px-4 py-2 bg-rose-500 text-white rounded-xl text-sm hover:bg-rose-600 transition-colors"
+          className="text-rose-500 rounded-xl text-sm hover:text-rose-800 transition-colors"
         >
           Aller à la recherche avancée
         </button>
       </div>
-
-      {/* Section de tri */}
-      {totalMovies > 0 && (
-        <div className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-2xl p-4 mb-8 border border-gray-200/50">
-          <div className="flex items-center gap-2 mb-3">
-            <Icon icon="solar:sort-outline" className="text-rose-500 text-lg" />
-            <h3 className="text-sm font-medium text-gray-800">Trier</h3>
-          </div>
-          <div className="flex flex-wrap gap-3">
-            <button
-              onClick={() => sortMovies("title")}
-              className={`group flex items-center gap-2 px-4 py-2 rounded-xl font-medium text-sm transition-all duration-200 ${
-                sortType === "title"
-                  ? "bg-rose-500 text-white"
-                  : "bg-white text-gray-700 hover:bg-rose-50 hover:text-rose-600 border border-gray-200 hover:border-rose-200"
-              }`}
-            >
-              <Icon
-                icon="solar:sort-from-top-to-bottom-outline"
-                className={`text-lg transition-colors ${sortType === "title" ? "text-white" : "text-gray-500 group-hover:text-rose-500"}`}
-              />
-              <span>Alphabétique</span>
-              {sortType === "title" && (
-                <div className="bg-white/20 px-1.5 py-0.5 rounded text-xs">
-                  {sortDirection === "asc" ? "A-Z" : "Z-A"}
-                </div>
-              )}
-            </button>
-
-            <button
-              onClick={() => sortMovies("year")}
-              className={`group flex items-center gap-2 px-4 py-2 rounded-xl font-medium text-sm transition-all duration-200 ${
-                sortType === "year"
-                  ? "bg-rose-500 text-white"
-                  : "bg-white text-gray-700 hover:bg-rose-50 hover:text-rose-600 border border-gray-200 hover:border-rose-200"
-              }`}
-            >
-              <Icon
-                icon="solar:calendar-outline"
-                className={`text-lg transition-colors ${sortType === "year" ? "text-white" : "text-gray-500 group-hover:text-rose-500"}`}
-              />
-              <span>Année</span>
-              {sortType === "year" && (
-                <div className="bg-white/20 px-1.5 py-0.5 rounded text-xs">
-                  {sortDirection === "asc" ? "1900→2025" : "2025→1900"}
-                </div>
-              )}
-            </button>
-
-            <button
-              onClick={() => sortMovies("none")}
-              className={`group flex items-center gap-2 px-4 py-2 rounded-xl font-medium text-sm transition-all duration-200 ${
-                sortType === "none"
-                  ? "bg-gray-700 text-white"
-                  : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 hover:border-gray-300"
-              }`}
-            >
-              <Icon
-                icon="solar:refresh-outline"
-                className={`text-lg transition-colors ${sortType === "none" ? "text-white" : "text-gray-500 group-hover:text-gray-600"}`}
-              />
-              <span>Par défaut</span>
-            </button>
-          </div>
-        </div>
-      )}
 
       {/* Section des résultats */}
       <div className="flex-1 pt-4" data-testid="results-section">
@@ -354,13 +255,8 @@ export default function Searchfield({
             Array.from({ length: 6 }).map((_, index) => (
               <div
                 key={index}
-                className="animate-pulse bg-gray-300 h-[200px] rounded-xl w-full justify-end max-w-xs mx-auto group overflow-hidden flex flex-col transition-transform"
-              >
-                <div className="flex flex-col p-5 space-y-2">
-                  <div className="h-6 bg-gray-200 rounded w-3/4 mb-2"></div>
-                  <div className="h-4 bg-gray-200 rounded w-1/3 mb-2"></div>
-                </div>
-              </div>
+                className="animate-pulse bg-gray-300 h-[200px] rounded-xl w-full justify-end max-w-xs mx-auto"
+              />
             ))
           ) : currentMovies.length === 0 ? (
             searchParams.get("word") ? (
@@ -390,14 +286,13 @@ export default function Searchfield({
               <button
                 onClick={() => changePage(currentPage - 1)}
                 disabled={currentPage === 1}
-                className={`flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+                className={`flex items-center p-2 rounded-lg text-sm font-medium transition-all ${
                   currentPage === 1
                     ? "bg-gray-100 text-gray-400 cursor-not-allowed"
                     : "bg-white text-gray-700 hover:bg-rose-50 hover:text-rose-600 border border-gray-200 hover:border-rose-200"
                 }`}
               >
-                <Icon icon="mdi:chevron-left" className="text-lg mr-1" />
-                Précédent
+                <Icon icon="mdi:chevron-left" className="text-lg" />
               </button>
 
               {/* Numéros de pages */}
@@ -425,14 +320,13 @@ export default function Searchfield({
               <button
                 onClick={() => changePage(currentPage + 1)}
                 disabled={currentPage === totalPages}
-                className={`flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+                className={`flex items-center p-2 rounded-lg text-sm font-medium transition-all ${
                   currentPage === totalPages
                     ? "bg-gray-100 text-gray-400 cursor-not-allowed"
                     : "bg-white text-gray-700 hover:bg-rose-50 hover:text-rose-600 border border-gray-200 hover:border-rose-200"
                 }`}
               >
-                Suivant
-                <Icon icon="mdi:chevron-right" className="text-lg ml-1" />
+                <Icon icon="mdi:chevron-right" className="text-lg" />
               </button>
             </div>
 

@@ -3,7 +3,7 @@
 import { Icon } from "@iconify/react";
 import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { searchMovies } from "@/app/server-actions/movies/search-movies";
+import { searchMoviesPaginated } from "@/app/server-actions/movies/search-movies";
 import Card from "./card";
 import { getImageUrl } from "@/utils";
 import Select from "./select";
@@ -14,9 +14,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 interface FormValues {
   countryId: string;
   genreId: string;
-  keywordIds: { value: string; label: string }[]; // Changed to array of keywords
+  keywordIds: { value: string; label: string }[];
   directorId: string;
-  startYear: string; // Changed from releaseYear to startYear
+  startYear: string;
   endYear: string;
   type: string;
 }
@@ -25,8 +25,6 @@ interface CollapsibleSectionProps {
   title: string;
   children: React.ReactNode;
 }
-
-const MOVIES_PER_PAGE = 100;
 
 // component for folding sections
 function CollapsibleSection({ title, children }: CollapsibleSectionProps) {
@@ -50,8 +48,11 @@ function CollapsibleSection({ title, children }: CollapsibleSectionProps) {
     </div>
   );
 }
+
 interface SearchFormProps {
   initialMovies: Movie[];
+  initialTotalCount: number;
+  initialHasMore: boolean;
   countries: { value: string; label: string }[];
   genres: { value: string; label: string }[];
   keywords: { value: string; label: string }[];
@@ -70,13 +71,15 @@ interface SearchFormProps {
 }
 
 export default function SearchForm({
-  initialMovies,
-  countries,
-  genres,
-  keywords,
-  directors,
-  releaseYears,
-  userIsAdmin,
+  initialMovies = [],
+  initialTotalCount = 0,
+  initialHasMore = false,
+  countries = [],
+  genres = [],
+  keywords = [],
+  directors = [],
+  releaseYears = [],
+  userIsAdmin = false,
 }: SearchFormProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -105,7 +108,7 @@ export default function SearchForm({
       defaultValues: {
         countryId: urlCountryId,
         genreId: urlGenreId,
-        keywordIds: urlKeywordIds as any, // Cast pour satisfaire TypeScript
+        keywordIds: urlKeywordIds as any,
         directorId: urlDirectorId,
         startYear: urlStartYear,
         endYear: urlEndYear,
@@ -114,33 +117,89 @@ export default function SearchForm({
     }
   );
 
+  // États pour la pagination infinie au lieu du simple "visibleCount"
   const [movies, setMovies] = useState<Movie[]>(initialMovies);
+  const [totalCount, setTotalCount] = useState(initialTotalCount);
+  const [hasMore, setHasMore] = useState(initialHasMore);
+  const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
-  const [visibleCount, setVisibleCount] = useState(MOVIES_PER_PAGE);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+
+  // DEBUG: Log initial state
+  useEffect(() => {
+    console.log("INITIAL STATE:", {
+      initialMovies: initialMovies.length,
+      initialTotalCount,
+      initialHasMore,
+      currentPage: 1,
+    });
+  }, []);
+
+  // DEBUG: Log movies state changes
+  useEffect(() => {
+    console.log("MOVIES STATE UPDATED:", {
+      moviesCount: movies.length,
+      totalCount,
+      hasMore,
+      currentPage,
+      movieTitles: movies.map((m) => m.title), // Affiche les 5 premiers titres
+    });
+  }, [movies, totalCount, hasMore, currentPage]);
 
   // Get the currently selected years to enforce validation
   const startYear = watch("startYear");
   const endYear = watch("endYear");
 
-  // Validate year selection - ensure endYear >= startYear if both are selected
+  // Validate year selection
   useEffect(() => {
     if (startYear && endYear && parseInt(startYear) > parseInt(endYear)) {
       setValue("endYear", startYear);
     }
   }, [startYear, endYear, setValue]);
 
-  // Memoize search parameters to prevent unnecessary re-renders
-  // const searchParams = watch();
+  // Fonction pour charger plus de films (pagination infinie)
+  const loadMoreMovies = async () => {
+    if (isLoadingMore || !hasMore) return;
 
-  // handle form submission
+    setIsLoadingMore(true);
+
+    try {
+      const formData = watch();
+      const result = await searchMoviesPaginated({
+        countryId: formData.countryId,
+        genreId: formData.genreId,
+        keywordIds: formData.keywordIds.map((k) => k.value),
+        directorId: formData.directorId,
+        startYear: formData.startYear,
+        endYear: formData.endYear,
+        type: formData.type,
+        page: currentPage + 1,
+        limit: 50,
+      });
+
+      setMovies((prev) => [...(prev || []), ...(result.movies || [])]);
+      setHasMore(result.hasMore);
+      setCurrentPage(result.currentPage);
+    } catch (error) {
+      console.error("Error loading more movies:", error);
+    } finally {
+      setIsLoadingMore(false);
+    }
+  };
+
+  // handle form submission avec searchMoviesPaginated
   const onSubmit = async (data: FormValues) => {
-    setIsLoading(true); // Show loading indicator
+    setIsLoading(true);
+
+    // Reset pagination
+    setCurrentPage(1);
+    setMovies([]);
 
     // Construire les paramètres de recherche pour l'URL
     const params = new URLSearchParams();
     if (data.countryId) params.set("countryId", data.countryId);
     if (data.genreId) params.set("genreId", data.genreId);
-    if (data.keywordIds.length > 0) {
+    if (data.keywordIds && data.keywordIds.length > 0) {
       const keywordIdsString = data.keywordIds.map((k) => k.value).join(",");
       params.set("keywordIds", keywordIdsString);
     }
@@ -149,30 +208,36 @@ export default function SearchForm({
     if (data.endYear) params.set("endYear", data.endYear);
     if (data.type) params.set("type", data.type);
 
-    // Mettre à jour l'URL sans recharger la page
     router.replace(`/movies?${params.toString()}`);
 
     try {
-      const results = await searchMovies({
+      const result = await searchMoviesPaginated({
         countryId: data.countryId,
         genreId: data.genreId,
-        keywordIds: data.keywordIds.map((keyword) => keyword.value), // Convert to array of keyword IDs
+        keywordIds: data.keywordIds?.map((keyword) => keyword.value) || [],
         directorId: data.directorId,
-        startYear: data.startYear, // Added startYear
+        startYear: data.startYear,
         endYear: data.endYear,
         type: data.type,
+        page: 1,
+        limit: 50,
       });
 
-      setMovies(results); // Update the movie list with search results
-      setIsLoading(false);
+      setMovies(result.movies || []);
+      setTotalCount(result.totalCount || 0);
+      setHasMore(result.hasMore || false);
+      setCurrentPage(1);
     } catch (error) {
       console.error("Error searching movies:", error);
-      setMovies([]); // Reset the movie list on error
+      setMovies([]);
+      setTotalCount(0);
+      setHasMore(false);
+    } finally {
       setIsLoading(false);
     }
   };
 
-  // Reset form and fetch all movies
+  // Reset form avec searchMoviesPaginated
   const handleReset = async () => {
     reset({
       countryId: "",
@@ -185,32 +250,36 @@ export default function SearchForm({
     });
 
     setIsLoading(true);
+    setCurrentPage(1);
+    setMovies([]);
 
-    // Nettoyer l'URL
     router.replace("/movies");
 
     try {
-      const results = await searchMovies({
+      const result = await searchMoviesPaginated({
         countryId: "",
         genreId: "",
-        keywordIds: [], // Pass empty array for keywords
+        keywordIds: [],
         directorId: "",
-        startYear: "", // Reset startYear
+        startYear: "",
         endYear: "",
         type: "",
-      }); // Trigger search with no filters
-      setMovies(results);
-      setIsLoading(false);
-      setVisibleCount(MOVIES_PER_PAGE); // Réinitialise l'affichage à 100 films au départ
+        page: 1,
+        limit: 50,
+      });
+
+      setMovies(result.movies || []);
+      setTotalCount(result.totalCount || 0);
+      setHasMore(result.hasMore || false);
+      setCurrentPage(1);
     } catch (error) {
       console.error("Error resetting search:", error);
-      setMovies([]); // Reset the movie list on error
+      setMovies([]);
+      setTotalCount(0);
+      setHasMore(false);
+    } finally {
       setIsLoading(false);
     }
-  };
-
-  const loadMore = () => {
-    setVisibleCount((prevCount) => prevCount + MOVIES_PER_PAGE);
   };
 
   return (
@@ -250,6 +319,7 @@ export default function SearchForm({
                 />
               </div>
             </CollapsibleSection>
+
             <CollapsibleSection title="Pays">
               <Controller
                 name="countryId"
@@ -279,6 +349,7 @@ export default function SearchForm({
                 )}
               />
             </CollapsibleSection>
+
             <CollapsibleSection title="Format">
               <Controller
                 name="type"
@@ -339,7 +410,7 @@ export default function SearchForm({
               className="w-full transition-colors duration-200 ease-in-out bg-black text-white px-4 py-2 rounded-xl hover:bg-rose-500"
               disabled={isLoading}
             >
-              Rechercher
+              {isLoading ? "Recherche..." : "Rechercher"}
             </button>
 
             <button
@@ -352,6 +423,7 @@ export default function SearchForm({
             </button>
           </div>
         </form>
+
         <div className="p-0 sm:pl-10 pt-2">
           <div className="border-l-4 text-sm border-rose-500 pl-4 py-2 pt-2 mb-6">
             {isLoading ? (
@@ -362,12 +434,18 @@ export default function SearchForm({
                   className="text-rose-500 font-semibold"
                   data-testid="results-count"
                 >
-                  {movies.length}
+                  {totalCount}
                 </span>
                 <span className="text-gray-600 ml-2">titres trouvés</span>
+                {movies && movies.length > 0 && movies.length < totalCount && (
+                  <span className="text-gray-500 ml-2">
+                    (affichage de {movies.length})
+                  </span>
+                )}
               </div>
             )}
           </div>
+
           <div className="w-full grid gap-3 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
             {isLoading ? (
               Array.from({ length: 6 }).map((_, index) => (
@@ -381,28 +459,34 @@ export default function SearchForm({
                   </div>
                 </div>
               ))
-            ) : movies.length === 0 ? (
+            ) : !movies || movies.length === 0 ? (
               <p>Aucun film trouvé</p>
             ) : (
-              movies
-                .slice(0, visibleCount)
-                .map((movie) => (
-                  <Card
-                    key={`${movie.title}-${movie.id}`}
-                    {...movie}
-                    userIsAdmin={userIsAdmin}
-                    image_url={getImageUrl(movie.image_url || "")}
-                  />
-                ))
+              movies.map((movie, index) => (
+                <Card
+                  key={`${movie.title}-${movie.id}-${index}`}
+                  {...movie}
+                  userIsAdmin={userIsAdmin}
+                  image_url={getImageUrl(movie.image_url || "")}
+                />
+              ))
             )}
           </div>
-          {visibleCount < movies.length && !isLoading && (
+          {hasMore && !isLoading && (
             <div className="flex justify-center mt-6">
               <button
-                onClick={loadMore}
+                onClick={loadMoreMovies}
+                disabled={isLoadingMore}
                 className="px-6 py-3 bg-rose-500 hover:bg-rose-600 text-white font-medium rounded-xl transition-all duration-200 flex items-center gap-2"
               >
-                Voir plus <Icon icon="mdi:chevron-down" className="size-5" />
+                {isLoadingMore ? (
+                  "Chargement..."
+                ) : (
+                  <>
+                    Voir plus{" "}
+                    <Icon icon="mdi:chevron-down" className="size-5" />
+                  </>
+                )}{" "}
               </button>
             </div>
           )}

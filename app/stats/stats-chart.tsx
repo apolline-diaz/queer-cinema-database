@@ -42,6 +42,7 @@ export default function StatsChart({ data, title }: StatsChartProps) {
     <>
       <div className="mb-10 flex xs:flex-col justify-start">
         <div className="flex flex-col">
+          <h2 className="text-black text-xl font-semibold mb-5">{title}</h2>
           <div className="flex flex-wrap gap-4 xs:w-full">
             <button
               onClick={() => setChartType("bar")}
@@ -64,7 +65,6 @@ export default function StatsChart({ data, title }: StatsChartProps) {
               Diagramme circulaire
             </button>
           </div>
-          <h2 className="text-black text-md pt-4">{title}</h2>
         </div>
       </div>
 

@@ -1,11 +1,9 @@
-import {
-  searchMovies,
-  getCountries,
-  getGenres,
-  getKeywords,
-  getReleaseYears,
-  getDirectors,
-} from "@/app/server-actions/movies/search-movies";
+import { searchMoviesPaginated } from "@/app/server-actions/movies/search-movies";
+import { getCountries } from "@/app/server-actions/countries/get-countries";
+import { getGenres } from "@/app/server-actions/genres/get-genres";
+import { getKeywords } from "@/app/server-actions/keywords/get-keywords";
+import { getDirectors } from "@/app/server-actions/directors/get-directors";
+import { getReleaseYears } from "../server-actions/movies/get-release-years";
 import { isAdmin } from "@/utils/is-user-admin";
 import { getMoviesByWord } from "../server-actions/movies/get-movies-by-word";
 import BackButton from "../components/back-button";
@@ -16,7 +14,6 @@ export default async function MoviesPage({
 }: {
   searchParams?: { [key: string]: string | string[] | undefined };
 }) {
-  // Get keyword from URL parameters if it exists
   const userIsAdmin = await isAdmin();
 
   // Extraire tous les paramètres d'URL pour le searchform
@@ -34,14 +31,22 @@ export default async function MoviesPage({
   const searchParam = (searchParams?.search as string) || "";
   const searchModeParam = (searchParams?.searchMode as string) || "";
 
-  // Récupérer les films selon le mode de recherche
-  let initialMovies;
+  // ADAPTATION: Utiliser searchMoviesPaginated au lieu de searchMovies
+  let initialResult;
 
   if (searchModeParam === "field" || (!searchModeParam && searchParam)) {
-    initialMovies = await getMoviesByWord(searchParam);
+    // Si vous avez une version paginée de getMoviesByWord, utilisez-la
+    // Sinon, adaptez cette partie selon votre logique
+    const movies = await getMoviesByWord(searchParam);
+    initialResult = {
+      movies: movies || [],
+      totalCount: movies?.length || 0,
+      hasMore: false, // Pas de pagination pour la recherche par mot pour l'instant
+      currentPage: 1,
+    };
   } else {
-    // Sinon récupérer tous les films
-    initialMovies = await searchMovies({
+    // Utiliser la fonction paginée
+    initialResult = await searchMoviesPaginated({
       countryId,
       genreId,
       keywordIds,
@@ -49,14 +54,51 @@ export default async function MoviesPage({
       startYear,
       endYear,
       type,
+      page: 1,
+      limit: 100,
     });
   }
 
-  const countries = await getCountries();
-  const genres = await getGenres();
-  const keywords = await getKeywords();
-  const directors = await getDirectors();
-  const releaseYears = await getReleaseYears();
+  // Récupérer les données pour les filtres
+  const [
+    countriesData,
+    genresData,
+    keywordsData,
+    directorsData,
+    releaseYearsData,
+  ] = await Promise.all([
+    getCountries(),
+    getGenres(),
+    getKeywords(),
+    getDirectors(),
+    getReleaseYears(),
+  ]);
+
+  // Transformation des données pour le format attendu par SearchForm
+  const countries = countriesData.map((country) => ({
+    value: country.id.toString(),
+    label: country.name,
+  }));
+
+  const genres = genresData.map((genre) => ({
+    value: genre.id.toString(),
+    label: genre.name || "",
+  }));
+
+  const keywords = keywordsData.map((keyword) => ({
+    value: keyword.value,
+    label: keyword.label,
+  }));
+
+  const directors = directorsData.map((director) => ({
+    value: director.id.toString(),
+    label: director.name || "",
+  }));
+
+  const releaseYears = releaseYearsData.map((year) => ({
+    value: year,
+    label: year,
+  }));
 
   return (
     <div className="h-full w-full justify-center items-center text-white">
@@ -67,7 +109,9 @@ export default async function MoviesPage({
           <div className="flex flex-col gap-5 w-full">
             <SearchForm
               userIsAdmin={userIsAdmin}
-              initialMovies={initialMovies}
+              initialMovies={initialResult.movies}
+              initialTotalCount={initialResult.totalCount}
+              initialHasMore={initialResult.hasMore}
               countries={countries}
               genres={genres}
               keywords={keywords}
