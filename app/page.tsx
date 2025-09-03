@@ -6,7 +6,7 @@ import { getCollections } from "@/app/server-actions/lists/get-collections";
 
 import Link from "next/link";
 import { Icon } from "@iconify/react";
-import React, { useRef } from "react";
+import React from "react";
 import { LatestMoviesCarousel } from "./components/carousel";
 
 export const revalidate = 3600; // revalidate every hour (Incremental Static Regeneration)

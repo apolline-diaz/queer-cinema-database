@@ -3,7 +3,6 @@
 import * as React from "react";
 import Link from "next/link";
 import Autoplay from "embla-carousel-autoplay";
-// import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
   CarouselContent,
@@ -12,27 +11,33 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { getImageUrl } from "@/utils";
+import { Movie } from "../types/movie";
+import { Prisma } from "@prisma/client";
 
-interface Movie {
-  id: number;
-  title: string;
-  description?: string | null;
-  release_date?: string | null;
-  image_url?: string | null;
-  movies_directors?: Array<{
-    directors: {
-      name: string;
+type MovieWithIncludes = Prisma.moviesGetPayload<{
+  include: {
+    movies_genres: {
+      include: { genres: true };
     };
-  }>;
-}
+    movies_directors: {
+      include: { directors: true };
+    };
+    movies_countries: {
+      include: { countries: true };
+    };
+    movies_keywords: {
+      include: { keywords: true };
+    };
+  };
+}>;
 
 interface LatestMoviesCarouselProps {
-  movies: Movie[];
+  movies: MovieWithIncludes[];
 }
 
 export function LatestMoviesCarousel({ movies }: LatestMoviesCarouselProps) {
   const plugin = React.useRef(
-    Autoplay({ delay: 3000, stopOnInteraction: false })
+    Autoplay({ delay: 4000, stopOnInteraction: false })
   );
 
   // Prendre seulement les 3 premiers films
@@ -65,10 +70,6 @@ export function LatestMoviesCarousel({ movies }: LatestMoviesCarouselProps) {
                     {movie.title}
                   </h3>
                   <p className="text-md font-medium flex flex-wrap gap-2 text-white">
-                    {movie?.movies_directors
-                      ?.map((item) => item.directors.name)
-                      .filter(Boolean) // Filtre les noms null
-                      .join(", ") || ""}
                     <span className="text-md font-light">
                       {movie.release_date || ""}
                     </span>
