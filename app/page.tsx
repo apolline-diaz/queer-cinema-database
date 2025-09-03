@@ -6,6 +6,8 @@ import { getCollections } from "@/app/server-actions/lists/get-collections";
 
 import Link from "next/link";
 import { Icon } from "@iconify/react";
+import React, { useRef } from "react";
+import { LatestMoviesCarousel } from "./components/carousel";
 
 export const revalidate = 3600; // revalidate every hour (Incremental Static Regeneration)
 
@@ -15,7 +17,9 @@ export default async function HomePage() {
     const latestMovies = await getLatestMovies();
     const collections = await getCollections();
 
-    const [featuredLatestMovie, ...otherLatestMovies] = latestMovies;
+    // Prendre les films pour le carrousel (3 premiers) et le reste pour la grille
+    const carouselMovies = latestMovies.slice(0, 3);
+    const otherLatestMovies = latestMovies.slice(3);
 
     return (
       <main className="w-full bg-white">
@@ -34,51 +38,27 @@ export default async function HomePage() {
               Nouveautés
             </h2>
           </div>
-          {/* First movie highlight */}
-          {featuredLatestMovie && (
-            <div className="relative w-full h-[400px] mb-5">
-              <Link
-                href={`/movies/${featuredLatestMovie.id}`}
-                className="h-full w-full overflow-hidden"
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={getImageUrl(featuredLatestMovie.image_url || "")}
-                  alt={featuredLatestMovie.title}
-                  className="w-full h-full object-cover rounded-xl"
-                />
-                <div className="bg-black/10  absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black/100 z-10 rounded-xl" />
-                <div className="absolute bottom-10 px-10 flex flex-col gap-1 text-left z-20">
-                  <h3 className="text-2xl font-medium">
-                    {featuredLatestMovie.title}
-                  </h3>
-                  <p className="text-md font-medium flex flex-wrap gap-2">
-                    {featuredLatestMovie?.movies_directors
-                      ?.map((item) => item.directors.name)
-                      .join(", ") || ""}
-                    <span className="text-md font-light">
-                      {featuredLatestMovie.release_date || ""}
-                    </span>{" "}
-                  </p>
 
-                  <p className="line-clamp-6 sm:line-clamp-5 w-3/4 overflow-hidden text-md font-extralight">
-                    {featuredLatestMovie.description || ""}
-                  </p>
-                </div>
-              </Link>
+          {/* Carrousel des 3 derniers films */}
+          {carouselMovies.length > 0 && (
+            <div className="mb-5">
+              <LatestMoviesCarousel movies={carouselMovies} />
             </div>
           )}
 
-          <div className="flex gap-3 overflow-x-auto pb-2">
-            {otherLatestMovies.map((movie) => (
-              <HomeCard
-                key={`${movie.title}-${movie.id}`}
-                {...movie}
-                release_date={movie.release_date || ""}
-                image_url={getImageUrl(movie.image_url || "")}
-              />
-            ))}
-          </div>
+          {/* Grille des autres films récents */}
+          {otherLatestMovies.length > 0 && (
+            <div className="flex gap-3 overflow-x-auto pb-2">
+              {otherLatestMovies.map((movie) => (
+                <HomeCard
+                  key={`${movie.title}-${movie.id}`}
+                  {...movie}
+                  release_date={movie.release_date || ""}
+                  image_url={getImageUrl(movie.image_url || "")}
+                />
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="pl-10">

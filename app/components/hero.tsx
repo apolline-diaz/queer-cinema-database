@@ -29,17 +29,19 @@ export default function Hero({ id, title, image_url }: CardProps) {
   return (
     <>
       <div className="relative bg-rose-50 w-full overflow-hidden">
-        <div className="relative w-full overflow-hidden h-[65vh]">
+        <div className="relative w-full overflow-hidden h-[70vh]">
           <Image
             src={getImageUrl(image_url)}
             alt={title}
             className="object-cover h-full w-full"
             title={title}
           />
-          <div className="absolute inset-0 flex flex-col justify-center items-center px-10 gap-y-8">
+          <div className="mt-20 absolute inset-0 flex flex-col justify-center items-center px-10 gap-y-8">
             <div className="relative w-4/5 sm:text-7xl text-5xl">
               <h2 className="text-center font-bold">
-                <span className="text-white uppercase">Films & Archives </span>
+                <span className="text-white uppercase mt-2">
+                  Films & Archives{" "}
+                </span>
                 {/* <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-yellow-300 via-green-400 via-blue-500 to-violet-500"> */}
                 <span className="text-transparent font-bold bg-clip-text bg-gradient-to-r from-rose-500  via-blue-500  to-yellow-400">
                   LGBTQI+

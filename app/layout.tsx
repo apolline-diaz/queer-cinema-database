@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(getCanonicalUrl()),
   title: "Queer Cinema Database | Films et Archives LGBTQI+",
   description:
-    "QueerCinema.fr : base de données mondiale dédiée aux films et archives LGBTQI+. Explorez la diversité et la richesse des cinémas queer.",
+    "Une plateforme dédiée aux films et archives LGBTQI+ du monde entier. Explorez la diversité et la richesse des cinémas queer.",
   keywords: [
     "cinéma queer",
     "films LGBTQI+",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Queer Cinema Database",
     description:
-      "Base de données mondiale dédiée aux films et archives LGBTQI+. Explorez la diversité et la richesse des cinémas queer.",
+      "Plateforme dédiée aux films et archives LGBTQI+ du monde entier. Explorez la diversité et la richesse des cinémas queer.",
     url: getCanonicalUrl(),
     siteName: "Queer Cinema",
     images: ["/assets/diary.svg"],
