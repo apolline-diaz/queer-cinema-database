@@ -1,19 +1,16 @@
-"use server";
-
-import { createClient } from "@/utils/supabase/server";
-
-export type TVLinks = {
-  featuredId: string | null;
-  items: Record<string, { url: string; label?: string; addedAt: string }[]>;
-};
+import { createBrowserClient } from "@supabase/ssr";
 
 const BUCKET = "tv-links";
 const KEY = "links.json";
 
-export async function readLinks(): Promise<TVLinks> {
-  const supabase = createClient();
+export async function readLinks() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+  const supabase = createBrowserClient(supabaseUrl, supabaseAnonKey);
+
   const { data, error } = await supabase.storage.from(BUCKET).download(KEY);
-  if (error) throw error;
+  if (error) throw new Error("Can't read links.json: " + error.message);
+
   const text = await data.text();
-  return JSON.parse(text) as TVLinks;
+  return JSON.parse(text);
 }
