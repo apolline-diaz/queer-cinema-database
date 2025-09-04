@@ -46,7 +46,7 @@ export function TVClient({
         )}
 
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/10" />
-        <div className="relative z-10 max-w-5xl mx-auto px-6 py-8 flex flex-col justify-end h-full">
+        <div className="relative z-10 max-w-5xl mx-auto px-6 py-15 flex flex-col justify-end h-full">
           <h1 className="text-3xl md:text-5xl font-bold">{current.title}</h1>
           <div className="mt-2 flex flex-wrap gap-4 text-sm opacity-90">
             <InfoRow label="Réal." value={current.directors} />
@@ -54,6 +54,7 @@ export function TVClient({
             <InfoRow label="Durée" value={current.runtime} />
             <InfoRow label="Langue" value={current.language} />
           </div>
+          <p className="text-sm font-medium">{current.description}</p>
 
           {/* Boutons de visionnage */}
           <div className="mt-4 flex flex-wrap gap-2">
@@ -79,7 +80,7 @@ export function TVClient({
             <button
               key={m.id}
               onClick={() => setCurrentId(m.id)}
-              className="group relative rounded overflow-hidden border border-white/10"
+              className="group relative rounded-xl overflow-hidden border border-white/10"
             >
               {m.image_url ? (
                 <div className="aspect-[2/3] relative">
@@ -93,7 +94,7 @@ export function TVClient({
               ) : (
                 <div className="aspect-[2/3] bg-neutral-800" />
               )}
-              <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/70 to-transparent text-sm">
+              <div className="absolute bottom-0 left-0 right-0 p-2 text-left bg-gradient-to-t from-black/70 to-transparent text-sm fond-semibold">
                 {m.title}
               </div>
             </button>
