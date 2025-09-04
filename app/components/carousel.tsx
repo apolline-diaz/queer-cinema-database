@@ -66,7 +66,7 @@ export function LatestMoviesCarousel({ movies }: LatestMoviesCarouselProps) {
                 />
                 <div className="bg-black/10 absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black/100 z-10 rounded-xl" />
                 <div className="absolute bottom-8 px-8 flex flex-col gap-1 text-left z-20">
-                  <h3 className="text-2xl font-medium text-white w-3/4">
+                  <h3 className="text-2xl font-medium text-white w-3/4 sm:w-1/2">
                     {movie.title}
                   </h3>
                   <p className="text-md font-medium flex flex-wrap gap-2 text-white">
@@ -78,7 +78,7 @@ export function LatestMoviesCarousel({ movies }: LatestMoviesCarouselProps) {
                       {movie.release_date || ""}
                     </span>
                   </p>
-                  <p className="line-clamp-4 sm:text-left w-full sm:w-3/4 overflow-hidden text-md font-extralight text-white">
+                  <p className="line-clamp-3 sm:text-left w-full sm:w-1/2 overflow-hidden text-md font-extralight text-white">
                     {movie.description || ""}
                   </p>
                 </div>
