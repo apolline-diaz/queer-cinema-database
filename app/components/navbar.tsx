@@ -249,7 +249,15 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                         Films
                       </Link>
                     </li>
-
+                    <li
+                      className={
+                        pathname === "/watch"
+                          ? activeLinkClass
+                          : normalLinkClass
+                      }
+                    >
+                      <Link href="/movies">Visionner</Link>
+                    </li>
                     <li
                       className={
                         isActive("/stats") ? activeLinkClass : normalLinkClass
@@ -286,7 +294,13 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                 >
                   <Link href="/movies">Films</Link>
                 </li>
-
+                <li
+                  className={
+                    pathname === "/watch" ? activeLinkClass : normalLinkClass
+                  }
+                >
+                  <Link href="/movies">Visionner</Link>
+                </li>
                 <li
                   className={
                     isActive("/stats") ? activeLinkClass : normalLinkClass
