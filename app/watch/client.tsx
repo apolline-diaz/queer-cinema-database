@@ -51,35 +51,36 @@ export function TVClient({
           <h1 className="text-3xl md:text-5xl font-bold mb-2">
             {current.title}
           </h1>
-          <div className="mt-2 flex flex-wrap space-x-2 text-sm opacity-90">
+          <div className="mt-2 flex flex-wrap gap-3 text-sm opacity-90">
             <InfoRow label="Réal." value={current.directors} />
             <InfoRow label="Année" value={current.release_date} />
             <InfoRow label="Durée" value={current.runtime} />
             <InfoRow label="Langue" value={current.language} />
           </div>
-          <p className="text-sm font-medium py-4 line-clamp-3 truncate">
+          <p className="text-sm font-medium py-4 line-clamp-3 line-clamp-">
             {current.description}
           </p>
           <Link
             href={`/movies/${current.id}`}
-            className="mt-4 px-5 py-2 hover:border-white hover:text-white text-rose-500 border border-rose-500 rounded-xl transition-colors duration-200"
+            className="inline-block mt-4 px-5 py-2 border border-rose-500 text-rose-500 rounded-xl hover:border-white hover:text-white transition-colors duration-200"
           >
             Voir la fiche
           </Link>
-
           {/* Boutons de visionnage */}
-          <div className="mt-4 flex flex-wrap gap-2">
-            <p className="font-semibold text-sm">Voir le film :</p>
-            {current.links.map((l: any) => (
-              <a
-                key={l.url}
-                href={l.url}
-                target="_blank"
-                className="px-4 py-2 bg-white text-black hover:text-white hover:bg-rose-900 rounded-xl hover:opacity-90"
-              >
-                {l.label || "Voir le film"}
-              </a>
-            ))}
+          <div className="flex flex-col">
+            <p className="font-semibold text-sm mt-2 mb-4">Voir le film :</p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {current.links.map((l: any) => (
+                <a
+                  key={l.url}
+                  href={l.url}
+                  target="_blank"
+                  className="transition-colors duration-200 px-4 py-2 bg-white text-black hover:text-white hover:bg-gray-800 rounded-xl hover:opacity-90"
+                >
+                  {l.label || "Voir le film"}
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </section>
