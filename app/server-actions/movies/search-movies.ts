@@ -114,7 +114,7 @@ export async function searchMoviesPaginated({
               image_url: true,
               release_date: true,
             },
-            orderBy: { created_at: "desc" },
+            orderBy: { release_date: "desc" },
             skip,
             take: limit,
           }),
