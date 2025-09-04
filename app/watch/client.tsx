@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import Image from "next/image";
 import { getImageUrl } from "@/utils";
+import Link from "next/link";
 
 function InfoRow({ label, value }: { label: string; value?: string | null }) {
   if (!value) return null;
@@ -55,6 +56,12 @@ export function TVClient({
             <InfoRow label="Langue" value={current.language} />
           </div>
           <p className="text-sm font-medium">{current.description}</p>
+          <Link
+            href={`/movies/${current.id}`}
+            className="inline-block mt-4 px-5 py-2 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 transition-colors duration-200"
+          >
+            Voir la fiche
+          </Link>
 
           {/* Boutons de visionnage */}
           <div className="mt-4 flex flex-wrap gap-2">
@@ -94,7 +101,7 @@ export function TVClient({
               ) : (
                 <div className="aspect-[2/3] bg-neutral-800" />
               )}
-              <div className="absolute bottom-0 left-0 right-0 p-2 text-left bg-gradient-to-t from-black/70 to-transparent text-sm fond-semibold">
+              <div className="absolute bottom-0 left-0 right-0 p-2 text-left bg-gradient-to-t from-black/70 to-transparent text-md fond-semibold">
                 {m.title}
               </div>
             </button>

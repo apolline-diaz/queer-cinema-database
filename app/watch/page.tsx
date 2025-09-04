@@ -33,6 +33,7 @@ export default async function TVPage() {
     .map((m) => ({
       id: m!.id,
       title: m!.title,
+      description: m!.description || "",
       image_url: m!.image_url || undefined,
       release_date: m!.release_date || undefined,
       language: m!.language || undefined,
