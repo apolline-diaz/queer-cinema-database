@@ -47,7 +47,7 @@ export function TVClient({
         )}
 
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/10" />
-        <div className="relative z-10 max-w-5xl mx-auto px-6 py-15 flex flex-col justify-end h-full">
+        <div className="relative z-10 max-w-5xl mx-auto px-6 pt-32 pb-15 flex flex-col justify-end h-full">
           <h1 className="text-3xl md:text-5xl font-bold mb-2">
             {current.title}
           </h1>
