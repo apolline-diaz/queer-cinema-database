@@ -48,31 +48,34 @@ export function TVClient({
 
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/10" />
         <div className="relative z-10 max-w-5xl mx-auto px-6 py-15 flex flex-col justify-end h-full">
-          <h1 className="text-3xl md:text-5xl font-bold">{current.title}</h1>
-          <div className="mt-2 flex flex-wrap gap-4 text-sm opacity-90">
+          <h1 className="text-3xl md:text-5xl font-bold mb-2">
+            {current.title}
+          </h1>
+          <div className="mt-2 flex flex-wrap space-x-2 text-sm opacity-90">
             <InfoRow label="Réal." value={current.directors} />
             <InfoRow label="Année" value={current.release_date} />
             <InfoRow label="Durée" value={current.runtime} />
             <InfoRow label="Langue" value={current.language} />
           </div>
-          <p className="text-sm font-medium py-4 line-clamp-3">
+          <p className="text-sm font-medium py-4 line-clamp-3 truncate">
             {current.description}
           </p>
           <Link
             href={`/movies/${current.id}`}
-            className="inline-block mt-4 px-5 py-2 hover:bg-rose-500 hover:text-white text-rose-500 shadow-md border border-rose-500 rounded-xl transition-colors duration-200"
+            className="mt-4 px-5 py-2 hover:border-white hover:text-white text-rose-500 border border-rose-500 rounded-xl transition-colors duration-200"
           >
             Voir la fiche
           </Link>
 
           {/* Boutons de visionnage */}
           <div className="mt-4 flex flex-wrap gap-2">
+            <p className="font-semibold text-sm">Voir le film :</p>
             {current.links.map((l: any) => (
               <a
                 key={l.url}
                 href={l.url}
                 target="_blank"
-                className="px-4 py-2 bg-white text-black hover:bg-rose-900 rounded-xl hover:opacity-90"
+                className="px-4 py-2 bg-white text-black hover:text-white hover:bg-rose-900 rounded-xl hover:opacity-90"
               >
                 {l.label || "Voir le film"}
               </a>
