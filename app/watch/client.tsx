@@ -68,7 +68,7 @@ export function TVClient({
           </Link>
           {/* Boutons de visionnage */}
           <div className="flex flex-col">
-            <p className="font-semibold text-sm mt-2 mb-3">Voir le film :</p>
+            <p className="font-semibold text-sm mt-4 mb-3">Voir le film :</p>
             <div className="flex flex-wrap gap-2">
               {current.links.map((l: any) => (
                 <a
