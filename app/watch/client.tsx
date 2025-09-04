@@ -55,10 +55,12 @@ export function TVClient({
             <InfoRow label="Durée" value={current.runtime} />
             <InfoRow label="Langue" value={current.language} />
           </div>
-          <p className="text-sm font-medium">{current.description}</p>
+          <p className="text-sm font-medium py-4 line-clamp-3">
+            {current.description}
+          </p>
           <Link
             href={`/movies/${current.id}`}
-            className="inline-block mt-4 px-5 py-2 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 transition-colors duration-200"
+            className="inline-block mt-4 px-5 py-2 hover:bg-rose-500 hover:text-white text-rose-500 shadow-md border border-rose-500 rounded-xl transition-colors duration-200"
           >
             Voir la fiche
           </Link>
@@ -70,7 +72,7 @@ export function TVClient({
                 key={l.url}
                 href={l.url}
                 target="_blank"
-                className="px-4 py-2 bg-white text-black rounded hover:opacity-90"
+                className="px-4 py-2 bg-white text-black hover:bg-rose-900 rounded-xl hover:opacity-90"
               >
                 {l.label || "Voir le film"}
               </a>
@@ -101,7 +103,7 @@ export function TVClient({
               ) : (
                 <div className="aspect-[2/3] bg-neutral-800" />
               )}
-              <div className="absolute bottom-0 left-0 right-0 p-2 text-left bg-gradient-to-t from-black/70 to-transparent text-md fond-semibold">
+              <div className="absolute bottom-0 left-0 right-0 p-4 text-left bg-gradient-to-t from-black/70 to-transparent text-md fond-bold">
                 {m.title}
               </div>
             </button>
