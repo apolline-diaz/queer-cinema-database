@@ -57,19 +57,19 @@ export function TVClient({
             <InfoRow label="Durée" value={current.runtime} />
             <InfoRow label="Langue" value={current.language} />
           </div>
-          <p className="text-sm font-medium py-4 line-clamp-3 line-clamp-">
+          <p className="text-sm font-medium py-4 line-clamp-3">
             {current.description}
           </p>
           <Link
             href={`/movies/${current.id}`}
-            className="inline-block mt-4 px-5 py-2 border border-rose-500 text-rose-500 rounded-xl hover:border-white hover:text-white transition-colors duration-200"
+            className="inline-flex mt-4 px-5 py-2 border border-rose-500 text-rose-500 rounded-xl hover:border-white hover:text-white transition-colors duration-200 w-fit"
           >
             Voir la fiche
           </Link>
           {/* Boutons de visionnage */}
           <div className="flex flex-col">
-            <p className="font-semibold text-sm mt-2 mb-4">Voir le film :</p>
-            <div className="mt-4 flex flex-wrap gap-2">
+            <p className="font-semibold text-sm mt-2 mb-3">Voir le film :</p>
+            <div className="flex flex-wrap gap-2">
               {current.links.map((l: any) => (
                 <a
                   key={l.url}
