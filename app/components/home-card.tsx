@@ -22,7 +22,7 @@ export default function HomeCard({
       <Link href={`/movies/${id}`}>
         <div className="h-full">
           {/* Responsive width, full on small screens, fixed on larger ones */}
-          <div className="group overflow-hidden rounded-xl relative w-full sm:w-[300px]  h-auto min-h-[300px] sm:min-h-0 sm:h-58 bg-center aspect-[3/4] sm:aspect-[16/9]">
+          <div className="group overflow-hidden rounded-xl relative w-full sm:w-[300px]  h-auto min-h-[250px] sm:min-h-0 sm:h-58 bg-center aspect-[3/4] sm:aspect-[16/9]">
             <Image
               src={getImageUrl(image_url)}
               alt={title}

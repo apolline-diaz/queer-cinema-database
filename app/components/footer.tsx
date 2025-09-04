@@ -8,7 +8,7 @@ export default function Footer() {
         {/* Logo et description */}
         <div className="mb-6 md:mb-0 text-center md:text-left">
           <h1 className="text-lg font-semibold">queer cinema database</h1>
-          <p className="mt-2 max-w-xs">
+          <p className="mt-2 font-light max-w-xs">
             Une sélection de films et d&apos;archives LGBTQI+ pour mettre en
             lumière la diversité des regards et récits queer.
           </p>
@@ -22,9 +22,6 @@ export default function Footer() {
           <Link href="/contact" className="hover:text-pink-500 transition">
             Contact
           </Link>
-          <Link href="/privacy" className="hover:text-pink-500 transition">
-            Politiques de confidentialité
-          </Link>
           <Link
             href="https://www.instagram.com/queercinema.db/"
             target="_blank"
@@ -33,10 +30,16 @@ export default function Footer() {
           >
             <Icon icon="lucide:instagram" className="size-5" />
           </Link>
+          <Link
+            href="/privacy"
+            className="hover:text-pink-500 transition text-xs"
+          >
+            Politiques de confidentialité
+          </Link>
         </div>
       </div>
 
-      <div className="mt-6 text-center font-light text-gray-700 text-sm">
+      <div className="mt-6 text-center font-light text-gray-700 text-xs">
         © 2025 Queer Cinema Database. Tous droits réservés.
       </div>
     </footer>
