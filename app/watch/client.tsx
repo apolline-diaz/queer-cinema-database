@@ -84,7 +84,7 @@ export function TVClient({
               {m.image_url ? (
                 <div className="aspect-[2/3] relative">
                   <Image
-                    src={m.image_url}
+                    src={getImageUrl(m.image_url)}
                     alt={m.title}
                     fill
                     className="object-cover group-hover:scale-[1.02] transition"
