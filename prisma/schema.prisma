@@ -129,7 +129,9 @@ model movies {
   movies_countries movies_countries[]
   movies_directors movies_directors[]
   movies_genres    movies_genres[]
-  movies_keywords  movies_keywords[]  
+  movies_keywords  movies_keywords[] 
+  movies_links movies_links[]
+
 }
 
 model users {
@@ -139,4 +141,26 @@ model users {
   created_at DateTime @db.Timestamp(6)
   role       String   @default("user") @db.VarChar // Ajoutez ce champ pour gérer les rôles
   lists      lists[]
+}
+
+model streaming_links {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  movie_id   String   @db.Uuid
+  url        String   @db.VarChar
+  platform   String   @db.VarChar // youtube, vod, internet_archive, etc.
+  isActive   Boolean  @default(true)
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+
+}
+
+
+model movies_links {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  movie_id   String   @db.Uuid
+  url        String   @db.VarChar
+  platform   String   @db.VarChar  // youtube, vod, internet_archive, etc.
+  isActive   Boolean  @default(true)
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+
+  movie movies @relation(fields: [movie_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
