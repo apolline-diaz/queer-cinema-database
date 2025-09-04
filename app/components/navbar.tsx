@@ -256,7 +256,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                           : normalLinkClass
                       }
                     >
-                      <Link href="/movies">Visionner</Link>
+                      <Link href="/watch">Visionner</Link>
                     </li>
                     <li
                       className={
@@ -299,7 +299,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                     pathname === "/watch" ? activeLinkClass : normalLinkClass
                   }
                 >
-                  <Link href="/movies">Visionner</Link>
+                  <Link href="/watch">Visionner</Link>
                 </li>
                 <li
                   className={
