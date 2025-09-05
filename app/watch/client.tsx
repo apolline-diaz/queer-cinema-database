@@ -31,9 +31,9 @@ export function TVClient({
   const others = initialData.filter((m) => m.id !== currentId);
 
   return (
-    <div className="min-h-dvh bg-black text-white">
+    <div className="h-screen flex flex-col bg-black text-white">
       {/* Hero */}
-      <section className="relative h-[70dvh] w-full">
+      <section className="flex-shrink-0 relative w-full">
         {current.image_url ? (
           <Image
             src={getImageUrl(current.image_url)}
@@ -86,10 +86,10 @@ export function TVClient({
         </div>
       </div>
       {/* Rail / vignettes */}
-      <section className="max-w-6xl mx-auto px-6 py-6">
+      <section className="flex-1 overflow-hidden max-w-6xl mx-auto px-6 py-6">
         <h2 className="text-lg font-semibold mb-3">Aussi disponible</h2>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+        <div className="h-full overflow-y-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
           {others.length === 0
             ? // Skeletons pendant le "chargement"
               Array.from({ length: 5 }).map((_, index) => (
