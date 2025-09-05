@@ -1,7 +1,7 @@
 import { readLinks } from "@/lib/tv-links";
-import { prisma } from "@/lib/prisma";
 import { Suspense } from "react";
 import { TVClient } from "./client";
+import { getMoviesToWatch } from "@/app/server-actions/movies/get-movies-to-watch";
 
 export default async function TVPage() {
   const tv = await readLinks();
@@ -10,14 +10,7 @@ export default async function TVPage() {
     return <div className="p-8">Aucun film disponible pour le moment.</div>;
   }
 
-  const movies = await prisma.movies.findMany({
-    where: { id: { in: ids } },
-    include: {
-      movies_directors: { include: { directors: true } },
-      movies_genres: { include: { genres: true } },
-      movies_countries: { include: { countries: true } },
-    },
-  });
+  const movies = await getMoviesToWatch(ids);
 
   // map + featured fallback
   const map = new Map(movies.map((m) => [m.id, m]));
