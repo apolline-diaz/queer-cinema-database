@@ -46,7 +46,7 @@ export function TVClient({
           <div className="absolute inset-0 bg-neutral-800" />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
-        <div className="relative z-10 max-w-5xl mx-auto px-6 pb-8 flex flex-col justify-end h-full">
+        <div className="relative z-10 max-w-5xl mx-auto px-6 pb-4 flex flex-col justify-end h-full">
           <h1 className="text-3xl md:text-5xl font-bold mb-2">
             {current.title}
           </h1>
@@ -58,7 +58,7 @@ export function TVClient({
           </div>
         </div>
       </section>
-      <p className="text-sm font-medium py-4 line-clamp-3">
+      <p className="text-sm font-medium py-4 px-6 line-clamp-3">
         {current.description}
       </p>
       <Link
