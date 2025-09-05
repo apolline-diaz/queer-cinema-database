@@ -8,7 +8,7 @@ import Link from "next/link";
 function InfoRow({ label, value }: { label: string; value?: string | null }) {
   if (!value) return null;
   return (
-    <div className="text-sm opacity-80">
+    <div className="text-sm opacity-80 mr-2">
       <span className="opacity-60">{label}:</span> {value}
     </div>
   );
@@ -46,11 +46,11 @@ export function TVClient({
           <div className="absolute inset-0 bg-neutral-800" />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
-        <div className="relative z-10 max-w-5xl mx-auto px-6 pb-4 flex flex-col justify-end h-full">
+        <div className="relative z-10 max-w-5xl mx-auto px-6 flex flex-col justify-end h-full">
           <h1 className="text-3xl md:text-5xl font-bold mb-2">
             {current.title}
           </h1>
-          <div className="mt-2 flex flex-wrap gap-3 text-sm opacity-90">
+          <div className="mt-2 flex flex-wrap gap-1 text-sm opacity-90">
             <InfoRow label="Réal." value={current.directors} />
             <InfoRow label="Année" value={current.release_date} />
             <InfoRow label="Durée" value={current.runtime} />
@@ -58,8 +58,8 @@ export function TVClient({
           </div>
         </div>
       </section>
-      <div className="px-6">
-        <p className="text-sm font-medium py-4 line-clamp-3">
+      <div className="max-w-5xl mx-auto px-6 py-6">
+        <p className="text-sm font-medium pb-4 line-clamp-3">
           {current.description}
         </p>
         <Link
@@ -88,30 +88,44 @@ export function TVClient({
       {/* Rail / vignettes */}
       <section className="max-w-6xl mx-auto px-6 py-6">
         <h2 className="text-lg font-semibold mb-3">Aussi disponible</h2>
+
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
-          {others.map((m) => (
-            <button
-              key={m.id}
-              onClick={() => setCurrentId(m.id)}
-              className="group relative rounded-xl overflow-hidden border border-white/10"
-            >
-              {m.image_url ? (
-                <div className="aspect-[2/3] relative">
-                  <Image
-                    src={getImageUrl(m.image_url)}
-                    alt={m.title}
-                    fill
-                    className="object-cover group-hover:scale-[1.02] transition"
-                  />
+          {others.length === 0
+            ? // Skeletons pendant le "chargement"
+              Array.from({ length: 5 }).map((_, index) => (
+                <div
+                  key={index}
+                  className="animate-pulse bg-neutral-800 aspect-[2/3] rounded-xl"
+                >
+                  <div className="absolute bottom-0 left-0 right-0 p-4">
+                    <div className="h-5 bg-neutral-700 rounded w-3/4 mb-2"></div>
+                    <div className="h-4 bg-neutral-700 rounded w-1/2"></div>
+                  </div>
                 </div>
-              ) : (
-                <div className="aspect-[2/3] bg-neutral-800" />
-              )}
-              <div className="absolute bottom-0 left-0 right-0 p-4 text-left bg-gradient-to-t from-black/70 to-transparent text-md fond-bold">
-                {m.title}
-              </div>
-            </button>
-          ))}
+              ))
+            : others.map((m) => (
+                <button
+                  key={m.id}
+                  onClick={() => setCurrentId(m.id)}
+                  className="group relative rounded-xl overflow-hidden"
+                >
+                  <div className="aspect-[2/3] relative">
+                    {m.image_url ? (
+                      <Image
+                        src={getImageUrl(m.image_url)}
+                        alt={m.title}
+                        fill
+                        className="object-cover group-hover:scale-[1.02] transition"
+                      />
+                    ) : (
+                      <div className="aspect-[2/3] bg-neutral-800" />
+                    )}
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 p-4 text-left bg-gradient-to-t from-black/70 to-transparent text-md font-bold">
+                    {m.title}
+                  </div>
+                </button>
+              ))}
         </div>
       </section>
     </div>
