@@ -50,9 +50,7 @@ export default function AboutPage() {
                 travers le monde.
                 <br /> Ce projet est né en France et le travail de recherche se
                 fait depuis cette localisation.
-                <br /> Un intérêt particulier est porté à la période des années
-                90 et 2000.
-                <br /> <br />
+                <br />
                 <span className="italic font-light text-xs">
                   Les films érotiques et pornographiques mainstream ne sont pas
                   traités.
@@ -96,23 +94,6 @@ export default function AboutPage() {
                 L'identité de genre et l'orientation des réalisateur-ices ou
                 leur profession n'est pas spécifiée car elle ne peut pas être
                 vérifiée et peut changer.
-              </p>
-            </div>
-            <div className="bg-rose-50 rounded-xl p-5">
-              <h3 className="font-bold mb-2">Les ressources</h3>
-              <p className="font-light text-black">
-                Les informations des films sont tirées de sites et
-                d'organisations dédiés au cinéma tels que :
-                <br /> - Plateformes communautaires : Letterboxd, Mubi, Tënk,
-                SensCritique, AlloCiné
-                <br /> - Plateformes VOD : Mubi, Tënk
-                <br /> - Bases de données : The Movie Database, IMDB, UniFrance,
-                Film documentaire
-                <br /> - Distributeurs : Frameline, Women Make Movies, Vucavu,
-                Video Data Bank, VTape, CFMDC, Optimale, OutPlay
-                <br /> - Festivals : Chéries Chéris, Cineffable, Pink Screens
-                <br /> - Archives nationales : BFI, UCLA, INA, Centre Simone de
-                Beauvoir
               </p>
             </div>
           </div>
