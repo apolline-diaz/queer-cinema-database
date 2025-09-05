@@ -46,7 +46,7 @@ export function TVClient({
           <div className="absolute inset-0 bg-neutral-800" />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
-        <div className="relative z-10 max-w-5xl mx-auto px-6 pb-4 flex flex-col justify-end h-full">
+        <div className="relative z-10 max-w-5xl mx-auto px-6 flex flex-col justify-end h-full">
           <h1 className="text-3xl md:text-5xl font-bold mb-2">
             {current.title}
           </h1>
@@ -58,7 +58,7 @@ export function TVClient({
           </div>
         </div>
       </section>
-      <div className="px-6">
+      <div className="max-w-6xl mx-auto px-6 py-6">
         <p className="text-sm font-medium py-4 line-clamp-3">
           {current.description}
         </p>
@@ -93,7 +93,7 @@ export function TVClient({
             <button
               key={m.id}
               onClick={() => setCurrentId(m.id)}
-              className="group relative rounded-xl overflow-hidden border border-white/10"
+              className="group relative rounded-xl overflow-hidden"
             >
               {m.image_url ? (
                 <div className="aspect-[2/3] relative">
