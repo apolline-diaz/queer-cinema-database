@@ -58,29 +58,31 @@ export function TVClient({
           </div>
         </div>
       </section>
-      <p className="text-sm font-medium py-4 px-6 line-clamp-3">
-        {current.description}
-      </p>
-      <Link
-        href={`/movies/${current.id}`}
-        className="inline-flex mt-4 px-5 py-2 border border-rose-500 text-rose-500 rounded-xl hover:border-white hover:text-white transition-colors duration-200 w-fit"
-      >
-        Voir la fiche
-      </Link>
-      {/* Boutons de visionnage */}
-      <div className="flex flex-col">
-        <p className="font-semibold text-sm mt-4 mb-3">Voir le film :</p>
-        <div className="flex flex-wrap gap-2">
-          {current.links.map((l: any) => (
-            <a
-              key={l.url}
-              href={l.url}
-              target="_blank"
-              className="transition-colors duration-200 px-4 py-2 bg-white text-black hover:text-white hover:bg-gray-800 rounded-xl hover:opacity-90"
-            >
-              {l.label || "Voir le film"}
-            </a>
-          ))}
+      <div className="px-6">
+        <p className="text-sm font-medium py-4 line-clamp-3">
+          {current.description}
+        </p>
+        <Link
+          href={`/movies/${current.id}`}
+          className="inline-flex mt-4 px-5 py-2 border border-rose-500 text-rose-500 rounded-xl hover:border-white hover:text-white transition-colors duration-200 w-fit"
+        >
+          Voir la fiche
+        </Link>
+        {/* Boutons de visionnage */}
+        <div className="flex flex-col">
+          <p className="font-semibold text-sm mt-4 mb-3">Voir le film :</p>
+          <div className="flex flex-wrap gap-2">
+            {current.links.map((l: any) => (
+              <a
+                key={l.url}
+                href={l.url}
+                target="_blank"
+                className="transition-colors duration-200 px-4 py-2 bg-white text-black hover:text-white hover:bg-gray-800 rounded-xl hover:opacity-90"
+              >
+                {l.label || "Voir le film"}
+              </a>
+            ))}
+          </div>
         </div>
       </div>
       {/* Rail / vignettes */}
