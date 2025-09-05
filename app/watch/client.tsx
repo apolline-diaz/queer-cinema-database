@@ -45,9 +45,8 @@ export function TVClient({
         ) : (
           <div className="absolute inset-0 bg-neutral-800" />
         )}
-
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/10" />
-        <div className="relative z-10 max-w-5xl mx-auto px-6 pt-32 pb-15 flex flex-col justify-end h-full">
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+        <div className="relative z-10 max-w-5xl mx-auto px-6 pb-4 flex flex-col justify-end h-full">
           <h1 className="text-3xl md:text-5xl font-bold mb-2">
             {current.title}
           </h1>
@@ -57,34 +56,35 @@ export function TVClient({
             <InfoRow label="Durée" value={current.runtime} />
             <InfoRow label="Langue" value={current.language} />
           </div>
-          <p className="text-sm font-medium py-4 line-clamp-3">
-            {current.description}
-          </p>
-          <Link
-            href={`/movies/${current.id}`}
-            className="inline-flex mt-4 px-5 py-2 border border-rose-500 text-rose-500 rounded-xl hover:border-white hover:text-white transition-colors duration-200 w-fit"
-          >
-            Voir la fiche
-          </Link>
-          {/* Boutons de visionnage */}
-          <div className="flex flex-col">
-            <p className="font-semibold text-sm mt-4 mb-3">Voir le film :</p>
-            <div className="flex flex-wrap gap-2">
-              {current.links.map((l: any) => (
-                <a
-                  key={l.url}
-                  href={l.url}
-                  target="_blank"
-                  className="transition-colors duration-200 px-4 py-2 bg-white text-black hover:text-white hover:bg-gray-800 rounded-xl hover:opacity-90"
-                >
-                  {l.label || "Voir le film"}
-                </a>
-              ))}
-            </div>
-          </div>
         </div>
       </section>
-
+      <div className="px-6">
+        <p className="text-sm font-medium py-4 line-clamp-3">
+          {current.description}
+        </p>
+        <Link
+          href={`/movies/${current.id}`}
+          className="inline-flex mt-4 px-5 py-2 border border-rose-500 text-rose-500 rounded-xl hover:border-white hover:text-white transition-colors duration-200 w-fit"
+        >
+          Voir la fiche
+        </Link>
+        {/* Boutons de visionnage */}
+        <div className="flex flex-col">
+          <p className="font-semibold text-sm mt-4 mb-3">Voir le film :</p>
+          <div className="flex flex-wrap gap-2">
+            {current.links.map((l: any) => (
+              <a
+                key={l.url}
+                href={l.url}
+                target="_blank"
+                className="transition-colors duration-200 px-4 py-2 bg-white text-black hover:text-white hover:bg-gray-800 rounded-xl hover:opacity-90"
+              >
+                {l.label || "Voir le film"}
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
       {/* Rail / vignettes */}
       <section className="max-w-6xl mx-auto px-6 py-6">
         <h2 className="text-lg font-semibold mb-3">Aussi disponible</h2>
