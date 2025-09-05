@@ -231,13 +231,6 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                     >
                       Accueil
                     </Link>
-                    <Link
-                      href="/about"
-                      className="link link-hover text-black transition-colors duration-300 hover:text-rose-500"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      À propos
-                    </Link>
                     <li
                       className={
                         pathname === "/movies"
@@ -267,6 +260,13 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                         Statistiques
                       </Link>
                     </li>
+                    <Link
+                      href="/about"
+                      className="link link-hover text-black transition-colors duration-300 hover:text-rose-500"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      À propos
+                    </Link>
                   </div>
                 </ul>
               </div>
@@ -281,12 +281,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                 >
                   Accueil
                 </Link>
-                <Link
-                  href="/about"
-                  className="link link-hover text-black transition-colors duration-300 hover:text-rose-500"
-                >
-                  À propos
-                </Link>
+
                 <li
                   className={
                     pathname === "/movies" ? activeLinkClass : normalLinkClass
@@ -308,7 +303,12 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                 >
                   <Link href="/stats">Statistiques</Link>
                 </li>
-
+                <Link
+                  href="/about"
+                  className="link link-hover text-black transition-colors duration-300 hover:text-rose-500"
+                >
+                  À propos
+                </Link>
                 <li
                   className={
                     isActive("/search") ? activeLinkClass : normalLinkClass

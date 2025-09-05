@@ -8,7 +8,7 @@ import Link from "next/link";
 function InfoRow({ label, value }: { label: string; value?: string | null }) {
   if (!value) return null;
   return (
-    <div className="text-sm opacity-80">
+    <div className="text-sm opacity-80 mr-2">
       <span className="opacity-60">{label}:</span> {value}
     </div>
   );
@@ -50,7 +50,7 @@ export function TVClient({
           <h1 className="text-3xl md:text-5xl font-bold mb-2">
             {current.title}
           </h1>
-          <div className="mt-2 flex flex-wrap gap-3 text-sm opacity-90">
+          <div className="mt-2 flex flex-wrap gap-1 text-sm opacity-90">
             <InfoRow label="Réal." value={current.directors} />
             <InfoRow label="Année" value={current.release_date} />
             <InfoRow label="Durée" value={current.runtime} />
@@ -58,8 +58,8 @@ export function TVClient({
           </div>
         </div>
       </section>
-      <div className="max-w-6xl mx-auto px-6 py-6">
-        <p className="text-sm font-medium py-4 line-clamp-3">
+      <div className="max-w-5xl mx-auto px-6 py-6">
+        <p className="text-sm font-medium pb-4 line-clamp-3">
           {current.description}
         </p>
         <Link
