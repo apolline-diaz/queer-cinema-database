@@ -68,7 +68,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
       <div className="flex flex-row w-full items-center justify-between gap-2 px-10 py-3">
         {/* Logo */}
         <Link href="/">
-          <h2 className="text-white whitespace-nowrap font-raleway font-bold text-xl xs:text-md">
+          <h2 className="text-white whitespace-nowrap font-raleway font-bold text-xl xs:text-md pr-10">
             <span className="text-rose-500">queer cinema</span>{" "}
             <span className="text-rose-500 font-light hidden sm:inline">
               {" "}
@@ -260,13 +260,22 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                         Statistiques
                       </Link>
                     </li>
-                    <Link
-                      href="/about"
-                      className="link link-hover text-black transition-colors duration-300 hover:text-rose-500"
-                      onClick={() => setIsOpen(false)}
+                    <li
+                      className={
+                        isActive("/resources")
+                          ? activeLinkClass
+                          : normalLinkClass
+                      }
                     >
-                      À propos
-                    </Link>
+                      <Link href="/resources">Ressources</Link>
+                    </li>
+                    <li
+                      className={
+                        isActive("/about") ? activeLinkClass : normalLinkClass
+                      }
+                    >
+                      <Link href="/about">À propos</Link>
+                    </li>
                   </div>
                 </ul>
               </div>
@@ -281,7 +290,6 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                 >
                   Accueil
                 </Link>
-
                 <li
                   className={
                     pathname === "/movies" ? activeLinkClass : normalLinkClass
@@ -303,12 +311,20 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                 >
                   <Link href="/stats">Statistiques</Link>
                 </li>
-                <Link
-                  href="/about"
-                  className="link link-hover text-black transition-colors duration-300 hover:text-rose-500"
+                <li
+                  className={
+                    isActive("/resources") ? activeLinkClass : normalLinkClass
+                  }
                 >
-                  À propos
-                </Link>
+                  <Link href="/resources">Ressources</Link>
+                </li>
+                <li
+                  className={
+                    isActive("/about") ? activeLinkClass : normalLinkClass
+                  }
+                >
+                  <Link href="/about">À propos</Link>
+                </li>
                 <li
                   className={
                     isActive("/search") ? activeLinkClass : normalLinkClass
@@ -321,7 +337,6 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                     <Icon icon="uil:search" className="size-5"></Icon>
                   </Link>
                 </li>
-
                 <DropdownMenu>
                   <DropdownMenuTrigger
                     className="pr-4 focus:outline-none"
