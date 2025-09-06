@@ -53,8 +53,8 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   icons: {
-    icon: ["/assets/logo_pink.png"], // Fichier favicon principal
-    shortcut: ["/assets/logo_pink.png"], // Optionnel pour compatibilité
+    icon: "/assets/logo_pink.png", // Fichier favicon principal
+    shortcut: "/assets/logo_pink.png", // Optionnel pour compatibilité
   },
 };
 
