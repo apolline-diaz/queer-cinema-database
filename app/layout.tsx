@@ -53,8 +53,12 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   icons: {
-    icon: "/assets/logo_pink.png", // Fichier favicon principal
-    shortcut: "/assets/logo_pink.png", // Optionnel pour compatibilité
+    icon: [
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
   },
 };
 
