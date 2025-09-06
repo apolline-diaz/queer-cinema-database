@@ -31,7 +31,7 @@ export function TVClient({
   const others = initialData.filter((m) => m.id !== currentId);
 
   return (
-    <div className=" bg-black text-white">
+    <div className="min-h-dvh bg-black text-white">
       {/* Hero */}
       <section className="relative h-[70dvh] w-full">
         {current.image_url ? (
@@ -59,7 +59,7 @@ export function TVClient({
         </div>
       </section>
       <div className="max-w-5xl mx-auto px-6 py-6">
-        <p className="text-sm font-medium line-clamp-3">
+        <p className="text-sm font-medium pb-4 line-clamp-3">
           {current.description}
         </p>
         <Link
@@ -69,7 +69,7 @@ export function TVClient({
           Voir la fiche
         </Link>
         {/* Boutons de visionnage */}
-        <div className="flex flex-col ">
+        <div className="flex flex-col">
           <p className="font-semibold text-sm mt-4 mb-3">Voir le film :</p>
           <div className="flex flex-wrap gap-2">
             {current.links.map((l: any) => (
@@ -86,10 +86,10 @@ export function TVClient({
         </div>
       </div>
       {/* Rail / vignettes */}
-      <section className="max-w-6xl mx-auto px-6 py-6 overflow-y-hidden">
+      <section className="max-w-6xl mx-auto px-6 py-6">
         <h2 className="text-lg font-semibold mb-3">Aussi disponible</h2>
 
-        <div className="overflow-y-hidden grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+        <div className="max-h-[500px] grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 overflow-y-auto pr-2">
           {others.length === 0
             ? // Skeletons pendant le "chargement"
               Array.from({ length: 5 }).map((_, index) => (
