@@ -424,7 +424,7 @@ export default function SearchForm({
           </div>
         </form>
 
-        <div className="p-0 sm:pl-10 pt-2">
+        <div className="max-h-[800px] overflow-y-auto  p-0 sm:pl-10 pt-2">
           <div className="border-l-4 text-sm border-rose-500 pl-4 py-2 pt-2 mb-6">
             {isLoading ? (
               <div className="animate-pulse rounded-md h-6 bg-gray-300 w-32"></div>
