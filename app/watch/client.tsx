@@ -31,9 +31,9 @@ export function TVClient({
   const others = initialData.filter((m) => m.id !== currentId);
 
   return (
-    <div className="h-screen flex flex-col bg-black text-white">
+    <div className="min-h-dvh bg-black text-white">
       {/* Hero */}
-      <section className="flex-shrink-0 relative w-full">
+      <section className="flex-shrink-0 w-full">
         {current.image_url ? (
           <Image
             src={getImageUrl(current.image_url)}
@@ -86,48 +86,50 @@ export function TVClient({
         </div>
       </div>
       {/* Rail / vignettes */}
-      <section className="flex-1 overflow-hidden max-w-6xl mx-auto px-6 py-6">
-        <h2 className="text-lg font-semibold mb-3">Aussi disponible</h2>
+      <div className="flex-1 overflow-hidden">
+        <section className="max-w-6xl mx-auto px-6 py-6">
+          <h2 className="text-lg font-semibold mb-3">Aussi disponible</h2>
 
-        <div className="h-full overflow-y-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
-          {others.length === 0
-            ? // Skeletons pendant le "chargement"
-              Array.from({ length: 5 }).map((_, index) => (
-                <div
-                  key={index}
-                  className="animate-pulse bg-neutral-800 aspect-[2/3] rounded-xl"
-                >
-                  <div className="absolute bottom-0 left-0 right-0 p-4">
-                    <div className="h-5 bg-neutral-700 rounded w-3/4 mb-2"></div>
-                    <div className="h-4 bg-neutral-700 rounded w-1/2"></div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+            {others.length === 0
+              ? // Skeletons pendant le "chargement"
+                Array.from({ length: 5 }).map((_, index) => (
+                  <div
+                    key={index}
+                    className="animate-pulse bg-neutral-800 aspect-[2/3] rounded-xl"
+                  >
+                    <div className="absolute bottom-0 left-0 right-0 p-4">
+                      <div className="h-5 bg-neutral-700 rounded w-3/4 mb-2"></div>
+                      <div className="h-4 bg-neutral-700 rounded w-1/2"></div>
+                    </div>
                   </div>
-                </div>
-              ))
-            : others.map((m) => (
-                <button
-                  key={m.id}
-                  onClick={() => setCurrentId(m.id)}
-                  className="group relative rounded-xl overflow-hidden"
-                >
-                  <div className="aspect-[2/3] relative">
-                    {m.image_url ? (
-                      <Image
-                        src={getImageUrl(m.image_url)}
-                        alt={m.title}
-                        fill
-                        className="object-cover group-hover:scale-[1.02] transition"
-                      />
-                    ) : (
-                      <div className="aspect-[2/3] bg-neutral-800" />
-                    )}
-                  </div>
-                  <div className="absolute bottom-0 left-0 right-0 p-4 text-left bg-gradient-to-t from-black/70 to-transparent text-md font-bold">
-                    {m.title}
-                  </div>
-                </button>
-              ))}
-        </div>
-      </section>
+                ))
+              : others.map((m) => (
+                  <button
+                    key={m.id}
+                    onClick={() => setCurrentId(m.id)}
+                    className="group relative rounded-xl overflow-hidden"
+                  >
+                    <div className="aspect-[2/3] relative">
+                      {m.image_url ? (
+                        <Image
+                          src={getImageUrl(m.image_url)}
+                          alt={m.title}
+                          fill
+                          className="object-cover group-hover:scale-[1.02] transition"
+                        />
+                      ) : (
+                        <div className="aspect-[2/3] bg-neutral-800" />
+                      )}
+                    </div>
+                    <div className="absolute bottom-0 left-0 right-0 p-4 text-left bg-gradient-to-t from-black/70 to-transparent text-md font-bold">
+                      {m.title}
+                    </div>
+                  </button>
+                ))}
+          </div>
+        </section>
+      </div>
     </div>
   );
 }
