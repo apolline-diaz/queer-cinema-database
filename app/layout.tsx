@@ -70,8 +70,8 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <head>
-        <link rel="icon" type="image/png" href="/assets/favicon-16x16.png" />
-        <link rel="shortcut icon" href="/assets/favicon-16x16.png" />
+        <link rel="icon" type="image/png" href="/assets/favicon.ico" />
+        <link rel="shortcut icon" href="/assets/favicon.ico" />
       </head>
       <body
         className={`${inter.className} bg-white min-h-screen text-white flex flex-col`}
