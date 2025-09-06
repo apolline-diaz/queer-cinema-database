@@ -106,7 +106,7 @@ async function CollectionsSection() {
             <div key={collection.id.toString()} className="flex flex-col">
               <div className="flex flex-row justify-between items-end pr-10 mb-4 gap-2">
                 <div className="flex flex-col gap-3 min-w-0 flex-1">
-                  <h2 className="text-2xl font-semibold leading-tight text-rose-500 line-clamp-3">
+                  <h2 className="text-xl sm:text-2xl font-semibold leading-tight text-rose-500 line-clamp-3">
                     {collection.title}
                   </h2>
                   <span className="w-fit text-sm text-rose-800 border border-rose-800 rounded-full font-light px-1.5 py-0.5">

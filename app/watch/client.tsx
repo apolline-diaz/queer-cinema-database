@@ -46,22 +46,22 @@ export function TVClient({
           <div className="absolute inset-0 bg-neutral-800" />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
-        <div className="relative z-10 max-w-5xl mx-auto px-6 flex flex-col justify-end h-full">
+        <div className="relative z-10 max-w-6xl mx-auto px-6 flex flex-col justify-end h-full">
           <h1 className="text-3xl md:text-5xl font-bold mb-2">
             {current.title}
           </h1>
-          <div className="mt-2 flex flex-wrap gap-1 text-sm opacity-90">
+          <div className="my-2 flex flex-wrap gap-1 text-sm opacity-90">
             <InfoRow label="Réal." value={current.directors} />
             <InfoRow label="Année" value={current.release_date} />
             <InfoRow label="Durée" value={current.runtime} />
             <InfoRow label="Langue" value={current.language} />
           </div>
+          <p className="text-sm font-medium line-clamp-3">
+            {current.description}
+          </p>
         </div>
       </section>
-      <div className="max-w-5xl mx-auto px-6 py-6">
-        <p className="text-sm font-medium pb-4 line-clamp-3">
-          {current.description}
-        </p>
+      <div className="max-w-6xl mx-auto px-6 pb-6">
         <Link
           href={`/movies/${current.id}`}
           className="inline-flex mt-4 px-5 py-2 border border-rose-500 text-rose-500 rounded-xl hover:border-white hover:text-white transition-colors duration-200 w-fit"
@@ -86,10 +86,10 @@ export function TVClient({
         </div>
       </div>
       {/* Rail / vignettes */}
-      <section className="max-w-6xl mx-auto px-6 py-6">
+      <section className="max-w-6xl mx-auto px-6 pb-6">
         <h2 className="text-lg font-semibold mb-3">Aussi disponible</h2>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+        <div className="max-h-[500px] grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 overflow-y-auto pr-2">
           {others.length === 0
             ? // Skeletons pendant le "chargement"
               Array.from({ length: 5 }).map((_, index) => (
