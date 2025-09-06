@@ -45,12 +45,16 @@ export const metadata: Metadata = {
       "Plateforme dédiée aux films et archives LGBTQI+ du monde entier. Explorez la diversité et la richesse des cinémas queer.",
     url: getCanonicalUrl(),
     siteName: "Queer Cinema",
-    images: ["/assets/diary.svg"],
+    images: ["/assets/logo_pink.png"],
     locale: "fr_FR",
     type: "website",
   },
   alternates: {
     canonical: "/",
+  },
+  icons: {
+    icon: ["/assets/logo_pink.png"], // Fichier favicon principal
+    shortcut: ["/assets/logo_pink.png"], // Optionnel pour compatibilité
   },
 };
 
