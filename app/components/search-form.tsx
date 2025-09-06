@@ -424,7 +424,7 @@ export default function SearchForm({
           </div>
         </form>
 
-        <div className="max-h-[800px] overflow-y-auto  p-0 sm:pl-10 pt-2">
+        <div className="p-0 sm:pl-10 pt-2">
           <div className="border-l-4 text-sm border-rose-500 pl-4 py-2 pt-2 mb-6">
             {isLoading ? (
               <div className="animate-pulse rounded-md h-6 bg-gray-300 w-32"></div>
@@ -446,7 +446,7 @@ export default function SearchForm({
             )}
           </div>
 
-          <div className="w-full grid gap-3 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+          <div className="max-h-[800px] overflow-y-auto w-full grid gap-3 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
             {isLoading ? (
               Array.from({ length: 6 }).map((_, index) => (
                 <div
