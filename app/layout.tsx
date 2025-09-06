@@ -45,12 +45,20 @@ export const metadata: Metadata = {
       "Plateforme dédiée aux films et archives LGBTQI+ du monde entier. Explorez la diversité et la richesse des cinémas queer.",
     url: getCanonicalUrl(),
     siteName: "Queer Cinema",
-    images: ["/assets/diary.svg"],
+    images: ["/assets/logo_pink.png"],
     locale: "fr_FR",
     type: "website",
   },
   alternates: {
     canonical: "/",
+  },
+  icons: {
+    icon: [
+      { url: "/assets/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/assets/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+    ],
+    shortcut: "/assets/favicon.ico",
+    apple: "/assets/apple-touch-icon.png",
   },
 };
 
@@ -61,6 +69,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
+      <head>
+        <link rel="icon" type="image/png" href="/assets/favicon.ico" />
+        <link rel="shortcut icon" href="/assets/favicon.ico" />
+      </head>
       <body
         className={`${inter.className} bg-white min-h-screen text-white flex flex-col`}
       >
