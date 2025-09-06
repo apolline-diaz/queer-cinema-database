@@ -50,7 +50,7 @@ export function TVClient({
           <h1 className="text-3xl md:text-5xl font-bold mb-2">
             {current.title}
           </h1>
-          <div className="mt-2 flex flex-wrap gap-1 text-sm opacity-90">
+          <div className="my-2 flex flex-wrap gap-1 text-sm opacity-90">
             <InfoRow label="Réal." value={current.directors} />
             <InfoRow label="Année" value={current.release_date} />
             <InfoRow label="Durée" value={current.runtime} />
@@ -61,7 +61,7 @@ export function TVClient({
           </p>
         </div>
       </section>
-      <div className="max-w-5xl mx-auto px-6 py-6">
+      <div className="max-w-5xl mx-auto px-6 pb-6">
         <Link
           href={`/movies/${current.id}`}
           className="inline-flex mt-4 px-5 py-2 border border-rose-500 text-rose-500 rounded-xl hover:border-white hover:text-white transition-colors duration-200 w-fit"
@@ -86,7 +86,7 @@ export function TVClient({
         </div>
       </div>
       {/* Rail / vignettes */}
-      <section className="max-w-6xl mx-auto px-6 py-6">
+      <section className="max-w-6xl mx-auto px-6 pb-6">
         <h2 className="text-lg font-semibold mb-3">Aussi disponible</h2>
 
         <div className="max-h-[500px] grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 overflow-y-auto pr-2">
