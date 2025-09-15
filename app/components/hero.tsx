@@ -14,18 +14,6 @@ interface CardProps {
 }
 
 export default function Hero({ id, title, image_url }: CardProps) {
-  const router = useRouter();
-  const [searchQuery, setSearchQuery] = useState("");
-  const [isSearching, setIsSearching] = useState(false);
-
-  const handleSearch = () => {
-    if (searchQuery.trim()) {
-      router.push(
-        `/search?search=${encodeURIComponent(searchQuery)}&searchMode=field`
-      );
-    }
-  };
-
   return (
     <>
       <div className="relative bg-rose-50 w-full overflow-hidden">
