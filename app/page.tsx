@@ -98,7 +98,7 @@ async function CollectionsSection() {
   const collections = await getCollections(); // Se charge en arrière-plan
 
   return (
-    <div className="pl-10">
+    <div className="px-[clamp(1.25rem,5vw,2.5rem)] py-5">
       {collections.length > 0 && (
         <div className="flex flex-col space-y-5 mb-10">
           {collections.map((collection) => (

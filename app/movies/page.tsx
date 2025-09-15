@@ -1,5 +1,5 @@
 import { searchMoviesPaginated } from "@/app/server-actions/movies/search-movies";
-import { getCountries } from "@/app/server-actions/countries/get-countries";
+import { getCountriesOnlyAssociatedToMovies } from "@/app/server-actions/countries/get-countries-only-associated-movies";
 import { getGenres } from "@/app/server-actions/genres/get-genres";
 import { getKeywords } from "@/app/server-actions/keywords/get-keywords";
 import { getDirectors } from "@/app/server-actions/directors/get-directors";
@@ -67,7 +67,7 @@ export default async function MoviesPage({
     directorsData,
     releaseYearsData,
   ] = await Promise.all([
-    getCountries(),
+    getCountriesOnlyAssociatedToMovies(),
     getGenres(),
     getKeywords(),
     getDirectors(),
