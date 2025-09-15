@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="px-10 py-20 mb-5">
+    <div className="px-[clamp(1.25rem,5vw,2.5rem)] py-20 mb-5">
       <h2 className="text-rose-500 font-bold text-2xl mb-6">À propos</h2>
       <div className="text-black">
         <p className=" w-full font-light  mb-6">
@@ -26,13 +26,14 @@ export default function AboutPage() {
           Notre sélection met en lumière des trajectoires multiples et
           singulières, qui ne se réduisent ni au genre ni à l’orientation
           sexuelle ou romantique, mais qui reflètent toute la complexité des
-          expériences LGBTQI+. Une attention particulière est portée aux œuvres
-          réalisées par des communautés trop souvent marginalisées, y compris au
-          sein du cinéma queer lui-même : les personnes trans, racisées,
-          assignées handicapées. Une attention particulière est apportée aux
-          films réalisées par des personnes issues de ces mêmes communautés, de
-          part les expériences communes qu'elles partagent et qui permettent
-          d'apporter une vision plus authentique de leurs réalités. <br />
+          expériences LGBTQI+. Le site met l'accent en particulier sur les
+          œuvres réalisées par des communautés trop souvent marginalisées, y
+          compris au sein du cinéma queer lui-même : les personnes trans,
+          racisées, assignées handicapées. Une attention particulière est
+          apportée aux films réalisés par des personnes issues de ces mêmes
+          communautés, de part les expériences communes qu'elles partagent et
+          qui permettent d'apporter une vision plus authentique de leurs
+          réalités. <br />
           <br />
           Le cinéma présenté ici est donc résolument politique, mais il ne se
           limite pas à l’exposition des discriminations. Il est aussi traversé

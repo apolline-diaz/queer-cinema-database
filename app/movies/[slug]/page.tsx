@@ -88,11 +88,11 @@ export default async function MoviePage({ params }: Props) {
           </div>
         </div>
       </div>
-      <div className="px-10 pt-5">
+      <div className="px-[clamp(1.25rem,5vw,2.5rem)] pt-5">
         <BackButton className="w-fit" />
       </div>
 
-      <div className="px-10 pb-5 text-black flex flex-col font-light gap-3">
+      <div className="px-[clamp(1.25rem,5vw,2.5rem)] pb-5 text-black flex flex-col font-light gap-3">
         <h1 className="text-4xl font-medium text-rose-500">{movie.title}</h1>
         {movie.original_title && (
           <h1 className="text-xl font-light text-gray-400">

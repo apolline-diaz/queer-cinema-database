@@ -12,7 +12,7 @@ export default async function StatisticsPage() {
   ]);
 
   return (
-    <div className="px-10 py-20">
+    <div className="px-[clamp(1.25rem,5vw,2.5rem)] py-20">
       <BackButton />
       <h1 className="text-2xl text-rose-500 mb-10 font-bold">Statistiques</h1>
 

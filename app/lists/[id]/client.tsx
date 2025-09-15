@@ -86,7 +86,7 @@ export default function ListClientPage({
   };
 
   return (
-    <div className="p-10 py-20">
+    <div className="px-[clamp(1.25rem,5vw,2.5rem)] py-20">
       <BackButton />
       {isLoading ? (
         <div>

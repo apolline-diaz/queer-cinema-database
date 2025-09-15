@@ -12,7 +12,7 @@ export default async function SearchPage({
 
   return (
     <div className="h-full w-full justify-center items-center text-white">
-      <div className="px-10 py-20">
+      <div className="px-[clamp(1.25rem,5vw,2.5rem)] py-20">
         <BackButton />
         <h1 className="text-2xl font-bold text-rose-500 mb-5">Recherche</h1>
 

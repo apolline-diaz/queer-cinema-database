@@ -8,7 +8,7 @@ interface CountryStat {
 }
 
 export async function getCountryStats(
-  limit: number = 10
+  limit: number = 13
 ): Promise<CountryStat[]> {
   const prisma = new PrismaClient();
 

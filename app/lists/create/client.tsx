@@ -104,14 +104,14 @@ const CreateListForm: React.FC<CreateListFormProps> = ({ isAdmin }) => {
   };
 
   return (
-    <div className="px-10 py-20">
+    <div className="mx-auto w-full max-w-md sm:max-w-md md:max-w-lg px-[clamp(1.25rem,5vw,2.5rem)] py-20">
       <BackButton />
       <div className="tracking-wide font-bold text-2xl text-rose-500 mb-5">
         Créer une liste de films
       </div>
-      <form onSubmit={handleSubmit(onSubmit)} className="py-5 text-black">
+      <form onSubmit={handleSubmit(onSubmit)} className="py-5 text-black ">
         {/* Title of the list */}
-        <div className="w-full md:w-1/2 mb-6">
+        <div className="w-full mb-6">
           <label className="block font-medium text-sm mb-2" htmlFor="title">
             Titre
           </label>
@@ -127,7 +127,7 @@ const CreateListForm: React.FC<CreateListFormProps> = ({ isAdmin }) => {
         </div>
 
         {/* Description of the list */}
-        <div className="w-full md:w-1/2 mt-3 mb-6">
+        <div className="w-full mt-3 mb-6">
           <label
             className="block font-medium text-sm mb-2"
             htmlFor="description"
@@ -150,7 +150,7 @@ const CreateListForm: React.FC<CreateListFormProps> = ({ isAdmin }) => {
         </div>
 
         {/* Movies Selection */}
-        <div className="w-full md:w-1/2 mt-3 mb-6 relative">
+        <div className="w-full mt-3 mb-6 relative">
           <label
             className="block font-medium text-sm mb-2"
             htmlFor="movie_search"
@@ -205,7 +205,7 @@ const CreateListForm: React.FC<CreateListFormProps> = ({ isAdmin }) => {
         </div>
 
         {/* Display selected movies as tags */}
-        <div className="mt-3 mb-6 -full sm:w-1/2">
+        <div className="mt-3 mb-6 w-full">
           {selectedMovies.map((movieId) => {
             const movie = movies.find((m) => m.id === movieId);
             return movie ? (
