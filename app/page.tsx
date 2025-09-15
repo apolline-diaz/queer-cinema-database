@@ -3,11 +3,13 @@ import { getImageUrl } from "@/utils";
 import { Suspense } from "react";
 import Hero from "./components/hero";
 import { getLatestMovies, getTopMovies } from "@/app/server-actions/movies";
+import { getMoviesToWatch } from "@/app/server-actions/movies/get-movies-to-watch";
 import { getCollections } from "@/app/server-actions/lists/get-collections";
 import Link from "next/link";
 import { Icon } from "@iconify/react";
 import React from "react";
 import { LatestMoviesCarousel } from "./components/carousel";
+import { readLinks } from "@/lib/tv-links";
 
 export const revalidate = 3600; // revalidate every hour (Incremental Static Regeneration)
 
@@ -17,6 +19,10 @@ export default function HomePage() {
       {/* 🚀 Cette section se charge en parallèle, sans bloquer l'affichage initial */}
       <Suspense fallback={<HeroSkeleton />}>
         <HeroSection />
+      </Suspense>
+
+      <Suspense fallback={<MoviesSkeleton />}>
+        <WatchSection />
       </Suspense>
 
       <Suspense fallback={<MoviesSkeleton />}>
@@ -92,6 +98,40 @@ async function LatestMoviesSection() {
       <p>Erreur lors du chargement des films : {(error as Error).message}</p>
     );
   }
+}
+
+export async function getFeaturedMovies() {
+  const tv = await readLinks(); // récupère les liens TV
+  const ids = Object.keys(tv.items);
+  if (ids.length === 0) return [];
+
+  const movies = await getMoviesToWatch(ids.slice(0, 3)); // limiter à 3 films
+  return movies;
+}
+
+async function WatchSection() {
+  const movies = await getFeaturedMovies();
+
+  if (movies.length === 0) return null;
+
+  return (
+    <div className="w-full px-[clamp(1.25rem,5vw,2.5rem)] py-5">
+      <h2 className="text-2xl mb-4 font-semibold text-rose-500 leading-tight">
+        À visionner
+      </h2>
+      <div className="flex gap-3 overflow-x-auto pb-2">
+        {movies.map((movie) => (
+          <HomeCard
+            key={`${movie.title}-${movie.id}`}
+            id={movie.id}
+            title={movie.title}
+            release_date={movie.release_date || ""}
+            image_url={getImageUrl(movie.image_url || "")}
+          />
+        ))}
+      </div>
+    </div>
+  );
 }
 
 async function CollectionsSection() {
