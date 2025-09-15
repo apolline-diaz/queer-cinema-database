@@ -9,7 +9,7 @@ export default async function ListsPage() {
   const lists = await getLists();
 
   return (
-    <div className="flex flex-col px-10 py-20">
+    <div className="flex flex-col px-[clamp(1.25rem,5vw,2.5rem)] py-20">
       {/* Users lists */}
       <BackButton className="w-fit" />
       <section className="">
@@ -37,7 +37,9 @@ export default async function ListsPage() {
             </svg>
           </Link>
 
-          {lists?.map((list) => <ListCard key={list.id} list={list} />)}
+          {lists?.map((list) => (
+            <ListCard key={list.id} list={list} />
+          ))}
         </div>
       </section>
     </div>

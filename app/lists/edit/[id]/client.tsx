@@ -106,14 +106,14 @@ export default function EditListForm({
   };
 
   return (
-    <div className="px-10 py-20">
+    <div className="mx-auto w-full max-w-md sm:max-w-md md:max-w-lg px-[clamp(1.25rem,5vw,2.5rem)] py-20">
       <BackButton />
 
       <h1 className="text-2xl text-rose-500 font-bold mb-5">
         Modifier la liste
       </h1>
       {isLoading ? (
-        <div className="space-y-4 w-full sm:w-1/2">
+        <div className="space-y-4 w-full">
           <div className={"animate-pulse bg-neutral-300 rounded h-10 w-full"} />
           <div className={"animate-pulse bg-neutral-300 rounded h-20 w-full"} />
           <div className={"animate-pulse bg-neutral-300 rounded h-10 w-full"} />
@@ -122,7 +122,7 @@ export default function EditListForm({
       ) : (
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="text-black py-5 w-full sm:w-1/2"
+          className="text-black py-5 w-full"
         >
           <input type="hidden" {...register("movie_id")} />
 

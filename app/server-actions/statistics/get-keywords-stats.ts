@@ -8,7 +8,7 @@ interface KeywordStat {
 }
 
 export async function getKeywordStats(
-  limit: number = 10
+  limit: number = 13
 ): Promise<KeywordStat[]> {
   const prisma = new PrismaClient();
 

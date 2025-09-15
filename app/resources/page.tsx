@@ -35,6 +35,8 @@ const ResourcesSection = () => {
       items: [
         { name: "Frameline", url: "https://www.frameline.org" },
         { name: "Women Make Movies", url: "https://www.wmm.com" },
+        { name: "Collectif Jeune Cinéma", url: "https://www.cjcinema.org/" },
+        { name: "LightCone", url: "https://lightcone.org/fr" },
         { name: "Vucavu", url: "https://www.vucavu.com" },
         { name: "Video Data Bank", url: "https://www.vdb.org" },
         { name: "VTape", url: "https://www.vtape.org" },
@@ -51,6 +53,10 @@ const ResourcesSection = () => {
         {
           name: "Pink Screens",
           url: "https://pinkscreens.org/fr/pink-screens",
+        },
+        {
+          name: "Fringe!",
+          url: "https://www.fringefilmfest.com/",
         },
       ],
     },
@@ -74,14 +80,14 @@ const ResourcesSection = () => {
   const otherArchives = [
     {
       name: "Otherness Archive",
-      url: "https://othernessarchive.com", // change si autre URL
+      url: "https://othernessarchive.com",
       description:
         "Base de données de films d’hommes trans et de récits alternatifs.",
     },
   ];
 
   return (
-    <div className="rounded-xl px-10 py-20">
+    <div className="rounded-xl px-[clamp(1.25rem,5vw,2.5rem)] py-20">
       <h3 className="font-bold text-2xl mb-4 text-rose-500">Ressources</h3>
       <p className="font-light text-gray-700 mb-6">
         Les informations des films sont tirées de sites et d&apos;organisations

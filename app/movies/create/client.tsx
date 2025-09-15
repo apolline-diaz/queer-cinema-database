@@ -100,7 +100,7 @@ const CreateMovieForm: React.FC = () => {
   };
 
   return (
-    <div className="px-10 py-20 text-sm w-full sm:w-1/2">
+    <div className="text-sm mx-auto w-full max-w-md sm:max-w-md md:max-w-lg px-[clamp(1.25rem,5vw,2.5rem)] py-20">
       <BackButton />
       <h1 className="tracking-wide text-rose-500 text-2xl mb-5 font-bold">
         Ajouter un film
@@ -296,7 +296,7 @@ const CreateMovieForm: React.FC = () => {
         </div>
 
         {/* keywords */}
-        <div className="w-full md:w-1/2 mt-2 mb-4">
+        <div className="w-full mt-2 mb-4">
           <label
             className="block font-medium tracking-wide text-black mb-2"
             htmlFor="keywords"
