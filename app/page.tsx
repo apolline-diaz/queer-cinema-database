@@ -9,6 +9,7 @@ import Link from "next/link";
 import { Icon } from "@iconify/react";
 import React from "react";
 import { LatestMoviesCarousel } from "./components/carousel";
+import { WatchCarousel } from "./components/watch-carousel";
 import { readLinks } from "@/lib/tv-links";
 
 export const revalidate = 3600; // revalidate every hour (Incremental Static Regeneration)
@@ -16,7 +17,6 @@ export const revalidate = 3600; // revalidate every hour (Incremental Static Reg
 export default function HomePage() {
   return (
     <main className="w-full bg-white">
-      {/* 🚀 Cette section se charge en parallèle, sans bloquer l'affichage initial */}
       <Suspense fallback={<HeroSkeleton />}>
         <HeroSection />
       </Suspense>
@@ -100,7 +100,7 @@ async function LatestMoviesSection() {
   }
 }
 
-export async function getFeaturedMovies() {
+async function getFeaturedMovies() {
   const tv = await readLinks(); // récupère les liens TV
   const ids = Object.keys(tv.items);
   if (ids.length === 0) return [];
@@ -110,7 +110,7 @@ export async function getFeaturedMovies() {
 }
 
 async function WatchSection() {
-  const movies = await getFeaturedMovies();
+  const movies = await getFeaturedMovies(); // récupère les 3 films à visionner
 
   if (movies.length === 0) return null;
 
@@ -119,17 +119,7 @@ async function WatchSection() {
       <h2 className="text-2xl mb-4 font-semibold text-rose-500 leading-tight">
         À visionner
       </h2>
-      <div className="flex gap-3 overflow-x-auto pb-2">
-        {movies.map((movie) => (
-          <HomeCard
-            key={`${movie.title}-${movie.id}`}
-            id={movie.id}
-            title={movie.title}
-            release_date={movie.release_date || ""}
-            image_url={getImageUrl(movie.image_url || "")}
-          />
-        ))}
-      </div>
+      <WatchCarousel movies={movies} />
     </div>
   );
 }
