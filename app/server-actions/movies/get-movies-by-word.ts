@@ -60,6 +60,9 @@ export const getMoviesByWord = async (search: string): Promise<Movie[]> => {
       release_date: true,
       language: true,
     },
+    orderBy: {
+      release_date: "desc", // "asc" pour du plus ancien au plus récent
+    },
   });
 
   return movies;

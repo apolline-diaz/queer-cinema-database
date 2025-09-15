@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function Footer() {
   return (
     <footer className="bg-rose-50 border border-t-rose-500 text-black py-8">
-      <div className="max-w-7xl mx-auto px-10 flex flex-col md:flex-row justify-between items-center">
+      <div className="px-[clamp(1.25rem,5vw,2.5rem)] flex flex-col md:flex-row justify-between items-center">
         {/* Logo et description */}
         <div className="mb-6 md:mb-0 text-center md:text-left">
           <h1 className="text-lg font-semibold">queer cinema database</h1>

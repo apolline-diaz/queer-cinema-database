@@ -125,27 +125,6 @@ export default function SearchForm({
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
-  // DEBUG: Log initial state
-  useEffect(() => {
-    console.log("INITIAL STATE:", {
-      initialMovies: initialMovies.length,
-      initialTotalCount,
-      initialHasMore,
-      currentPage: 1,
-    });
-  }, []);
-
-  // DEBUG: Log movies state changes
-  useEffect(() => {
-    console.log("MOVIES STATE UPDATED:", {
-      moviesCount: movies.length,
-      totalCount,
-      hasMore,
-      currentPage,
-      movieTitles: movies.map((m) => m.title), // Affiche les 5 premiers titres
-    });
-  }, [movies, totalCount, hasMore, currentPage]);
-
   // Get the currently selected years to enforce validation
   const startYear = watch("startYear");
   const endYear = watch("endYear");
