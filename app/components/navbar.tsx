@@ -65,7 +65,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
 
   return (
     <div className="text-black font-bold border-b border-gray-500 w-full fixed top-0 left-0 z-50 text-md transition-all duration-300 bg-white">
-      <div className="flex flex-row w-full items-center justify-between gap-2 px-10 py-3">
+      <div className="flex flex-row w-full items-center justify-between gap-2 px-[clamp(1.25rem,5vw,2.5rem)] py-3">
         {/* Logo */}
         <Link href="/">
           <h2 className="text-white whitespace-nowrap font-raleway font-bold text-xl xs:text-md pr-10">

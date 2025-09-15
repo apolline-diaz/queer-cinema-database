@@ -50,7 +50,6 @@ async function HeroSection() {
 async function LatestMoviesSection() {
   try {
     const latestMovies = await getLatestMovies();
-    const collections = await getCollections();
 
     // Prendre les films pour le carrousel (3 premiers) et le reste pour la grille
     const carouselMovies = latestMovies.slice(0, 3);
@@ -58,7 +57,7 @@ async function LatestMoviesSection() {
 
     return (
       <main className="w-full bg-white">
-        <div className="w-full p-10">
+        <div className="w-full px-[clamp(1.25rem,5vw,2.5rem)]">
           <div className="flex flex-row justify-between">
             <h2 className="text-2xl mb-4 font-semibold text-rose-500 leading-tight line-clamp-3">
               Nouveautés
