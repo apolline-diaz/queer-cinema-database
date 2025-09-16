@@ -40,7 +40,7 @@ export function WatchCarousel({ movies }: WatchCarouselProps) {
       <CarouselContent>
         {movies.map((movie) => (
           <CarouselItem key={`${movie.title}-${movie.id}`}>
-            <div className="relative w-full h-[400px]">
+            <div className="relative w-full h-[600px]">
               <Link
                 href={`/movies/${movie.id}`}
                 className="h-full w-full overflow-hidden block"
