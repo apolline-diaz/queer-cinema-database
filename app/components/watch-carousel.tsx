@@ -18,7 +18,7 @@ type MovieWithIncludes = Prisma.moviesGetPayload<{
     movies_countries: { include: { countries: true } };
   };
 }> & {
-  links?: { url: string; label?: string }[];
+  links?: { url: string; label?: string }[]; // ajout du champ links
 };
 
 interface WatchCarouselProps {
@@ -68,23 +68,28 @@ export function WatchCarousel({ movies }: WatchCarouselProps) {
                   <p className="line-clamp-5 sm:text-left w-full sm:w-1/2 overflow-hidden text-md font-extralight text-white">
                     {movie.description || ""}
                   </p>
-                  {movie.links && movie.links.length > 0 && (
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {movie.links.map((l) => (
-                        <a
-                          key={l.url}
-                          href={l.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="transition-colors duration-200 px-4 py-2 bg-white text-black hover:text-white hover:bg-gray-800 rounded-xl hover:opacity-90"
-                        >
-                          Voir le film
-                        </a>
-                      ))}
-                    </div>
-                  )}
                 </div>
               </Link>
+
+              {/* Boutons de visionnage externes - sortis du Link */}
+              {movie.links && movie.links.length > 0 && (
+                <div className="absolute bottom-4 left-[clamp(1.25rem,5vw,2.5rem)] z-30">
+                  <div className="flex flex-wrap gap-2">
+                    {movie.links.map((l) => (
+                      <a
+                        key={l.url}
+                        href={l.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="transition-colors duration-200 px-4 py-2 bg-white text-black hover:text-white hover:bg-gray-800 rounded-xl hover:opacity-90"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        Voir le film
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </CarouselItem>
         ))}
