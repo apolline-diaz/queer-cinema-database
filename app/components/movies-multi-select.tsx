@@ -33,7 +33,7 @@ export default function MoviesMultiSelect({
   const [selectedOptions, setSelectedOptions] =
     useState<Option[]>(defaultValues);
 
-  // Met à jour les options filtrées quand l’utilisateur tape
+  // Met à jour les options filtrées quand l utilisateur tape
   useEffect(() => {
     setFilteredOptions(
       options.filter((opt) =>

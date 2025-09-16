@@ -3,26 +3,29 @@ import { getImageUrl } from "@/utils";
 import { Suspense } from "react";
 import Hero from "./components/hero";
 import { getLatestMovies, getTopMovies } from "@/app/server-actions/movies";
+import { getMoviesToWatch } from "@/app/server-actions/movies/get-movies-to-watch";
 import { getCollections } from "@/app/server-actions/lists/get-collections";
 import Link from "next/link";
 import { Icon } from "@iconify/react";
 import React from "react";
 import { LatestMoviesCarousel } from "./components/carousel";
+import { WatchCarousel } from "./components/watch-carousel";
+import { readLinks } from "@/lib/tv-links";
 
 export const revalidate = 3600; // revalidate every hour (Incremental Static Regeneration)
 
 export default function HomePage() {
   return (
     <main className="w-full bg-white">
-      {/* 🚀 Cette section se charge en parallèle, sans bloquer l'affichage initial */}
       <Suspense fallback={<HeroSkeleton />}>
         <HeroSection />
       </Suspense>
-
       <Suspense fallback={<MoviesSkeleton />}>
         <LatestMoviesSection />
       </Suspense>
-
+      <Suspense fallback={<MoviesSkeleton />}>
+        <WatchSection />
+      </Suspense>
       <Suspense fallback={<CollectionsSkeleton />}>
         <CollectionsSection />
       </Suspense>
@@ -92,6 +95,36 @@ async function LatestMoviesSection() {
       <p>Erreur lors du chargement des films : {(error as Error).message}</p>
     );
   }
+}
+
+async function getFeaturedMovies() {
+  const tv = await readLinks();
+  const ids = Object.keys(tv.items);
+  if (ids.length === 0) return [];
+
+  const movies = await getMoviesToWatch(ids.slice(0, 3)); // limiter à 3 films
+
+  const moviesWithLinks = movies.map((m) => ({
+    ...m,
+    links: tv.items[m.id] || [],
+  }));
+
+  return moviesWithLinks;
+}
+
+async function WatchSection() {
+  const moviesWithLinks = await getFeaturedMovies(); // récupère les 3 films à visionner
+
+  if (moviesWithLinks.length === 0) return null;
+
+  return (
+    <div className="w-full py-5">
+      {/* <h2 className="text-2xl mb-4 font-semibold text-rose-500 leading-tight">
+        À visionner
+      </h2> */}
+      <WatchCarousel movies={moviesWithLinks} />
+    </div>
+  );
 }
 
 async function CollectionsSection() {
