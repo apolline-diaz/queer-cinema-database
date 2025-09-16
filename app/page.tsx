@@ -53,8 +53,6 @@ async function HeroSection() {
 async function LatestMoviesSection() {
   try {
     const latestMovies = await getLatestMovies();
-
-    // Prendre les films pour le carrousel (3 premiers) et le reste pour la grille
     const carouselMovies = latestMovies.slice(0, 3);
     const otherLatestMovies = latestMovies.slice(3);
 
@@ -66,15 +64,11 @@ async function LatestMoviesSection() {
               Nouveautés
             </h2>
           </div>
-
-          {/* Carrousel des 3 derniers films */}
           {carouselMovies.length > 0 && (
             <div className="mb-5">
               <LatestMoviesCarousel movies={carouselMovies} />
             </div>
           )}
-
-          {/* Grille des autres films récents */}
           {otherLatestMovies.length > 0 && (
             <div className="flex gap-3 overflow-x-auto pb-2">
               {otherLatestMovies.map((movie) => (
@@ -119,9 +113,7 @@ async function WatchSection() {
 
   return (
     <div className="w-full py-5">
-      {/* <h2 className="text-2xl mb-4 font-semibold text-rose-500 leading-tight">
-        À visionner
-      </h2> */}
+      
       <WatchCarousel movies={moviesWithLinks} />
     </div>
   );

@@ -40,6 +40,9 @@ export function WatchCarousel({ movies }: WatchCarouselProps) {
       <CarouselContent>
         {movies.map((movie) => (
           <CarouselItem key={`${movie.title}-${movie.id}`}>
+            <h2 className="absolute z-10 text-2xl mb-4 w-full px-[clamp(1.25rem,5vw,2.5rem)] pt-10 font-semibold text-rose-500 leading-tight">
+              À voir en ligne
+            </h2>
             <div className="relative w-full h-[600px]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -49,6 +52,21 @@ export function WatchCarousel({ movies }: WatchCarouselProps) {
               />
               <div className="bg-black/10 absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black/100 z-10" />
               <div className="absolute bottom-10 pb-15 px-[clamp(1.25rem,5vw,2.5rem)] flex flex-col gap-1 text-left z-20">
+                <h3 className="text-2xl font-medium text-white w-3/4 sm:w-1/2">
+                  {movie.title}
+                </h3>
+                <p className="text-md font-medium flex flex-wrap gap-2 text-white">
+                  {movie?.movies_directors
+                    ?.map((item) => item.directors.name)
+                    .filter(Boolean)
+                    .join(", ") || ""}{" "}
+                  <span className="text-md font-light">
+                    {movie.release_date || ""}
+                  </span>
+                </p>
+                <p className="line-clamp-5 sm:text-left w-full sm:w-1/2 overflow-hidden text-md font-extralight text-white mb-5">
+                  {movie.description || ""}
+                </p>
                 {/* Boutons de visionnage externes - sortis du Link */}
                 {movie.links && movie.links.length > 0 && (
                   <div className="left-[clamp(1.25rem,5vw,2.5rem)] z-30 pb-5">
@@ -68,21 +86,6 @@ export function WatchCarousel({ movies }: WatchCarouselProps) {
                     </div>
                   </div>
                 )}
-                <h3 className="text-2xl font-medium text-white w-3/4 sm:w-1/2">
-                  {movie.title}
-                </h3>
-                <p className="text-md font-medium flex flex-wrap gap-2 text-white">
-                  {movie?.movies_directors
-                    ?.map((item) => item.directors.name)
-                    .filter(Boolean)
-                    .join(", ") || ""}{" "}
-                  <span className="text-md font-light">
-                    {movie.release_date || ""}
-                  </span>
-                </p>
-                <p className="line-clamp-5 sm:text-left w-full sm:w-1/2 overflow-hidden text-md font-extralight text-white">
-                  {movie.description || ""}
-                </p>
               </div>
             </div>
           </CarouselItem>
