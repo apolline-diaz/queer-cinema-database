@@ -103,20 +103,26 @@ async function getFeaturedMovies() {
   if (ids.length === 0) return [];
 
   const movies = await getMoviesToWatch(ids.slice(0, 3)); // limiter à 3 films
-  return movies;
+
+  const moviesWithLinks = movies.map((m) => ({
+    ...m,
+    links: tv.items[m.id] || [],
+  }));
+
+  return moviesWithLinks;
 }
 
 async function WatchSection() {
-  const movies = await getFeaturedMovies(); // récupère les 3 films à visionner
+  const moviesWithLinks = await getFeaturedMovies(); // récupère les 3 films à visionner
 
-  if (movies.length === 0) return null;
+  if (moviesWithLinks.length === 0) return null;
 
   return (
     <div className="w-full py-5">
       {/* <h2 className="text-2xl mb-4 font-semibold text-rose-500 leading-tight">
         À visionner
       </h2> */}
-      <WatchCarousel movies={movies} />
+      <WatchCarousel movies={moviesWithLinks} />
     </div>
   );
 }
