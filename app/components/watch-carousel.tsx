@@ -61,7 +61,7 @@ export function WatchCarousel({ movies }: WatchCarouselProps) {
                     {movie.release_date || ""}
                   </span>
                 </p>
-                <p className="line-clamp-5 sm:text-left w-full sm:w-1/2 overflow-hidden text-md font-extralight text-white">
+                <p className="line-clamp-5 sm:text-left w-full sm:w-1/2 overflow-hidden text-md font-extralight text-white mb-5">
                   {movie.description || ""}
                 </p>
                 {/* Boutons de visionnage externes - sortis du Link */}
