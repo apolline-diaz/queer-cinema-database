@@ -43,7 +43,7 @@ export function WatchCarousel({ movies }: WatchCarouselProps) {
             <div className="relative w-full h-[600px]">
               {/* Boutons de visionnage externes - sortis du Link */}
               {movie.links && movie.links.length > 0 && (
-                <div className="absolute top-40 left-[clamp(1.25rem,5vw,2.5rem)] z-30 pb-10">
+                <div className="absolute top-60 left-[clamp(1.25rem,5vw,2.5rem)] z-30 pb-10">
                   <div className="flex flex-wrap gap-2">
                     {movie.links.map((l) => (
                       <a
