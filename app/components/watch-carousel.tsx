@@ -41,6 +41,25 @@ export function WatchCarousel({ movies }: WatchCarouselProps) {
         {movies.map((movie) => (
           <CarouselItem key={`${movie.title}-${movie.id}`}>
             <div className="relative w-full h-[600px]">
+              {/* Boutons de visionnage externes - sortis du Link */}
+              {movie.links && movie.links.length > 0 && (
+                <div className="absolute top-40 left-[clamp(1.25rem,5vw,2.5rem)] z-30 pb-10">
+                  <div className="flex flex-wrap gap-2">
+                    {movie.links.map((l) => (
+                      <a
+                        key={l.url}
+                        href={l.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="transition-colors duration-200 px-4 py-2 bg-white text-black hover:text-white hover:bg-gray-800 rounded-xl hover:opacity-90"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        Voir le film
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
               <Link
                 href={`/movies/${movie.id}`}
                 className="h-full w-full overflow-hidden block"
@@ -52,7 +71,7 @@ export function WatchCarousel({ movies }: WatchCarouselProps) {
                   className="w-full h-full object-cover"
                 />
                 <div className="bg-black/10 absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black/100 z-10" />
-                <div className="absolute top-10 px-[clamp(1.25rem,5vw,2.5rem)] flex flex-col gap-1 text-left z-20">
+                <div className="absolute bottom-10 pb-15 px-[clamp(1.25rem,5vw,2.5rem)] flex flex-col gap-1 text-left z-20">
                   <h3 className="text-2xl font-medium text-white w-3/4 sm:w-1/2">
                     {movie.title}
                   </h3>
@@ -70,26 +89,6 @@ export function WatchCarousel({ movies }: WatchCarouselProps) {
                   </p>
                 </div>
               </Link>
-
-              {/* Boutons de visionnage externes - sortis du Link */}
-              {movie.links && movie.links.length > 0 && (
-                <div className="absolute bottom-4 left-[clamp(1.25rem,5vw,2.5rem)] z-30 pb-10">
-                  <div className="flex flex-wrap gap-2">
-                    {movie.links.map((l) => (
-                      <a
-                        key={l.url}
-                        href={l.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="transition-colors duration-200 px-4 py-2 bg-white text-black hover:text-white hover:bg-gray-800 rounded-xl hover:opacity-90"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        Voir le film
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              )}
             </div>
           </CarouselItem>
         ))}
