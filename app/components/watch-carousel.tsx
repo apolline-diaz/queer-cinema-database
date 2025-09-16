@@ -72,7 +72,7 @@ export function WatchCarousel({ movies }: WatchCarouselProps) {
               </Link>
               {/* Boutons de visionnage externes */}
               {movie.links && movie.links.length > 0 && (
-                <div className="absolute bottom-4 left-8 flex flex-wrap gap-2 z-30">
+                <div className="bottom-20 left-8 flex flex-wrap gap-2 z-30">
                   {movie.links.map((l) => (
                     <a
                       key={l.url}
