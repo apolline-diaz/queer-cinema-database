@@ -18,7 +18,7 @@ type MovieWithIncludes = Prisma.moviesGetPayload<{
     movies_countries: { include: { countries: true } };
   };
 }> & {
-  links?: { url: string; label?: string }[]; // ajout du champ links
+  links?: { url: string; label?: string }[];
 };
 
 interface WatchCarouselProps {
@@ -52,7 +52,7 @@ export function WatchCarousel({ movies }: WatchCarouselProps) {
                   className="w-full h-full object-cover"
                 />
                 <div className="bg-black/10 absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black/100 z-10" />
-                <div className="absolute bottom-8 px-8 flex flex-col gap-1 text-left z-20">
+                <div className="absolute bottom-10 px-[clamp(1.25rem,5vw,2.5rem)] flex flex-col gap-1 text-left z-20">
                   <h3 className="text-2xl font-medium text-white w-3/4 sm:w-1/2">
                     {movie.title}
                   </h3>
@@ -65,11 +65,9 @@ export function WatchCarousel({ movies }: WatchCarouselProps) {
                       {movie.release_date || ""}
                     </span>
                   </p>
-                  <p className="line-clamp-3 sm:text-left w-full sm:w-1/2 overflow-hidden text-md font-extralight text-white">
+                  <p className="line-clamp-5 sm:text-left w-full sm:w-1/2 overflow-hidden text-md font-extralight text-white">
                     {movie.description || ""}
                   </p>
-
-                  {/* Boutons de visionnage externes - déplacés ici */}
                   {movie.links && movie.links.length > 0 && (
                     <div className="mt-4 flex flex-wrap gap-2">
                       {movie.links.map((l) => (
