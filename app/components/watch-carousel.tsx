@@ -52,7 +52,7 @@ export function WatchCarousel({ movies }: WatchCarouselProps) {
                   className="w-full h-full object-cover"
                 />
                 <div className="bg-black/10 absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black/100 z-10" />
-                <div className="absolute bottom-10 pb-15 px-[clamp(1.25rem,5vw,2.5rem)] flex flex-col gap-1 text-left z-20">
+                <div className="absolute top-10 px-[clamp(1.25rem,5vw,2.5rem)] flex flex-col gap-1 text-left z-20">
                   <h3 className="text-2xl font-medium text-white w-3/4 sm:w-1/2">
                     {movie.title}
                   </h3>
