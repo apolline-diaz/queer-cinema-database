@@ -40,6 +40,9 @@ export function WatchCarousel({ movies }: WatchCarouselProps) {
       <CarouselContent>
         {movies.map((movie) => (
           <CarouselItem key={`${movie.title}-${movie.id}`}>
+            <h2 className="absolute z-10 text-2xl mb-4 w-full px-[clamp(1.25rem,5vw,2.5rem)] pt-10 font-semibold text-rose-500 leading-tight">
+              À voir en ligne
+            </h2>
             <div className="relative w-full h-[600px]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
