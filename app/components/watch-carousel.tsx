@@ -68,24 +68,25 @@ export function WatchCarousel({ movies }: WatchCarouselProps) {
                   <p className="line-clamp-3 sm:text-left w-full sm:w-1/2 overflow-hidden text-md font-extralight text-white">
                     {movie.description || ""}
                   </p>
+
+                  {/* Boutons de visionnage externes - déplacés ici */}
+                  {movie.links && movie.links.length > 0 && (
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {movie.links.map((l) => (
+                        <a
+                          key={l.url}
+                          href={l.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="transition-colors duration-200 px-4 py-2 bg-white text-black hover:text-white hover:bg-gray-800 rounded-xl hover:opacity-90"
+                        >
+                          Voir le film
+                        </a>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </Link>
-              {/* Boutons de visionnage externes */}
-              {movie.links && movie.links.length > 0 && (
-                <div className="bottom-20 left-8 flex flex-wrap gap-2 z-30">
-                  {movie.links.map((l) => (
-                    <a
-                      key={l.url}
-                      href={l.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="transition-colors duration-200 px-4 py-2 bg-white text-black hover:text-white hover:bg-gray-800 rounded-xl hover:opacity-90"
-                    >
-                      {l.label || "Voir le film"}
-                    </a>
-                  ))}
-                </div>
-              )}
             </div>
           </CarouselItem>
         ))}
