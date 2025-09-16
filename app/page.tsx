@@ -20,15 +20,12 @@ export default function HomePage() {
       <Suspense fallback={<HeroSkeleton />}>
         <HeroSection />
       </Suspense>
-
-      <Suspense fallback={<MoviesSkeleton />}>
-        <WatchSection />
-      </Suspense>
-
       <Suspense fallback={<MoviesSkeleton />}>
         <LatestMoviesSection />
       </Suspense>
-
+      <Suspense fallback={<MoviesSkeleton />}>
+        <WatchSection />
+      </Suspense>
       <Suspense fallback={<CollectionsSkeleton />}>
         <CollectionsSection />
       </Suspense>
@@ -101,7 +98,7 @@ async function LatestMoviesSection() {
 }
 
 async function getFeaturedMovies() {
-  const tv = await readLinks(); // récupère les liens TV
+  const tv = await readLinks();
   const ids = Object.keys(tv.items);
   if (ids.length === 0) return [];
 
@@ -115,10 +112,10 @@ async function WatchSection() {
   if (movies.length === 0) return null;
 
   return (
-    <div className="w-full px-[clamp(1.25rem,5vw,2.5rem)] py-5">
-      <h2 className="text-2xl mb-4 font-semibold text-rose-500 leading-tight">
+    <div className="w-full py-5">
+      {/* <h2 className="text-2xl mb-4 font-semibold text-rose-500 leading-tight">
         À visionner
-      </h2>
+      </h2> */}
       <WatchCarousel movies={movies} />
     </div>
   );
