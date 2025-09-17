@@ -8,6 +8,8 @@ import { auth } from "@/utils/auth";
 import BackButton from "@/app/components/back-button";
 import { Metadata } from "next";
 import { getCanonicalUrl } from "@/utils/index";
+import { getMovieLinks } from "@/app/server-actions/movies/get-links";
+import { Icon } from "@iconify/react/dist/iconify.js";
 
 export const revalidate = 0;
 
@@ -61,6 +63,8 @@ export default async function MoviePage({ params }: Props) {
     return <div>Film introuvable</div>;
   }
 
+  const links = await getMovieLinks(movie.id.toString());
+
   // Determine if we display "min" or "saison(s)" depending on the type
   const durationText =
     movie.type === "Série" || movie.type === "Emission TV"
@@ -86,6 +90,24 @@ export default async function MoviePage({ params }: Props) {
               )}
             </div>
           </div>
+          {links.length > 0 && (
+            <div className="w-full flex flex-col mt-4 r-0">
+              <div className="flex flex-wrap gap-2 justify-end">
+                {links.map((l: any, index: number) => (
+                  <Link
+                    key={l.url}
+                    href={l.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-row flex justify-between items-center gap-2 transition-colors duration-200 px-4 py-2 bg-rose-500 text-white hover:bg-rose-700 rounded-full hover:opacity-90"
+                  >
+                    Voir le film{links.length > 1 ? ` ${index + 1}` : ""}
+                    <Icon icon="lsicon:play-outline" className="size-5" />
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
       <div className="px-[clamp(1.25rem,5vw,2.5rem)] pt-5">
