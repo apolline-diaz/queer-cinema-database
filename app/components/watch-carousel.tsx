@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/carousel";
 import { getImageUrl } from "@/utils";
 import { Prisma } from "@prisma/client";
+import { Icon } from "@iconify/react/dist/iconify.js";
 
 type MovieWithIncludes = Prisma.moviesGetPayload<{
   include: {
@@ -71,17 +72,21 @@ export function WatchCarousel({ movies }: WatchCarouselProps) {
                 {movie.links && movie.links.length > 0 && (
                   <div className="left-[clamp(1.25rem,5vw,2.5rem)] z-30 pb-5">
                     <div className="flex flex-wrap gap-2">
-                      {movie.links.map((l) => (
-                        <a
+                      {movie.links?.map((l, index) => (
+                        <Link
                           key={l.url}
                           href={l.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="transition-colors duration-200 px-4 py-2 bg-white text-black hover:text-white hover:bg-gray-800 rounded-xl hover:opacity-90"
+                          className="flex-row flex justify-between items-center gap-2 transition-colors duration-200 px-4 py-2 bg-rose-500 text-white hover:bg-rose-700 rounded-full hover:opacity-90"
                           onClick={(e) => e.stopPropagation()}
                         >
                           Voir le film
-                        </a>
+                          {movie.links && movie.links.length > 1
+                            ? ` ${index + 1}`
+                            : ""}
+                          <Icon icon="lsicon:play-outline" className="size-5" />
+                        </Link>
                       ))}
                     </div>
                   </div>
