@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import Image from "next/image";
 import { getImageUrl } from "@/utils";
 import Link from "next/link";
+import { Icon } from "@iconify/react/dist/iconify.js";
 
 function InfoRow({ label, value }: { label: string; value?: string | null }) {
   if (!value) return null;
@@ -69,20 +70,18 @@ export function TVClient({
           Voir la fiche
         </Link>
         {/* Boutons de visionnage */}
-        <div className="flex flex-col">
-          <p className="font-semibold text-sm mt-4 mb-3">Voir le film :</p>
-          <div className="flex flex-wrap gap-2">
-            {current.links.map((l: any) => (
-              <a
-                key={l.url}
-                href={l.url}
-                target="_blank"
-                className="transition-colors duration-200 px-4 py-2 bg-white text-black hover:text-white hover:bg-gray-800 rounded-xl hover:opacity-90"
-              >
-                {l.label || "Voir le film"}
-              </a>
-            ))}
-          </div>
+        <div className="flex flex-wrap gap-2">
+          {current.links?.map((l: any, index: number) => (
+            <a
+              key={l.url}
+              href={l.url}
+              target="_blank"
+              className="flex-row flex justify-between items-center gap-2 transition-colors duration-200 px-4 py-2 bg-rose-500 text-white hover:bg-rose-700 rounded-full hover:opacity-90"
+            >
+              {l.label || "Voir le film"}
+              <Icon icon="lsicon:play-outline" className="size-5" />
+            </a>
+          ))}
         </div>
       </div>
       {/* Rail / vignettes */}
