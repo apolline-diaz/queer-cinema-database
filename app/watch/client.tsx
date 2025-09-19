@@ -65,14 +65,14 @@ export function TVClient({
       <div className="max-w-6xl mx-auto px-6 pb-6">
         <Link
           href={`/movies/${current.id}`}
-          className="inline-flex mt-4 px-5 py-2 border border-rose-500 text-rose-500 rounded-xl hover:border-white hover:text-white transition-colors duration-200 w-fit"
+          className="inline-flex mt-4 px-3 py-1 border border-rose-500 text-rose-500 rounded-xl hover:border-white hover:text-white transition-colors duration-200 w-fit"
         >
           Voir la fiche
         </Link>
         {/* Boutons de visionnage */}
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2 mt-3">
           {current.links?.map((l: any, index: number) => (
-            <a
+            <Link
               key={l.url}
               href={l.url}
               target="_blank"
@@ -80,7 +80,7 @@ export function TVClient({
             >
               {l.label || "Voir le film"}
               <Icon icon="lsicon:play-outline" className="size-5" />
-            </a>
+            </Link>
           ))}
         </div>
       </div>
