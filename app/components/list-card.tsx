@@ -63,13 +63,18 @@ export const ListCard: React.FC<ListCardProps> = ({ list }) => {
       <div className="group overflow-hidden flex flex-col rounded-xl transition-transform">
         <div className="relative h-48 overflow-hidden">
           <Link href={`/lists/${list.id}`}>
-            <Image
-              src={getImageUrl(firstMoviePoster)}
-              alt={list.title}
-              className="object-cover w-full h-full z-20 transform transition-transform duration-700 ease-in-out group-hover:scale-110 group-hover:brightness-50"
-              title={list.title}
-            />
-
+            {firstMoviePoster ? (
+              <Image
+                src={getImageUrl(firstMoviePoster)}
+                alt={list.title}
+                className="object-cover w-full h-full z-20 transform transition-transform duration-700 ease-in-out group-hover:scale-110 group-hover:brightness-50"
+                title={list.title}
+              />
+            ) : (
+              <div className="w-full h-full bg-gray-300 flex items-center justify-center">
+                <span className="text-gray-500 text-sm">Aucune image</span>
+              </div>
+            )}
             <div className="absolute inset-0 bg-black bg-opacity-20 flex flex-col p-4 text-white uppercase justify-end">
               <div className="text-xl font-semibold line-clamp-2">
                 {list.title}
