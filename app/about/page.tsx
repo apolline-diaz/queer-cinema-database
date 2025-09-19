@@ -37,25 +37,25 @@ export default function AboutPage() {
           <br />
           Le cinéma présenté ici est donc résolument politique, mais il ne se
           limite pas à l’exposition des discriminations. Il est aussi traversé
-          par des élans de joie, de solidarité, d'entraide, d'amour, d'amitié.
-          Mais aussi de rupture, de remise en question, d'expérimentation, de
+          par des élans de joie, de solidarité, d'entraide, d'amour, d'amitié,
+          mais aussi de rupture, de remise en question, d'expérimentation, de
           rébellion et de résistance, toujours.
         </p>
 
         <div className="">
           <div className="grid grid-col-1 gap-5">
             <div className="bg-rose-50 rounded-xl p-5">
-              <h3 className="font-bold mb-2">Pourquoi indexer les films?</h3>
+              <h3 className="font-bold mb-2">Pourquoi indexer les films ?</h3>
               <p className="font-light text-black">
                 Face à la masse de productions sur les sujets LGBTQI+ qui existe
                 aujourd&apos;hui, il est difficile d'identifier le contenu d'une
-                oeuvre au-delà du simple label "LGBT" ou "queer". <br />
+                œuvre au-delà du simple label "LGBT" ou "queer". <br />
                 Dans la plateforme, chaque film comprend des informations
                 techniques, et des mots-clés leurs sont attribués afin d'avoir
                 une compréhension plus complète des sujets qu'ils abordent.
                 <br />
-                Les mots clés- sont déterminés selon les sujets principaux des
-                oeuvres : les thématiques sociales, économiques, politiques,
+                Les mots-clés sont déterminés selon les sujets principaux des
+                œuvres : les thématiques sociales, économiques, politiques,
                 culturelles, l&apos;identité et l'expression de genre et
                 l&apos;orientation relationnelle (sexuelle/romantique) des
                 personnages, et celles avec qui ils flirtent.
@@ -64,8 +64,8 @@ export default function AboutPage() {
                 déroule pas à la même période que l'année de sortie).
                 <br />
                 L'identité de genre et l'orientation des réalisateur-ices ou
-                leur profession n'est pas spécifiée car elle ne peut pas être
-                vérifiée et peut changer. <br />
+                leur profession ne sont pas spécifiées car elles ne peuvent pas
+                être vérifiées et peuvent changer. <br />
                 <br />
                 Dans la page Films, vous trouverez tous les films de la base de
                 données. Ils sont classés du plus récent ajout au plus ancien.
