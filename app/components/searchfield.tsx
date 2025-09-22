@@ -227,24 +227,28 @@ export default function Searchfield({
       {/* Section des résultats */}
       <div className="flex-1 pt-4" data-testid="results-section">
         {/* Compteur de résultats et info pagination */}
-        <div className="border-l-4 text-sm border-rose-500 pl-4 py-2 mb-6">
-          {isLoading ? (
-            <div className="animate-pulse rounded-md h-6 bg-gray-300 w-32"></div>
-          ) : (
-            <div className="text-gray-800">
-              <span
-                className="text-rose-500 font-semibold"
-                data-testid="results-count"
-              >
-                {totalMovies}
+
+        <div className="border-l-4 text-sm border-rose-500 pl-4 py-2 mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+          <div className="text-gray-800">
+            <span
+              className="text-rose-500 font-semibold"
+              data-testid="results-count"
+            >
+              {totalMovies}
+            </span>
+            {totalMovies > 0 && (
+              <span className="text-gray-500 ml-4 text-xs">
+                Page {currentPage} sur {totalPages} • Affichage de{" "}
+                {startIndex + 1} à {Math.min(endIndex, totalMovies)}
               </span>
-              <span className="text-gray-600 ml-2">titres trouvés</span>
-              {totalMovies > 0 && (
-                <span className="text-gray-500 ml-4 text-xs">
-                  Page {currentPage} sur {totalPages} • Affichage de{" "}
-                  {startIndex + 1} à {Math.min(endIndex, totalMovies)}
-                </span>
-              )}
+            )}
+          </div>
+          {/* Indication du tri */}
+          {totalMovies > 0 && (
+            <div className="text-xs text-gray-500 italic">
+              Triés par{" "}
+              <span className="font-medium text-gray-700">date de sortie</span>{" "}
+              — du plus récent au plus ancien
             </div>
           )}
         </div>

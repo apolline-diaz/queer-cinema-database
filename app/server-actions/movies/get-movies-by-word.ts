@@ -19,6 +19,8 @@ export const getMoviesByWord = async (search: string): Promise<Movie[]> => {
       "transmasculinité",
       "transidentité/transgenre",
     ],
+    transmasc: ["transmasculinité"],
+    homo: ["homosexualité"],
     mode: ["mode/fashion"],
     bi: ["bisexualité/pansexualité"],
     bisexuel: ["bisexualité/pansexualité"],
