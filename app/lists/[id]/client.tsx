@@ -30,9 +30,15 @@ export default function ListClientPage({
         const list = await getList(id);
         if (list) {
           setListData(list);
-          const extractedMovies = list.lists_movies.map(
-            (item: any) => item.movies
-          );
+          // Gestion sécurisée des films, même si la liste est vide
+
+          const extractedMovies =
+            list.lists_movies?.length > 0
+              ? list.lists_movies
+                  .map((item: any) => item.movies)
+                  .filter(Boolean)
+              : [];
+
           const flatMovies = extractedMovies.flat();
           setMovies(flatMovies);
           setSortedMovies(flatMovies);
@@ -111,89 +117,11 @@ export default function ListClientPage({
       ) : (
         <div>
           <h1 className="text-2xl font-bold text-rose-500">{listData.title}</h1>
-          <p className="text-black font-light mt-2 mb-6">
-            {listData.description}
-          </p>
-
-          {/* Section de tri */}
-          <div className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-2xl p-4 mb-8 border border-gray-200/50">
-            <div className="flex items-center gap-2 mb-3">
-              <Icon
-                icon="solar:sort-outline"
-                className="text-rose-500 text-lg"
-              />
-              <h3 className="text-sm font-medium text-gray-800">Trier</h3>
-            </div>
-
-            <div className="flex flex-wrap gap-3">
-              <button
-                onClick={() => sortMovies("title")}
-                className={`group flex items-center gap-2 px-4 py-2 rounded-xl font-medium text-sm transition-all duration-200 ${
-                  sortType === "title"
-                    ? "bg-rose-500 text-white "
-                    : "bg-white text-gray-700 hover:bg-rose-50 hover:text-rose-600 border border-gray-200 hover:border-rose-200 "
-                }`}
-              >
-                <Icon
-                  icon="solar:sort-from-top-to-bottom-outline"
-                  className={`text-lg transition-colors ${
-                    sortType === "title"
-                      ? "text-white"
-                      : "text-gray-500 group-hover:text-rose-500"
-                  }`}
-                />
-                <span>Alphabétique</span>
-                {sortType === "title" && (
-                  <div className="bg-white/20 px-1.5 py-0.5 rounded text-xs">
-                    {sortDirection === "asc" ? "A-Z" : "Z-A"}
-                  </div>
-                )}
-              </button>
-
-              <button
-                onClick={() => sortMovies("year")}
-                className={`group flex items-center gap-2 px-4 py-2 rounded-xl font-medium text-sm transition-all duration-200 ${
-                  sortType === "year"
-                    ? "bg-rose-500 text-white"
-                    : "bg-white text-gray-700 hover:bg-rose-50 hover:text-rose-600 border border-gray-200 hover:border-rose-200"
-                }`}
-              >
-                <Icon
-                  icon="solar:calendar-outline"
-                  className={`text-lg transition-colors ${
-                    sortType === "year"
-                      ? "text-white"
-                      : "text-gray-500 group-hover:text-rose-500"
-                  }`}
-                />
-                <span>Année</span>
-                {sortType === "year" && (
-                  <div className="bg-white/20 px-1.5 py-0.5 rounded text-xs">
-                    {sortDirection === "asc" ? "1900→2025" : "2025→1900"}
-                  </div>
-                )}
-              </button>
-
-              <button
-                onClick={() => sortMovies("none")}
-                className={`group flex items-center gap-2 px-4 py-2 rounded-xl font-medium text-sm transition-all duration-200 ${
-                  sortType === "none"
-                    ? "bg-gray-700 text-white"
-                    : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 hover:border-gray-300"
-                }`}
-              >
-                <Icon
-                  icon="solar:refresh-outline"
-                  className={`text-lg transition-colors ${
-                    sortType === "none"
-                      ? "text-white"
-                      : "text-gray-500 group-hover:text-gray-600"
-                  }`}
-                />
-                <span>Par défaut</span>
-              </button>
-            </div>
-          </div>
+          {listData?.description && (
+            <p className="text-black font-light mt-2 mb-6">
+              {listData.description}
+            </p>
+          )}
 
           {userIsOwner && (
             <button
@@ -207,9 +135,118 @@ export default function ListClientPage({
             </button>
           )}
 
+          {/* Afficher la section de tri seulement s'il y a des films */}
+          {movies.length > 0 && (
+            <div className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-2xl p-4 mb-8 border border-gray-200/50">
+              <div className="flex items-center gap-2 mb-3">
+                <Icon
+                  icon="solar:sort-outline"
+                  className="text-rose-500 text-lg"
+                />
+                <h3 className="text-sm font-medium text-gray-800">Trier</h3>
+              </div>
+
+              <div className="flex flex-wrap gap-3">
+                <button
+                  onClick={() => sortMovies("title")}
+                  className={`group flex items-center gap-2 px-4 py-2 rounded-xl font-medium text-sm transition-all duration-200 ${
+                    sortType === "title"
+                      ? "bg-rose-500 text-white "
+                      : "bg-white text-gray-700 hover:bg-rose-50 hover:text-rose-600 border border-gray-200 hover:border-rose-200 "
+                  }`}
+                >
+                  <Icon
+                    icon="solar:sort-from-top-to-bottom-outline"
+                    className={`text-lg transition-colors ${
+                      sortType === "title"
+                        ? "text-white"
+                        : "text-gray-500 group-hover:text-rose-500"
+                    }`}
+                  />
+                  <span>Alphabétique</span>
+                  {sortType === "title" && (
+                    <div className="bg-white/20 px-1.5 py-0.5 rounded text-xs">
+                      {sortDirection === "asc" ? "A-Z" : "Z-A"}
+                    </div>
+                  )}
+                </button>
+
+                <button
+                  onClick={() => sortMovies("year")}
+                  className={`group flex items-center gap-2 px-4 py-2 rounded-xl font-medium text-sm transition-all duration-200 ${
+                    sortType === "year"
+                      ? "bg-rose-500 text-white"
+                      : "bg-white text-gray-700 hover:bg-rose-50 hover:text-rose-600 border border-gray-200 hover:border-rose-200"
+                  }`}
+                >
+                  <Icon
+                    icon="solar:calendar-outline"
+                    className={`text-lg transition-colors ${
+                      sortType === "year"
+                        ? "text-white"
+                        : "text-gray-500 group-hover:text-rose-500"
+                    }`}
+                  />
+                  <span>Année</span>
+                  {sortType === "year" && (
+                    <div className="bg-white/20 px-1.5 py-0.5 rounded text-xs">
+                      {sortDirection === "asc" ? "1900→2025" : "2025→1900"}
+                    </div>
+                  )}
+                </button>
+
+                <button
+                  onClick={() => sortMovies("none")}
+                  className={`group flex items-center gap-2 px-4 py-2 rounded-xl font-medium text-sm transition-all duration-200 ${
+                    sortType === "none"
+                      ? "bg-gray-700 text-white"
+                      : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 hover:border-gray-300"
+                  }`}
+                >
+                  <Icon
+                    icon="solar:refresh-outline"
+                    className={`text-lg transition-colors ${
+                      sortType === "none"
+                        ? "text-white"
+                        : "text-gray-500 group-hover:text-gray-600"
+                    }`}
+                  />
+                  <span>Par défaut</span>
+                </button>
+              </div>
+            </div>
+          )}
+
           <div className="grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 mt-5">
             {sortedMovies.length === 0 ? (
-              <p>Aucun film trouvé</p>
+              <div className="col-span-full">
+                <div className="text-center py-12">
+                  <Icon
+                    icon="solar:film-roll-outline"
+                    className="text-6xl text-gray-300 mx-auto mb-4"
+                  />
+                  <p className="text-gray-500 text-lg mb-2">
+                    Cette liste est vide
+                  </p>
+                  <p className="text-gray-400 text-sm">
+                    {userIsOwner
+                      ? "Vous pouvez ajouter des films en modifiant la liste"
+                      : "Aucun film n'a été ajouté à cette liste pour le moment"}
+                  </p>
+                  {userIsOwner && (
+                    <button
+                      onClick={() => router.push(`/lists/edit/${id}`)}
+                      className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-xl text-rose-600 border border-rose-200 hover:bg-rose-50 transition-colors"
+                    >
+                      <Icon
+                        icon="solar:add-circle-outline"
+                        className="text-lg"
+                      />
+                      Ajouter des films
+                    </button>
+                  )}
+                </div>
+              </div>
             ) : (
               sortedMovies.map((movie) => (
                 <Card

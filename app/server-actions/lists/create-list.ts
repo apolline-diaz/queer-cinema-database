@@ -8,7 +8,7 @@ import { ensureUserExists } from "@/utils/ensure-user-exist";
 export interface FormState {
   type: string;
   message: string;
-  id?: string | number | bigint | null;
+  id?: string | number | bigint | null; // Make it accept multiple types to be safe
   errors: {
     title?: string[];
     description?: string[];
@@ -23,7 +23,12 @@ const ListSchema = z.object({
   is_collection: z.string(),
 });
 
-export async function createList(formData: FormData) {
+export async function createList(formData: {
+  title: string;
+  description?: string;
+  movie_id?: string;
+  is_collection: boolean;
+}) {
   // Assurez-vous que l'utilisateur existe avant de créer la liste
   const userSync = await ensureUserExists();
 
@@ -40,10 +45,17 @@ export async function createList(formData: FormData) {
 
   const userId = data.user.id;
   const validatedFields = ListSchema.safeParse({
-    title: formData.get("title"),
-    description: formData.get("description"),
-    movie_id: formData.get("movie_id"),
-    is_collection: formData.get("is_collection"),
+    title: formData.title?.trim() || "",
+    description:
+      formData.description && formData.description !== "$undefined"
+        ? formData.description.trim()
+        : undefined,
+    movie_id:
+      formData.movie_id && formData.movie_id !== "$undefined"
+        ? formData.movie_id.trim()
+        : undefined,
+
+    is_collection: formData.is_collection,
   });
 
   if (!validatedFields.success) {
