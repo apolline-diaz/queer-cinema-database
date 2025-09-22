@@ -8,7 +8,7 @@ import { ensureUserExists } from "@/utils/ensure-user-exist";
 export interface FormState {
   type: string;
   message: string;
-  id?: string | number | bigint | null; // Make it accept multiple types to be safe
+  id?: string | number | bigint | null;
   errors: {
     title?: string[];
     description?: string[];

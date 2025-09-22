@@ -18,15 +18,15 @@ export default async function StatisticsPage() {
 
       <StatsChart
         data={keywordStats}
-        title="Nombre de films par mots-clés les plus fréquents"
+        title="Nombre de films par les 15 mots-clés les plus fréquents"
       />
       <StatsChart
         data={genreStats}
-        title="Nombre de films par genres les plus fréquents"
+        title="Nombre de films par les 15 genres les plus fréquents"
       />
       <StatsChart
         data={countryStats}
-        title="Nombre de films par pays les plus fréquents"
+        title="Nombre de films par les 15 pays les plus fréquents"
       />
     </div>
   );
