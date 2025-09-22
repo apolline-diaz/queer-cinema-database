@@ -86,19 +86,20 @@ export function TVClient({
       </div>
       {/* Rail / vignettes */}
       <section className="max-w-6xl mx-auto px-6 pb-6">
-        <h2 className="text-lg font-semibold mb-3">Aussi disponible</h2>
+        <h2 className="text-lg font-semibold mb-3">Aussi disponibles</h2>
 
-        <div className="max-h-[500px] grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 overflow-y-auto pr-2">
+        <div className="flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory">
           {others.length === 0
             ? // Skeletons pendant le "chargement"
               Array.from({ length: 5 }).map((_, index) => (
                 <div
                   key={index}
-                  className="animate-pulse bg-neutral-800 aspect-[2/3] rounded-xl"
+                  className="relative animate-pulse bg-neutral-800 rounded-xl flex-shrink-0 snap-start"
+                  style={{ width: "150px", height: "225px" }} // même ratio que tes affiches
                 >
-                  <div className="absolute bottom-0 left-0 right-0 p-4">
-                    <div className="h-5 bg-neutral-700 rounded w-3/4 mb-2"></div>
-                    <div className="h-4 bg-neutral-700 rounded w-1/2"></div>
+                  <div className="absolute bottom-0 left-0 right-0 p-2">
+                    <div className="h-4 bg-neutral-700 rounded w-3/4 mb-1"></div>
+                    <div className="h-3 bg-neutral-700 rounded w-1/2"></div>
                   </div>
                 </div>
               ))
@@ -106,9 +107,10 @@ export function TVClient({
                 <button
                   key={m.id}
                   onClick={() => setCurrentId(m.id)}
-                  className="group relative rounded-xl overflow-hidden"
+                  className="group relative rounded-xl overflow-hidden flex-shrink-0 snap-start"
+                  style={{ width: "150px", height: "225px" }} // ratio 2/3
                 >
-                  <div className="aspect-[2/3] relative">
+                  <div className="relative w-full h-full">
                     {m.image_url ? (
                       <Image
                         src={getImageUrl(m.image_url)}
@@ -117,10 +119,10 @@ export function TVClient({
                         className="object-cover group-hover:scale-[1.02] transition"
                       />
                     ) : (
-                      <div className="aspect-[2/3] bg-neutral-800" />
+                      <div className="w-full h-full bg-neutral-800" />
                     )}
                   </div>
-                  <div className="absolute bottom-0 left-0 right-0 p-4 text-left bg-gradient-to-t from-black/70 to-transparent text-md font-bold">
+                  <div className="absolute bottom-0 left-0 right-0 p-2 text-left bg-gradient-to-t from-black/70 to-transparent text-sm font-bold">
                     {m.title}
                   </div>
                 </button>

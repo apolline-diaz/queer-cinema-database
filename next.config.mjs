@@ -15,6 +15,12 @@ const nextConfig = {
         hostname: "127.0.0.1",
         port: "54338",
       },
+      {
+        protocol: "http",
+        hostname: "127.0.0.1",
+        port: "54331",
+        pathname: "/storage/v1/object/public/**", // dev local supabase
+      },
     ],
   },
 };
