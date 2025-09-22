@@ -9,13 +9,24 @@ export const getMoviesByWord = async (search: string): Promise<Movie[]> => {
   // Map des exceptions
   const exceptions: Record<string, string[]> = {
     trans: ["transféminité", "transmasculinité", "transidentité/transgenre"],
-    mode: ["mode", "fashion"],
+    transgenre: [
+      "transféminité",
+      "transmasculinité",
+      "transidentité/transgenre",
+    ],
+    transidentité: [
+      "transféminité",
+      "transmasculinité",
+      "transidentité/transgenre",
+    ],
+    mode: ["mode/fashion"],
     bi: ["bisexualité/pansexualité"],
     bisexuel: ["bisexualité/pansexualité"],
     pansexuel: ["bisexualité/pansexualité"],
     gouine: ["lesbienne"],
     "comédie romantique": ["romance"],
     musical: ["comédie musicale", "musical"],
+    "etats unis": ["États-Unis"],
   };
 
   // Si l'utilisateur tape un mot avec exception, on remplace par les mots-clés correspondants
