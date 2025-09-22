@@ -10,11 +10,14 @@ export default function BackButton({ className = "" }) {
     <button
       onClick={() => router.back()}
       className={cn(
-        "flex items-center border border-gray-500 mb-4 text-sm text-gray-500 hover:text-white hover:bg-rose-500 hover:border-rose-500 rounded-full px-2 pr-3",
+        "inline-flex items-center text-sm gap-2 pr-3 pl-2 py-1 my-4 rounded-xl text-gray-600 border border-gray-200 hover:bg-gray-50 hover:text-gray-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-rose-300",
         className
       )}
     >
-      <Icon icon="mdi:chevron-left" className="inline size-4" />
+      <Icon
+        icon="mdi:chevron-left"
+        className="w-5 h-5 transition-transform duration-200 group-hover:-translate-x-1"
+      />
       Retour
     </button>
   );
