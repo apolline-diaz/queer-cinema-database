@@ -32,7 +32,10 @@ export async function getList(id: string) {
       throw new Error("Vous n'avez pas la permission d'accéder à cette liste.");
     }
 
-    return list;
+    return {
+      ...list,
+      lists_movies: list.lists_movies || [],
+    };
   } catch (error) {
     console.error("Error fetching list:", error);
     throw new Error("Could not fetch list data");

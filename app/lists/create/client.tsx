@@ -85,21 +85,26 @@ const CreateListForm: React.FC<CreateListFormProps> = ({ isAdmin }) => {
   );
 
   const onSubmit = async (data: FormData) => {
-    const formData = new FormData();
-    formData.append("title", data.title);
-    if (data.description) {
-      formData.append("description", data.description);
-    }
-    if (data.movie_ids.length > 0) {
-      formData.append("movie_id", data.movie_ids.join(","));
-    }
-    formData.append(
-      "is_collection",
-      isAdmin ? (data.is_collection ? "true" : "false") : "false"
-    );
-    const response = await createList(formData);
+    const payload = {
+      title: data.title,
+      description: data.description?.trim() || undefined,
+      movie_id:
+        data.movie_ids.length > 0 ? data.movie_ids.join(",") : undefined,
+      is_collection: isAdmin ? !!data.is_collection : false,
+    };
+
+    const response = await createList({
+      title: data.title,
+      description: data.description?.trim() || undefined,
+      movie_id:
+        data.movie_ids.length > 0 ? data.movie_ids.join(",") : undefined,
+      is_collection: isAdmin ? !!data.is_collection : false, // forcer un booléen
+    });
+
     if (response?.type === "success" && response.id) {
       router.push(`/lists/${response.id}`);
+    } else {
+      console.error("Erreur création liste :", response);
     }
   };
 
@@ -135,9 +140,7 @@ const CreateListForm: React.FC<CreateListFormProps> = ({ isAdmin }) => {
             Description
           </label>
           <textarea
-            {...register("description", {
-              required: "La description est requise",
-            })}
+            {...register("description")}
             className="block w-full text-sm text-black bg-white placeholder-gray-500 font-light border-black border py-3 px-4 rounded-xl focus:outline-none"
             placeholder="Entrez une description..."
             data-testid="description-input"
@@ -188,7 +191,6 @@ const CreateListForm: React.FC<CreateListFormProps> = ({ isAdmin }) => {
           <Controller
             name="movie_ids"
             control={control}
-            rules={{ required: "Vous devez ajouter au moins un film" }}
             render={({ field }) => (
               <input
                 type="hidden"

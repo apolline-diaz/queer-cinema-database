@@ -7,7 +7,7 @@ interface GenreStat {
   count: number;
 }
 
-export async function getGenreStats(limit: number = 13): Promise<GenreStat[]> {
+export async function getGenreStats(limit: number = 15): Promise<GenreStat[]> {
   const prisma = new PrismaClient();
 
   try {

@@ -29,18 +29,25 @@ export default function StatsChart({ data, title }: StatsChartProps) {
 
   const COLORS = [
     "oklch(85% 0.08 10)",
-    "oklch(80% 0.07 40)",
-    "oklch(78% 0.07 120)",
-    "oklch(82% 0.06 200)",
-    "oklch(87% 0.06 300)",
-    "oklch(84% 0.05 25)",
-    "oklch(88% 0.05 85)",
-    "oklch(90% 0.04 180)",
+    "oklch(83% 0.08 30)",
+    "oklch(81% 0.07 50)",
+    "oklch(79% 0.07 70)",
+    "oklch(77% 0.07 90)",
+    "oklch(82% 0.06 110)",
+    "oklch(84% 0.06 130)",
+    "oklch(86% 0.05 150)",
+    "oklch(88% 0.05 170)",
+    "oklch(90% 0.04 190)",
+    "oklch(87% 0.05 210)",
+    "oklch(85% 0.06 230)",
+    "oklch(83% 0.07 250)",
+    "oklch(81% 0.08 270)",
+    "oklch(79% 0.09 290)",
   ];
 
   return (
     <>
-      <div className="mb-10 flex xs:flex-col justify-start">
+      <div className="mb-5 flex xs:flex-col justify-start">
         <div className="flex flex-col">
           <h2 className="text-black text-xl font-semibold mb-5">{title}</h2>
           <div className="flex flex-wrap gap-4 xs:w-full">
@@ -68,7 +75,7 @@ export default function StatsChart({ data, title }: StatsChartProps) {
         </div>
       </div>
 
-      <div className="rounded-lg my-6">
+      <div className="rounded-lg mb-10">
         <div className="h-96">
           {chartType === "bar" ? (
             <ResponsiveContainer width="100%" height="100%">
@@ -81,8 +88,9 @@ export default function StatsChart({ data, title }: StatsChartProps) {
                   angle={-45}
                   textAnchor="end"
                   height={90}
+                  tick={{ fontSize: 12 }}
                 />
-                <YAxis />
+                <YAxis tick={{ fontSize: 12 }} />
                 <Tooltip
                   formatter={(value) => [`${value} films`]}
                   labelFormatter={(label) => `${label}`}
@@ -108,8 +116,11 @@ export default function StatsChart({ data, title }: StatsChartProps) {
                   outerRadius={120}
                   dataKey="count"
                   nameKey="name"
-                  label={({ name, count, percent }) =>
-                    `${name}: ${count} (${(percent * 100).toFixed(0)}%)`
+                  // label={({ name, count, percent }) =>
+                  //   `${name}: ${count} (${(percent * 100).toFixed(0)}%)`
+                  // }
+                  label={({ count, percent }) =>
+                    `${count} (${(percent * 100).toFixed(0)}%)`
                   }
                 >
                   {data.map((entry, index) => (
@@ -120,7 +131,7 @@ export default function StatsChart({ data, title }: StatsChartProps) {
                   ))}
                 </Pie>
                 <Tooltip formatter={(value) => [`${value} films`, "Nombre"]} />
-                <Legend />
+                <Legend wrapperStyle={{ fontSize: "12px" }} />
               </PieChart>
             </ResponsiveContainer>
           )}
