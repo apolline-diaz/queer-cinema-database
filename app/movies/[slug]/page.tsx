@@ -135,8 +135,8 @@ export default async function MoviePage({ params }: Props) {
           ))}
         </h2>
 
-        <div className="flex flex-col sm:flex-row gap-6">
-          <div className="min-w-[150px] bg-rose-50 rounded-xl p-3 grid sm:grid-cols-1 grid-cols-3 gap-4 font-light">
+        <div className="grid sm:grid-cols-[250px_1fr] gap-6 items-start">
+          <div className="border border-rose-200 bg-rose-50 rounded-xl p-3 grid sm:grid-cols-1 grid-cols-3 gap-4 font-light">
             <div className="text-sm ">
               <h3 className="mb-1 font-light text-gray-500">Pays</h3>
               <span>
