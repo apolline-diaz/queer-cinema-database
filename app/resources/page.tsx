@@ -79,10 +79,22 @@ const ResourcesSection = () => {
 
   const otherArchives = [
     {
+      name: "LezWatch.TV",
+      url: "https://lezwatchtv.com/",
+      description:
+        "Le site répertorie et documente les personnages queer féminins, non binaires et transgenres, ainsi que les séries télévisées, les sites web et les plateformes de streaming sur lesquels vous pouvez les trouver. ",
+    },
+    {
       name: "Otherness Archive",
       url: "https://othernessarchive.com",
       description:
-        "Base de données de films d’hommes trans et de récits alternatifs.",
+        "Base de données de films sur les hommes trans et aussi réalisés par des personnes transmasculines.",
+    },
+    {
+      name: "Transgender Media Portal",
+      url: "https://www.transgendermediaportal.org/",
+      description:
+        "Le Transgender Media Portal est similaire à IMDb, mais il se concentre exclusivement sur la mise en avant du travail des créateurs trans+.",
     },
   ];
 
@@ -117,28 +129,37 @@ const ResourcesSection = () => {
           </div>
         ))}
       </div>
-      {/* Nouvelle section archives alternatives */}
+      {/* Section archives alternatives */}
       <div className="mt-10 pt-10 border-t border-rose-200">
         <h3 className="font-bold text-xl mb-4 text-rose-500">
-          Archives alternatives
+          Archives, répertoires et bases de données de films queer
         </h3>
         <p className="font-light text-gray-700 mb-6">
-          D&apos;autres initiatives qui travaillent à documenter et rendre
-          visibles des films qui mettent en scène les récits et personnages
-          queer :
+          Des sites qui recensent et mettent en avant des films sur et par les
+          personnes LGBTQI+.
         </p>
         <div className="flex flex-wrap gap-3">
           {otherArchives.map((archive, idx) => (
-            <a
+            <div
               key={idx}
-              href={archive.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-rose-200 hover:bg-rose-100 hover:border-rose-300 transition-colors text-sm text-gray-700 hover:text-rose-800"
+              className="bg-white border border-rose-200 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow"
             >
-              {archive.name}
-              <ExternalLink className="w-4 h-4" />
-            </a>
+              <a
+                href={archive.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-col items-start gap-2 text-black hover:text-rose-800"
+              >
+                <span className="flex flex-row gap-2 items-center font-semibold">
+                  {archive.name}
+                  <ExternalLink className="w-4 h-4" />
+                </span>
+
+                <p className="text-sm text-gray-600 mt-2">
+                  {archive.description}
+                </p>
+              </a>
+            </div>
           ))}
         </div>
       </div>
