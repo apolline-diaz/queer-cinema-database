@@ -98,9 +98,9 @@ export default function AboutPage() {
               @lawrens_shyboi
             </Link>
             , un compte dédié aux productions cinématographiques et
-            audiovisuelles LGBQTI+.
+            audiovisuelles LGBTQI+.
             <br /> J'ai développé ce site afin d'en faire un outil accessible à
-            tou-tes et plus libre, en dehors des réseaux sociaux.
+            tou-tes pour découvrir des films, en dehors des réseaux sociaux.
           </p>
         </div>
       </div>

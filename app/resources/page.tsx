@@ -1,5 +1,16 @@
+/* eslint-disable react/no-unescaped-entities */
+import { Metadata } from "next";
 import React from "react";
 import { ExternalLink } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Ressources | Queer Cinema Database",
+  description:
+    "Découvrir les ressources utilisées pour les informations des films de Queer Cinema Database, et d'autres projets d'archives queer.",
+  alternates: {
+    canonical: "/resources",
+  },
+};
 
 const ResourcesSection = () => {
   const resources = [
@@ -102,8 +113,8 @@ const ResourcesSection = () => {
     <div className="rounded-xl px-[clamp(1.25rem,5vw,2.5rem)] py-20">
       <h3 className="font-bold text-2xl mb-4 text-rose-500">Ressources</h3>
       <p className="font-light text-gray-700 mb-6">
-        Toutes informations, synopsis et images des films sont tirés des sites
-        suivants :
+        Toutes les informations, les synopsis et les images des films sont tirés
+        des sites suivants :
       </p>
 
       <div className="space-y-5">
