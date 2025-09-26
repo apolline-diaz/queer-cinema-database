@@ -88,13 +88,13 @@ const ResourcesSection = () => {
       name: "Otherness Archive",
       url: "https://othernessarchive.com",
       description:
-        "Base de données de films sur les hommes trans et aussi réalisés par des personnes transmasculines.",
+        "Archive audiovisuelle qui documente les films queer et leurs pionnier-ères, ainsi qu'un espace dédié aux cinéastes contemporain-es.",
     },
     {
       name: "Transgender Media Portal",
       url: "https://www.transgendermediaportal.org/",
       description:
-        "Le Transgender Media Portal est similaire à IMDb, mais il se concentre exclusivement sur la mise en avant du travail des créateurs trans+.",
+        "Transgender Media Portal est similaire à IMDb, mais il se concentre exclusivement sur la mise en avant du travail des créateur-ices trans+.",
     },
   ];
 
@@ -102,8 +102,8 @@ const ResourcesSection = () => {
     <div className="rounded-xl px-[clamp(1.25rem,5vw,2.5rem)] py-20">
       <h3 className="font-bold text-2xl mb-4 text-rose-500">Ressources</h3>
       <p className="font-light text-gray-700 mb-6">
-        Les informations des films sont tirées de sites et d&apos;organisations
-        dédiés au cinéma :
+        Toutes informations, synopsis et images des films sont tirés des sites
+        suivants :
       </p>
 
       <div className="space-y-5">
@@ -138,21 +138,20 @@ const ResourcesSection = () => {
           Des sites qui recensent et mettent en avant des films sur et par les
           personnes LGBTQI+.
         </p>
-        <div className="flex flex-wrap gap-3">
+        <div className="flex flex-col sm:flex-row gap-3">
           {otherArchives.map((archive, idx) => (
             <div
               key={idx}
-              className="bg-white border border-rose-200 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow"
+              className="bg-white border border-rose-200 rounded-2xl p-4 shadow-sm hover:shadow-md transition-shadow"
             >
               <a
                 href={archive.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex flex-col items-start gap-2 text-black hover:text-rose-800"
+                className="flex flex-col items-start gap-2 text-black hover:text-rose-500"
               >
                 <span className="flex flex-row gap-2 items-center font-semibold">
                   {archive.name}
-                  <ExternalLink className="w-4 h-4" />
                 </span>
 
                 <p className="text-sm text-gray-600 mt-2">
