@@ -30,17 +30,16 @@ export default function Footer() {
           >
             <Icon icon="lucide:instagram" className="size-5" />
           </Link>
-          <Link
-            href="/privacy"
-            className="hover:text-pink-500 transition text-xs"
-          >
-            Politiques de confidentialité
-          </Link>
         </div>
       </div>
 
       <div className="mt-6 text-center font-light text-gray-700 text-xs">
-        © 2025 Queer Cinema Database. Tous droits réservés.
+        <Link
+          href="/privacy"
+          className="hover:text-pink-500 transition text-xs"
+        >
+          Politiques de confidentialité
+        </Link>
       </div>
     </footer>
   );
