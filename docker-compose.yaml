@@ -1,0 +1,116 @@
+services:
+  app:
+    build:
+      context: .
+    container_name: next-app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    env_file:
+      - .env
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - NEXT_PUBLIC_SUPABASE_ANON_KEY=${NEXT_PUBLIC_SUPABASE_ANON_KEY}
+      - NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY=${NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY}
+    volumes:
+      - .:/app # Monte le code local dans le conteneur pour le développement
+    command: ["pnpm", "dev"]
+
+  postgres:
+    image: postgres:15
+    container_name: plai_postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432" # Expose PostgreSQL sur le port 5432
+    volumes:
+      - db-data:/var/lib/postgresql/data # Persiste les données même si le conteneur redémarre
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Virg024&
+      POSTGRES_DB: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  drizzle-gateway:
+    image: ghcr.io/drizzle-team/gateway:latest
+    container_name: drizzle-gate
+    restart: always
+    ports:
+      - "4983:4983"
+    # environment:
+      # - PORT=4983
+      # - STORE_PATH=./store
+      # - MASTERPASS=master_password
+    volumes:
+      - drizzle-gateway:/app
+
+  minio:
+    image: minio/minio
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    environment:
+      MINIO_ROOT_USER: storage
+      MINIO_ROOT_PASSWORD: secret1234
+    command: server --console-address ":9001" /data
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://minio:9000/minio/health/live" ]
+      interval: 2s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - ./volumes/storage:/data:z
+
+  minio-createbucket:
+    image: minio/mc
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: >
+      /bin/sh -c "
+      /usr/bin/mc alias set minio http://minio:9000 storage secret1234;
+      /usr/bin/mc mb minio/default;
+      exit 0;
+      "
+
+  encoder:
+    build: ./apps/encoder
+    container_name: plai-encoder-service
+    profiles: ["encoder"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+      # localstack:
+      #   condition: service_started
+    environment:
+      # Database
+      PGHOST: postgres
+      PGPORT: 5432
+      PGDATABASE: plai
+      PGUSER: postgres
+      PGPASSWORD: postgres
+
+      # S3 (LocalStack for development)
+      S3_ENDPOINT: http://localstack:4566
+      S3_REGION: us-east-1
+      S3_BUCKET: plai-audio
+      S3_ACCESS_KEY: test
+      S3_SECRET_KEY: test
+
+      # Service
+      PORT: 8080
+      CONCURRENCY: 2
+      NODE_ENV: development
+    ports:
+      - "8080:8080"
+    volumes:
+      - /tmp:/tmp
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  drizzle-gateway:
