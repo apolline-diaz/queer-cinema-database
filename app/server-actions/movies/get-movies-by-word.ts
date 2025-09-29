@@ -20,6 +20,7 @@ export const getMoviesByWord = async (search: string): Promise<Movie[]> => {
       "transidentité/transgenre",
     ],
     transmasc: ["transmasculinité"],
+    "femme trans": ["transféminité"],
     homo: ["homosexualité"],
     mode: ["mode/fashion"],
     bi: ["bisexualité/pansexualité"],
@@ -29,6 +30,15 @@ export const getMoviesByWord = async (search: string): Promise<Movie[]> => {
     "comédie romantique": ["romance"],
     musical: ["comédie musicale", "musical"],
     "etats unis": ["États-Unis"],
+    latino: ["latina/latino/latinx"],
+    latina: ["latina/latino/latinx"],
+    latinx: ["latina/latino/latinx"],
+    asiatique: ["asio-américain-e", "asio-descendant-e"],
+    afro: ["afro-descendant-e", "afro-américain-e"],
+    noir: ["afro-descendant-e", "afro-américain-e"],
+    noire: ["afro-descendant-e", "afro-américain-e"],
+    amérindien: ["natif-ve américain-e"],
+    sorcière: ["sorcellerie/sorcière"],
   };
 
   // Si l'utilisateur tape un mot avec exception, on remplace par les mots-clés correspondants
