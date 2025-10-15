@@ -48,14 +48,20 @@ export function TVClient({
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
         <div className="relative z-10 max-w-6xl mx-auto px-6 flex flex-col justify-end h-full">
-          <h1 className="text-3xl md:text-5xl font-bold mb-2">
-            {current.title}
-          </h1>
-          <div className="my-2 flex flex-wrap gap-1 text-sm opacity-90">
+          <h1 className="text-3xl md:text-5xl font-bold">{current.title}</h1>
+          {/* <div className="my-2 flex flex-wrap gap-1 text-sm opacity-90">
             <InfoRow label="Réal." value={current.directors} />
             <InfoRow label="Année" value={current.release_date} />
             <InfoRow label="Durée" value={current.runtime} />
             <InfoRow label="Langue" value={current.language} />
+          </div> */}
+          <div className="my-2 flex flex-col gap-1 text-sm opacity-90">
+            <p className="text-xl">{current.directors} </p>
+            <div className="flex flex-row gap-3">
+              <p>{current.release_date} </p>
+              <p>{current.runtime} min</p>
+              <p>{current.language} </p>
+            </div>
           </div>
           <p className="text-sm font-medium line-clamp-3">
             {current.description}
