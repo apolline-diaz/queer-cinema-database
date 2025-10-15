@@ -53,7 +53,10 @@ export function LatestMoviesCarousel({ movies }: LatestMoviesCarouselProps) {
       <CarouselContent>
         {featuredMovies.map((movie) => (
           <CarouselItem key={`${movie.title}-${movie.id}`}>
-            <div className="relative w-full h-[400px]">
+            <div
+              className="relative w-full h-[clamp(320px,45vw,600px)]
+"
+            >
               <Link
                 href={`/movies/${movie.id}`}
                 className="h-full w-full overflow-hidden block"

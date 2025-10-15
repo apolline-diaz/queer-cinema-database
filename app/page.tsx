@@ -113,7 +113,6 @@ async function WatchSection() {
 
   return (
     <div className="w-full py-5">
-      
       <WatchCarousel movies={moviesWithLinks} />
     </div>
   );
@@ -128,7 +127,7 @@ async function CollectionsSection() {
         <div className="flex flex-col space-y-5 mb-10">
           {collections.map((collection) => (
             <div key={collection.id.toString()} className="flex flex-col">
-              <div className="flex flex-row justify-between items-end pr-10 mb-4 gap-2">
+              <div className="flex flex-row justify-between items-end mb-4 gap-2">
                 <div className="flex flex-col gap-3 min-w-0 flex-1">
                   <h2 className="text-xl sm:text-2xl font-semibold leading-tight text-rose-500 line-clamp-3">
                     {collection.title}
