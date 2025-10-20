@@ -81,7 +81,7 @@ export function LatestMoviesCarousel({ movies }: LatestMoviesCarouselProps) {
                       {movie.release_date || ""}
                     </span>
                   </p>
-                  <p className="line-clamp-3 sm:text-left w-full sm:w-1/2 overflow-hidden text-md font-extralight text-white">
+                  <p className="line-clamp-3 sm:line-clamp-4 md:line-clamp-6 sm:text-left w-full sm:w-1/2 md:w-3/4 overflow-hidden text-md font-extralight text-white">
                     {movie.description || ""}
                   </p>
                 </div>
