@@ -7,11 +7,8 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 import { getImageUrl } from "@/utils";
-import { Movie } from "../types/movie";
 import { Prisma } from "@prisma/client";
 
 type MovieWithIncludes = Prisma.moviesGetPayload<{

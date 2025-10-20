@@ -60,7 +60,7 @@ async function LatestMoviesSection() {
       <main className="w-full bg-white">
         <div className="w-full px-[clamp(1.25rem,5vw,2.5rem)] pt-5">
           <div className="flex flex-row justify-between">
-            <h2 className="text-2xl mb-4 font-semibold text-rose-500 leading-tight line-clamp-3">
+            <h2 className="text-3xl mb-4 font-bold text-black leading-tight line-clamp-3">
               Nouveautés
             </h2>
           </div>
