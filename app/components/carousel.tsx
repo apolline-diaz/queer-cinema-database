@@ -7,11 +7,8 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 import { getImageUrl } from "@/utils";
-import { Movie } from "../types/movie";
 import { Prisma } from "@prisma/client";
 
 type MovieWithIncludes = Prisma.moviesGetPayload<{
@@ -53,10 +50,7 @@ export function LatestMoviesCarousel({ movies }: LatestMoviesCarouselProps) {
       <CarouselContent>
         {featuredMovies.map((movie) => (
           <CarouselItem key={`${movie.title}-${movie.id}`}>
-            <div
-              className="relative w-full h-[clamp(320px,45vw,600px)]
-"
-            >
+            <div className="relative w-full h-[clamp(360px,45vw,600px)]">
               <Link
                 href={`/movies/${movie.id}`}
                 className="h-full w-full overflow-hidden block"
@@ -81,7 +75,7 @@ export function LatestMoviesCarousel({ movies }: LatestMoviesCarouselProps) {
                       {movie.release_date || ""}
                     </span>
                   </p>
-                  <p className="line-clamp-3 sm:text-left w-full sm:w-1/2 overflow-hidden text-md font-extralight text-white">
+                  <p className="line-clamp-3 sm:line-clamp-4 md:line-clamp-6 sm:text-left w-full sm:w-1/2 md:w-3/4 overflow-hidden text-md font-extralight text-white">
                     {movie.description || ""}
                   </p>
                 </div>

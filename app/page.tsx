@@ -60,7 +60,7 @@ async function LatestMoviesSection() {
       <main className="w-full bg-white">
         <div className="w-full px-[clamp(1.25rem,5vw,2.5rem)] pt-5">
           <div className="flex flex-row justify-between">
-            <h2 className="text-2xl mb-4 font-semibold text-rose-500 leading-tight line-clamp-3">
+            <h2 className="text-3xl mb-4 font-bold text-black leading-tight line-clamp-3">
               Nouveautés
             </h2>
           </div>
@@ -123,6 +123,7 @@ async function CollectionsSection() {
 
   return (
     <div className="px-[clamp(1.25rem,5vw,2.5rem)] py-5">
+      <h2 className="text-3xl font-bold text-black mb-5">Collections</h2>
       {collections.length > 0 && (
         <div className="flex flex-col space-y-5 mb-10">
           {collections.map((collection) => (
@@ -132,9 +133,6 @@ async function CollectionsSection() {
                   <h2 className="text-xl sm:text-2xl font-semibold leading-tight text-rose-500 line-clamp-3">
                     {collection.title}
                   </h2>
-                  <span className="w-fit text-sm text-rose-800 border border-rose-800 rounded-full font-light px-1.5 py-0.5">
-                    Collection
-                  </span>
                 </div>
 
                 <Link
