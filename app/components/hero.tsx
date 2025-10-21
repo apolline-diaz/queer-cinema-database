@@ -24,9 +24,9 @@ export default function Hero({ id, title, image_url }: CardProps) {
             className="object-cover h-full w-full"
             title={title}
           />
-          <div className="mt-20 absolute inset-0 flex flex-col justify-center items-center px-10 gap-y-8">
-            <div className="relative w-4/5 sm:text-7xl text-5xl">
-              <h2 className="text-center font-bold">
+          <div className="mt-20 absolute inset-0 flex flex-col justify-center items-left pl-10 gap-y-8">
+            <div className="relative w-2/3 sm:text-7xl lg:text-8xl text-5xl">
+              <h2 className="text-left font-bold">
                 <span className="text-white uppercase mt-2">
                   Films & Archives{" "}
                 </span>
@@ -37,10 +37,10 @@ export default function Hero({ id, title, image_url }: CardProps) {
               </h2>
             </div>
             {/* Barre de recherche qui redirige vers /movies */}
-            <div className="z-10 flex flex-col sm:flex-row gap-5 justify-center items-center">
+            <div className="z-10 flex flex-col sm:flex-row gap-5 justify-start items-start">
               <Link
                 href="/movies"
-                className="relative flex flex-row gap-1 font-semibold items-center bg-gradient-to-r from-rose-600 to-pink-600  hover:from-rose-700 hover:to-pink-700  transition-all duration-500 ease-in-out hover:text-white px-4 py-3 rounded-xl"
+                className="relative flex flex-row gap-1 font-semibold items-center  bg-gradient-to-r from-rose-600 to-pink-600  hover:from-rose-700 hover:to-pink-700                             transition-all duration-500 ease-in-out hover:text-white                       px-3 py-2 rounded-lg text-sm"
               >
                 Découvrir tous les films
                 <Icon icon="uis:angle-right" fontSize={25} />
