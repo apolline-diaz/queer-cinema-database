@@ -19,7 +19,7 @@ type MovieWithIncludes = Prisma.moviesGetPayload<{
     movies_countries: { include: { countries: true } };
   };
 }> & {
-  links?: { url: string; label?: string }[]; // ajout du champ links
+  links?: { url: string; label?: string }[];
 };
 
 interface WatchCarouselProps {
@@ -28,74 +28,233 @@ interface WatchCarouselProps {
 
 export function WatchCarousel({ movies }: WatchCarouselProps) {
   const plugin = React.useRef(
-    Autoplay({ delay: 5000, stopOnInteraction: false })
+    Autoplay({ delay: 6000, stopOnInteraction: false })
   );
 
   return (
-    <Carousel
-      plugins={[plugin.current]}
-      className="w-full"
-      onMouseEnter={plugin.current.stop}
-      onMouseLeave={plugin.current.reset}
-    >
-      <CarouselContent>
-        {movies.map((movie) => (
-          <CarouselItem key={`${movie.title}-${movie.id}`}>
-            <h2 className="absolute z-10 text-3xl mb-4 w-full px-[clamp(1.25rem,5vw,2.5rem)] pt-10 font-bold text-rose-500 leading-tight">
-              À voir en ligne
-            </h2>
-            <div className="relative w-full h-[600px]">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={getImageUrl(movie.image_url || "")}
-                alt={movie.title}
-                className="w-full h-full object-cover"
-              />
-              <div className="bg-black/10 absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black/100 z-10" />
-              <div className="absolute bottom-10 pb-15 px-[clamp(1.25rem,5vw,2.5rem)] flex flex-col gap-1 text-left z-20">
-                <h3 className="text-2xl font-medium text-white w-3/4 sm:w-1/2">
-                  {movie.title}
-                </h3>
-                <p className="text-md font-medium flex flex-wrap gap-2 text-white">
-                  {movie?.movies_directors
-                    ?.map((item) => item.directors.name)
-                    .filter(Boolean)
-                    .join(", ") || ""}{" "}
-                  <span className="text-md font-light">
-                    {movie.release_date || ""}
-                  </span>
-                </p>
-                <p className="line-clamp-5 sm:text-left w-full sm:w-1/2 overflow-hidden text-md font-extralight text-white mb-5">
-                  {movie.description || ""}
-                </p>
-                {/* Boutons de visionnage externes - sortis du Link */}
-                {movie.links && movie.links.length > 0 && (
-                  <div className="left-[clamp(1.25rem,5vw,2.5rem)] z-30 pb-5">
-                    <div className="flex flex-wrap gap-2">
-                      {movie.links?.map((l, index) => (
-                        <Link
-                          key={l.url}
-                          href={l.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex-row flex justify-between items-center gap-2 transition-colors duration-200 px-4 py-2 bg-rose-500 text-white hover:bg-rose-700 rounded-full hover:opacity-90"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          Voir le film
-                          {movie.links && movie.links.length > 1
-                            ? ` ${index + 1}`
-                            : ""}
-                          <Icon icon="lsicon:play-outline" className="size-5" />
-                        </Link>
-                      ))}
+    <div className="w-full px-[clamp(1.25rem,5vw,2.5rem)] py-5">
+      {/* Titre de section */}
+      <h2 className="text-3xl mb-6 font-bold text-black leading-tight">
+        À voir en ligne
+      </h2>
+
+      <Carousel
+        plugins={[plugin.current]}
+        className="w-full"
+        onMouseEnter={plugin.current.stop}
+        onMouseLeave={plugin.current.reset}
+      >
+        <CarouselContent>
+          {movies.map((movie) => {
+            const directors = movie?.movies_directors
+              ?.map((item) => item.directors.name)
+              .filter(Boolean)
+              .join(", ");
+
+            const genres = movie?.movies_genres
+              ?.map((item) => item.genres.name)
+              .filter(Boolean)
+              .slice(0, 3);
+
+            const countries = movie?.movies_countries
+              ?.map((item) => item.countries.name)
+              .filter(Boolean)
+              .slice(0, 2);
+
+            return (
+              <CarouselItem key={`${movie.title}-${movie.id}`}>
+                <div className="flex flex-col lg:flex-row gap-6 mb-4">
+                  {/* Image du film */}
+                  <div className="w-full lg:w-2/3 relative group overflow-hidden rounded-2xl">
+                    <div className="aspect-[16/10] relative">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={getImageUrl(movie.image_url || "")}
+                        alt={movie.title}
+                        className="w-full h-full object-cover"
+                      />
+
+                      {/* Overlay gradient */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+
+                      {/* Badge "Disponible en ligne" */}
+                      <div className="absolute top-4 left-4 bg-green-500 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg flex items-center gap-2">
+                        <Icon icon="mdi:play-circle" className="text-lg" />
+                        Disponible en ligne
+                      </div>
+
+                      {/* Infos en overlay sur mobile uniquement */}
+                      <div className="lg:hidden absolute bottom-0 left-0 right-0 p-6 space-y-3">
+                        <h3 className="text-2xl font-bold text-white leading-tight">
+                          {movie.title}
+                        </h3>
+                        {directors && (
+                          <p className="text-white/90 text-sm">
+                            {directors} •{" "}
+                            {movie.release_date &&
+                              new Date(movie.release_date).getFullYear()}
+                          </p>
+                        )}
+                        {movie.description && (
+                          <p className="text-white/80 text-sm line-clamp-2">
+                            {movie.description}
+                          </p>
+                        )}
+                      </div>
                     </div>
                   </div>
-                )}
-              </div>
-            </div>
-          </CarouselItem>
-        ))}
-      </CarouselContent>
-    </Carousel>
+
+                  {/* Infos et liens - visible sur desktop uniquement */}
+                  <div className="hidden lg:flex w-full lg:w-1/3 bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 rounded-2xl p-8 flex-col justify-between shadow-lg">
+                    <div className="space-y-6">
+                      {/* Titre */}
+                      <div>
+                        <h3 className="text-3xl font-bold text-gray-900 leading-tight line-clamp-2">
+                          {movie.title}
+                        </h3>
+                        {movie.release_date && (
+                          <p className="text-gray-600 mt-2 font-medium">
+                            {new Date(movie.release_date).getFullYear()}
+                          </p>
+                        )}
+                      </div>
+
+                      {/* Réalisateur */}
+                      {directors && (
+                        <div className="flex items-start gap-3">
+                          <Icon
+                            icon="mdi:movie-open"
+                            className="text-green-500 text-xl flex-shrink-0 mt-0.5"
+                          />
+                          <div>
+                            <p className="text-xs text-gray-500 uppercase tracking-wide font-semibold">
+                              Réalisateur
+                            </p>
+                            <p className="text-gray-900 font-medium">
+                              {directors}
+                            </p>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Genres */}
+                      {genres && genres.length > 0 && (
+                        <div className="flex items-start gap-3">
+                          <Icon
+                            icon="mdi:tag-multiple"
+                            className="text-green-500 text-xl flex-shrink-0 mt-0.5"
+                          />
+                          <div>
+                            <p className="text-xs text-gray-500 uppercase tracking-wide font-semibold">
+                              Genres
+                            </p>
+                            <div className="flex flex-wrap gap-2 mt-1">
+                              {genres.map((genre, index) => (
+                                <span
+                                  key={index}
+                                  className="bg-white px-3 py-1 rounded-full text-sm text-gray-700 shadow-sm"
+                                >
+                                  {genre}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Pays */}
+                      {countries && countries.length > 0 && (
+                        <div className="flex items-start gap-3">
+                          <Icon
+                            icon="mdi:earth"
+                            className="text-green-500 text-xl flex-shrink-0 mt-0.5"
+                          />
+                          <div>
+                            <p className="text-xs text-gray-500 uppercase tracking-wide font-semibold">
+                              Pays
+                            </p>
+                            <p className="text-gray-900 font-medium">
+                              {countries.join(", ")}
+                            </p>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Synopsis court */}
+                      {movie.description && (
+                        <div className="flex items-start gap-3">
+                          <Icon
+                            icon="mdi:text-box-outline"
+                            className="text-green-500 text-xl flex-shrink-0 mt-0.5"
+                          />
+                          <div>
+                            <p className="text-xs text-gray-500 uppercase tracking-wide font-semibold">
+                              Synopsis
+                            </p>
+                            <p className="text-gray-700 text-sm leading-relaxed line-clamp-4">
+                              {movie.description}
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Boutons de visionnage */}
+                    {movie.links?.length ? (
+                      <div className="mt-6 space-y-3">
+                        <p className="text-xs text-gray-500 uppercase tracking-wide font-semibold">
+                          Voir le film
+                        </p>
+                        <div className="flex flex-col gap-2">
+                          {movie.links.map((link, index) => (
+                            <Link
+                              key={link.url}
+                              href={link.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-xl transition-colors duration-300 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <Icon
+                                icon="mdi:play-circle"
+                                className="text-xl"
+                              />
+                              Plateforme{" "}
+                              {/* {movie.links.length > 1 ? index + 1 : ""} */}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    ) : null}
+                  </div>
+                </div>
+
+                {/* Boutons de visionnage - mobile uniquement */}
+                {movie.links?.length ? (
+                  <div className="lg:hidden flex flex-col gap-2 mt-4">
+                    {movie.links.map((link, index) => (
+                      <Link
+                        key={link.url}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-xl transition-colors duration-300 flex items-center justify-center gap-2 shadow-lg"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <Icon icon="mdi:play-circle" className="text-xl" />
+                        Voir le film{" "}
+                        {/* {movie.links.length > 1
+                          ? `- Plateforme ${index + 1}`
+                          : ""} */}
+                      </Link>
+                    ))}
+                  </div>
+                ) : null}
+              </CarouselItem>
+            );
+          })}
+        </CarouselContent>
+      </Carousel>
+    </div>
   );
 }

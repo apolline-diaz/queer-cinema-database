@@ -8,9 +8,10 @@ import { getCollections } from "@/app/server-actions/lists/get-collections";
 import Link from "next/link";
 import { Icon } from "@iconify/react";
 import React from "react";
-import { LatestMoviesCarousel } from "./components/carousel";
+// import { LatestMoviesCarousel } from "./components/carousel";
 import { WatchCarousel } from "./components/watch-carousel";
 import { readLinks } from "@/lib/tv-links";
+import { FeaturedLatestMovie } from "./components/lastmovie";
 
 export const revalidate = 3600; // revalidate every hour (Incremental Static Regeneration)
 
@@ -53,22 +54,13 @@ async function HeroSection() {
 async function LatestMoviesSection() {
   try {
     const latestMovies = await getLatestMovies();
-    const carouselMovies = latestMovies.slice(0, 3);
-    const otherLatestMovies = latestMovies.slice(3);
-
+    const featuredMovie = latestMovies[0];
+    const otherLatestMovies = latestMovies.slice(1);
     return (
       <main className="w-full bg-white">
         <div className="w-full px-[clamp(1.25rem,5vw,2.5rem)] pt-5">
-          <div className="flex flex-row justify-between">
-            <h2 className="text-3xl mb-4 font-bold text-black leading-tight line-clamp-3">
-              Nouveautés
-            </h2>
-          </div>
-          {carouselMovies.length > 0 && (
-            <div className="mb-5">
-              <LatestMoviesCarousel movies={carouselMovies} />
-            </div>
-          )}
+          <FeaturedLatestMovie movie={featuredMovie} />
+
           {otherLatestMovies.length > 0 && (
             <div className="flex gap-3 overflow-x-auto pb-2">
               {otherLatestMovies.map((movie) => (
