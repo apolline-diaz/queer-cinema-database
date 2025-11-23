@@ -8,9 +8,9 @@ import { getCollections } from "@/app/server-actions/lists/get-collections";
 import Link from "next/link";
 import { Icon } from "@iconify/react";
 import React from "react";
-import { WatchCarousel } from "./components/watch-carousel";
+import { WatchGrid } from "./components/watch-grid";
 import { readLinks } from "@/lib/tv-links";
-import { LatestMoviesGrid } from "./components/lastmovie";
+import { LatestMoviesGrid } from "./components/lastest-movies-grid";
 
 export const revalidate = 3600; // revalidate every hour (Incremental Static Regeneration)
 
@@ -56,9 +56,7 @@ async function LatestMoviesSection() {
     const movies = latestMovies.slice(0, 3);
     return (
       <main className="w-full bg-white">
-        <div className="w-full px-[clamp(1.25rem,5vw,2.5rem)] pt-5">
-          <LatestMoviesGrid movies={movies} />
-        </div>
+        <LatestMoviesGrid movies={movies} />
       </main>
     );
   } catch (error) {
@@ -90,7 +88,7 @@ async function WatchSection() {
 
   return (
     <div className="w-full py-5">
-      <WatchCarousel movies={moviesWithLinks} />
+      <WatchGrid movies={moviesWithLinks} />
     </div>
   );
 }

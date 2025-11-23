@@ -4,6 +4,7 @@ import Link from "next/link";
 import { getImageUrl } from "@/utils";
 import { Prisma } from "@prisma/client";
 import { Icon } from "@iconify/react";
+import { Image } from "@/app/components/image";
 
 type MovieWithIncludes = Prisma.moviesGetPayload<{
   include: {
@@ -28,14 +29,14 @@ interface LatestMoviesGridProps {
 
 export function LatestMoviesGrid({ movies }: LatestMoviesGridProps) {
   return (
-    <div className="w-full px-[clamp(1.25rem,5vw,2.5rem)] py-8">
+    <div className="px-[clamp(1.25rem,5vw,2.5rem)] py-5">
       {/* Titre de section */}
       <div className="mb-8">
-        <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
+        <h2 className="text-3xl lg:text-4xl pt-5 font-bold text-gray-900 mb-2">
           Dernières nouveautés
         </h2>
         <p className="text-gray-600">
-          Découvrez les derniers films queer ajoutés à notre collection
+          Découvrez les derniers films ajoutés à notre catalogue
         </p>
       </div>
 
@@ -61,10 +62,11 @@ export function LatestMoviesGrid({ movies }: LatestMoviesGridProps) {
                 {/* Image container */}
                 <div className="relative aspect-[2/2] overflow-hidden bg-gray-200">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                  <Image
                     src={getImageUrl(movie.image_url || "")}
                     alt={movie.title}
                     className="w-full h-full rounded-2xl object-cover transition-transform duration-700 group-hover:scale-110"
+                    title={movie.title}
                   />
 
                   {/* Gradient overlay */}
