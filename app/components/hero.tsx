@@ -37,7 +37,7 @@ export default function Hero({ id, title, image_url }: CardProps) {
               </h2>
             </div>
             {/* Barre de recherche qui redirige vers /movies */}
-            <div className="z-10 flex flex-col sm:flex-row gap-5 justify-start items-start">
+            {/* <div className="z-10 flex flex-col sm:flex-row gap-5 justify-start items-start">
               <Link
                 href="/movies"
                 className="relative flex flex-row gap-1 font-semibold items-center  bg-gradient-to-r from-rose-600 to-pink-600  hover:from-rose-700 hover:to-pink-700                             transition-all duration-500 ease-in-out hover:text-white                       px-3 py-2 rounded-lg text-sm"
@@ -45,7 +45,7 @@ export default function Hero({ id, title, image_url }: CardProps) {
                 Découvrir tous les films
                 <Icon icon="uis:angle-right" fontSize={25} />
               </Link>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

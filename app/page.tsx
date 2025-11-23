@@ -8,10 +8,9 @@ import { getCollections } from "@/app/server-actions/lists/get-collections";
 import Link from "next/link";
 import { Icon } from "@iconify/react";
 import React from "react";
-// import { LatestMoviesCarousel } from "./components/carousel";
 import { WatchCarousel } from "./components/watch-carousel";
 import { readLinks } from "@/lib/tv-links";
-import { FeaturedLatestMovie } from "./components/lastmovie";
+import { LatestMoviesGrid } from "./components/lastmovie";
 
 export const revalidate = 3600; // revalidate every hour (Incremental Static Regeneration)
 
@@ -54,25 +53,11 @@ async function HeroSection() {
 async function LatestMoviesSection() {
   try {
     const latestMovies = await getLatestMovies();
-    const featuredMovie = latestMovies[0];
-    const otherLatestMovies = latestMovies.slice(1);
+    const movies = latestMovies.slice(0, 3);
     return (
       <main className="w-full bg-white">
         <div className="w-full px-[clamp(1.25rem,5vw,2.5rem)] pt-5">
-          <FeaturedLatestMovie movie={featuredMovie} />
-
-          {otherLatestMovies.length > 0 && (
-            <div className="flex gap-3 overflow-x-auto pb-2">
-              {otherLatestMovies.map((movie) => (
-                <HomeCard
-                  key={`${movie.title}-${movie.id}`}
-                  {...movie}
-                  release_date={movie.release_date || ""}
-                  image_url={getImageUrl(movie.image_url || "")}
-                />
-              ))}
-            </div>
-          )}
+          <LatestMoviesGrid movies={movies} />
         </div>
       </main>
     );
