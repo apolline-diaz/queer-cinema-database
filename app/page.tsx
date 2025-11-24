@@ -158,7 +158,7 @@ function HeroSkeleton() {
 }
 
 // Skeleton pour LatestMoviesGrid
-export function LatestMoviesGridSkeleton() {
+function LatestMoviesGridSkeleton() {
   return (
     <div className="px-[clamp(1.25rem,5vw,2.5rem)] py-5">
       {/* Titre */}
@@ -183,7 +183,7 @@ export function LatestMoviesGridSkeleton() {
 }
 
 // Skeleton pour WatchGrid
-export function WatchGridSkeleton() {
+function WatchGridSkeleton() {
   return (
     <div className="px-[clamp(1.25rem,5vw,2.5rem)] py-5">
       {/* Titre */}
