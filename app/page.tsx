@@ -2,7 +2,7 @@ import HomeCard from "@/app/components/home-card";
 import { getImageUrl } from "@/utils";
 import { Suspense } from "react";
 import Hero from "./components/hero";
-import { getLatestMovies, getTopMovies } from "@/app/server-actions/movies";
+import { getLatestMovies } from "@/app/server-actions/movies";
 import { getMoviesToWatch } from "@/app/server-actions/movies/get-movies-to-watch";
 import { getCollections } from "@/app/server-actions/lists/get-collections";
 import Link from "next/link";
@@ -20,10 +20,10 @@ export default function HomePage() {
       <Suspense fallback={<HeroSkeleton />}>
         <HeroSection />
       </Suspense>
-      <Suspense fallback={<MoviesSkeleton />}>
+      <Suspense fallback={<LatestMoviesGridSkeleton />}>
         <LatestMoviesSection />
       </Suspense>
-      <Suspense fallback={<MoviesSkeleton />}>
+      <Suspense fallback={<WatchGridSkeleton />}>
         <WatchSection />
       </Suspense>
       <Suspense fallback={<CollectionsSkeleton />}>
@@ -157,36 +157,48 @@ function HeroSkeleton() {
   );
 }
 
-function MoviesSkeleton() {
+// Skeleton pour LatestMoviesGrid
+export function LatestMoviesGridSkeleton() {
   return (
-    <div className="w-full p-10">
-      {/* Title skeleton */}
-      <div className="flex flex-row justify-between mb-6">
-        <div className="w-40 h-8 bg-gradient-to-r from-rose-300 to-rose-200 rounded animate-pulse"></div>
+    <div className="px-[clamp(1.25rem,5vw,2.5rem)] py-5">
+      {/* Titre */}
+      <div className="mb-8 space-y-2">
+        <div className="w-60 h-8 bg-gray-300 rounded animate-pulse"></div>
+        <div className="w-80 h-4 bg-gray-200 rounded animate-pulse"></div>
       </div>
 
-      {/* Carousel skeleton */}
-      <div className="mb-8 h-80 bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent animate-shimmer"></div>
-        <div className="absolute inset-4 space-y-4">
-          <div className="w-2/3 h-6 bg-gray-300/60 rounded"></div>
-          <div className="w-1/2 h-4 bg-gray-300/40 rounded"></div>
-          <div className="w-1/3 h-10 bg-rose-300/40 rounded-lg mt-8"></div>
-        </div>
-      </div>
-
-      {/* Movie grid skeleton */}
-      <div className="flex gap-4 overflow-x-auto pb-4">
-        {[...Array(8)].map((_, i) => (
-          <div key={i} className="flex-shrink-0 group">
-            <div className="w-44 h-64 bg-gradient-to-br from-gray-200 to-gray-300 rounded-xl relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-t from-gray-400/20 to-transparent"></div>
-              <div className="absolute bottom-4 left-4 right-4">
-                <div className="w-full h-4 bg-white/60 rounded mb-2"></div>
-                <div className="w-2/3 h-3 bg-white/40 rounded"></div>
-              </div>
-            </div>
+      {/* Grille */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        {[...Array(3)].map((_, i) => (
+          <div
+            key={i}
+            className="relative rounded-2xl overflow-hidden shadow-lg bg-gray-200 animate-pulse aspect-[2/2]"
+          >
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
           </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Skeleton pour WatchGrid
+export function WatchGridSkeleton() {
+  return (
+    <div className="px-[clamp(1.25rem,5vw,2.5rem)] py-5">
+      {/* Titre */}
+      <div className="mb-8 space-y-2">
+        <div className="w-60 h-8 bg-gray-300 rounded animate-pulse"></div>
+        <div className="w-80 h-4 bg-gray-200 rounded animate-pulse"></div>
+      </div>
+
+      {/* Grille */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {[...Array(3)].map((_, i) => (
+          <div
+            key={i}
+            className="relative rounded-2xl overflow-hidden shadow-lg bg-gray-200 animate-pulse aspect-[16/9]"
+          />
         ))}
       </div>
     </div>
