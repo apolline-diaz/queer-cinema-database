@@ -251,15 +251,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                     >
                       <Link href="/watch">Visionner</Link>
                     </li>
-                    <li
-                      className={
-                        isActive("/stats") ? activeLinkClass : normalLinkClass
-                      }
-                    >
-                      <Link href="/stats" onClick={() => setIsOpen(false)}>
-                        Statistiques
-                      </Link>
-                    </li>
+
                     <li
                       className={
                         isActive("/resources")
@@ -304,13 +296,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                 >
                   <Link href="/watch">Visionner</Link>
                 </li>
-                <li
-                  className={
-                    isActive("/stats") ? activeLinkClass : normalLinkClass
-                  }
-                >
-                  <Link href="/stats">Statistiques</Link>
-                </li>
+
                 <li
                   className={
                     isActive("/resources") ? activeLinkClass : normalLinkClass
