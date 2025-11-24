@@ -1,29 +1,16 @@
 "use client";
 
-import Link from "next/link";
-import { Image } from "@/app/components/image";
-import { getImageUrl } from "@/utils";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Icon } from "@iconify/react/dist/iconify.js";
+const imageUrl =
+  "https://xcwrhyjbfgzsaslstssc.supabase.co/storage/v1/object/public/storage/1758151183587-watermelonwomanvideoclub.webp";
 
-interface CardProps {
-  id: string;
-  title: string;
-  image_url?: string | null;
-}
-
-export default function Hero({ id, title, image_url }: CardProps) {
+export default function Hero() {
   return (
     <>
       <div className="relative bg-rose-50 w-full overflow-hidden">
-        <div className="relative w-full overflow-hidden h-[80vh]">
-          <Image
-            src={getImageUrl(image_url)}
-            alt={title}
-            className="object-cover h-full w-full"
-            title={title}
-          />
+        <div
+          className="relative w-full h-[80vh] overflow-hidden bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${imageUrl})` }}
+        >
           <div className="mt-20 absolute inset-0 flex flex-col justify-center items-left pl-10 gap-y-8">
             <div className="relative w-2/3 sm:text-7xl lg:text-8xl text-5xl">
               <h2 className="text-left font-bold">

@@ -65,8 +65,7 @@ export function WatchGrid({ movies }: WatchGridProps) {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
                   {/* Badge */}
-                  <div className="absolute top-4 left-4 bg-green-500 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg flex items-center gap-2">
-                    <Icon icon="mdi:play-circle" className="text-lg" />
+                  <div className="absolute top-4 right-4 bg-rose-500 text-white px-4 py-2 rounded-full text-xs font-semibold shadow-lg flex items-center gap-2">
                     Disponible en ligne
                   </div>
 
@@ -86,28 +85,6 @@ export function WatchGrid({ movies }: WatchGridProps) {
                   </div>
                 </div>
               </Link>
-
-              {/* /* Boutons de visionnage - mobile uniquement  */}
-              {movie.links?.length ? (
-                <div className="lg:hidden flex flex-col gap-2 mt-4">
-                  {movie.links.map((link, index) => (
-                    <Link
-                      key={link.url}
-                      href={link.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-xl transition-colors duration-300 flex items-center justify-center gap-2 shadow-lg"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <Icon icon="mdi:play-circle" className="text-xl" />
-                      Voir le film{" "}
-                      {/* {movie.links.length > 1
-                          ? `- Plateforme ${index + 1}`
-                          : ""} */}
-                    </Link>
-                  ))}
-                </div>
-              ) : null}
             </div>
           );
         })}

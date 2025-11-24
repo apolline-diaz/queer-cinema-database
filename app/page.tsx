@@ -35,17 +35,9 @@ export default function HomePage() {
 
 // Chaque section charge ses données indépendamment
 async function HeroSection() {
-  const topMovies = await getTopMovies(); // Se charge en arrière-plan
-
   return (
     <div className="w-full">
-      {topMovies.map((movie) => (
-        <Hero
-          key={`${movie.title}-${movie.id}`}
-          {...movie}
-          image_url={getImageUrl(movie.image_url)}
-        />
-      ))}
+      <Hero />
     </div>
   );
 }
@@ -87,7 +79,7 @@ async function WatchSection() {
   if (moviesWithLinks.length === 0) return null;
 
   return (
-    <div className="w-full py-5">
+    <div className="w-full">
       <WatchGrid movies={moviesWithLinks} />
     </div>
   );
@@ -97,8 +89,10 @@ async function CollectionsSection() {
   const collections = await getCollections(); // Se charge en arrière-plan
 
   return (
-    <div className="px-[clamp(1.25rem,5vw,2.5rem)] py-5">
-      <h2 className="text-3xl font-bold text-black mb-5">Collections</h2>
+    <div className="px-[clamp(1.25rem,5vw,2.5rem)] pt-8 py-5">
+      <h2 className="text-3xl lg:text-4xl font-bold text-black mb-5">
+        Collections
+      </h2>
       {collections.length > 0 && (
         <div className="flex flex-col space-y-5 mb-10">
           {collections.map((collection) => (
