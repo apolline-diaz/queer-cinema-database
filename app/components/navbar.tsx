@@ -59,9 +59,9 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
   };
 
   // Classe CSS for active links
-  const activeLinkClass = "text-rose-500";
+  const activeLinkClass = "text-pink-500";
   const normalLinkClass =
-    "text-black transition-colors duration-300 hover:text-rose-500";
+    "text-black transition-colors duration-300 hover:text-pink-500";
 
   return (
     <div className="text-black font-bold border-b border-gray-500 w-full fixed top-0 left-0 z-50 text-md transition-all duration-300 bg-white">
@@ -69,8 +69,8 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
         {/* Logo */}
         <Link href="/">
           <h2 className="text-white whitespace-nowrap font-raleway font-bold text-xl xs:text-md pr-10">
-            <span className="text-rose-500">queer cinema</span>{" "}
-            <span className="text-rose-500 font-light hidden sm:inline">
+            <span className="text-pink-500">queer cinema</span>{" "}
+            <span className="text-pink-500 font-light hidden sm:inline">
               {" "}
               database
             </span>
@@ -106,7 +106,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                         : "carbon:user-avatar"
                     }
                     className={`size-5 transition-all duration-150 ${
-                      isHovered ? "text-rose-500" : "text-black"
+                      isHovered ? "text-pink-500" : "text-black"
                     }`}
                   />
                 </DropdownMenuTrigger>
@@ -160,7 +160,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                       ) : (
                         <form action={logout}>
                           <button
-                            className="hover:text-rose-500 transition-colors duration-300"
+                            className="hover:text-pink-500 transition-colors duration-300"
                             aria-label="Se déconnecter de votre compte"
                             data-testid="logout-button"
                           >
@@ -174,7 +174,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
               </DropdownMenu>
               <button
                 onClick={() => setIsOpen((prev) => !prev)}
-                className="HAMBURGER-ICON space-y-2 hover:text-rose-500 "
+                className="HAMBURGER-ICON space-y-2 hover:text-pink-500 "
                 aria-label={
                   isOpen ? "Fermer le menu mobile" : "Ouvrir le menu mobile"
                 }
@@ -208,7 +208,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                   aria-label="Fermer le menu"
                 >
                   <svg
-                    className="h-5 w-5 text-gray-black hover:text-rose-500 transition-colors duration-300"
+                    className="h-5 w-5 text-gray-black hover:text-pink-500 transition-colors duration-300"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -226,7 +226,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                   <div className="flex flex-col items-end pr-10 pt-5 gap-5">
                     <Link
                       href="/"
-                      className="link link-hover text-black transition-colors duration-300 hover:text-rose-500"
+                      className="link link-hover text-black transition-colors duration-300 hover:text-pink-500"
                       onClick={() => setIsOpen(false)}
                     >
                       Accueil
@@ -278,7 +278,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
               <ul className="DESKTOP-MENU hidden whitespace-nowrap space-x-12 lg:flex  items-center">
                 <Link
                   href="/"
-                  className="link link-hover text-black transition-colors duration-300 hover:text-rose-500"
+                  className="link link-hover text-black transition-colors duration-300 hover:text-pink-500"
                 >
                   Accueil
                 </Link>
@@ -338,7 +338,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                           : "carbon:user-avatar"
                       }
                       className={`size-5 transition-all duration-150 ${
-                        isHovered ? "text-rose-500" : "text-black"
+                        isHovered ? "text-pink-500" : "text-black"
                       }`}
                     />
                   </DropdownMenuTrigger>
@@ -392,7 +392,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                         ) : (
                           <form action={logout}>
                             <button
-                              className="hover:text-rose-500 "
+                              className="hover:text-pink-500 "
                               aria-label="Se déconnecter de votre compte"
                               data-testid="logout-button"
                             >

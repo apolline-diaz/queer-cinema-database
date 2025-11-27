@@ -36,7 +36,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
             size="icon"
             variant="ghost"
             onClick={() => setVisible(!visible)}
-            className="absolute right-2 top-1/2 -translate-y-1/2 hover:bg-transparent text-rose-500"
+            className="absolute right-2 top-1/2 -translate-y-1/2 hover:bg-transparent text-pink-500"
             data-testid={`${dataTestId}-toggle`}
           >
             {visible ? (
@@ -48,7 +48,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
         </div>
         {error && (
           <span
-            className="text-rose-500 text-xs"
+            className="text-pink-500 text-xs"
             data-testid={`${dataTestId}-error`}
           >
             {error}

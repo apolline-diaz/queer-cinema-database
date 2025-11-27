@@ -13,11 +13,11 @@ export default async function ListsPage() {
       {/* Users lists */}
       <BackButton className="w-fit" />
       <section className="">
-        <h1 className="text-2xl text-rose-500 mb-5 font-bold">Mes listes</h1>
+        <h1 className="text-2xl text-pink-500 mb-5 font-bold">Mes listes</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           <Link
             href="/lists/create"
-            className="flex flex-col justify-center rounded-xl border border-xl text-black border-black items-center  text-center p-4 cursor-pointer hover:text-rose-500 hover:border-rose-500"
+            className="flex flex-col justify-center rounded-xl border border-xl text-black border-black items-center  text-center p-4 cursor-pointer hover:text-pink-500 hover:border-pink-500"
             data-testid="create-list-link"
           >
             Créer une nouvelle liste

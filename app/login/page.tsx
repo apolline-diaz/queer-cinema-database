@@ -81,7 +81,7 @@ export default function LoginPage() {
       <div className="p-10 m-10 max-w-md w-full">
         <form onSubmit={handleSubmit(onSubmit)} data-testid="login-form">
           <div className="flex flex-col gap-3 mb-10">
-            <h1 className="text-center font-bold text-rose-500 text-xl">
+            <h1 className="text-center font-bold text-pink-500 text-xl">
               Connexion
             </h1>
             {authError && (

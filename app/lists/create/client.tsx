@@ -106,7 +106,7 @@ const CreateListForm: React.FC<CreateListFormProps> = ({ isAdmin }) => {
   return (
     <div className="mx-auto w-full max-w-md sm:max-w-md md:max-w-lg px-[clamp(1.25rem,5vw,2.5rem)] py-20">
       <BackButton />
-      <div className="tracking-wide font-bold text-2xl text-rose-500 mb-5">
+      <div className="tracking-wide font-bold text-2xl text-pink-500 mb-5">
         Créer une liste de films
       </div>
       <form onSubmit={handleSubmit(onSubmit)} className="py-5 text-black ">
@@ -143,7 +143,7 @@ const CreateListForm: React.FC<CreateListFormProps> = ({ isAdmin }) => {
             data-testid="description-input"
           />
           {errors.description && (
-            <span className="text-rose-500 text-xs my-2">
+            <span className="text-pink-500 text-xs my-2">
               {errors.description.message}
             </span>
           )}
@@ -168,13 +168,13 @@ const CreateListForm: React.FC<CreateListFormProps> = ({ isAdmin }) => {
           {/* Suggestions de films */}
           {isSearching && filteredMovies.length > 0 && (
             <ul
-              className="absolute border max-h-40 w-full overflow-y-auto bg-rose-50 rounded-xl text-sm border-rose-500 mt-1 z-10"
+              className="absolute border max-h-40 w-full overflow-y-auto bg-pink-50 rounded-xl text-sm border-pink-500 mt-1 z-10"
               data-testid="movie-suggestions-list"
             >
               {filteredMovies.map((movie) => (
                 <li
                   key={movie.id}
-                  className="px-4 py-2 capitalize font-bold hover:bg-rose-500 cursor-pointer hover:text-white"
+                  className="px-4 py-2 capitalize font-bold hover:bg-pink-500 cursor-pointer hover:text-white"
                   onClick={() => handleAddMovie(movie)}
                   data-testid={`movie-suggestion-${movie.id}`}
                 >
@@ -198,7 +198,7 @@ const CreateListForm: React.FC<CreateListFormProps> = ({ isAdmin }) => {
             )}
           />
           {errors.movie_ids && (
-            <span className="text-rose-500 text-xs my-2">
+            <span className="text-pink-500 text-xs my-2">
               {errors.movie_ids.message}
             </span>
           )}
@@ -211,7 +211,7 @@ const CreateListForm: React.FC<CreateListFormProps> = ({ isAdmin }) => {
             return movie ? (
               <span
                 key={movie.id}
-                className="items-center my-2 border capitalize flex justify-between border-rose-500 w-full bg-rose-50 text-black text-sm font-light mr-2 px-3 py-1 rounded-xl"
+                className="items-center my-2 border capitalize flex justify-between border-pink-500 w-full bg-pink-50 text-black text-sm font-light mr-2 px-3 py-1 rounded-xl"
                 data-testid={`selected-movie-${movie.id}`}
               >
                 <div className="font-bold">
@@ -221,7 +221,7 @@ const CreateListForm: React.FC<CreateListFormProps> = ({ isAdmin }) => {
                 <button
                   type="button"
                   onClick={() => handleRemoveMovie(movie.id)}
-                  className="ml-2 text-rose-500 hover:text-rose-500"
+                  className="ml-2 text-pink-500 hover:text-pink-500"
                   data-testid={`remove-movie-${movie.id}`}
                 >
                   &times;

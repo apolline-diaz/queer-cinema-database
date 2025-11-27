@@ -49,7 +49,7 @@ export default function MultiSelect({
   };
 
   return (
-    <div className="text-rose-900 col-span-2 relative">
+    <div className="text-pink-900 col-span-2 relative">
       {/* <label className="block text-sm font-medium mb-1">{label}</label> */}
       <Controller
         name={name}
@@ -90,11 +90,11 @@ export default function MultiSelect({
 
               {/* Dropdown Suggestions */}
               {inputValue && filteredOptions.length > 0 && (
-                <ul className="left-0 right-0 bg-rose-100 text-black rounded-xl border border-rose-500 text-sm font-light mt-1 z-10 max-h-40 overflow-y-auto">
+                <ul className="left-0 right-0 bg-pink-100 text-black rounded-xl border border-pink-500 text-sm font-light mt-1 z-10 max-h-40 overflow-y-auto">
                   {filteredOptions.map((option) => (
                     <li
                       key={option.value}
-                      className="px-4 py-2 cursor-pointer hover:text-white hover:bg-rose-500"
+                      className="px-4 py-2 cursor-pointer hover:text-white hover:bg-pink-500"
                       onClick={() => {
                         // Check if the option is already selected
                         const isAlreadySelected = safeValue.some(
@@ -120,12 +120,12 @@ export default function MultiSelect({
                 {safeValue.map((option: Option) => (
                   <span
                     key={option.value}
-                    className="inline-flex items-center bg-rose-50 border border-rose-500  text-rose-500 text-sm  font-light px-2 py-1 rounded-xl"
+                    className="inline-flex items-center bg-pink-50 border border-pink-500  text-pink-500 text-sm  font-light px-2 py-1 rounded-xl"
                   >
                     {option.label}
                     <button
                       type="button"
-                      className="ml-2 font-light text-rose-500 hover:text-rose-500"
+                      className="ml-2 font-light text-pink-500 hover:text-pink-500"
                       onClick={() => {
                         const newValue = safeValue.filter(
                           (item: Option) => item.value !== option.value

@@ -111,7 +111,7 @@ const ResourcesSection = () => {
 
   return (
     <div className="rounded-xl px-[clamp(1.25rem,5vw,2.5rem)] py-20">
-      <h3 className="font-bold text-2xl mb-4 text-rose-500">Ressources</h3>
+      <h3 className="font-bold text-2xl mb-4 text-pink-500">Ressources</h3>
       <p className="font-light text-gray-700 mb-6">
         Toutes les informations, les synopsis et les images des films sont tirés
         des sites suivants :
@@ -119,7 +119,7 @@ const ResourcesSection = () => {
 
       <div className="space-y-5">
         {resources.map((category, index) => (
-          <div key={index} className="border-l-3 border-rose-200">
+          <div key={index} className="border-l-3 border-pink-200">
             <h4 className="font-semibold text-black mb-2">
               {category.category}
             </h4>
@@ -130,7 +130,7 @@ const ResourcesSection = () => {
                   href={item.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 px-3 py-1 bg-white rounded-full border border-rose-200 hover:bg-rose-100 hover:border-rose-300 transition-colors text-sm text-gray-700 hover:text-rose-800"
+                  className="inline-flex items-center gap-1 px-3 py-1 bg-white rounded-full border border-pink-200 hover:bg-pink-100 hover:border-pink-300 transition-colors text-sm text-gray-700 hover:text-pink-800"
                 >
                   {item.name}
                   <ExternalLink className="w-3 h-3" />
@@ -141,8 +141,8 @@ const ResourcesSection = () => {
         ))}
       </div>
       {/* Section archives alternatives */}
-      <div className="mt-10 pt-10 border-t border-rose-200">
-        <h3 className="font-bold text-xl mb-4 text-rose-500">
+      <div className="mt-10 pt-10 border-t border-pink-200">
+        <h3 className="font-bold text-xl mb-4 text-pink-500">
           Archives, répertoires et bases de données de films queer
         </h3>
         <p className="font-light text-gray-700 mb-6">
@@ -153,13 +153,13 @@ const ResourcesSection = () => {
           {otherArchives.map((archive, idx) => (
             <div
               key={idx}
-              className="bg-white border border-rose-200 rounded-2xl p-4 shadow-sm hover:shadow-md transition-shadow"
+              className="bg-white border border-pink-200 rounded-2xl p-4 shadow-sm hover:shadow-md transition-shadow"
             >
               <a
                 href={archive.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex flex-col items-start gap-2 text-black hover:text-rose-500"
+                className="flex flex-col items-start gap-2 text-black hover:text-pink-500"
               >
                 <span className="flex flex-row gap-2 items-center font-semibold">
                   {archive.name}

@@ -102,7 +102,7 @@ const CreateMovieForm: React.FC = () => {
   return (
     <div className="text-sm mx-auto w-full max-w-md sm:max-w-md md:max-w-lg px-[clamp(1.25rem,5vw,2.5rem)] py-20">
       <BackButton />
-      <h1 className="tracking-wide text-rose-500 text-2xl mb-5 font-bold">
+      <h1 className="tracking-wide text-pink-500 text-2xl mb-5 font-bold">
         Ajouter un film
       </h1>
 
@@ -124,7 +124,7 @@ const CreateMovieForm: React.FC = () => {
             data-testid="title-input"
           />
           {errors.title && (
-            <span className="text-rose-500 text-xs my-2">
+            <span className="text-pink-500 text-xs my-2">
               {errors.title.message}
             </span>
           )}
@@ -139,7 +139,7 @@ const CreateMovieForm: React.FC = () => {
             data-testid="original-title-input"
           />
           {errors.original_title && (
-            <span className="text-rose-500 text-xs my-2">
+            <span className="text-pink-500 text-xs my-2">
               {errors.original_title.message}
             </span>
           )}
@@ -156,7 +156,7 @@ const CreateMovieForm: React.FC = () => {
             data-testid="director-name-input"
           />
           {errors.director_name && (
-            <span className="text-rose-500 text-xs my-2">
+            <span className="text-pink-500 text-xs my-2">
               {errors.director_name.message}
             </span>
           )}
@@ -178,7 +178,7 @@ const CreateMovieForm: React.FC = () => {
             data-testid="description-textarea"
           ></textarea>
           {errors.description && (
-            <span className="text-rose-500 text-xs my-2">
+            <span className="text-pink-500 text-xs my-2">
               {errors.description.message}
             </span>
           )}
@@ -224,7 +224,7 @@ const CreateMovieForm: React.FC = () => {
             ))}
           </select>
           {errors.country_id && (
-            <span className="text-rose-500 text-xs my-2">
+            <span className="text-pink-500 text-xs my-2">
               {errors.country_id.message}
             </span>
           )}
@@ -245,7 +245,7 @@ const CreateMovieForm: React.FC = () => {
             data-testid="runtime-input"
           />
           {errors.runtime && (
-            <span className="text-rose-500 text-xs my-2">
+            <span className="text-pink-500 text-xs my-2">
               {errors.runtime.message}
             </span>
           )}
@@ -267,7 +267,7 @@ const CreateMovieForm: React.FC = () => {
             <option value="Emission TV">Emission TV</option>
           </select>
           {errors.type && (
-            <span className="text-rose-500 text-xs my-2">
+            <span className="text-pink-500 text-xs my-2">
               {errors.type.message}
             </span>
           )}
@@ -289,7 +289,7 @@ const CreateMovieForm: React.FC = () => {
             ))}
           </select>
           {errors.genre_id && (
-            <span className="text-rose-500 text-xs my-2">
+            <span className="text-pink-500 text-xs my-2">
               {errors.genre_id.message}
             </span>
           )}
@@ -325,7 +325,7 @@ const CreateMovieForm: React.FC = () => {
             )}
           />
           {errors?.keyword_id && (
-            <span id="keywords-error" className="text-rose-500 text-xs my-2">
+            <span id="keywords-error" className="text-pink-500 text-xs my-2">
               {errors.keyword_id.message}
             </span>
           )}
@@ -351,7 +351,7 @@ const CreateMovieForm: React.FC = () => {
           <button
             type="button"
             onClick={() => router.push("/movies")}
-            className="xs:w-full sm:w-[200px] border hover:border-rose-500 hover:text-rose-500 text-black px-4 py-2 border-black rounded-xl"
+            className="xs:w-full sm:w-[200px] border hover:border-pink-500 hover:text-pink-500 text-black px-4 py-2 border-black rounded-xl"
           >
             Annuler
           </button>

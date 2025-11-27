@@ -102,7 +102,7 @@ export default function ClientMovieActions({ movieId, userIsAdmin }: Props) {
         <DropdownMenuTrigger asChild>
           <button
             aria-label="Gérer les listes"
-            className="z-10 p-2 bg-black text-rose-500 rounded-full border bg-opacity-50 border-rose-500 transition-all duration-300 ease-in-out hover:bg-rose-500 hover:text-white"
+            className="z-10 p-2 bg-black text-pink-500 rounded-full border bg-opacity-50 border-pink-500 transition-all duration-300 ease-in-out hover:bg-pink-500 hover:text-white"
           >
             <Icon
               icon={
@@ -114,19 +114,19 @@ export default function ClientMovieActions({ movieId, userIsAdmin }: Props) {
         </DropdownMenuTrigger>
 
         <DropdownMenuContent
-          className="max-w-[75vw] max-h-[40vh] rounded-lg border border-rose-500 bg-white flex flex-col"
+          className="max-w-[75vw] max-h-[40vh] rounded-lg border border-pink-500 bg-white flex flex-col"
           align="start"
           sideOffset={4}
         >
           {/* Label du menu */}
-          <DropdownMenuLabel className="text-rose-500 flex flex-row px-3 py-2 items-center gap-2 text-sm font-medium border-b border-rose-300">
+          <DropdownMenuLabel className="text-pink-500 flex flex-row px-3 py-2 items-center gap-2 text-sm font-medium border-b border-pink-300">
             Ajouter à une liste
           </DropdownMenuLabel>
 
           {/* Bouton "Créer une liste" */}
           <DropdownMenuItem
             asChild
-            className="px-2 py-2 text-sm font-medium rounded-none text-black hover:text-rose-500 hover:bg-rose-50 cursor-pointer flex items-center gap-2 border-b border-gray-400"
+            className="px-2 py-2 text-sm font-medium rounded-none text-black hover:text-pink-500 hover:bg-pink-50 cursor-pointer flex items-center gap-2 border-b border-gray-400"
           >
             <Link href="/lists/create">
               <span className="flex flex-row gap-2 items-center justify-between">
@@ -153,9 +153,9 @@ export default function ClientMovieActions({ movieId, userIsAdmin }: Props) {
                     toggleMovieInList(list.id, list.hasMovie)
                   }
                   className={cn(
-                    "px-3 py-2 gap-2 items-center rounded-none text-sm border-b border-gray-200 font-light flex justify-between cursor-pointer hover:text-rose-500",
+                    "px-3 py-2 gap-2 items-center rounded-none text-sm border-b border-gray-200 font-light flex justify-between cursor-pointer hover:text-pink-500",
                     {
-                      "text-rose-500": list.hasMovie,
+                      "text-pink-500": list.hasMovie,
                       "text-black": !list.hasMovie,
                     }
                   )}
@@ -171,7 +171,7 @@ export default function ClientMovieActions({ movieId, userIsAdmin }: Props) {
       {userIsAdmin && (
         <div className="">
           <Link href={`/movies/edit/${movieId}`}>
-            <button className="right-2 bg-black bg-opacity-60 p-2 border border-rose-500 rounded-full text-rose-500 transition-all duration-300 ease-in-out opacity-100 visible hover:bg-rose-500 hover:text-white">
+            <button className="right-2 bg-black bg-opacity-60 p-2 border border-pink-500 rounded-full text-pink-500 transition-all duration-300 ease-in-out opacity-100 visible hover:bg-pink-500 hover:text-white">
               <Icon icon="lucide:edit" />
             </button>
           </Link>

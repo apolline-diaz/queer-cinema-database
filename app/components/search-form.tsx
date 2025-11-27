@@ -386,7 +386,7 @@ export default function SearchForm({
           <div className="flex flex-col sm:flex-wrap gap-4">
             <button
               type="submit"
-              className="w-full transition-colors duration-200 ease-in-out bg-black text-white px-4 py-2 rounded-xl hover:bg-rose-500"
+              className="w-full transition-colors duration-200 ease-in-out bg-black text-white px-4 py-2 rounded-xl hover:bg-pink-500"
               disabled={isLoading}
             >
               {isLoading ? "Recherche..." : "Rechercher"}
@@ -395,7 +395,7 @@ export default function SearchForm({
             <button
               type="button"
               onClick={handleReset}
-              className="w-full border transition-colors duration-200 ease-in-out hover:border-rose-500 hover:text-rose-500 text-black px-4 py-2 border-black rounded-xl"
+              className="w-full border transition-colors duration-200 ease-in-out hover:border-pink-500 hover:text-pink-500 text-black px-4 py-2 border-black rounded-xl"
               disabled={isLoading}
             >
               Réinitialiser
@@ -404,13 +404,13 @@ export default function SearchForm({
         </form>
 
         <div className="p-0 sm:pl-10 pt-2">
-          <div className="border-l-4 text-sm border-rose-500 pl-4 py-2 pt-2 mb-6">
+          <div className="border-l-4 text-sm border-pink-500 pl-4 py-2 pt-2 mb-6">
             {isLoading ? (
               <div className="animate-pulse rounded-md h-6 bg-gray-300 w-32"></div>
             ) : (
               <div className="text-gray-800">
                 <span
-                  className="text-rose-500 font-semibold"
+                  className="text-pink-500 font-semibold"
                   data-testid="results-count"
                 >
                   {totalCount}
@@ -456,7 +456,7 @@ export default function SearchForm({
               <button
                 onClick={loadMoreMovies}
                 disabled={isLoadingMore}
-                className="px-6 py-3 bg-rose-500 hover:bg-rose-600 text-white font-medium rounded-xl transition-all duration-200 flex items-center gap-2"
+                className="px-6 py-3 bg-pink-500 hover:bg-pink-600 text-white font-medium rounded-xl transition-all duration-200 flex items-center gap-2"
               >
                 {isLoadingMore ? (
                   "Chargement..."

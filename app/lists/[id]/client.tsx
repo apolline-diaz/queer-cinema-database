@@ -110,7 +110,7 @@ export default function ListClientPage({
         </div>
       ) : (
         <div>
-          <h1 className="text-2xl font-bold text-rose-500">{listData.title}</h1>
+          <h1 className="text-2xl font-bold text-pink-500">{listData.title}</h1>
           <p className="text-black font-light mt-2 mb-6">
             {listData.description}
           </p>
@@ -120,7 +120,7 @@ export default function ListClientPage({
             <div className="flex items-center gap-2 mb-3">
               <Icon
                 icon="solar:sort-outline"
-                className="text-rose-500 text-lg"
+                className="text-pink-500 text-lg"
               />
               <h3 className="text-sm font-medium text-gray-800">Trier</h3>
             </div>
@@ -130,8 +130,8 @@ export default function ListClientPage({
                 onClick={() => sortMovies("title")}
                 className={`group flex items-center gap-2 px-4 py-2 rounded-xl font-medium text-sm transition-all duration-200 ${
                   sortType === "title"
-                    ? "bg-rose-500 text-white "
-                    : "bg-white text-gray-700 hover:bg-rose-50 hover:text-rose-600 border border-gray-200 hover:border-rose-200 "
+                    ? "bg-pink-500 text-white "
+                    : "bg-white text-gray-700 hover:bg-pink-50 hover:text-pink-600 border border-gray-200 hover:border-pink-200 "
                 }`}
               >
                 <Icon
@@ -139,7 +139,7 @@ export default function ListClientPage({
                   className={`text-lg transition-colors ${
                     sortType === "title"
                       ? "text-white"
-                      : "text-gray-500 group-hover:text-rose-500"
+                      : "text-gray-500 group-hover:text-pink-500"
                   }`}
                 />
                 <span>Alphabétique</span>
@@ -154,8 +154,8 @@ export default function ListClientPage({
                 onClick={() => sortMovies("year")}
                 className={`group flex items-center gap-2 px-4 py-2 rounded-xl font-medium text-sm transition-all duration-200 ${
                   sortType === "year"
-                    ? "bg-rose-500 text-white"
-                    : "bg-white text-gray-700 hover:bg-rose-50 hover:text-rose-600 border border-gray-200 hover:border-rose-200"
+                    ? "bg-pink-500 text-white"
+                    : "bg-white text-gray-700 hover:bg-pink-50 hover:text-pink-600 border border-gray-200 hover:border-pink-200"
                 }`}
               >
                 <Icon
@@ -163,7 +163,7 @@ export default function ListClientPage({
                   className={`text-lg transition-colors ${
                     sortType === "year"
                       ? "text-white"
-                      : "text-gray-500 group-hover:text-rose-500"
+                      : "text-gray-500 group-hover:text-pink-500"
                   }`}
                 />
                 <span>Année</span>
@@ -199,7 +199,7 @@ export default function ListClientPage({
             <button
               onClick={() => router.push(`/lists/edit/${id}`)}
               className="flex items-center gap-2 px-5 py-2.5 rounded-2xl text-white font-medium 
-               bg-gradient-to-r from-rose-500 to-red-500 bg-[length:200%_200%] 
+               bg-gradient-to-r from-pink-500 to-red-500 bg-[length:200%_200%] 
                hover:bg-[position:100%_0%] transition-all duration-500 mb-4"
             >
               <Icon icon="solar:edit-bold" className="text-lg" />

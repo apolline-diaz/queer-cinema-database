@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <div className="px-[clamp(1.25rem,5vw,2.5rem)] py-20 mb-5">
-      <h2 className="text-rose-500 font-bold text-2xl mb-6">À propos</h2>
+      <h2 className="text-pink-500 font-bold text-2xl mb-6">À propos</h2>
       <div className="text-black">
         <p className=" w-full font-light  mb-6">
           Ce site a pour vocation d’archiver et de mettre en valeur la richesse
@@ -44,7 +44,7 @@ export default function AboutPage() {
 
         <div className="">
           <div className="grid grid-col-1 gap-5">
-            <div className="bg-rose-50 border border-rose-200 rounded-xl p-5">
+            <div className="bg-pink-50 border border-pink-200 rounded-xl p-5">
               <h3 className="font-bold mb-2">Pourquoi indexer les films ?</h3>
               <p className="font-light text-black">
                 Face à la masse de productions sur les sujets LGBTQI+ qui existe

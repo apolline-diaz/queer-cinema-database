@@ -72,7 +72,7 @@ export default function SignUpPage() {
               placeholder="Tapez votre adresse e-mail"
             />
             {errors.email && (
-              <span className="text-rose-500 text-xs">
+              <span className="text-pink-500 text-xs">
                 {errors.email.message}
               </span>
             )}

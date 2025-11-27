@@ -99,7 +99,7 @@ export default async function MoviePage({ params }: Props) {
                     href={l.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-row flex justify-between items-center gap-2 transition-colors duration-200 px-4 py-2 bg-rose-500 text-white hover:bg-rose-700 rounded-full hover:opacity-90"
+                    className="flex-row flex justify-between items-center gap-2 transition-colors duration-200 px-4 py-2 bg-pink-500 text-white hover:bg-pink-700 rounded-full hover:opacity-90"
                   >
                     Voir le film{links.length > 1 ? ` ${index + 1}` : ""}
                     <Icon icon="lsicon:play-outline" className="size-5" />
@@ -115,7 +115,7 @@ export default async function MoviePage({ params }: Props) {
       </div>
 
       <div className="px-[clamp(1.25rem,5vw,2.5rem)] pb-5 text-black flex flex-col font-light gap-3">
-        <h1 className="text-4xl font-medium text-rose-500">{movie.title}</h1>
+        <h1 className="text-4xl font-medium text-pink-500">{movie.title}</h1>
         {movie.original_title && (
           <h1 className="text-xl font-light text-gray-400">
             {movie.original_title}
@@ -128,7 +128,7 @@ export default async function MoviePage({ params }: Props) {
               key={director.id}
               href={`/movies?directorId=${encodeURIComponent(director.id.toString())}`}
             >
-              <span className="text-lg hover:text-rose-500 hover:cursor-pointer hover:underline transition-transform duration-300">
+              <span className="text-lg hover:text-pink-500 hover:cursor-pointer hover:underline transition-transform duration-300">
                 {director.name}
               </span>
             </Link>
@@ -136,7 +136,7 @@ export default async function MoviePage({ params }: Props) {
         </h2>
 
         <div className="grid sm:grid-cols-[250px_1fr] gap-6 items-start">
-          <div className="border border-rose-200 bg-rose-50 rounded-xl p-3 grid sm:grid-cols-1 grid-cols-3 gap-4 font-light">
+          <div className="border border-pink-200 bg-pink-50 rounded-xl p-3 grid sm:grid-cols-1 grid-cols-3 gap-4 font-light">
             <div className="text-sm ">
               <h3 className="mb-1 font-light text-gray-500">Pays</h3>
               <span>
@@ -180,7 +180,7 @@ export default async function MoviePage({ params }: Props) {
                   key={keyword.id}
                   href={`/movies?keywordIds=${encodeURIComponent(keyword.id.toString())}&searchMode=form`}
                 >
-                  <span className="font-light text-sm rounded-full border border-rose-500 text-rose-500 px-2 mr-1 py-1 hover:bg-rose-500 hover:text-white hover:border-rose-500 hover:cursor-pointer transition-colors duration-300 ">
+                  <span className="font-light text-sm rounded-full border border-pink-500 text-pink-500 px-2 mr-1 py-1 hover:bg-pink-500 hover:text-white hover:border-pink-500 hover:cursor-pointer transition-colors duration-300 ">
                     {keyword.name}
                   </span>
                 </Link>

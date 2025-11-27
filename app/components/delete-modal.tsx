@@ -52,7 +52,7 @@ export const DeleteModal: React.FC<DeleteModalProps> = ({
     <div className="fixed font-light inset-0 bg-black bg-opacity-50 text-center flex items-center justify-center z-50">
       <div
         ref={modalRef}
-        className="bg-white text-black p-6 rounded-xl max-w-md w-full border border-rose-500"
+        className="bg-white text-black p-6 rounded-xl max-w-md w-full border border-pink-500"
       >
         <p className="mb-6 ">
           Voulez-vous vraiment supprimer cet élément? <br />

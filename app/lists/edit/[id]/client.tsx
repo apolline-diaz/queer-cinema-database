@@ -109,7 +109,7 @@ export default function EditListForm({
     <div className="mx-auto w-full max-w-md sm:max-w-md md:max-w-lg px-[clamp(1.25rem,5vw,2.5rem)] py-20">
       <BackButton />
 
-      <h1 className="text-2xl text-rose-500 font-bold mb-5">
+      <h1 className="text-2xl text-pink-500 font-bold mb-5">
         Modifier la liste
       </h1>
       {isLoading ? (
@@ -168,7 +168,7 @@ export default function EditListForm({
                 <input
                   type="checkbox"
                   {...register("is_collection")}
-                  className="rounded-xl border-rose-900 text-rose-900 focus:ring-rose-500"
+                  className="rounded-xl border-pink-900 text-pink-900 focus:ring-pink-500"
                 />
                 <span>Marquer comme collection</span>
               </label>

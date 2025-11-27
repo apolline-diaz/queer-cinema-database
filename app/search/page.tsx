@@ -14,7 +14,7 @@ export default async function SearchPage({
     <div className="h-full w-full justify-center items-center text-white">
       <div className="px-[clamp(1.25rem,5vw,2.5rem)] py-20">
         <BackButton />
-        <h1 className="text-2xl font-bold text-rose-500 mb-5">Recherche</h1>
+        <h1 className="text-2xl font-bold text-pink-500 mb-5">Recherche</h1>
 
         <div className="mb-4">
           <Searchfield initialSearch={searchQuery} userIsAdmin={userIsAdmin} />
