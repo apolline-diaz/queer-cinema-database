@@ -55,6 +55,12 @@ export default async function MoviePage({ params }: Props) {
   const userIsAdmin = await isAdmin();
   const session = await auth();
 
+  const formatRuntime = (minutes: number) => {
+    const h = Math.floor(minutes / 60);
+    const m = minutes % 60;
+    return `${h}h ${m}min`;
+  };
+
   if (error) {
     return <div>Erreur lors du chargement du film : {error}</div>;
   }
@@ -74,7 +80,7 @@ export default async function MoviePage({ params }: Props) {
     <div className="w-full text-white mx-auto min-h-screen">
       <div className="max-h-[75vh] min-h-[40vh] relative">
         <Image
-          className="object-cover w-full max-h-[75vh] min-h-[40vh]"
+          className="object-cover w-full max-h-[75vh] min-h-[40vh] pt-12"
           alt={movie.title}
           src={getImageUrl(movie.image_url)}
           title={movie.title}
@@ -122,34 +128,36 @@ export default async function MoviePage({ params }: Props) {
           </h1>
         )}
 
-        <h2 className="font-medium text-lg mb-2 flex flex-wrap gap-x-2">
+        <h2 className="font-medium text-2xl flex flex-wrap gap-x-2">
           {movie.directors?.map((director, index) => (
             <Link
               key={director.id}
               href={`/movies?directorId=${encodeURIComponent(director.id.toString())}`}
             >
-              <span className="text-lg hover:text-pink-500 hover:cursor-pointer hover:underline transition-transform duration-300">
+              <span className="hover:text-pink-500 hover:cursor-pointer hover:underline transition-transform duration-300">
                 {director.name}
+                {index < movie.directors.length - 1 ? ", " : ""}
               </span>
             </Link>
           ))}
         </h2>
+        <h2 className="font-medium text-gray-500 text-xl">
+          {movie.release_date}
+        </h2>
 
-        <div className="grid sm:grid-cols-[250px_1fr] gap-6 items-start">
-          <div className="border border-pink-200 bg-pink-50 rounded-xl p-3 grid sm:grid-cols-1 grid-cols-3 gap-4 font-light">
-            <div className="text-sm ">
-              <h3 className="mb-1 font-light text-gray-500">Pays</h3>
-              <span>
+        <div>
+          <p className="my-4 mb-10 text-md">{movie.description}</p>
+          <p className="text-pink-300 font-medium mb-2"> Détails</p>
+          <div className="border-t border-pink-200 py-3 flex flex-col sm:flex-row sm:flex-wrap gap-x-6 gap-y-3 font-light">
+            <div className="text-sm">
+              <h3 className="text-sm mb-1 font-light text-gray-500">Pays</h3>
+              <span className="font-light">
                 {movie.countries?.map((country) => country.name).join(", ")}
               </span>
             </div>
             <div className="text-sm">
-              <h3 className="mb-1 font-light text-gray-500">Année</h3>
-              <span>{movie.release_date}</span>
-            </div>
-            <div className="text-sm">
-              <h3 className=" mb-1 font-light text-gray-500">Durée</h3>
-              <span>
+              <h3 className="text-sm mb-1 font-light text-gray-500">Durée</h3>
+              <span className="font-light">
                 {movie.runtime} {durationText}
               </span>
             </div>
@@ -170,22 +178,18 @@ export default async function MoviePage({ params }: Props) {
               </div>
             )}
           </div>
-          <div>
-            <h3 className="font-light text-gray-500">Synopsis</h3>
-            <p className="my-4 text-md">{movie.description}</p>
-            <h3 className="font-light text-gray-500">Mots-clés</h3>
-            <div className="font-bold flex items-center gap-y-3 flex-wrap py-3 my-1">
-              {movie.keywords?.map((keyword) => (
-                <Link
-                  key={keyword.id}
-                  href={`/movies?keywordIds=${encodeURIComponent(keyword.id.toString())}&searchMode=form`}
-                >
-                  <span className="font-light text-sm rounded-full border border-pink-500 text-pink-500 px-2 mr-1 py-1 hover:bg-pink-500 hover:text-white hover:border-pink-500 hover:cursor-pointer transition-colors duration-300 ">
-                    {keyword.name}
-                  </span>
-                </Link>
-              ))}
-            </div>
+          <h2 className="font-light text-sm text-gray-500">Mots-clés</h2>
+          <div className="font-bold flex items-center gap-y-3 flex-wrap py-3 my-1">
+            {movie.keywords?.map((keyword) => (
+              <Link
+                key={keyword.id}
+                href={`/movies?keywordIds=${encodeURIComponent(keyword.id.toString())}&searchMode=form`}
+              >
+                <span className="font-light text-sm rounded-full border border-pink-500 text-pink-500 px-2 mr-1 py-1 hover:bg-pink-500 hover:text-white hover:border-pink-500 hover:cursor-pointer transition-colors duration-300 ">
+                  {keyword.name}
+                </span>
+              </Link>
+            ))}
           </div>
         </div>
       </div>
