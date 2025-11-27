@@ -54,20 +54,20 @@ export default function ContactForm() {
 
   return (
     <div className="px-10 py-20">
-      <h2 className="text-2xl text-rose-500 font-bold mb-4">Contact</h2>
+      <h2 className="text-2xl text-pink-500 font-bold mb-4">Contact</h2>
       <p className="text-sm text-black font-light mb-4 italic">
         Pour toute suggestion de films ou séries, des corrections à indiquer ou
         toute autre question concernant le site...
       </p>
       <div className="sm:w-1/2 w-full">
         {status === "success" && (
-          <div className="mb-4 py-3 text-rose-800 font-light">
+          <div className="mb-4 py-3 text-pink-800 font-light">
             Votre message a été envoyé avec succès!
           </div>
         )}
 
         {status === "error" && (
-          <div className="mb-4 p-3 bg-rose-50 text-red-700 rounded">
+          <div className="mb-4 p-3 bg-pink-50 text-red-700 rounded">
             Une erreur est survenue. Veuillez réessayer plus tard.
           </div>
         )}

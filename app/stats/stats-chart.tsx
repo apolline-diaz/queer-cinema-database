@@ -55,8 +55,8 @@ export default function StatsChart({ data, title }: StatsChartProps) {
               onClick={() => setChartType("bar")}
               className={`w-auto text-sm font-light px-4 py-1 border rounded-full transition-colors ${
                 chartType === "bar"
-                  ? "bg-rose-500 text-white border-rose-500"
-                  : "bg-transparent text-rose-500 border-rose-500 hover:bg-rose-500 hover:text-white"
+                  ? "bg-pink-500 text-white border-pink-500"
+                  : "bg-transparent text-pink-500 border-pink-500 hover:bg-pink-500 hover:text-white"
               }`}
             >
               Diagramme en barres
@@ -65,8 +65,8 @@ export default function StatsChart({ data, title }: StatsChartProps) {
               onClick={() => setChartType("pie")}
               className={`w-auto text-sm font-light px-4 py-1 border rounded-full transition-colors ${
                 chartType === "pie"
-                  ? "bg-rose-500 text-white border-rose-500"
-                  : "bg-transparent text-rose-500 border-rose-500 hover:bg-rose-500 hover:text-white"
+                  ? "bg-pink-500 text-white border-pink-500"
+                  : "bg-transparent text-pink-500 border-pink-500 hover:bg-pink-500 hover:text-white"
               }`}
             >
               Diagramme circulaire

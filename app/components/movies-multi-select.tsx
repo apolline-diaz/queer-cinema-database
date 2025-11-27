@@ -90,11 +90,11 @@ export default function MoviesMultiSelect({
 
               {/* Liste déroulante des suggestions */}
               {inputValue && filteredOptions.length > 0 && (
-                <ul className="absolute left-0 right-0 capitalize bg-rose-50 border-rose-500 text-black text-sm rounded-xl border mt-1 z-10 max-h-40 overflow-y-auto">
+                <ul className="absolute left-0 right-0 capitalize bg-pink-50 border-pink-500 text-black text-sm rounded-xl border mt-1 z-10 max-h-40 overflow-y-auto">
                   {filteredOptions.map((option) => (
                     <li
                       key={option.value}
-                      className="px-4 py-2 font-light hover:text-white cursor-pointer hover:bg-rose-500"
+                      className="px-4 py-2 font-light hover:text-white cursor-pointer hover:bg-pink-500"
                       onClick={() => handleSelectMovie(option)}
                     >
                       <div className="flex flex-row gap-2 font-bold">
@@ -112,7 +112,7 @@ export default function MoviesMultiSelect({
                 {selectedOptions.map((option) => (
                   <span
                     key={option.value}
-                    className="cursor-pointer capitalize flex border border-rose-500 justify-between items-center bg-rose-50 text-black text-sm font-light px-2 py-1 rounded-xl"
+                    className="cursor-pointer capitalize flex border border-pink-500 justify-between items-center bg-pink-50 text-black text-sm font-light px-2 py-1 rounded-xl"
                     onClick={() => handleRemoveMovie(option)}
                   >
                     <div className="font-bold">

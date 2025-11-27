@@ -10,7 +10,7 @@ export default function BackButton({ className = "" }) {
     <button
       onClick={() => router.back()}
       className={cn(
-        "inline-flex items-center text-sm gap-2 pr-3 pl-2 py-1 my-4 rounded-xl text-gray-600 border border-gray-200 hover:bg-gray-50 hover:text-gray-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-rose-300",
+        "inline-flex items-center text-sm gap-2 pr-3 pl-2 py-1 my-4 rounded-xl text-gray-600 border border-gray-200 hover:bg-gray-50 hover:text-gray-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-pink-300",
         className
       )}
     >

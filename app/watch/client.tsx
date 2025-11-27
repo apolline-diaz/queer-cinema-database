@@ -60,7 +60,7 @@ export function TVClient({
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 flex flex-col justify-end h-full pb-16">
-          <div className="mb-6 inline-flex w-fit bg-rose-500/10 backdrop-blur-sm text-white px-3 py-1 rounded-full text-xs tracking-wide uppercase border border-white/20">
+          <div className="mb-6 inline-flex w-fit bg-pink-500/10 backdrop-blur-sm text-white px-3 py-1 rounded-full text-xs tracking-wide uppercase border border-white/20">
             Nouveau
           </div>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 max-w-4xl">
@@ -94,7 +94,7 @@ export function TVClient({
           </p>
           <Link
             href={`/movies/${current.id}`}
-            className="inline-flex w-fit items-center gap-2 bg-white text-black px-4 py-2 rounded-full font-semibold text-sm hover:bg-rose-500 hover:text-white transition-all duration-300 shadow-xl"
+            className="inline-flex w-fit items-center gap-2 bg-white text-black px-4 py-2 rounded-full font-semibold text-sm hover:bg-pink-500 hover:text-white transition-all duration-300 shadow-xl"
           >
             <Icon icon="mdi:play" className="text-xl" />
             Voir le film
@@ -104,7 +104,7 @@ export function TVClient({
 
       {/* Section de recherche et filtres */}
       <section className="max-w-7xl mx-auto px-6 pb-12">
-        <h2 className="text-2xl md:text-3xl font-bold mb-6 text-rose-500">
+        <h2 className="text-2xl md:text-3xl font-bold mb-6 text-pink-500">
           Explorer le catalogue
         </h2>
 

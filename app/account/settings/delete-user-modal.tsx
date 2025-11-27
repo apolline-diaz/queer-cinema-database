@@ -30,7 +30,7 @@ export function DeleteUserModal({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4  border border-rose-500">
+      <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4  border border-pink-500">
         <h2 className="text-xl text-center font-bold text-gray-900 mb-4">
           {title}
         </h2>
@@ -60,7 +60,7 @@ export function DeleteUserModal({
             type="button"
             onClick={onClose}
             disabled={isLoading}
-            className="px-4 py-2 text-rose-900 border border-rose-900 rounded-md hover:border-rose-500 hover:text-rose-500 disabled:opacity-50"
+            className="px-4 py-2 text-pink-900 border border-pink-900 rounded-md hover:border-pink-500 hover:text-pink-500 disabled:opacity-50"
           >
             Annuler
           </button>
@@ -68,7 +68,7 @@ export function DeleteUserModal({
             type="button"
             onClick={handleConfirm}
             disabled={confirmText !== expectedText || isLoading}
-            className="px-4 py-2 bg-rose-900 text-white rounded-md hover:bg-rose-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-4 py-2 bg-pink-900 text-white rounded-md hover:bg-pink-500 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isLoading ? "Désactivation..." : "Désactiver définitivement"}
           </button>

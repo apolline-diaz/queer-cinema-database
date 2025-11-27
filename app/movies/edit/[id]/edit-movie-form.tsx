@@ -368,7 +368,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
             </p>
 
             {errors?.directors && (
-              <span id="directors-error" className="text-rose-500 text-xs my-2">
+              <span id="directors-error" className="text-pink-500 text-xs my-2">
                 {errors.directors.message}
               </span>
             )}
@@ -441,7 +441,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
               className="w-full px-3 py-2 text-black font-light text-sm border bg-white border-black rounded-md bg-transparent"
             />
             {errors.description && (
-              <span className="text-rose-500 text-xs my-2">
+              <span className="text-pink-500 text-xs my-2">
                 {errors.description.message}
               </span>
             )}
@@ -495,7 +495,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
                 ))}
               </select>
               {errors.country_id && (
-                <span className="text-rose-500 text-xs my-2">
+                <span className="text-pink-500 text-xs my-2">
                   {errors.country_id.message}
                 </span>
               )}
@@ -561,7 +561,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
               <option value="Emission TV">Emission TV</option>
             </select>
             {errors.type && (
-              <span className="text-rose-500 text-xs my-2">
+              <span className="text-pink-500 text-xs my-2">
                 {errors.type.message}
               </span>
             )}
@@ -604,7 +604,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
             </p>
 
             {errors?.genres && (
-              <span className="text-rose-500 text-xs my-2">
+              <span className="text-pink-500 text-xs my-2">
                 {errors.genres.message}
               </span>
             )}
@@ -648,7 +648,7 @@ export default function EditMovieForm({ movie }: { movie: Movie }) {
             </p>
 
             {errors?.keywords && (
-              <span className="text-rose-500 text-xs my-2">
+              <span className="text-pink-500 text-xs my-2">
                 {errors.keywords.message}
               </span>
             )}

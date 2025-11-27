@@ -65,7 +65,7 @@ export function WatchGrid({ movies }: WatchGridProps) {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
                   {/* Badge */}
-                  <div className="absolute top-4 right-4 bg-rose-500 text-white px-4 py-2 rounded-full text-xs font-semibold shadow-lg flex items-center gap-2">
+                  <div className="absolute top-4 right-4 bg-pink-500 text-white px-4 py-2 rounded-full text-xs font-semibold shadow-lg flex items-center gap-2">
                     Disponible en ligne
                   </div>
 

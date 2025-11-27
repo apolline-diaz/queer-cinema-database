@@ -46,13 +46,13 @@ export default function ForgotPasswordPage() {
 
   return (
     <div
-      className="w-screen min-h-screen flex items-center text-rose-900 justify-center bg-cover bg-center"
+      className="w-screen min-h-screen flex items-center text-pink-900 justify-center bg-cover bg-center"
       style={{
         backgroundImage:
           "url('https://xcwrhyjbfgzsaslstssc.supabase.co/storage/v1/object/public/storage//watermelon-woman-background.webp')",
       }}
     >
-      <div className="bg-rose-50 border border-rose-900 bg-opacity-90 backdrop-blur-md rounded-2xl shadow-xl p-10 m-10 max-w-md w-full">
+      <div className="bg-pink-50 border border-pink-900 bg-opacity-90 backdrop-blur-md rounded-2xl shadow-xl p-10 m-10 max-w-md w-full">
         {isEmailSent ? (
           <div className="flex flex-col gap-3">
             <h1 className="text-center font-medium text-xl">Email envoyé</h1>
@@ -65,7 +65,7 @@ export default function ForgotPasswordPage() {
             <div className="mt-6 w-full justify-center items-center flex">
               <Link
                 href="/login"
-                className="rounded-md border px-6 py-2 border-rose-900 hover:bg-rose-950 hover:text-white transition-colors"
+                className="rounded-md border px-6 py-2 border-pink-900 hover:bg-pink-950 hover:text-white transition-colors"
               >
                 Retour à la connexion
               </Link>
@@ -83,7 +83,7 @@ export default function ForgotPasswordPage() {
               </p>
 
               {error && (
-                <div className="bg-rose-50 border border-red-400 text-red-700 px-4 py-3 rounded mb-2">
+                <div className="bg-pink-50 border border-red-400 text-red-700 px-4 py-3 rounded mb-2">
                   {error}
                 </div>
               )}
@@ -98,7 +98,7 @@ export default function ForgotPasswordPage() {
                     message: "Adresse e-mail invalide",
                   },
                 })}
-                className="appearance-none text-sm font-light border-rose-900 block w-full border rounded py-3 px-4 leading-tight focus:outline-none focus:text-black"
+                className="appearance-none text-sm font-light border-pink-900 block w-full border rounded py-3 px-4 leading-tight focus:outline-none focus:text-black"
                 id="email"
                 type="email"
                 placeholder="Tapez votre adresse e-mail"

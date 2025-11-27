@@ -99,14 +99,14 @@ async function CollectionsSection() {
             <div key={collection.id.toString()} className="flex flex-col">
               <div className="flex flex-row justify-between items-end mb-4 gap-2">
                 <div className="flex flex-col gap-3 min-w-0 flex-1">
-                  <h2 className="text-xl sm:text-2xl font-semibold leading-tight text-rose-500 line-clamp-3">
+                  <h2 className="text-xl sm:text-2xl font-semibold leading-tight text-pink-500 line-clamp-3">
                     {collection.title}
                   </h2>
                 </div>
 
                 <Link
                   href={`/lists/${collection.id}`}
-                  className="border rounded-xl px-2 py-1 border-rose-500 text-rose-500 hover:border-rose-500 hover:bg-rose-500 hover:text-white text-sm whitespace-nowrap flex-shrink-0"
+                  className="border rounded-xl px-2 py-1 border-pink-500 text-pink-500 hover:border-pink-500 hover:bg-pink-500 hover:text-white text-sm whitespace-nowrap flex-shrink-0"
                 >
                   Tout voir{" "}
                   <Icon icon="mdi:chevron-right" className="inline size-4" />
@@ -137,22 +137,22 @@ async function CollectionsSection() {
 // Skeletons pour l'affichage immédiat
 function HeroSkeleton() {
   return (
-    <div className="w-full h-[500px] bg-gradient-to-br from-rose-100 via-pink-50 to-purple-100 relative overflow-hidden">
+    <div className="w-full h-[500px] bg-gradient-to-br from-pink-100 via-pink-50 to-purple-100 relative overflow-hidden">
       {/* Animated background */}
-      <div className="absolute inset-0 bg-gradient-to-r from-rose-200/50 to-purple-200/50 animate-pulse"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-pink-200/50 to-purple-200/50 animate-pulse"></div>
 
       {/* Content skeleton */}
       <div className="absolute inset-0 flex items-center justify-center">
         <div className="text-center space-y-4 z-10">
           <div className="w-80 h-12 bg-white/30 rounded-lg animate-pulse backdrop-blur-sm"></div>
           <div className="w-96 h-6 bg-white/20 rounded animate-pulse backdrop-blur-sm"></div>
-          <div className="w-32 h-10 bg-rose-300/50 rounded-lg animate-pulse backdrop-blur-sm mx-auto mt-6"></div>
+          <div className="w-32 h-10 bg-pink-300/50 rounded-lg animate-pulse backdrop-blur-sm mx-auto mt-6"></div>
         </div>
       </div>
 
       {/* Decorative elements */}
       <div className="absolute top-10 right-10 w-20 h-20 bg-white/10 rounded-full animate-bounce"></div>
-      <div className="absolute bottom-10 left-10 w-16 h-16 bg-rose-300/20 rounded-full animate-pulse"></div>
+      <div className="absolute bottom-10 left-10 w-16 h-16 bg-pink-300/20 rounded-full animate-pulse"></div>
     </div>
   );
 }
@@ -213,10 +213,10 @@ function CollectionsSkeleton() {
           {/* Collection header */}
           <div className="flex flex-row justify-between items-end pr-10 mb-6 gap-4">
             <div className="flex flex-col gap-3 min-w-0 flex-1">
-              <div className="w-64 h-8 bg-gradient-to-r from-rose-300 to-pink-300 rounded animate-pulse"></div>
-              <div className="w-24 h-6 bg-rose-200 rounded-full animate-pulse"></div>
+              <div className="w-64 h-8 bg-gradient-to-r from-pink-300 to-pink-300 rounded animate-pulse"></div>
+              <div className="w-24 h-6 bg-pink-200 rounded-full animate-pulse"></div>
             </div>
-            <div className="w-28 h-10 bg-gradient-to-r from-rose-200 to-rose-300 rounded-xl animate-pulse"></div>
+            <div className="w-28 h-10 bg-gradient-to-r from-pink-200 to-pink-300 rounded-xl animate-pulse"></div>
           </div>
 
           {/* Movies row */}

@@ -140,7 +140,7 @@ export default function SettingsClientPage({ user }: { user: User }) {
             placeholder="Votre nom ou pseudo"
           />
           {nameError && (
-            <p className="text-rose-500 text-sm my-2">{nameError}</p>
+            <p className="text-pink-500 text-sm my-2">{nameError}</p>
           )}
         </div>
         <SubmitButton
@@ -149,7 +149,7 @@ export default function SettingsClientPage({ user }: { user: User }) {
           isSubmitting={isUpdatingName}
         />
       </form>
-      <hr className="my-5 border-t border-rose-200" />
+      <hr className="my-5 border-t border-pink-200" />
 
       {/* Formulaire : modifier le mot de passe */}
       <form
@@ -174,7 +174,7 @@ export default function SettingsClientPage({ user }: { user: User }) {
             onChange={handleNewPasswordChange}
           />
           {newPasswordError && (
-            <p className="text-rose-500 text-sm my-2">{newPasswordError}</p>
+            <p className="text-pink-500 text-sm my-2">{newPasswordError}</p>
           )}
           {/* Message d'aide toujours visible */}
           <p className="text-gray-500 text-xs mt-2">
@@ -190,7 +190,7 @@ export default function SettingsClientPage({ user }: { user: User }) {
             className={passwordError ? "border-red-500" : ""}
           />
           {passwordError && (
-            <p className="text-rose-500 text-sm my-2">{passwordError}</p>
+            <p className="text-pink-500 text-sm my-2">{passwordError}</p>
           )}
         </div>
         <SubmitButton
@@ -199,10 +199,10 @@ export default function SettingsClientPage({ user }: { user: User }) {
           isSubmitting={isUpdatingPassword}
         />
       </form>
-      <hr className="my-5 border-t border-rose-200" />
+      <hr className="my-5 border-t border-pink-200" />
 
       {/* Suppression du compte */}
-      <form className="p-5 rounded-md bg-rose-50 border border-rose-500">
+      <form className="p-5 rounded-md bg-pink-50 border border-pink-500">
         <h2 className="text-lg font-semibold text-black mb-4">
           Désactiver le compte
         </h2>
@@ -213,7 +213,7 @@ export default function SettingsClientPage({ user }: { user: User }) {
         <button
           type="button"
           onClick={() => setIsDeleteOpen(true)}
-          className=" text-rose-500 border-rose-500 hover:text-white border px-4 py-2 transition-colors duration-200 ease-in-out rounded-md hover:bg-rose-500 disabled:opacity-50"
+          className=" text-pink-500 border-pink-500 hover:text-white border px-4 py-2 transition-colors duration-200 ease-in-out rounded-md hover:bg-pink-500 disabled:opacity-50"
         >
           Désactiver mon compte
         </button>

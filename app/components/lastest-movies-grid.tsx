@@ -73,7 +73,7 @@ export function LatestMoviesGrid({ movies }: LatestMoviesGridProps) {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
                   {/* Badge Nouveauté */}
-                  <div className="absolute top-3 right-3 bg-rose-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-lg backdrop-blur-sm">
+                  <div className="absolute top-3 right-3 bg-pink-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-lg backdrop-blur-sm">
                     Nouveau
                   </div>
 

@@ -196,14 +196,14 @@ export default function Searchfield({
         <div className="flex flex-co pl-0 sm:pl-5 sm:flex-row flex-col gap-4 py-2">
           <button
             type="submit"
-            className="w-full bg-black text-white px-4 py-2 rounded-xl hover:bg-rose-500"
+            className="w-full bg-black text-white px-4 py-2 rounded-xl hover:bg-pink-500"
           >
             Rechercher
           </button>
           <button
             type="button"
             onClick={handleReset}
-            className="w-full border hover:border-rose-500 hover:text-rose-500 text-black px-4 py-2 border-black rounded-xl"
+            className="w-full border hover:border-pink-500 hover:text-pink-500 text-black px-4 py-2 border-black rounded-xl"
           >
             Réinitialiser
           </button>
@@ -218,7 +218,7 @@ export default function Searchfield({
         </span>
         <button
           onClick={() => router.push("/movies")}
-          className="text-rose-500 rounded-xl text-sm hover:text-rose-800 transition-colors"
+          className="text-pink-500 rounded-xl text-sm hover:text-pink-800 transition-colors"
         >
           Aller à la recherche avancée
         </button>
@@ -228,10 +228,10 @@ export default function Searchfield({
       <div className="flex-1 pt-4" data-testid="results-section">
         {/* Compteur de résultats et info pagination */}
 
-        <div className="border-l-4 text-sm border-rose-500 pl-4 py-2 mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+        <div className="border-l-4 text-sm border-pink-500 pl-4 py-2 mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           <div className="text-gray-800">
             <span
-              className="text-rose-500 font-semibold"
+              className="text-pink-500 font-semibold"
               data-testid="results-count"
             >
               {totalMovies}
@@ -293,7 +293,7 @@ export default function Searchfield({
                 className={`flex items-center p-2 rounded-lg text-sm font-medium transition-all ${
                   currentPage === 1
                     ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                    : "bg-white text-gray-700 hover:bg-rose-50 hover:text-rose-600 border border-gray-200 hover:border-rose-200"
+                    : "bg-white text-gray-700 hover:bg-pink-50 hover:text-pink-600 border border-gray-200 hover:border-pink-200"
                 }`}
               >
                 <Icon icon="mdi:chevron-left" className="text-lg" />
@@ -310,8 +310,8 @@ export default function Searchfield({
                         onClick={() => changePage(page as number)}
                         className={`px-3 py-2 rounded-lg text-sm font-medium transition-all ${
                           currentPage === page
-                            ? "bg-rose-500 text-white"
-                            : "bg-white text-gray-700 hover:bg-rose-50 hover:text-rose-600 border border-gray-200 hover:border-rose-200"
+                            ? "bg-pink-500 text-white"
+                            : "bg-white text-gray-700 hover:bg-pink-50 hover:text-pink-600 border border-gray-200 hover:border-pink-200"
                         }`}
                       >
                         {page}
@@ -327,7 +327,7 @@ export default function Searchfield({
                 className={`flex items-center p-2 rounded-lg text-sm font-medium transition-all ${
                   currentPage === totalPages
                     ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                    : "bg-white text-gray-700 hover:bg-rose-50 hover:text-rose-600 border border-gray-200 hover:border-rose-200"
+                    : "bg-white text-gray-700 hover:bg-pink-50 hover:text-pink-600 border border-gray-200 hover:border-pink-200"
                 }`}
               >
                 <Icon icon="mdi:chevron-right" className="text-lg" />

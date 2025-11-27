@@ -55,6 +55,12 @@ export default async function MoviePage({ params }: Props) {
   const userIsAdmin = await isAdmin();
   const session = await auth();
 
+  const formatRuntime = (minutes: number) => {
+    const h = Math.floor(minutes / 60);
+    const m = minutes % 60;
+    return `${h}h ${m}min`;
+  };
+
   if (error) {
     return <div>Erreur lors du chargement du film : {error}</div>;
   }
@@ -74,7 +80,7 @@ export default async function MoviePage({ params }: Props) {
     <div className="w-full text-white mx-auto min-h-screen">
       <div className="max-h-[75vh] min-h-[40vh] relative">
         <Image
-          className="object-cover w-full max-h-[75vh] min-h-[40vh]"
+          className="object-cover w-full max-h-[75vh] min-h-[40vh] pt-12"
           alt={movie.title}
           src={getImageUrl(movie.image_url)}
           title={movie.title}
@@ -99,7 +105,7 @@ export default async function MoviePage({ params }: Props) {
                     href={l.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-row flex justify-between items-center gap-2 transition-colors duration-200 px-4 py-2 bg-rose-500 text-white hover:bg-rose-700 rounded-full hover:opacity-90"
+                    className="flex-row flex justify-between items-center gap-2 transition-colors duration-200 px-4 py-2 bg-pink-500 text-white hover:bg-pink-700 rounded-full hover:opacity-90"
                   >
                     Voir le film{links.length > 1 ? ` ${index + 1}` : ""}
                     <Icon icon="lsicon:play-outline" className="size-5" />
@@ -115,41 +121,43 @@ export default async function MoviePage({ params }: Props) {
       </div>
 
       <div className="px-[clamp(1.25rem,5vw,2.5rem)] pb-5 text-black flex flex-col font-light gap-3">
-        <h1 className="text-4xl font-medium text-rose-500">{movie.title}</h1>
+        <h1 className="text-4xl font-medium text-pink-500">{movie.title}</h1>
         {movie.original_title && (
           <h1 className="text-xl font-light text-gray-400">
             {movie.original_title}
           </h1>
         )}
 
-        <h2 className="font-medium text-lg mb-2 flex flex-wrap gap-x-2">
+        <h2 className="font-medium text-2xl flex flex-wrap gap-x-2">
           {movie.directors?.map((director, index) => (
             <Link
               key={director.id}
               href={`/movies?directorId=${encodeURIComponent(director.id.toString())}`}
             >
-              <span className="text-lg hover:text-rose-500 hover:cursor-pointer hover:underline transition-transform duration-300">
+              <span className="hover:text-pink-500 hover:cursor-pointer hover:underline transition-transform duration-300">
                 {director.name}
+                {index < movie.directors.length - 1 ? ", " : ""}
               </span>
             </Link>
           ))}
         </h2>
+        <h2 className="font-medium text-gray-500 text-xl">
+          {movie.release_date}
+        </h2>
 
-        <div className="grid sm:grid-cols-[250px_1fr] gap-6 items-start">
-          <div className="border border-rose-200 bg-rose-50 rounded-xl p-3 grid sm:grid-cols-1 grid-cols-3 gap-4 font-light">
-            <div className="text-sm ">
-              <h3 className="mb-1 font-light text-gray-500">Pays</h3>
-              <span>
+        <div>
+          <p className="my-4 mb-10 text-md">{movie.description}</p>
+          <p className="text-pink-300 font-medium mb-2"> Détails</p>
+          <div className="border-t border-pink-200 py-3 flex flex-col sm:flex-row sm:flex-wrap gap-x-6 gap-y-3 font-light">
+            <div className="text-sm">
+              <h3 className="text-sm mb-1 font-light text-gray-500">Pays</h3>
+              <span className="font-light">
                 {movie.countries?.map((country) => country.name).join(", ")}
               </span>
             </div>
             <div className="text-sm">
-              <h3 className="mb-1 font-light text-gray-500">Année</h3>
-              <span>{movie.release_date}</span>
-            </div>
-            <div className="text-sm">
-              <h3 className=" mb-1 font-light text-gray-500">Durée</h3>
-              <span>
+              <h3 className="text-sm mb-1 font-light text-gray-500">Durée</h3>
+              <span className="font-light">
                 {movie.runtime} {durationText}
               </span>
             </div>
@@ -170,22 +178,18 @@ export default async function MoviePage({ params }: Props) {
               </div>
             )}
           </div>
-          <div>
-            <h3 className="font-light text-gray-500">Synopsis</h3>
-            <p className="my-4 text-md">{movie.description}</p>
-            <h3 className="font-light text-gray-500">Mots-clés</h3>
-            <div className="font-bold flex items-center gap-y-3 flex-wrap py-3 my-1">
-              {movie.keywords?.map((keyword) => (
-                <Link
-                  key={keyword.id}
-                  href={`/movies?keywordIds=${encodeURIComponent(keyword.id.toString())}&searchMode=form`}
-                >
-                  <span className="font-light text-sm rounded-full border border-rose-500 text-rose-500 px-2 mr-1 py-1 hover:bg-rose-500 hover:text-white hover:border-rose-500 hover:cursor-pointer transition-colors duration-300 ">
-                    {keyword.name}
-                  </span>
-                </Link>
-              ))}
-            </div>
+          <h2 className="font-light text-sm text-gray-500">Mots-clés</h2>
+          <div className="font-bold flex items-center gap-y-3 flex-wrap py-3 my-1">
+            {movie.keywords?.map((keyword) => (
+              <Link
+                key={keyword.id}
+                href={`/movies?keywordIds=${encodeURIComponent(keyword.id.toString())}&searchMode=form`}
+              >
+                <span className="font-light text-sm rounded-full border border-pink-500 text-pink-500 px-2 mr-1 py-1 hover:bg-pink-500 hover:text-white hover:border-pink-500 hover:cursor-pointer transition-colors duration-300 ">
+                  {keyword.name}
+                </span>
+              </Link>
+            ))}
           </div>
         </div>
       </div>

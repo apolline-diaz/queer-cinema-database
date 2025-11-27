@@ -6,7 +6,7 @@ const imageUrl =
 export default function Hero() {
   return (
     <>
-      <div className="relative bg-rose-50 w-full overflow-hidden">
+      <div className="relative bg-pink-50 w-full overflow-hidden">
         <div
           className="relative w-full h-[80vh] overflow-hidden bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${imageUrl})` }}
@@ -18,7 +18,7 @@ export default function Hero() {
                   Films & Archives{" "}
                 </span>
                 {/* <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-yellow-300 via-green-400 via-blue-500 to-violet-500"> */}
-                <span className="text-transparent font-bold bg-clip-text bg-gradient-to-r from-rose-500  via-blue-500  to-yellow-400">
+                <span className="text-transparent font-bold bg-clip-text bg-gradient-to-r from-pink-500  via-blue-500  to-yellow-400">
                   LGBTQI+
                 </span>
               </h2>
@@ -27,7 +27,7 @@ export default function Hero() {
             {/* <div className="z-10 flex flex-col sm:flex-row gap-5 justify-start items-start">
               <Link
                 href="/movies"
-                className="relative flex flex-row gap-1 font-semibold items-center  bg-gradient-to-r from-rose-600 to-pink-600  hover:from-rose-700 hover:to-pink-700                             transition-all duration-500 ease-in-out hover:text-white                       px-3 py-2 rounded-lg text-sm"
+                className="relative flex flex-row gap-1 font-semibold items-center  bg-gradient-to-r from-pink-600 to-pink-600  hover:from-pink-700 hover:to-pink-700                             transition-all duration-500 ease-in-out hover:text-white                       px-3 py-2 rounded-lg text-sm"
               >
                 Découvrir tous les films
                 <Icon icon="uis:angle-right" fontSize={25} />
