@@ -15,32 +15,27 @@ export const metadata: Metadata = {
 const ResourcesSection = () => {
   const resources = [
     {
-      category: "Plateformes communautaires",
+      category: "Plateformes collaboratives et catalogues de référence",
       items: [
+        { name: "AlloCiné", url: "https://www.allocine.fr" },
+        { name: "Film documentaire", url: "https://www.film-documentaire.fr" },
+        { name: "IMDb", url: "https://www.imdb.com" },
         { name: "Letterboxd", url: "https://letterboxd.com" },
         { name: "Mubi", url: "https://mubi.com" },
-        { name: "Tënk", url: "https://www.tenk.fr" },
         { name: "SensCritique", url: "https://www.senscritique.com" },
-        { name: "AlloCiné", url: "https://www.allocine.fr" },
+        { name: "Tënk", url: "https://www.tenk.fr" },
+        { name: "The Movie Database", url: "https://www.themoviedb.org" },
+        { name: "UniFrance", url: "https://www.unifrance.org" },
       ],
     },
     {
-      category: "Plateformes VOD",
+      category: "Plateformes de streaming et vidéo à la demande VOD",
       items: [
         { name: "Mubi", url: "https://mubi.com" },
         { name: "Tënk", url: "https://www.tenk.fr" },
-        { name: "Prime Video", url: "https://www.primevideo.com/" },
       ],
     },
-    {
-      category: "Bases de données",
-      items: [
-        { name: "The Movie Database", url: "https://www.themoviedb.org" },
-        { name: "IMDb", url: "https://www.imdb.com" },
-        { name: "UniFrance", url: "https://www.unifrance.org" },
-        { name: "Film documentaire", url: "https://www.film-documentaire.fr" },
-      ],
-    },
+
     {
       category: "Distributeurs",
       items: [
@@ -57,7 +52,7 @@ const ResourcesSection = () => {
       ],
     },
     {
-      category: "Festivals",
+      category: "Festivals et programmations queer",
       items: [
         { name: "Chéries Chéris", url: "https://www.cheries-cheris.com" },
         { name: "Cineffable", url: "https://www.cineffable.fr" },
@@ -68,6 +63,10 @@ const ResourcesSection = () => {
         {
           name: "Fringe!",
           url: "https://www.fringefilmfest.com/",
+        },
+        {
+          name: "Dirty Looks",
+          url: "https://dirtylooksla.org/events",
         },
       ],
     },
@@ -107,69 +106,83 @@ const ResourcesSection = () => {
       description:
         "Transgender Media Portal est similaire à IMDb, mais il se concentre exclusivement sur la mise en avant du travail des créateur-ices trans+.",
     },
+    {
+      name: "Black Film Archive",
+      url: "https://blackfilmarchive.com/",
+      description:
+        "Black Film Archive est un registre vivant des films noirs. Dans sa version actuelle, il présente les films noirs réalisés entre 1898 et 1999 actuellement disponibles en streaming.",
+    },
   ];
 
   return (
-    <div className="rounded-xl px-[clamp(1.25rem,5vw,2.5rem)] py-20">
-      <h3 className="font-bold text-2xl mb-4 text-pink-500">Ressources</h3>
-      <p className="font-light text-gray-700 mb-6">
-        Toutes les informations, les synopsis et les images des films sont tirés
-        des sites suivants :
+    <div className="px-[clamp(1.25rem,5vw,2.5rem)] py-20 max-w-5xl mx-auto">
+      <h3 className="font-bold text-3xl mb-4 text-pink-600">Ressources</h3>
+      <p className="font-light text-gray-700 mb-8 max-w-xl">
+        Toutes les informations, les synopsis et les images des films
+        proviennent de plateformes et bases de données spécialisées.
       </p>
 
-      <div className="space-y-5">
+      <div className="space-y-10">
         {resources.map((category, index) => (
-          <div key={index} className="border-l-3 border-pink-200">
-            <h4 className="font-semibold text-black mb-2">
+          <div
+            key={index}
+            className="p-6 rounded-2xl bg-white border border-pink-100 shadow-sm hover:shadow-md transition-shadow"
+          >
+            <h4 className="font-semibold text-lg text-pink-500 mb-3">
               {category.category}
             </h4>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-3">
               {category.items.map((item, itemIndex) => (
                 <a
                   key={itemIndex}
                   href={item.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 px-3 py-1 bg-white rounded-full border border-pink-200 hover:bg-pink-100 hover:border-pink-300 transition-colors text-sm text-gray-700 hover:text-pink-800"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-br from-white to-pink-50 border border-pink-200 text-gray-700 hover:from-pink-50 hover:to-white hover:text-pink-600 hover:border-pink-400 transition-colors text-sm shadow-sm"
                 >
                   {item.name}
-                  <ExternalLink className="w-3 h-3" />
+                  <ExternalLink className="w-4 h-4" />
                 </a>
               ))}
             </div>
           </div>
         ))}
       </div>
-      {/* Section archives alternatives */}
-      <div className="mt-10 pt-10 border-t border-pink-200">
-        <h3 className="font-bold text-xl mb-4 text-pink-500">
-          Archives, répertoires et bases de données de films queer
-        </h3>
-        <p className="font-light text-gray-700 mb-6">
-          Des sites qui recensent et mettent en avant des films sur et par les
-          personnes LGBTQI+.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-3">
-          {otherArchives.map((archive, idx) => (
-            <div
-              key={idx}
-              className="bg-white border border-pink-200 rounded-2xl p-4 shadow-sm hover:shadow-md transition-shadow"
-            >
-              <a
-                href={archive.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex flex-col items-start gap-2 text-black hover:text-pink-500"
-              >
-                <span className="flex flex-row gap-2 items-center font-semibold">
-                  {archive.name}
-                </span>
 
-                <p className="text-sm text-gray-600 mt-2">
-                  {archive.description}
-                </p>
-              </a>
-            </div>
+      <div className="mt-16 pt-10 border-t border-pink-200">
+        <h3 className="font-bold text-2xl mb-4 text-pink-600">
+          Archives et bases de données queer
+        </h3>
+        <p className="font-light text-gray-700 mb-6 max-w-xl">
+          Des projets qui documentent, préservent et diffusent les créations
+          LGBTQI+.
+        </p>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {otherArchives.map((archive, idx) => (
+            <a
+              key={idx}
+              href={archive.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-5 rounded-2xl bg-white border border-pink-200 shadow-sm hover:shadow-lg hover:border-pink-400 transition-all flex flex-col gap-2 group"
+            >
+              <div className="flex flex-row gap-2 items-center">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={`https://www.google.com/s2/favicons?sz=64&domain_url=${archive.url}`}
+                  alt={`${archive.name} favicon`}
+                  className="w-6 h-6 rounded-sm"
+                />
+                <span className="font-semibold text-black group-hover:text-pink-600 flex items-center gap-2">
+                  {archive.name}
+                  <ExternalLink className="w-4 h-4 opacity-70 group-hover:opacity-100" />
+                </span>
+              </div>
+              <p className="text-sm text-gray-600 mt-1">
+                {archive.description}
+              </p>
+            </a>
           ))}
         </div>
       </div>
