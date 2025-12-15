@@ -6,6 +6,7 @@ import Footer from "./components/footer";
 import { getCanonicalUrl } from "@/utils/index";
 import TopLoader from "nextjs-toploader";
 import { ToastProvider } from "./components/toast";
+import { Analytics } from "@vercel/analytics/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -89,7 +90,9 @@ export default function RootLayout({
           <div className="">
             <Header />
           </div>
-          <main className="bg-white">{children}</main>
+          <main className="bg-white">
+            {children} <Analytics />
+          </main>
           <div className="mt-auto">
             <Footer />
           </div>
