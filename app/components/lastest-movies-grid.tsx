@@ -60,7 +60,7 @@ export function LatestMoviesGrid({ movies }: LatestMoviesGridProps) {
             >
               <div className="relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform ">
                 {/* Image container */}
-                <div className="relative aspect-[2/2] overflow-hidden bg-gray-200">
+                <div className="relative aspect-[16/9] overflow-hidden bg-gray-200">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <Image
                     src={getImageUrl(movie.image_url || "")}
