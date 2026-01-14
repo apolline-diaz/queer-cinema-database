@@ -33,8 +33,8 @@ export function WatchGrid({ movies }: WatchGridProps) {
         <h2 className="text-3xl lg:text-4xl pt-5 font-bold text-black leading-tight mb-2">
           À voir en ligne
         </h2>
-        <div className="flex flex-row justify-between items-center">
-          <p className="text-gray-600">
+        <div className="flex flex-row justify-between items-end">
+          <p className="text-gray-600 pr-2">
             Découvrez une sélection de films disponibles en accès libre et en
             VOD
           </p>

@@ -35,8 +35,8 @@ export function LatestMoviesGrid({ movies }: LatestMoviesGridProps) {
         <h2 className="text-3xl lg:text-4xl pt-5 font-bold text-gray-900 mb-2">
           Dernières nouveautés
         </h2>{" "}
-        <div className="flex flex-row justify-between items-center">
-          <p className="text-gray-600">
+        <div className="flex flex-row justify-between items-end">
+          <p className="text-gray-600 pr-2">
             Découvrez les derniers films ajoutés à la base de données
           </p>
           <Link
