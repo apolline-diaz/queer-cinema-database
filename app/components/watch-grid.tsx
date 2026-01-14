@@ -33,9 +33,20 @@ export function WatchGrid({ movies }: WatchGridProps) {
         <h2 className="text-3xl lg:text-4xl pt-5 font-bold text-black leading-tight mb-2">
           À voir en ligne
         </h2>
-        <p className="text-gray-600">
-          Découvrez une sélection de films disponibles en streaming
-        </p>
+        <div className="flex flex-row justify-between items-center">
+          <p className="text-gray-600">
+            Découvrez une sélection de films disponibles en accès libre et en
+            VOD
+          </p>
+
+          <Link
+            href={`/watch`}
+            className="border rounded-xl px-2 py-1 border-pink-500 text-pink-500 hover:border-pink-500 hover:bg-pink-500 hover:text-white text-sm whitespace-nowrap flex-shrink-0"
+          >
+            Tout voir{" "}
+            <Icon icon="mdi:chevron-right" className="inline size-4" />
+          </Link>
+        </div>
       </div>
 
       {/* Grille 3 colonnes */}
@@ -89,7 +100,6 @@ export function WatchGrid({ movies }: WatchGridProps) {
           );
         })}
       </div>
-
       {/* Message si aucun film */}
       {latestOnline.length === 0 && (
         <div className="text-center py-10">

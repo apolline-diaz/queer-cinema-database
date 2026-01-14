@@ -15,7 +15,7 @@ export default function Hero() {
             <div className="relative w-2/3 sm:text-7xl lg:text-8xl text-5xl">
               <h2 className="text-left font-bold">
                 <span className="text-white uppercase mt-2">
-                  Films & Archives{" "}
+                  Films + Archives{" "}
                 </span>
                 {/* <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-yellow-300 via-green-400 via-blue-500 to-violet-500"> */}
                 <span className="text-transparent font-bold bg-clip-text bg-gradient-to-r from-pink-500  via-blue-500  to-yellow-400">

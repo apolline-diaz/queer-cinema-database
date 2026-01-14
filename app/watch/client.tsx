@@ -5,13 +5,16 @@ import Image from "next/image";
 import { getImageUrl } from "@/utils";
 import Link from "next/link";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import { Play } from "lucide-react";
 
 export function TVClient({
   initialData,
   featuredId,
+  genres,
 }: {
   initialData: any[];
   featuredId: string;
+  genres: { id: bigint; name: string }[]; // type correct
 }) {
   const byId = useMemo(
     () => new Map(initialData.map((m) => [m.id, m])),
@@ -32,7 +35,7 @@ export function TVClient({
         m.directors?.toLowerCase().includes(search.toLowerCase());
 
       const matchesGenre =
-        !genreFilter || (m.genres && m.genres.includes(genreFilter));
+        !genreFilter || (m.genreIds || []).includes(genreFilter);
 
       const matchesYear = !yearFilter || m.release_date?.startsWith(yearFilter);
 
@@ -94,9 +97,9 @@ export function TVClient({
           </p>
           <Link
             href={`/movies/${current.id}`}
-            className="inline-flex w-fit items-center gap-2 bg-white text-black px-4 py-2 rounded-full font-semibold text-sm hover:bg-pink-500 hover:text-white transition-all duration-300 shadow-xl"
+            className="inline-flex w-fit  items-center gap-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white px-6 py-3 rounded-full font-semibold text-base hover:shadow-xl hover:shadow-pink-500/50 transition-all duration-300"
           >
-            <Icon icon="mdi:play" className="text-xl" />
+            <Play className="w-5 h-5" />
             Voir le film
           </Link>
         </div>
@@ -104,10 +107,12 @@ export function TVClient({
 
       {/* Section de recherche et filtres */}
       <section className="max-w-7xl mx-auto px-6 pb-12">
-        <h2 className="text-2xl md:text-3xl font-bold mb-6 text-pink-500">
+        <h2 className="text-2xl md:text-3xl font-bold mb-4 text-pink-500">
           Explorer le catalogue
         </h2>
-
+        <p className="text-neutral-400 text-lg mb-5">
+          Visionner des films queer en accès libre et en VOD
+        </p>
         {/* Barre de recherche */}
         <div className="relative mb-6 text-sm">
           <Icon
@@ -131,9 +136,11 @@ export function TVClient({
             className="px-3 py-2 bg-neutral-900 rounded-xl border border-neutral-800 focus:border-white outline-none cursor-pointer transition-colors"
           >
             <option value="">Tous les genres</option>
-            <option value="drama">Drame</option>
-            <option value="documentary">Documentaire</option>
-            <option value="comedy">Comédie</option>
+            {genres.map((genre) => (
+              <option key={genre.id.toString()} value={genre.id.toString()}>
+                {genre.name}
+              </option>
+            ))}{" "}
           </select>
 
           <select
