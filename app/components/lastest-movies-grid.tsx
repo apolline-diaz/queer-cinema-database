@@ -104,7 +104,7 @@ export function LatestMoviesGrid({ movies }: LatestMoviesGridProps) {
                     <h3 className="text-xl font-bold text-white drop-shadow-md line-clamp-2">
                       {movie.title}
                     </h3>
-                    <div className="flex flex-wrap gap-1 items-center text-white mt-2 drop-shadow-md">
+                    <div className="flex flex-wrap gap-1 items-center text-white drop-shadow-md">
                       {director && (
                         <div className="flex items-center gap-2 text-sm">
                           <span className="line-clamp-1">{director}</span>

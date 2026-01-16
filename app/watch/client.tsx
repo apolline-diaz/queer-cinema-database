@@ -54,6 +54,7 @@ export function TVClient({
             src={getImageUrl(current.image_url)}
             alt={current.title}
             fill
+            sizes="100vw"
             className="object-cover opacity-50"
             priority
           />
@@ -208,6 +209,7 @@ export function TVClient({
                     src={getImageUrl(movie.image_url)}
                     alt={movie.title}
                     fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
                     className="object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                 ) : (
