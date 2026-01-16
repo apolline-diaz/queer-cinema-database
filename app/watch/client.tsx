@@ -54,7 +54,6 @@ export function TVClient({
             src={getImageUrl(current.image_url)}
             alt={current.title}
             fill
-            sizes="100vw"
             className="object-cover opacity-50"
             priority
           />
@@ -203,13 +202,14 @@ export function TVClient({
               href={`/movies/${movie.id}`}
               className="group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 block"
             >
-              <div className="aspect-[16/9] relative">
+              <div className="relative h-[220px] sm:h-auto sm:aspect-[16/9] overflow-hidden">
                 {movie.image_url ? (
                   <Image
                     src={getImageUrl(movie.image_url)}
                     alt={movie.title}
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
+                    width={640}
+                    height={360}
+                    sizes="(max-width: 640px) 100vw,         (max-width: 1024px) 50vw, 25vw"
                     className="object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                 ) : (
