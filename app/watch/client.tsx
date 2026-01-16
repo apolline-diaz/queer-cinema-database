@@ -10,11 +10,11 @@ import { Play } from "lucide-react";
 export function TVClient({
   initialData,
   featuredId,
-  genres,
+  // genres,
 }: {
   initialData: any[];
   featuredId: string;
-  genres: { id: bigint; name: string }[]; // type correct
+  // genres: { id: bigint; name: string }[]; // type correct
 }) {
   const byId = useMemo(
     () => new Map(initialData.map((m) => [m.id, m])),
@@ -130,7 +130,7 @@ export function TVClient({
 
         {/* Filtres */}
         <div className="flex flex-wrap gap-3 text-sm">
-          <select
+          {/* <select
             value={genreFilter}
             onChange={(e) => setGenreFilter(e.target.value)}
             className="px-3 py-2 bg-neutral-900 rounded-xl border border-neutral-800 focus:border-white outline-none cursor-pointer transition-colors"
@@ -140,8 +140,8 @@ export function TVClient({
               <option key={genre.id.toString()} value={genre.id.toString()}>
                 {genre.name}
               </option>
-            ))}{" "}
-          </select>
+            ))}
+          </select> */}
 
           <select
             value={yearFilter}
