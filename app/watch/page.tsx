@@ -2,7 +2,6 @@ import { readLinks } from "@/lib/tv-links";
 import { Suspense } from "react";
 import { TVClient } from "./client";
 import { getMoviesToWatch } from "@/app/server-actions/movies/get-movies-to-watch";
-// import { getGenres } from "@/app/server-actions/genres/get-genres";
 
 export default async function TVPage() {
   const tv = await readLinks();
@@ -12,10 +11,6 @@ export default async function TVPage() {
   }
 
   const movies = await getMoviesToWatch(ids);
-  // const rawGenres = await getGenres();
-  // const genres = rawGenres
-  //   .filter((g) => g.name)
-  //   .map((g) => ({ id: g.id, name: g.name! })); // TS safe
 
   // map + featured fallback
   const map = new Map(movies.map((m) => [m.id, m]));
@@ -45,11 +40,7 @@ export default async function TVPage() {
 
   return (
     <Suspense fallback={<div className="p-8">Chargement…</div>}>
-      <TVClient
-        initialData={payload}
-        featuredId={featured.id}
-        // genres={genres}
-      />
+      <TVClient initialData={payload} featuredId={featured.id} />
     </Suspense>
   );
 }
