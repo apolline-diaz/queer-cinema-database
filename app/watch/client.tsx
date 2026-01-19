@@ -94,7 +94,7 @@ export function TVClient({
           </p>
           <Link
             href={`/movies/${current.id}`}
-            className="inline-flex w-fit items-center gap-2 bg-white text-black px-4 py-2 rounded-full font-semibold text-sm hover:bg-rose-500 hover:text-white transition-all duration-300 shadow-xl"
+            className="inline-flex w-fit items-center gap-2 bg-white text-black px-4 py-2 rounded-full font-semibold text-sm hover:bg-pink-500 hover:text-white transition-all duration-300 shadow-xl"
           >
             <Icon icon="mdi:play" className="text-xl" />
             Voir le film
@@ -104,9 +104,12 @@ export function TVClient({
 
       {/* Section de recherche et filtres */}
       <section className="max-w-7xl mx-auto px-6 pb-12">
-        <h2 className="text-2xl md:text-3xl font-bold mb-6 text-rose-500">
+        <h2 className="text-2xl md:text-3xl font-bold mb-3 text-pink-500">
           Explorer le catalogue
         </h2>
+        <p className="mb-4 text-gray-400">
+          Visionner des films en accès libre ou en VOD
+        </p>
 
         {/* Barre de recherche */}
         <div className="relative mb-6 text-sm">
