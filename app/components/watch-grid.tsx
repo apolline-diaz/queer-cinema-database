@@ -39,13 +39,13 @@ export function WatchGrid({ movies }: WatchGridProps) {
             VOD
           </p>
 
-          <Link
+          {/* <Link
             href={`/watch`}
             className="border rounded-xl px-2 py-1 border-pink-500 text-pink-500 hover:border-pink-500 hover:bg-pink-500 hover:text-white text-sm whitespace-nowrap flex-shrink-0"
           >
             Tout voir{" "}
             <Icon icon="mdi:chevron-right" className="inline size-4" />
-          </Link>
+          </Link> */}
         </div>
       </div>
 
@@ -82,7 +82,7 @@ export function WatchGrid({ movies }: WatchGridProps) {
 
                   {/* Infos superposées */}
                   <div className="absolute inset-0 p-6 flex flex-col justify-end  transition-opacity duration-300">
-                    <h3 className="text-2xl font-bold text-white drop-shadow-md line-clamp-2">
+                    <h3 className="text-xl font-bold text-white drop-shadow-md line-clamp-2">
                       {movie.title}
                     </h3>
 

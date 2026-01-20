@@ -43,7 +43,7 @@ export function LatestMoviesGrid({ movies }: LatestMoviesGridProps) {
             href={`/movies`}
             className="border rounded-xl px-2 py-1 border-pink-500 text-pink-500 hover:border-pink-500 hover:bg-pink-500 hover:text-white text-sm whitespace-nowrap flex-shrink-0"
           >
-            Tout voir{" "}
+            Tous les films{" "}
             <Icon icon="mdi:chevron-right" className="inline size-4" />
           </Link>
         </div>
