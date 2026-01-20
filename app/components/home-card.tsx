@@ -26,14 +26,15 @@ export default function HomeCard({
             <Image
               src={getImageUrl(image_url)}
               alt={title}
-              className="object-cover w-full h-full rounded-xl transition-transform duration-700 ease-in-out group-hover:scale-110 group-hover:brightness-50"
+              className="object-cover w-full h-full rounded-xl transition-transform duration-700 ease-in-out group-hover:scale-110"
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               title={title}
             />
-          </div>
-          <div className="top-0 text-black w-full pt-3">
-            <div className="text-md font-semibold">{title}</div>
-            <p className="text-sm font-light">{release_date}</p>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <div className="absolute bottom-0 w-full p-3">
+              <div className="text-md font-semibold">{title}</div>
+              <p className="text-sm font-light">{release_date}</p>
+            </div>
           </div>
         </div>
       </Link>

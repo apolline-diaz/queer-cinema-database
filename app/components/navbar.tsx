@@ -242,7 +242,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                         Films
                       </Link>
                     </li>
-                    <li
+                    {/* <li
                       className={
                         pathname === "/watch"
                           ? activeLinkClass
@@ -250,7 +250,7 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                       }
                     >
                       <Link href="/watch">Visionner</Link>
-                    </li>
+                    </li> */}
 
                     <li
                       className={
@@ -289,13 +289,13 @@ export default function Navbar({ user, userIsAdmin }: HeaderProps) {
                 >
                   <Link href="/movies">Films</Link>
                 </li>
-                <li
+                {/* <li
                   className={
                     pathname === "/watch" ? activeLinkClass : normalLinkClass
                   }
                 >
                   <Link href="/watch">Visionner</Link>
-                </li>
+                </li> */}
 
                 <li
                   className={
