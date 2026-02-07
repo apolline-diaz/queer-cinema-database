@@ -45,7 +45,7 @@ async function HeroSection() {
 async function LatestMoviesSection() {
   try {
     const latestMovies = await getLatestMovies();
-    const movies = latestMovies.slice(0, 3);
+    const movies = latestMovies.slice(0, 4);
     return (
       <main className="w-full bg-white">
         <LatestMoviesGrid movies={movies} />
@@ -63,7 +63,7 @@ async function getFeaturedMovies() {
   const ids = Object.keys(tv.items);
   if (ids.length === 0) return [];
 
-  const movies = await getMoviesToWatch(ids.slice(0, 3)); // limiter à 3 films
+  const movies = await getMoviesToWatch(ids.slice(0, 4)); // limiter à 3 films
 
   const moviesWithLinks = movies.map((m) => ({
     ...m,

@@ -50,7 +50,7 @@ export function LatestMoviesGrid({ movies }: LatestMoviesGridProps) {
       </div>
 
       {/* Grille responsive */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         {movies.map((movie) => {
           const director = movie.movies_directors?.[0]?.directors.name;
           const releaseYear = movie.release_date
@@ -59,7 +59,7 @@ export function LatestMoviesGrid({ movies }: LatestMoviesGridProps) {
           const genres = movie.movies_genres
             ?.map((item) => item.genres.name)
             .filter(Boolean)
-            .slice(0, 2);
+            .slice(0, 3);
 
           return (
             <Link
@@ -67,24 +67,19 @@ export function LatestMoviesGrid({ movies }: LatestMoviesGridProps) {
               href={`/movies/${movie.id}`}
               className="group relative"
             >
-              <div className="relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform ">
+              <div className="relative overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform ">
                 {/* Image container */}
-                <div className="relative aspect-[16/9] overflow-hidden bg-gray-200">
+                <div className="relative aspect-[4/3] overflow-hidden bg-gray-200">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <Image
                     src={getImageUrl(movie.image_url || "")}
                     alt={movie.title}
-                    className="w-full h-full rounded-2xl object-cover transition-transform duration-700 group-hover:scale-110"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     title={movie.title}
                   />
 
                   {/* Gradient overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
-                  {/* Badge Nouveauté */}
-                  <div className="absolute top-3 right-3 bg-pink-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-lg backdrop-blur-sm">
-                    Nouveau
-                  </div>
 
                   {/* Infos sur l’image */}
                   <div className="absolute inset-0 p-6 flex flex-col justify-end transition-opacity duration-300">
@@ -101,7 +96,7 @@ export function LatestMoviesGrid({ movies }: LatestMoviesGridProps) {
                       </div>
                     )}
 
-                    <h3 className="text-xl font-bold text-white drop-shadow-md line-clamp-2">
+                    <h3 className="text-xl font-semibold text-white drop-shadow-md line-clamp-2">
                       {movie.title}
                     </h3>
                     <div className="flex flex-wrap gap-1 items-center text-white drop-shadow-md">
