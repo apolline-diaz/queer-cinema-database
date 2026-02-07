@@ -24,7 +24,7 @@ export function WatchGrid({ movies }: WatchGridProps) {
   // On garde uniquement les 3 derniers films avec au moins 1 lien
   const latestOnline = movies
     .filter((m) => m.links && m.links.length > 0)
-    .slice(0, 3);
+    .slice(0, 4);
 
   return (
     <div className="px-[clamp(1.25rem,5vw,2.5rem)] py-5">
@@ -50,7 +50,7 @@ export function WatchGrid({ movies }: WatchGridProps) {
       </div>
 
       {/* Grille 3 colonnes */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         {latestOnline.map((movie) => {
           const directors = movie?.movies_directors
             ?.map((item) => item.directors.name)
@@ -59,12 +59,11 @@ export function WatchGrid({ movies }: WatchGridProps) {
 
           return (
             <div key={movie.id} className="flex flex-col gap-4">
-              {/* —— IMAGE CLIQUABLE —— */}
               <Link
                 href={`/movies/${movie.id}`}
-                className="relative group rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 block"
+                className="relative group overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 block"
               >
-                <div className="aspect-[16/9] relative">
+                <div className="aspect-[4/3] relative">
                   <Image
                     src={getImageUrl(movie.image_url || "")}
                     alt={movie.title}
@@ -75,14 +74,9 @@ export function WatchGrid({ movies }: WatchGridProps) {
                   {/* Overlay hover */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                  {/* Badge */}
-                  <div className="absolute top-4 right-4 bg-pink-500 text-white px-4 py-2 rounded-full text-xs font-semibold shadow-lg flex items-center gap-2">
-                    Disponible en ligne
-                  </div>
-
                   {/* Infos superposées */}
                   <div className="absolute inset-0 p-6 flex flex-col justify-end  transition-opacity duration-300">
-                    <h3 className="text-xl font-bold text-white drop-shadow-md line-clamp-2">
+                    <h3 className="text-xl font-semibold leading-tight text-white drop-shadow-md line-clamp-2">
                       {movie.title}
                     </h3>
 
