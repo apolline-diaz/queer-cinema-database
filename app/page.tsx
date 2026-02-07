@@ -172,7 +172,7 @@ function LatestMoviesGridSkeleton() {
         {[...Array(3)].map((_, i) => (
           <div
             key={i}
-            className="relative rounded-2xl overflow-hidden shadow-lg bg-gray-200 animate-pulse aspect-[2/2]"
+            className="relative overflow-hidden shadow-lg bg-gray-200 animate-pulse aspect-[2/2]"
           >
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
           </div>
@@ -197,7 +197,7 @@ function WatchGridSkeleton() {
         {[...Array(3)].map((_, i) => (
           <div
             key={i}
-            className="relative rounded-2xl overflow-hidden shadow-lg bg-gray-200 animate-pulse aspect-[16/9]"
+            className="relative overflow-hidden shadow-lg bg-gray-200 animate-pulse aspect-[16/9]"
           />
         ))}
       </div>
@@ -223,7 +223,7 @@ function CollectionsSkeleton() {
           <div className="flex gap-4 overflow-auto">
             {[...Array(6)].map((_, j) => (
               <div key={j} className="flex-shrink-0">
-                <div className="w-40 h-60 bg-gradient-to-br from-gray-200 to-gray-300 rounded-lg relative overflow-hidden">
+                <div className="w-40 h-60 bg-gradient-to-br from-gray-200 to-gray-300 relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-t from-gray-400/30 to-transparent"></div>
                   <div className="absolute bottom-3 left-3 right-3">
                     <div className="w-full h-3 bg-white/70 rounded mb-1"></div>

@@ -32,7 +32,7 @@ export default function HomeCard({
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <div className="absolute bottom-0 w-full p-3">
-              <div className="text-md font-semibold">{title}</div>
+              <div className="text-md leading-tight font-semibold">{title}</div>
               <p className="text-sm font-light">{release_date}</p>
             </div>
           </div>

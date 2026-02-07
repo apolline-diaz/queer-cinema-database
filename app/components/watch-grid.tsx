@@ -76,7 +76,7 @@ export function WatchGrid({ movies }: WatchGridProps) {
 
                   {/* Infos superposées */}
                   <div className="absolute inset-0 p-6 flex flex-col justify-end  transition-opacity duration-300">
-                    <h3 className="text-xl font-bold text-white drop-shadow-md line-clamp-2">
+                    <h3 className="text-xl font-semibold leading-tight text-white drop-shadow-md line-clamp-2">
                       {movie.title}
                     </h3>
 
