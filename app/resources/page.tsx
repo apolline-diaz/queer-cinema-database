@@ -116,7 +116,7 @@ const ResourcesSection = () => {
 
   const otherArchives = [
     {
-      name: "LezWatch.TV",
+      name: "LezWatch",
       url: "https://lezwatchtv.com/",
       description:
         "Le site répertorie et documente les personnages queer féminins, non binaires et transgenres, ainsi que les séries télévisées, les sites web et les plateformes de streaming sur lesquels vous pouvez les trouver.",
@@ -155,9 +155,9 @@ const ResourcesSection = () => {
   };
 
   return (
-    <div className="bg-gradient-to-br from-pink-50 to-purple-50 px-[clamp(1.25rem,5vw,2.5rem)] py-20">
+    <div className="px-[clamp(1.25rem,5vw,2.5rem)] py-20">
       <div className="max-w-6xl mx-auto">
-        <div className="mb-12">
+        {/* <div className="mb-12">
           <h1 className="font-bold text-4xl mb-4 text-pink-600">Ressources</h1>
           <p className="text-gray-700 text-lg">
             Toutes les informations, les synopsis et les images des films sont
@@ -166,7 +166,7 @@ const ResourcesSection = () => {
         </div>
 
         {/* Grille de cartes pour les catégories */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-16">
+        {/*  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-16">
           {resources.map((category, index) => {
             const Icon = getCategoryIcon(category.category);
             const isExpanded = expandedCategories[category.category];
@@ -219,37 +219,37 @@ const ResourcesSection = () => {
               </div>
             );
           })}
-        </div>
+        </div> */}
 
         {/* Section archives alternatives */}
-        <div className="bg-white rounded-2xl shadow-sm border border-pink-100 p-8">
-          <h2 className="font-bold text-2xl mb-3 text-pink-600">
-            Archives, répertoires et bases de données de films queer
-          </h2>
-          <p className="text-gray-700 mb-6">
-            Des sites qui recensent et mettent en avant des films sur et par les
-            personnes LGBTQI+
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {otherArchives.map((archive, idx) => (
-              <a
-                key={idx}
-                href={archive.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-gradient-to-br from-pink-50 to-purple-50 border border-pink-200 rounded-xl p-5 hover:shadow-lg transition-all group"
-              >
-                <h3 className="font-semibold text-lg text-gray-900 group-hover:text-pink-600 transition-colors mb-2 flex items-center gap-2">
-                  {archive.name}
-                  <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </h3>
-                <p className="text-sm text-gray-600 leading-relaxed">
-                  {archive.description}
-                </p>
-              </a>
-            ))}
-          </div>
+        {/* <div className="bg-white rounded-2xl shadow-sm border border-pink-100 p-8"> */}
+        <h2 className="font-bold text-2xl mb-3 text-pink-600">
+          Archives, répertoires et bases de données de films queer
+        </h2>
+        <p className="text-gray-700 mb-6">
+          Des sites qui recensent et mettent en avant des films sur et par les
+          personnes LGBTQI+
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {otherArchives.map((archive, idx) => (
+            <a
+              key={idx}
+              href={archive.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border border-pink-200 p-5 hover:border-1 hover:border-pink-500 transition-all group"
+            >
+              <h3 className="font-semibold text-lg text-gray-900 group-hover:text-pink-600 transition-colors mb-2 flex items-center gap-2">
+                {archive.name}
+                {/* <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" /> */}
+              </h3>
+              <p className="text-sm text-gray-600 leading-relaxed">
+                {archive.description}
+              </p>
+            </a>
+          ))}
         </div>
+        {/* </div> */}
       </div>
     </div>
   );
