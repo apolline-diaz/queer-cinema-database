@@ -79,14 +79,15 @@ export function WatchGrid({ movies }: WatchGridProps) {
                     <h3 className="text-xl font-semibold leading-tight text-white drop-shadow-md line-clamp-2">
                       {movie.title}
                     </h3>
-
-                    {directors && (
-                      <p className="text-white/90 text-sm mt-1">
-                        {directors} •{" "}
+                    <div className="flex flex-wrap gap-1 items-center text-white drop-shadow-md">
+                      {directors && (
+                        <p className="text-white text-sm">{directors}</p>
+                      )}
+                      <div className="flex items-center gap-2 text-sm font-light text-white/90">
                         {movie.release_date &&
                           new Date(movie.release_date).getFullYear()}
-                      </p>
-                    )}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </Link>

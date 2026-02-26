@@ -33,7 +33,7 @@ export function LatestMoviesGrid({ movies }: LatestMoviesGridProps) {
       {/* Titre de section */}
       <div className="mb-8">
         <h2 className="text-3xl lg:text-4xl pt-5 font-bold text-gray-900 mb-2">
-          Dernières nouveautés
+          Nouveautés
         </h2>{" "}
         <div className="flex flex-row justify-between items-end">
           <p className="text-gray-600 pr-2">
@@ -83,35 +83,33 @@ export function LatestMoviesGrid({ movies }: LatestMoviesGridProps) {
 
                   {/* Infos sur l’image */}
                   <div className="absolute inset-0 p-6 flex flex-col justify-end transition-opacity duration-300">
+                    <h3 className="text-xl font-semibold leading-tight text-white drop-shadow-md line-clamp-2">
+                      {movie.title}
+                    </h3>
+                    <div className="flex flex-wrap gap-1 mb-2 items-center text-white drop-shadow-md">
+                      {director && (
+                        <div className="flex items-center gap-2 text-sm">
+                          <span className="line-clamp-1">{director}</span>
+                        </div>
+                      )}{" "}
+                      {releaseYear && (
+                        <div className="flex items-center gap-2 text-sm font-light text-white/90">
+                          <span>{releaseYear}</span>
+                        </div>
+                      )}
+                    </div>{" "}
                     {genres && genres.length > 0 && (
-                      <div className="flex flex-wrap gap-2 mb-3">
+                      <div className="flex flex-wrap gap-2 mb-1">
                         {genres.map((genre, index) => (
                           <span
                             key={index}
-                            className="bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-medium text-white border border-white/30"
+                            className="bg-white/20 backdrop-blur-md px-2 py-1 rounded-full text-xs font-light text-white border border-white/30"
                           >
                             {genre}
                           </span>
                         ))}
                       </div>
                     )}
-
-                    <h3 className="text-xl font-semibold leading-tight text-white drop-shadow-md line-clamp-2">
-                      {movie.title}
-                    </h3>
-                    <div className="flex flex-wrap gap-1 items-center text-white drop-shadow-md">
-                      {director && (
-                        <div className="flex items-center gap-2 text-sm">
-                          <span className="line-clamp-1">{director}</span>
-                        </div>
-                      )}{" "}
-                      <span className="text-white">•</span>
-                      {releaseYear && (
-                        <div className="flex items-center gap-2 text-sm">
-                          <span>{releaseYear}</span>
-                        </div>
-                      )}
-                    </div>
                   </div>
                 </div>
               </div>
