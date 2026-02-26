@@ -12,6 +12,7 @@ import { WatchGrid } from "./components/watch-grid";
 import { readLinks } from "@/lib/tv-links";
 import { LatestMoviesGrid } from "./components/lastest-movies-grid";
 
+export const dynamic = "force-static";
 export const revalidate = 3600; // revalidate every hour (Incremental Static Regeneration)
 
 export default function HomePage() {

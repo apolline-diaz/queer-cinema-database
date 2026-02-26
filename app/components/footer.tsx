@@ -9,8 +9,9 @@ export default function Footer() {
         <div className="mb-6 md:mb-0 text-center md:text-left">
           <h1 className="text-lg font-semibold">queer cinema database</h1>
           <p className="mt-2 font-light max-w-xs">
-            Une sélection de films et d&apos;archives LGBTQI+ pour mettre en
-            lumière la diversité des regards et récits queer.
+            Une base de données de films et d&apos;archives audiovisuelles
+            LGBTQI+ pour mettre en lumière la diversité des regards et récits
+            queer.
           </p>
         </div>
 

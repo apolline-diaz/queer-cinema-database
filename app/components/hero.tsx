@@ -11,11 +11,11 @@ export default function Hero() {
           className="relative w-full h-[80vh] overflow-hidden bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${imageUrl})` }}
         >
-          <div className="mt-20 absolute inset-0 flex flex-col justify-center items-left pl-10 gap-y-8">
-            <div className="relative w-2/3 sm:text-7xl lg:text-8xl text-5xl">
-              <h2 className="text-left font-bold">
+          <div className="mt-20 absolute inset-0 flex flex-col justify-center items-left gap-y-8">
+            <div className="relative sm:text-7xl md:text-7xl lg:text-8xl text-6xl px-10">
+              <h2 className="text-center items-center font-bold">
                 <span className="text-white uppercase mt-2">
-                  Films + Archives{" "}
+                  Films & Archives{" "}
                 </span>
                 {/* <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-yellow-300 via-green-400 via-blue-500 to-violet-500"> */}
                 <span className="text-transparent font-bold bg-clip-text bg-gradient-to-r from-pink-500  via-blue-500  to-yellow-400">
