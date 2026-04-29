@@ -33,15 +33,6 @@ export default function HomePage() {
   );
 }
 
-// // Chaque section charge ses données indépendamment
-// async function HeroSection() {
-//   return (
-//     <div className="w-full">
-//       <Hero />
-//     </div>
-//   );
-// }
-
 async function LatestMoviesSection() {
   try {
     const latestMovies = await getLatestMovies();
@@ -114,7 +105,7 @@ async function CollectionsSection() {
               </div>
 
               {"lists_movies" in collection && collection.lists_movies && (
-                <div className="flex flex-row-1 mb-3 gap-3 overflow-auto max-h-[400px]">
+                <div className="flex flex-row-1 mb-3 gap-1 overflow-auto max-h-[400px]">
                   {collection.lists_movies.map((listMovie) => (
                     <HomeCard
                       key={`${listMovie.movies.title}-${listMovie.movies.id}`}
@@ -130,29 +121,6 @@ async function CollectionsSection() {
           ))}
         </div>
       )}
-    </div>
-  );
-}
-
-// Skeletons pour l'affichage immédiat
-function HeroSkeleton() {
-  return (
-    <div className="w-full h-[500px] bg-gradient-to-br from-pink-100 via-pink-50 to-purple-100 relative overflow-hidden">
-      {/* Animated background */}
-      <div className="absolute inset-0 bg-gradient-to-r from-pink-200/50 to-purple-200/50 animate-pulse"></div>
-
-      {/* Content skeleton */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="text-center space-y-4 z-10">
-          <div className="w-80 h-12 bg-white/30 rounded-lg animate-pulse backdrop-blur-sm"></div>
-          <div className="w-96 h-6 bg-white/20 rounded animate-pulse backdrop-blur-sm"></div>
-          <div className="w-32 h-10 bg-pink-300/50 rounded-lg animate-pulse backdrop-blur-sm mx-auto mt-6"></div>
-        </div>
-      </div>
-
-      {/* Decorative elements */}
-      <div className="absolute top-10 right-10 w-20 h-20 bg-white/10 rounded-full animate-bounce"></div>
-      <div className="absolute bottom-10 left-10 w-16 h-16 bg-pink-300/20 rounded-full animate-pulse"></div>
     </div>
   );
 }

@@ -66,36 +66,17 @@ export function LatestMoviesGrid({ movies }: LatestMoviesGridProps) {
               href={`/movies/${movie.id}`}
               className="group relative"
             >
-              <div className="relative overflow-hidden transition-all duration-500 transform ">
+              <div className="relative overflow-hidden">
                 {/* Image container */}
-                <div className="relative w-full aspect-video overflow-hidden bg-gray-900">
+                <div className="relative w-full h-[180px] sm:h-[220px] lg:h-[260px]">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <Image
                     src={getImageUrl(movie.image_url || "")}
                     alt={movie.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    className="w-full h-full object-cover"
                     title={movie.title}
                   />
                   <div className="absolute inset-0 bg-black/20" />
-
-                  {/* Infos sur l’image */}
-                  {/* <div className="absolute inset-0 p-3 flex flex-col justify-end transition-opacity duration-300">
-                    <h3 className="text-xs font-semibold leading-tight text-white  line-clamp-2">
-                      {movie.title}
-                    </h3>
-                    <div className="flex flex-wrap gap-1 mb-2 items-center text-white ">
-                      {director && (
-                        <div className="flex items-center gap-2 text-xs">
-                          <span className="line-clamp-1">{director}</span>
-                        </div>
-                      )}{" "}
-                      {releaseYear && (
-                        <div className="flex items-center gap-2 text-xs font-light text-white/90">
-                          <span>{releaseYear}</span>
-                        </div>
-                      )}
-                    </div> 
-                  </div> */}
                 </div>
               </div>
             </Link>
