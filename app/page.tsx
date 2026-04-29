@@ -17,9 +17,9 @@ export const revalidate = 3600; // revalidate every hour (Incremental Static Reg
 export default function HomePage() {
   return (
     <main className="w-full bg-white">
-      <Suspense fallback={<HeroSkeleton />}>
+      {/* <Suspense fallback={<HeroSkeleton />}>
         <HeroSection />
-      </Suspense>
+      </Suspense> */}
       <Suspense fallback={<LatestMoviesGridSkeleton />}>
         <LatestMoviesSection />
       </Suspense>
@@ -33,19 +33,10 @@ export default function HomePage() {
   );
 }
 
-// Chaque section charge ses données indépendamment
-async function HeroSection() {
-  return (
-    <div className="w-full">
-      <Hero />
-    </div>
-  );
-}
-
 async function LatestMoviesSection() {
   try {
     const latestMovies = await getLatestMovies();
-    const movies = latestMovies.slice(0, 4);
+    const movies = latestMovies.slice(0, 6);
     return (
       <main className="w-full bg-white">
         <LatestMoviesGrid movies={movies} />
@@ -63,7 +54,7 @@ async function getFeaturedMovies() {
   const ids = Object.keys(tv.items);
   if (ids.length === 0) return [];
 
-  const movies = await getMoviesToWatch(ids.slice(0, 4)); // limiter à 3 films
+  const movies = await getMoviesToWatch(ids.slice(0, 8)); // limiter à 3 films
 
   const moviesWithLinks = movies.map((m) => ({
     ...m,
@@ -114,7 +105,7 @@ async function CollectionsSection() {
               </div>
 
               {"lists_movies" in collection && collection.lists_movies && (
-                <div className="flex flex-row-1 mb-3 gap-3 overflow-auto max-h-[400px]">
+                <div className="flex flex-row-1 mb-3 gap-1 overflow-auto max-h-[400px]">
                   {collection.lists_movies.map((listMovie) => (
                     <HomeCard
                       key={`${listMovie.movies.title}-${listMovie.movies.id}`}
@@ -134,49 +125,36 @@ async function CollectionsSection() {
   );
 }
 
-// Skeletons pour l'affichage immédiat
-function HeroSkeleton() {
-  return (
-    <div className="w-full h-[500px] bg-gradient-to-br from-pink-100 via-pink-50 to-purple-100 relative overflow-hidden">
-      {/* Animated background */}
-      <div className="absolute inset-0 bg-gradient-to-r from-pink-200/50 to-purple-200/50 animate-pulse"></div>
-
-      {/* Content skeleton */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="text-center space-y-4 z-10">
-          <div className="w-80 h-12 bg-white/30 rounded-lg animate-pulse backdrop-blur-sm"></div>
-          <div className="w-96 h-6 bg-white/20 rounded animate-pulse backdrop-blur-sm"></div>
-          <div className="w-32 h-10 bg-pink-300/50 rounded-lg animate-pulse backdrop-blur-sm mx-auto mt-6"></div>
-        </div>
-      </div>
-
-      {/* Decorative elements */}
-      <div className="absolute top-10 right-10 w-20 h-20 bg-white/10 rounded-full animate-bounce"></div>
-      <div className="absolute bottom-10 left-10 w-16 h-16 bg-pink-300/20 rounded-full animate-pulse"></div>
-    </div>
-  );
-}
-
 // Skeleton pour LatestMoviesGrid
 function LatestMoviesGridSkeleton() {
   return (
-    <div className="px-[clamp(1.25rem,5vw,2.5rem)] py-5">
-      {/* Titre */}
-      <div className="mb-8 space-y-2">
-        <div className="w-60 h-8 bg-gray-300 rounded animate-pulse"></div>
-        <div className="w-80 h-4 bg-gray-200 rounded animate-pulse"></div>
+    <div className="px-[clamp(1rem,4vw,2rem)] py-6">
+      {/* En-tête */}
+      <div className="flex items-end justify-between gap-4 mb-4">
+        <div className="space-y-2">
+          <div className="w-48 h-7 bg-gray-200 rounded animate-pulse" />
+          <div className="w-72 h-4 bg-gray-100 rounded animate-pulse hidden sm:block" />
+        </div>
+        <div className="w-28 h-8 bg-gray-200 rounded-full animate-pulse flex-shrink-0" />
       </div>
 
-      {/* Grille */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+      {/* Héro pleine largeur */}
+      <div className="w-full aspect-[4/3] sm:aspect-[21/9] bg-gray-200 animate-pulse mb-0.5" />
+
+      {/* 3 portraits */}
+      <div className="grid grid-cols-3 gap-0.5 mb-0.5">
         {[...Array(3)].map((_, i) => (
-          <div
-            key={i}
-            className="relative overflow-hidden shadow-lg bg-gray-200 animate-pulse aspect-[2/2]"
-          >
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-          </div>
+          <div key={i} className="aspect-[2/3] bg-gray-300 animate-pulse" />
         ))}
+      </div>
+
+      {/* Paysage + portrait tall */}
+      <div
+        className="grid gap-0.5"
+        style={{ gridTemplateColumns: "1.6fr 1fr" }}
+      >
+        <div className="aspect-video bg-gray-200 animate-pulse" />
+        <div className="aspect-[3/4] bg-gray-300 animate-pulse" />
       </div>
     </div>
   );
