@@ -128,34 +128,18 @@ async function CollectionsSection() {
 // Skeleton pour LatestMoviesGrid
 function LatestMoviesGridSkeleton() {
   return (
-    <div className="px-[clamp(1rem,4vw,2rem)] py-6">
-      {/* En-tête */}
-      <div className="flex items-end justify-between gap-4 mb-4">
-        <div className="space-y-2">
-          <div className="w-48 h-7 bg-gray-200 rounded animate-pulse" />
-          <div className="w-72 h-4 bg-gray-100 rounded animate-pulse hidden sm:block" />
-        </div>
-        <div className="w-28 h-8 bg-gray-200 rounded-full animate-pulse flex-shrink-0" />
+    <div className="relative mt-10">
+      {/* Overlay texte */}
+      <div className="absolute inset-0 z-10 flex flex-col justify-center items-center text-center px-10 pointer-events-none">
+        {/* Titre */}
+        <div className="h-10 sm:h-16 lg:h-20 w-[280px] sm:w-[500px] lg:w-[700px] bg-gray-300 rounded animate-pulse mb-4" />
+
+        {/* Sous-titre */}
+        <div className="h-4 sm:h-6 w-[200px] sm:w-[350px] bg-gray-200 rounded animate-pulse" />
       </div>
 
-      {/* Héro pleine largeur */}
-      <div className="w-full aspect-[4/3] sm:aspect-[21/9] bg-gray-200 animate-pulse mb-0.5" />
-
-      {/* 3 portraits */}
-      <div className="grid grid-cols-3 gap-0.5 mb-0.5">
-        {[...Array(3)].map((_, i) => (
-          <div key={i} className="aspect-[2/3] bg-gray-300 animate-pulse" />
-        ))}
-      </div>
-
-      {/* Paysage + portrait tall */}
-      <div
-        className="grid gap-0.5"
-        style={{ gridTemplateColumns: "1.6fr 1fr" }}
-      >
-        <div className="aspect-video bg-gray-200 animate-pulse" />
-        <div className="aspect-[3/4] bg-gray-300 animate-pulse" />
-      </div>
+      {/* Image placeholder */}
+      <div className="w-full aspect-[16/9] bg-gray-300 animate-pulse" />
     </div>
   );
 }
