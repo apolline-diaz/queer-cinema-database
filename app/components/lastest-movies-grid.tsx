@@ -29,16 +29,19 @@ interface LatestMoviesGridProps {
 
 export function LatestMoviesGrid({ movies }: LatestMoviesGridProps) {
   return (
-    <div className="relative">
-      <div className="absolute inset-0 z-10 flex flex-col justify-center items-center pointer-events-none">
-        <h2 className="text-center font-bold sm:text-7xl md:text-7xl lg:text-8xl text-5xl px-10">
+    <div className="relative mt-10">
+      <div className="absolute text-center inset-0 z-10 flex flex-col justify-center items-center pointer-events-none px-10">
+        <h2 className="font-bold sm:text-7xl md:text-7xl lg:text-8xl text-6xl">
           <span className="text-white uppercase drop-shadow-lg">
             Films & Archives{" "}
           </span>
-          <span className="text-transparent font-bold bg-clip-text bg-gradient-to-r from-pink-500 via-blue-500 to-yellow-400">
+          <span className="text-transparent font-bold bg-clip-text bg-gradient-to-r from-pink-500 via-blue-500 to-yellow-400 drop-shadow-lg">
             LGBTQI+
           </span>
         </h2>
+        <p className="font-thin text-xl">
+          Une base de données pour le cinéma queer
+        </p>
         {/* <Link
           href={`/movies`}
           className="border rounded-full px-2 py-1 border-pink-500 text-pink-500 hover:border-pink-500 hover:bg-pink-500 hover:text-white text-sm whitespace-nowrap flex-shrink-0"
@@ -49,7 +52,7 @@ export function LatestMoviesGrid({ movies }: LatestMoviesGridProps) {
       </div>
 
       {/* Grille responsive */}
-      <div className="grid grid-cols-2 lg:grid-cols-3">
+      <div className="w-full aspect-[16/9]">
         {movies.map((movie) => {
           const director = movie.movies_directors?.[0]?.directors.name;
           const releaseYear = movie.release_date
@@ -68,7 +71,7 @@ export function LatestMoviesGrid({ movies }: LatestMoviesGridProps) {
             >
               <div className="relative overflow-hidden">
                 {/* Image container */}
-                <div className="relative w-full h-[180px] sm:h-[220px] lg:h-[260px]">
+                <div className="relative w-full">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <Image
                     src={getImageUrl(movie.image_url || "")}

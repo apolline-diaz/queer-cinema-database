@@ -36,7 +36,7 @@ export default function HomePage() {
 async function LatestMoviesSection() {
   try {
     const latestMovies = await getLatestMovies();
-    const movies = latestMovies.slice(0, 6);
+    const movies = latestMovies.slice(0, 1);
     return (
       <main className="w-full bg-white">
         <LatestMoviesGrid movies={movies} />
