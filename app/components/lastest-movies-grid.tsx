@@ -31,7 +31,7 @@ export function LatestMoviesGrid({ movies }: LatestMoviesGridProps) {
   return (
     <div className="relative mt-10">
       <div className="absolute text-center inset-0 z-10 flex flex-col justify-center items-center pointer-events-none px-10">
-        <h2 className="font-bold sm:text-7xl md:text-7xl lg:text-8xl text-6xl">
+        <h2 className="font-bold sm:text-7xl md:text-7xl lg:text-8xl text-3xl">
           <span className="text-white uppercase drop-shadow-lg">
             Films & Archives{" "}
           </span>
@@ -39,7 +39,7 @@ export function LatestMoviesGrid({ movies }: LatestMoviesGridProps) {
             LGBTQI+
           </span>
         </h2>
-        <p className="font-thin text-xl">
+        <p className="font-thin text-sm sm:text-xl">
           Une base de données pour le cinéma queer
         </p>
         {/* <Link
