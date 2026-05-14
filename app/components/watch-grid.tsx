@@ -24,7 +24,7 @@ export function WatchGrid({ movies }: WatchGridProps) {
   // On garde uniquement les 3 derniers films avec au moins 1 lien
   const latestOnline = movies
     .filter((m) => m.links && m.links.length > 0)
-    .slice(0, 8);
+    .slice(0, 15);
 
   return (
     <div className="px-[clamp(1.25rem,5vw,2.5rem)] py-5">
