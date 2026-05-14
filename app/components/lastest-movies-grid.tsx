@@ -30,29 +30,33 @@ interface LatestMoviesGridProps {
 export function LatestMoviesGrid({ movies }: LatestMoviesGridProps) {
   return (
     <div className="relative mt-10">
-      <div className="absolute text-center inset-0 z-10 flex flex-col justify-center items-center pointer-events-none px-10">
-        <h2 className="font-bold sm:text-7xl md:text-7xl lg:text-8xl text-3xl">
-          <span className="text-white uppercase drop-shadow-lg">
-            Films & Archives{" "}
+      <div className="absolute text-center inset-0 z-10 flex flex-col justify-center items-center  px-10">
+        {/* pointer-events-none pour rendre l'image cliquable vers la fiche film */}
+        <h2 className="font-bold sm:text-7xl md:text-7xl lg:text-8xl text-5xl">
+          <span className="bg-white inline-block text-black uppercase line-clamp-2">
+            Films / Archives{" "}
           </span>
-          <span className="text-transparent font-bold bg-clip-text bg-gradient-to-r from-pink-500 via-blue-500 to-yellow-400 drop-shadow-lg">
-            LGBTQI+
+          <br />
+          <span className="bg-white inline-block px-2">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-blue-500 to-yellow-400">
+              LGBTQI+
+            </span>
           </span>
         </h2>
-        <p className="font-thin text-sm sm:text-xl">
+        {/* <p className="font-light text-md sm:text-xl mx-10 my-3 mb-10 px-2 text-white inline-block">
           Une base de données pour le cinéma queer
-        </p>
-        {/* <Link
+        </p> */}
+        <Link
           href={`/movies`}
-          className="border rounded-full px-2 py-1 border-pink-500 text-pink-500 hover:border-pink-500 hover:bg-pink-500 hover:text-white text-sm whitespace-nowrap flex-shrink-0"
+          className="absolute bottom-20 border rounded-md py-2 px-4 border-white text-white hover:border-pink-500  hover:text-pink-500 text-sm sm:text-lg whitespace-nowrap"
         >
-          Tous les films{" "}
-          <Icon icon="mdi:chevron-right" className="inline size-4" />
-        </Link> */}
+          Explorer la base de données{" "}
+          {/* <Icon icon="mdi:chevron-right" className="inline size-4" /> */}
+        </Link>
       </div>
 
       {/* Grille responsive */}
-      <div className="w-full aspect-[16/9]">
+      <div className="w-full aspect-[4/5] max-h-[85vh]">
         {movies.map((movie) => {
           const director = movie.movies_directors?.[0]?.directors.name;
           const releaseYear = movie.release_date
@@ -67,11 +71,11 @@ export function LatestMoviesGrid({ movies }: LatestMoviesGridProps) {
             <Link
               key={movie.id}
               href={`/movies/${movie.id}`}
-              className="group relative"
+              className="group relative block w-full h-full"
             >
-              <div className="relative overflow-hidden">
+              <div className="relative overflow-hidden w-full h-full">
                 {/* Image container */}
-                <div className="relative w-full">
+                <div className="relative w-full h-full">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <Image
                     src={getImageUrl(movie.image_url || "")}

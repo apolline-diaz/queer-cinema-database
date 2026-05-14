@@ -29,14 +29,15 @@ export function WatchGrid({ movies }: WatchGridProps) {
   return (
     <div className="px-[clamp(1.25rem,5vw,2.5rem)] py-5">
       {/* Titre */}
-      <div className="mb-8">
-        <h2 className="text-3xl lg:text-4xl pt-5 font-bold text-black leading-tight">
+      <div className="mb-5">
+        <h2 className="text-3xl lg:text-4xl pt-3 font-bold text-black leading-tight">
           À voir en ligne
         </h2>
       </div>
 
       {/* Grille 3 colonnes */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-1">
+      <div className="flex gap-1 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-4">
+        {" "}
         {latestOnline.map((movie) => {
           const directors = movie?.movies_directors
             ?.map((item) => item.directors.name)
@@ -44,7 +45,10 @@ export function WatchGrid({ movies }: WatchGridProps) {
             .join(", ");
 
           return (
-            <div key={movie.id} className="flex flex-col gap-4">
+            <div
+              key={movie.id}
+              className="flex-shrink-0 w-[85%] sm:w-[45%] lg:w-[30%] snap-start"
+            >
               <Link
                 href={`/movies/${movie.id}`}
                 className="relative group overflow-hidden transition-all duration-500 block"
