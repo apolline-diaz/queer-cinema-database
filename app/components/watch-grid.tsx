@@ -36,7 +36,7 @@ export function WatchGrid({ movies }: WatchGridProps) {
       </div>
 
       {/* Grille 3 colonnes */}
-      <div className="flex gap-1 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-4">
+      <div className="flex gap-1 overflow-x-auto scrollbar-hide snap-x snap-mandatory">
         {" "}
         {latestOnline.map((movie) => {
           const directors = movie?.movies_directors

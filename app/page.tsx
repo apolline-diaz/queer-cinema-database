@@ -54,7 +54,7 @@ async function getFeaturedMovies() {
   const ids = Object.keys(tv.items);
   if (ids.length === 0) return [];
 
-  const movies = await getMoviesToWatch(ids.slice(0, 8)); // limiter à 3 films
+  const movies = await getMoviesToWatch(ids.slice(0, 15)); // limiter à 3 films
 
   const moviesWithLinks = movies.map((m) => ({
     ...m,
@@ -97,7 +97,7 @@ async function CollectionsSection() {
 
                 <Link
                   href={`/lists/${collection.id}`}
-                  className="border rounded-xl px-2 py-1 border-pink-500 text-pink-500 hover:border-pink-500 hover:bg-pink-500 hover:text-white text-sm whitespace-nowrap flex-shrink-0"
+                  className="border rounded-full px-2 py-1 items-center justify-between border-pink-500 text-pink-500 hover:border-pink-500 hover:bg-pink-500 hover:text-white text-sm whitespace-nowrap flex"
                 >
                   Tout voir{" "}
                   <Icon icon="mdi:chevron-right" className="inline size-4" />
@@ -175,21 +175,24 @@ function CollectionsSkeleton() {
           {/* Collection header */}
           <div className="flex flex-row justify-between items-end pr-10 mb-6 gap-4">
             <div className="flex flex-col gap-3 min-w-0 flex-1">
-              <div className="w-64 h-8 bg-gradient-to-r from-pink-300 to-pink-300 rounded animate-pulse"></div>
+              <div className="w-64 h-8 bg-pink-300 rounded animate-pulse" />
               <div className="w-24 h-6 bg-pink-200 rounded-full animate-pulse"></div>
             </div>
-            <div className="w-28 h-10 bg-gradient-to-r from-pink-200 to-pink-300 rounded-xl animate-pulse"></div>
+            <div className="w-28 h-10 bg-pink-200 rounded-xl animate-pulse" />
           </div>
 
           {/* Movies row */}
-          <div className="flex gap-4 overflow-auto">
+          <div className="flex gap-1 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-hide">
             {[...Array(6)].map((_, j) => (
-              <div key={j} className="flex-shrink-0">
-                <div className="w-40 h-60 bg-gradient-to-br from-gray-200 to-gray-300 relative overflow-hidden">
+              <div
+                key={j}
+                className="flex-shrink-0 w-[85%] sm:w-[45%] lg:w-[30%] snap-start"
+              >
+                <div className="group relative overflow-hidden w-full aspect-video bg-gray-200">
                   <div className="absolute inset-0 bg-gradient-to-t from-gray-400/30 to-transparent"></div>
-                  <div className="absolute bottom-3 left-3 right-3">
-                    <div className="w-full h-3 bg-white/70 rounded mb-1"></div>
-                    <div className="w-3/4 h-2 bg-white/50 rounded"></div>
+                  <div className="absolute bottom-0 w-full p-4">
+                    <div className="w-3/4 h-4 bg-white/60 rounded mb-2 animate-pulse"></div>
+                    <div className="w-1/3 h-3 bg-white/40 rounded animate-pulse"></div>
                   </div>
                 </div>
               </div>
