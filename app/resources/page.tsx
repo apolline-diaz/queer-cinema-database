@@ -4,9 +4,6 @@
 // import { Metadata } from "next";
 import React, { useState } from "react";
 import {
-  ExternalLink,
-  ChevronDown,
-  ChevronUp,
   Film,
   Users,
   Database,
@@ -116,6 +113,36 @@ const ResourcesSection = () => {
 
   const otherArchives = [
     {
+      name: "Archivo de la Mermoria Trans",
+      url: "https://archivotrans.ar/",
+      description:
+        "Les Archives de la Mémoire Trans (AMT) préservent l’histoire des personnes trans en Argentine à travers plus de 15 000 documents et objets. Fondées par María Belén Correa, elles visent à lutter contre la transphobie, promouvoir l’éducation et l’intégration sociale, et servir de ressource documentaire et mémoire collective pour la communauté trans.",
+    },
+    {
+      name: "Big Tata",
+      url: "https://bigtata.org/",
+      description:
+        "Big Tata est le premier réseau de Bibliothèques et de Centres d’archives LGBTQIA+ qui rassemble des associations et des collectifs en France, en Suisse et au Canada. Le réseau est administré par l’association Mémoires minoritaires et animé collectivement par l’ensemble des membres.",
+    },
+    {
+      name: "Dirty Looks",
+      url: "https://dirtylooksla.org/about",
+      description:
+        "Dirty Looks Inc. est une plateforme dédiée au cinéma, à la vidéo et à la performance queer, fondée en 2011 par Bradford Nordeen. Utilisant le film et l'art temporel pour explorer les histoires queer et les espaces liminaux de Los Angeles et de New York, Dirty Looks retrace l'esthétique queer contemporaine à travers des œuvres historiques, présentant des films et des vidéos GLBTQ emblématiques, aux côtés d'artistes et de cinéastes émergents.",
+    },
+    {
+      name: "Frameline",
+      url: "https://www.frameline.org/distribution",
+      description:
+        "Frameline Distribution est le seul distributeur à but non lucratif entièrement dédié au cinéma LGBTQ+, proposant depuis 1981 des œuvres diverses et novatrices à un public international. Sa collection de plus de 300 films – documentaires, courts métrages, longs métrages et films expérimentaux – est disponible à la vente, à la location, à la diffusion et à la projection publique.",
+    },
+    {
+      name: "Kyky Archives",
+      url: "https://www.kykyarchives.com/",
+      description:
+        "KyKy est une archive numérique et une ressource pédagogique destinée aux personnes lesbiennes, queer, non conformes au genre et transgenres issues de la diaspora africaine.",
+    },
+    {
       name: "LezWatch",
       url: "https://lezwatchtv.com/",
       description:
@@ -128,22 +155,16 @@ const ResourcesSection = () => {
         "Archive audiovisuelle qui documente les films queer et leurs pionnier-ères, ainsi qu'un espace dédié aux cinéastes contemporain-es.",
     },
     {
-      name: "Transgender Media Portal",
-      url: "https://www.transgendermediaportal.org/",
-      description:
-        "Transgender Media Portal est similaire à IMDb, mais il se concentre exclusivement sur la mise en avant du travail des créateur-ices trans+.",
-    },
-    {
-      name: "Archivo de la Mermoria Trans",
-      url: "https://archivotrans.ar/",
-      description:
-        "Les Archives de la Mémoire Trans (AMT) préservent l’histoire des personnes trans en Argentine à travers plus de 15 000 documents et objets. Fondées par María Belén Correa, elles visent à lutter contre la transphobie, promouvoir l’éducation et l’intégration sociale, et servir de ressource documentaire et mémoire collective pour la communauté trans.",
-    },
-    {
       name: "Queer Documentaries",
       url: "https://queerdocumentaries.org/en/mainpage/",
       description:
         "Queer Documentaries (QDocs), lancée en 2013, est une plateforme qui rassemble des documentaires LGBTI+ du monde entier pour les rendre visibles et contribuer à la mémoire queer. Elle diffuse des récits qui questionnent les normes de genre et offrent un espace aux histoires complexes des personnes LGBTI+, soutenant leur expression dans un contexte de liberté d’expression limitée.",
+    },
+    {
+      name: "Transgender Media Portal",
+      url: "https://www.transgendermediaportal.org/",
+      description:
+        "Transgender Media Portal est similaire à IMDb, mais il se concentre exclusivement sur la mise en avant du travail des créateur-ices trans+.",
     },
   ];
 
@@ -157,78 +178,13 @@ const ResourcesSection = () => {
   return (
     <div className="px-[clamp(1.25rem,5vw,2.5rem)] py-20">
       <div className="max-w-6xl mx-auto">
-        {/* <div className="mb-12">
-          <h1 className="font-bold text-4xl mb-4 text-pink-600">Ressources</h1>
-          <p className="text-gray-700 text-lg">
-            Toutes les informations, les synopsis et les images des films sont
-            tirés des sites suivants
-          </p>
-        </div>
-
-        {/* Grille de cartes pour les catégories */}
-        {/*  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-16">
-          {resources.map((category, index) => {
-            const Icon = getCategoryIcon(category.category);
-            const isExpanded = expandedCategories[category.category];
-
-            return (
-              <div
-                key={index}
-                className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-all border border-pink-100 overflow-hidden"
-              >
-                <button
-                  onClick={() => toggleCategory(category.category)}
-                  className="w-full px-6 py-4 flex items-center justify-between transition-colors"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="bg-pink-100 p-2 rounded-lg">
-                      <Icon className="w-5 h-5 text-pink-600" />
-                    </div>
-                    <h3 className="font-semibold text-lg text-gray-900">
-                      {category.category}
-                    </h3>
-                    <span className="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
-                      {category.items.length}
-                    </span>
-                  </div>
-                  {isExpanded ? (
-                    <ChevronUp className="w-5 h-5 text-pink-600" />
-                  ) : (
-                    <ChevronDown className="w-5 h-5 text-pink-600" />
-                  )}
-                </button>
-
-                {isExpanded && (
-                  <div className="px-6 pb-6 pt-2">
-                    <div className="flex flex-wrap gap-2">
-                      {category.items.map((item, itemIndex) => (
-                        <a
-                          key={itemIndex}
-                          href={item.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-pink-50 rounded-full border border-pink-200 hover:bg-pink-100 hover:border-pink-300 transition-colors text-sm text-gray-700 hover:text-pink-800"
-                        >
-                          {item.name}
-                          <ExternalLink className="w-3 h-3" />
-                        </a>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div> */}
-
         {/* Section archives alternatives */}
         {/* <div className="bg-white rounded-2xl shadow-sm border border-pink-100 p-8"> */}
         <h2 className="font-bold text-2xl mb-3 text-pink-600">
-          Archives, répertoires et bases de données de films queer
+          Archives et ressources
         </h2>
         <p className="text-gray-700 mb-6">
-          Des sites qui recensent et mettent en avant des films sur et par les
-          personnes LGBTQI+
+          Une sélection de plateformes, bases de données et archives LGBTQI+
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {otherArchives.map((archive, idx) => (

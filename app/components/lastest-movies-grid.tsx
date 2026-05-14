@@ -30,7 +30,8 @@ interface LatestMoviesGridProps {
 export function LatestMoviesGrid({ movies }: LatestMoviesGridProps) {
   return (
     <div className="relative mt-10">
-      <div className="absolute text-center inset-0 z-10 flex flex-col justify-center items-center  px-10">
+      <div className="absolute text-center inset-0 z-10 flex flex-col justify-center items-center px-10 gap-6">
+        {" "}
         {/* pointer-events-none pour rendre l'image cliquable vers la fiche film */}
         <h2 className="font-bold sm:text-7xl md:text-7xl lg:text-8xl text-5xl">
           <span className="bg-white inline-block text-black uppercase line-clamp-2">
@@ -48,7 +49,7 @@ export function LatestMoviesGrid({ movies }: LatestMoviesGridProps) {
         </p> */}
         <Link
           href={`/movies`}
-          className="absolute bottom-20 border rounded-md py-2 px-4 border-white text-white hover:border-pink-500  hover:text-pink-500 text-sm sm:text-lg whitespace-nowrap"
+          className="border rounded-md py-2 px-4 border-white text-white hover:border-pink-500 hover:text-pink-500 text-sm sm:text-lg whitespace-nowrap"
         >
           Explorer la base de données{" "}
           {/* <Icon icon="mdi:chevron-right" className="inline size-4" /> */}
